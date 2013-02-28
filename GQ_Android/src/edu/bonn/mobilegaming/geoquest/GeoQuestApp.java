@@ -825,19 +825,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     }
 
     public void refreshMapDisplay() {
-	if (googleMap != null)
-	    googleMap.postInvalidate();
+	if (getGoogleMap() != null)
+	    getGoogleMap().postInvalidate();
 
-	if (osmap != null)
-	    osmap.postInvalidate();
+	if (getOsmap() != null)
+	    getOsmap().postInvalidate();
     }
-
-    // TODO -- Sabine -- location-Methoden löschen
-    // public Location getLastKnownLocation() {
-    // return lastKnownLocation;
-    // }
-    //
-    // public void setLastKnownLocation(Location loc) {
-    // this.lastKnownLocation = loc;
-    // }
 }

@@ -10,12 +10,13 @@ import org.dom4j.Element;
 import org.openintents.intents.AbstractWikitudeARIntent;
 import org.openintents.intents.WikitudeARIntent;
 import org.openintents.intents.WikitudePOI;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.api.IMapView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +39,6 @@ import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
@@ -56,7 +56,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
  * @author Krischan Udelhoven
  * @author Folker Hoffmann
  */
-public class MapOverview extends GeoQuestMapActivity implements HotspotListener {
+public class MapOverview extends MapNavigation implements HotspotListener {
 
     private static String TAG = "MapOverview";
 
@@ -67,7 +67,6 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
     static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
     private LocationManager myLocationManager;
-    private GeoQuestLocationListener locationListener;
 
     /*
      * handler is used to schedule location retrieves in particular when using
@@ -81,11 +80,6 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
     private MapController myMapCtrl;
     private MyLocationOverlay myLocationOverlay;
 
-    /**
-     * list of hotspots, inited in readxml. main thread may not access this
-     * until readxml_completed ist true
-     * */
-    private List<HotspotOld> hotspots = new ArrayList<HotspotOld>();
     private LinearLayout startMissionPanel;
 
     private MapHelper mapHelper;
@@ -109,7 +103,6 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	Log.d(this.getClass().getName(),
 	      "creating activity");
 	super.onCreate(savedInstanceState);
-	
 
 	// get extras
 	Bundle extras = getIntent().getExtras();
@@ -132,7 +125,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    myMapView.setSatellite(true);
 
 	myMapCtrl = myMapView.getController();
-	mapHelper.setGoogleMapController(myMapCtrl);
+	mapHelper = new MapHelper(this);
 
 	myMapCtrl.setZoom(18);
 	String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
@@ -160,30 +153,12 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    }
 	});
 
-	// Initialize location stuff:
-	locationListener = new GeoQuestLocationListener(this) {
-	    public void onRelevantLocationChanged(Location location) {
-		super.onRelevantLocationChanged(location);
-		GeoPoint point = location2GP(location);
-		myMapCtrl.animateTo(point);
-
-		// calculate distance to hotspots
-		for (Iterator<HotspotOld> i = hotspots.listIterator(); i
-			.hasNext();) {
-		    HotspotOld hotspot = i.next(); // TODO: throws a
-						   // ConcurrentModificationException
-						   // sometimes (hm)
-		    hotspot.inRange(location);
-		}
-	    }
-	};
-
 	try {
 	    long timeStepMockMode = Long
 		    .parseLong(getText(R.string.map_mockGPSTimeInterval)
 			    .toString());
 	    locationSource = new LocationSource(getApplicationContext(),
-		    locationListener, handler, timeStepMockMode);
+		    mapHelper.getLocationListener(), handler, timeStepMockMode);
 	    locationSource.setMode(LocationSource.REAL_MODE);
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -226,7 +201,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
     @Override
     protected void onDestroy() {
 	if (myLocationManager != null)
-	    myLocationManager.removeUpdates(locationListener);
+	    myLocationManager.removeUpdates(mapHelper.getLocationListener());
 	GeoQuestApp.getInstance().setGoogleMap(null);
 	super.onDestroy();
     }
@@ -293,7 +268,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    startARViewBasic();
 	    break;
 	case CENTER_MAP_ON_CURRENT_LOCATION_ID:
-	    mapHelper.centerMap(locationListener);
+	    mapHelper.centerMap();
 	    break;
 	}
 
@@ -373,20 +348,6 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    h.runOnTapEvent();
 	}
 
-    }
-
-    /**
-     * is called by the android framework when a child mission returns a result.
-     * Checks if all submissions are completed and finishes the map view if so.
-     * Also replaces a hotspots mission when definied in the XML file.
-     */
-    @Override
-    protected void onActivityResult(int requestCode,
-				    int resultCode,
-				    Intent data) {
-	super.onActivityResult(requestCode,
-			       resultCode,
-			       data);
     }
 
     /**
@@ -480,7 +441,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 		// this would cause a crash in nonmain thread; so this is done
 		// here
 		List<Overlay> mapOverlays = myMapView.getOverlays();
-		for (Iterator<HotspotOld> iterator = hotspots.iterator(); iterator
+		for (Iterator<HotspotOld> iterator = getHotspots().iterator(); iterator
 			.hasNext();) {
 		    HotspotOld hotspot = (HotspotOld) iterator.next();
 		    mapOverlays.add(hotspot.getGoogleOverlay());
@@ -538,7 +499,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 		    HotspotOld newHotspot = HotspotOld.create(mission,
 							      hotspot);
 		    newHotspot.addHotspotListener(MapOverview.this);
-		    hotspots.add(newHotspot);
+		    getHotspots().add(newHotspot);
 		    // new hotspots are not added to myMapView.getOverlays();
 		    // this would course a crash in nonmain thread;
 		    // readxmlHandler will add them later
@@ -595,26 +556,8 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
      */
     public void finish(Double status) {
 	mission.setStatus(status);
-
-	// if (status == Globals.STATUS_SUCCESS) {
-	// setResult(Activity.RESULT_OK, result);
-	// mission.runOnSuccessEvents();
-	// } else if (status == Globals.STATUS_FAIL) {
-	// setResult(Activity.RESULT_CANCELED, result);
-	// mission.runOnFailEvents();
-	// }
-
 	mission.applyOnEndRules();
-
 	finish();
-    }
-
-    private GeoPoint location2GP(Location location) {
-	if (location == null)
-	    return null;
-	GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
-		(int) (location.getLongitude() * 1E6));
-	return point;
     }
 
     public void onBlockingStateUpdated(boolean isBlocking) {
@@ -627,8 +570,14 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	return null;
     }
 
-    // /////////////////////////////////////////////////////////////////////////////
-    // imported from MissionActivity (end)
-    // /////////////////////////////////////////////////////////////////////////////
+    @Override
+    public IMapView getMapView() {
+	return new org.osmdroid.google.wrapper.MapView(myMapView);
+    }
+
+    @Override
+    public IMapController getMapController() {
+	return new org.osmdroid.google.wrapper.MapController(myMapCtrl);
+    }
 
 }
