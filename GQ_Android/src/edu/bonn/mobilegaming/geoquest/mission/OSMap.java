@@ -121,6 +121,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 
 	myMapCtrl = myMapView.getController();
 	mapHelper = new MapHelper(this);
+	mapHelper.centerMap();
 
 	myMapCtrl.setZoom(18);
 	String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
