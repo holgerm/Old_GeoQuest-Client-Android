@@ -138,31 +138,31 @@ public abstract class MissionActivity extends GeoQuestActivity implements
      * @throws IllegalArgumentException
      *             if the attribute is necessary but not given in the game.xml
      */
-    protected CharSequence getMissionAttribute(String attributeName,
+    public CharSequence getMissionAttribute(String attributeName,
 					       int defaultAsResourceID) {
-	String attributeAsText = mission.xmlMissionNode
-		.attributeValue(attributeName);
-	if (attributeAsText == null)
-	    if (defaultAsResourceID == XMLUtilities.NECESSARY_ATTRIBUTE)
-		// attribute needed but not found => error in game.xml:
-		throw new IllegalArgumentException("Necessary attribute \""
-			+ attributeName
-			+ "\" missing. Rework game specification.");
-	    else if (defaultAsResourceID == XMLUtilities.OPTIONAL_ATTRIBUTE) {
-		// optional attribute not set in game.xml => return null:
-		return null;
-	    } else
-		// attribute not set in game.xml but given as parameter => use
-		// referenced resource as default and return its value:
-		return GeoQuestApp.getInstance().getText(defaultAsResourceID);
-	else
-	    return (CharSequence) attributeAsText;
+	return XMLUtilities.getAttribute(attributeName,
+					 defaultAsResourceID,
+					 mission.xmlMissionNode);
+    }
+
+    /**
+     * Same as {@link #getMissionAttribute(String, int)} but assuming an
+     * optional attribute (cf. {@link XMLUtilities#OPTIONAL_ATTRIBUTE}).
+     * 
+     * @param attributeName
+     * @return
+     */
+    public CharSequence getMissionAttribute(String attributeName) {
+	return XMLUtilities.getAttribute(attributeName,
+					 XMLUtilities.OPTIONAL_ATTRIBUTE,
+					 mission.xmlMissionNode);
     }
 
     public Element getXML() {
 	return mission.xmlMissionNode;
     }
 
+    // TODO Blocking stuff should be moved to UI class:
     protected InteractionBlockingManager ibm;
 
     public BlockableAndReleasable

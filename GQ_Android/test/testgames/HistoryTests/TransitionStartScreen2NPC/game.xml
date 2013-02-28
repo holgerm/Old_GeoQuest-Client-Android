@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="TransitionStartScreen2NPC"
+	xmlformat="5"
+>
+	<mission
+		id="m1"
+		image="drawable/ploppschutz.png"
+		type="StartAndExitScreen"
+		duration="1000"
+	>
+		<onEnd>
+			<rule>
+				<action
+					id="m2"
+					type="StartMission" />
+			</rule>
+		</onEnd>
+	</mission>
+	<mission
+		id="m2"
+		image="drawable/ploppschutz.png"
+		type="NPCTalk"
+	>
+		<onEnd>
+			<rule>
+				<action type="EndGame" />
+			</rule>
+		</onEnd>
+		<dialogitem>Text 2. Teil A.
+		</dialogitem>
+		<dialogitem>Text 2. Teil B.
+		</dialogitem>
+		<dialogitem>Text 2. Teil C.
+		</dialogitem>
+	</mission>
+</game>

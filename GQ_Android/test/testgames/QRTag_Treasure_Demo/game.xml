@@ -2,7 +2,7 @@
 
 <game name="QRTag Treasure Demo" xmlformat="5">
 
-	<mission type="QRTagReading" id="QR_Treasure_1" buttontext="Finde den Schatz ..."
+	<mission type="QRTagReadingProduct" id="QR_Treasure_1" buttontext="Finde den Schatz ..."
 		taskdescription="Demo eines 'Schatzes', den du durch den QR-Tag oder Bar-Code finden kannst ..."
 		mode="treasure" initial_image="drawable/chest_closed.jpg" cancel="fail">
 		<onEnd>
@@ -12,7 +12,7 @@
 		</onEnd>
 	</mission>
 
-	<mission type="QRTagReading" id="QR_Treasure_2" buttontext="Finde den Schatz ..."
+	<mission type="QRTagReadingProduct" id="QR_Treasure_2" buttontext="Finde den Schatz ..."
 		taskdescription="Nochmal das gleiche aber mit angepasstem Feedback Text ..."
 		mode="treasure" initial_image="drawable/chest_closed.jpg" cancel="fail"
 		feedbacktext="In dem angepassten Text, kannst du das Ergebnis (@result@) beliebig referenzieren, auch mehrmals: @result@.">

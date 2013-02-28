@@ -1,285 +1,218 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
+import org.dom4j.Attribute;
 import org.dom4j.Element;
-
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TransitionItem;
-import com.qeevee.gq.xml.XMLUtilities;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import android.os.Bundle;
 import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
-import edu.bonn.mobilegaming.geoquest.ui.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 /**
  * Just a talking NPC. The NPC has a Image and text is based on dialogItems. The
  * text scrolls down on the screen and after each dialogItem the player have to
  * press a button to proceed.
  * 
+ * @author Holger Muegge
  * @author Folker Hoffmann
  * @author Krischan Udelhoven
  */
 
-public class NPCTalk extends MissionActivity implements OnClickListener {
+public class NPCTalk extends MissionActivity {
+    @SuppressWarnings("unused")
     private static final String TAG = "NPCTalk";
 
-    /** button for the player to preceed / answer */
-    private Button proceedButton;
-    private String endButtonText;
-    private String nextDialogButtonText;
-    /** textView to show the dialog text */
-    private TextView dialogText;
-    /** all dialogItems. Is filled in the onCreate method */
-    private LinkedList<DialogItem> dialogItems = new LinkedList<DialogItem>();
-    private Iterator<DialogItem> dialogItemIterator;
-    /** currentDialogItem */
-    private DialogItem currItem;
-    private CountDownTimer myCountDownTimer;
-    /** Inside the scroolView is the textView so the text can scroll down/up */
-    private ScrollView scrollView;
+    private Iterator<Element> dialogItemIterator;
 
+    @SuppressWarnings("unused")
     private NPCTalkUI ui;
+
+    private int nrOfDialogItems;
+
+    private int indexOfCurrentDialogItem;
 
     /**
      * Called by the android framework when the mission is created. Setups the
      * View and calls the readXML method to get the dialogItems. The dialog
      * starts with the first dialogItem.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-	Long start = System.currentTimeMillis();
 	super.onCreate(savedInstanceState);
-
-	// Create and initialize UI for this mission:
-	ui = UIFactory.getInstance().createUI(this);
-
-	proceedButton = (Button) findViewById(R.id.proceedButton);
-	dialogText = (TextView) findViewById(R.id.npctext);
-	scrollView = (ScrollView) findViewById(R.id.npc_scroll_view);
-	proceedButton.setOnClickListener(this);
-
-	readXML();
-	dialogItemIterator = dialogItems.iterator();
-	Log.d(TAG,
-	      "RuntimeMeasure "
-		      + (System.currentTimeMillis() - start)
-		      + " ms");
-	gotoNextDialogItem();
-    }
-
-    /**
-     * Starts a DialogItem by setting up a myCountDownTimer and starting it.
-     * 
-     * @param i
-     *            DialogItem to be started
-     */
-    private void startDialogItem(DialogItem i) {
-	dialogText.append(i.getFormattedSpeaker());
-	scrollView.fullScroll(View.FOCUS_DOWN);
-	int numParts = i.getNumParts();
-	final long milliseconds_per_part = 100;
-	long millisecondsInFuture = milliseconds_per_part
-		* (numParts + 1); // +1
-	myCountDownTimer = new NPCTalk.TalkCountDownTimer(millisecondsInFuture,
-		milliseconds_per_part, i);
-	myCountDownTimer.start();
-    }
-
-    /**
-     * Iterates to the next DialogItem. If there is another DialogItem in the
-     * list, startDialogItem(DialogItem) is called with it, otherwise nothing
-     * happens and currItem is set to {@code null}.
-     */
-    private void gotoNextDialogItem() {
-	// we always show the next dialogItem starting with the first.
-
-	if (!dialogItemIterator.hasNext()) {
-	    new TransitionItem(this);
-	    finish(Globals.STATUS_SUCCEEDED);
-	    return;
-	}
-	currItem = dialogItemIterator.next();
-
-	myCountDownTimer = new CountDownTimer(500, 500) {
-
-	    @Override
-	    public void onTick(long millisUntilFinished) {
-		// Do nothing
-	    }
-
-	    @Override
-	    public void onFinish() {
-		startDialogItem(currItem);
-	    }
-	}; // Ende Countdowntimer
-
-	// Start interaction with player:
-	// First start audio file if given:
-	if (currItem.getAudioFilePath() != null)
-	    GeoQuestApp.playAudio(currItem.getAudioFilePath(),
-				  currItem.blocking);
-	// Then start displaying the text word by word:
-	myCountDownTimer.start();
-    }
-
-    private void setProceedButtonText(DialogItem curItem) {
-	if (!dialogItemIterator.hasNext()) {
-	    // this is the last dialogitem to show:
-	    proceedButton.setText(endButtonText);
-	} else {
-	    if (curItem.nextDialogButtonText != null)
-		// use specific nextDialogButtonText for current DialogItem:
-		proceedButton.setText(curItem.nextDialogButtonText);
-	    else
-		// use global nextDialogButtonText (might be specified in
-		// game.xml or default)
-		proceedButton.setText(this.nextDialogButtonText);
-	}
-    }
-
-    /**
-     * Reads the xml file. Is called by the onCreate method. Builds the
-     * dialogItemList.
-     */
-    @SuppressWarnings("unchecked")
-    private void readXML() {
-
-	initImage();
-	initEndButtonText();
-
-	// Prepare endButtonText:
-	String ebt = mission.xmlMissionNode.attributeValue("endbuttontext");
-	if (ebt == null) {
-	    this.endButtonText = getText(R.string.button_text_proceed)
-		    .toString();
-	} else {
-	    this.endButtonText = ebt; 
-	}
-
-	// Adjust text size (default is 30sp):
-	String textsize = mission.xmlMissionNode.attributeValue("textsize");
-	if (textsize != null) {
-	    this.dialogText.setTextSize(Float.parseFloat(textsize));
-	}
-
-	// Prepare nextDialogButtonText:
-	String ndbt = mission.xmlMissionNode
-		.attributeValue("nextdialogbuttontext");
-	if (ndbt == null) {
-	    this.nextDialogButtonText = getText(R.string.button_text_proceed)
-		    .toString();
-	} else {
-	    this.nextDialogButtonText = ndbt;
-	}
-
-	// Load Dialog Items:
 	List<Element> dialogItemList = mission.xmlMissionNode
 		.selectNodes("./dialogitem");
-	for (Iterator<Element> e = dialogItemList.iterator(); e.hasNext();) {
-	    dialogItems.addLast(new DialogItem(e.next()));
-	}
+	dialogItemIterator = dialogItemList.iterator();
+	nrOfDialogItems = dialogItemList.size();
+	indexOfCurrentDialogItem = 0;
+	ui = UIFactory.getInstance().createUI(this);
     }
 
-    private void initEndButtonText() {
-	// TODO Auto-generated method stub
-	
-    }
-
-    private void initImage() {
-	String relPathToImageFile = null;
-	try {
-	    relPathToImageFile = getMissionAttribute("image",
-						     XMLUtilities.OPTIONAL_ATTRIBUTE)
-		    .toString();
-	    ui.setImage(relPathToImageFile);
-	} catch (IllegalArgumentException iae) {
-	    Log.e(TAG,
-		  "The image attribute is optional. This exception SHOULD NOT occur!");
-	}
+    public void finishMission() {
+	new TransitionItem(this);
+	if (hasMoreDialogItems())
+	    super.finish(Globals.STATUS_FAIL);
+	else
+	    super.finish(Globals.STATUS_SUCCEEDED);
     }
 
     /**
-     * On Click handler. If there is no dialogItem left the mission is over,
-     * else the next dialogItem is shown.
+     * @return true if this mission still has at least one more dialogs item to
+     *         show.
      */
-    public void onClick(View v) {
-	if (currItem == null) { // Am Ende
-	    finish(Globals.STATUS_SUCCEEDED);
-	    return;
-	} else {
-	    gotoNextDialogItem();
-	}
+    public boolean hasMoreDialogItems() {
+	return dialogItemIterator.hasNext();
     }
 
     /**
-     * Timer der Wort f�r Wort zu dem TextView hinzuf�gt
+     * @return the index of the last dialog item returned on a call to
+     *         {@link #getNextDialogItem()}. Index starts with 1 and will not
+     *         exceed the number of items - even if you call
+     *         {@link #getNextDialogItem()} too often.
      */
-    class TalkCountDownTimer extends CountDownTimer implements
-	    InteractionBlocker {
-	DialogItem dialogItem;
+    public int getIndexOfCurrentDialogItem() {
+	return indexOfCurrentDialogItem;
+    }
 
-	public TalkCountDownTimer(long millisInFuture,
-				  long countDownInterval,
-				  DialogItem item) {
-	    super(millisInFuture, countDownInterval);
-	    this.dialogItem = item;
-	    // block interaction on the NPCTalk using this Timer as Blocker
-	    // monitor:
-	    NPCTalk.this.blockInteraction(this);
-	    setProceedButtonText(item);
-	}
+    public int getNumberOfDialogItems() {
+	return nrOfDialogItems;
+    }
 
-	@Override
-	public void onFinish() {
-	    // Zur Sicherheit, da manchmal Wörter verschluckt werden (nicht
-	    // ausreichend genauer timer!)
-	    CharSequence next = dialogItem.getNextPart();
-	    while (next != null) {
-		NPCTalk.this.dialogText.append(next);
-		scrollView.fullScroll(View.FOCUS_DOWN);
-		next = dialogItem.getNextPart();
-	    }
-	    scrollView.fullScroll(View.FOCUS_DOWN);
-	    /*
-	     * Store history item. TODO: add more argument for image, audio and
-	     * thumbnail.
-	     */
-	    new TextItem(currItem.getText(), NPCTalk.this, Actor.NPC);
-	    // release blocked interaction on the NPCTalk using this Timer as
-	    // Blocker monitor:
-	    NPCTalk.this.releaseInteraction(this);
-	}
+    public DialogItem getNextDialogItem() {
+	DialogItem result = new DialogItem(dialogItemIterator.next());
+	if (result != null)
+	    indexOfCurrentDialogItem++;
+	return result;
+    }
 
-	@Override
-	public void onTick(long millisUntilFinished) {
-	    CharSequence next = dialogItem.getNextPart();
-	    if (next != null) {
-		NPCTalk.this.dialogText.append(next);
-		scrollView.fullScroll(View.FOCUS_DOWN);
-	    }
-	}
+    public void hasShownDialogItem(DialogItem shownDialogItem) {
+	/*
+	 * Store history item. TODO: add more arguments for image, audio and
+	 * thumbnail.
+	 */
+	new TextItem(shownDialogItem.getText(), this, Actor.NPC);
 
     }
 
     public void onBlockingStateUpdated(boolean isBlocking) {
-	proceedButton.setEnabled(!isBlocking);
+	// TODO stop letting MissionOrToolActivity implement
+	// BlockableAndReleasable!
+
     }
 
+    /**
+     * Dialog Items are needed by the NPC talk mission. A dialog item is for
+     * example a sentence the NPC will say.
+     * 
+     * @author Folker Hoffmann
+     * @author Krischan Udelhoven
+     */
+    public static class DialogItem {
+
+	/** name of the speaker */
+	private String speaker;
+	/** DialogItems text */
+	private String text;
+	/** Array of words */
+	private String[] textElements;
+	/** used for iterating through the textElements */
+	private int counter = 0;
+	private CharSequence nextDialogButtonText = null;
+
+	public CharSequence getNextDialogButtonText() {
+	    return nextDialogButtonText;
+	}
+
+	private String audioFilePath;
+	public boolean blocking;
+
+	private Element xml = null;
+
+	/**
+	 * Constructor gets the information from the passed xmlElement
+	 * 
+	 * @param xmlElement
+	 *            the dialogItem element from the XML file
+	 */
+	public DialogItem(Element xmlElement) {
+	    xml = xmlElement;
+	    speaker = xml.attributeValue("speaker");
+
+	    // read nextdialogbuttontext:
+	    Attribute a = (Attribute) xml
+		    .selectSingleNode("@nextdialogbuttontext");
+	    if (a != null) {
+		nextDialogButtonText = a.getText();
+	    }
+
+	    // read sound (might be an audiofile for listenig to the text):
+	    a = (Attribute) xml.selectSingleNode("@sound");
+	    if (a != null) {
+		audioFilePath = a.getText();
+	    }
+
+	    // read blocking attribute:
+	    a = (Attribute) xml.selectSingleNode("@blocking");
+	    if (a != null
+		    && a.getText().equals("false"))
+		blocking = false;
+	    else
+		blocking = true;
+
+	    text = xml.getText().replaceAll("\\s+",
+					    " ").trim();
+	    if (text.startsWith(" ")) {
+		text = text.substring(1);
+	    }
+
+	    textElements = text.split("\\s+"); // Split anhand der Whitespaces
+	}
+
+	/**
+	 * @return the speaker's name or <code>null</code> if no speaker given.
+	 */
+	public String getSpeaker() {
+	    return speaker;
+	}
+
+	public String getText() {
+	    return text;
+	}
+
+	public String getAudioFilePath() {
+	    return audioFilePath;
+	}
+
+	/**
+	 * @return returns the number of words
+	 */
+	public int getNumParts() {
+	    return textElements.length;
+	}
+
+	/**
+	 * get the next word
+	 * 
+	 * @return returns each word as a CharSquence or null of there is no
+	 *         word left
+	 */
+	public CharSequence getNextPart() {
+	    if (counter >= textElements.length)
+		return null;
+	    if (counter == textElements.length - 1)
+		return textElements[counter++]
+			+ "\n";
+
+	    return textElements[counter++]
+		    + " "; // add white space for all words
+			   // but the last
+	}
+    }
 }

@@ -11,7 +11,8 @@ import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.DialogItem;
+import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
+import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
 import edu.bonn.mobilegaming.geoquest.mission.WebTech;
 
 /**
@@ -59,7 +60,9 @@ public class NPCTalkJSInterface {
 	if (imgUrl.startsWith("drawable")) {
 	    imgUrl = imgUrl.substring(8);
 	}
-	return "file://" + imgDir.getAbsolutePath() + imgUrl;
+	return "file://"
+		+ imgDir.getAbsolutePath()
+		+ imgUrl;
     }
 
     // TODO -- Sabine -- WebTech �bergabe der Dialoge an JS �ndern. Diese L�sung
@@ -75,7 +78,7 @@ public class NPCTalkJSInterface {
 	List<Element> dialogItemList = mission.xmlMissionNode
 		.selectNodes("./dialogitem");
 	for (Iterator<Element> e = dialogItemList.iterator(); e.hasNext();) {
-	    dialogItems.addLast(new DialogItem(e.next()));
+	    dialogItems.addLast(new NPCTalk.DialogItem(e.next()));
 	}
 
 	speakers = new String[dialogItems.size()];
@@ -92,8 +95,8 @@ public class NPCTalkJSInterface {
 	    dialogs[i] = item.getText();
 
 	    if (it.hasNext()) { // Nextbutton
-		if (item.nextDialogButtonText != null) {
-		    buttons[i] = (item.nextDialogButtonText).toString();
+		if (item.getNextDialogButtonText() != null) {
+		    buttons[i] = (item.getNextDialogButtonText()).toString();
 		} else {
 		    buttons[i] = mission.xmlMissionNode
 			    .attributeValue("nextdialogbuttontext");

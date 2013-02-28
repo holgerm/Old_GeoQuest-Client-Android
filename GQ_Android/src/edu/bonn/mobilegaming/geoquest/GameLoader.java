@@ -31,6 +31,7 @@ import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
 
@@ -51,9 +52,11 @@ public class GameLoader {
      * @return the directory where the game files have been stored
      */
     static void unzipGameArchive(File gameZipFile) {
-	String newGameDirName = gameZipFile.getAbsolutePath().replace(".zip", "");
+	String newGameDirName = gameZipFile.getAbsolutePath().replace(".zip",
+								      "");
 	File newGameDir = new File(newGameDirName);
-	if (!newGameDir.exists() || newGameDir.isFile()) {
+	if (!newGameDir.exists()
+		|| newGameDir.isFile()) {
 	    if (newGameDir.isFile())
 		// just in the awkward case that there is a file with the same
 		// name ...
@@ -71,20 +74,25 @@ public class GameLoader {
 	    FileOutputStream fos;
 	    InputStream entryStream;
 
-	    for (Enumeration<? extends ZipEntry> enumeration = zipFile.entries(); enumeration.hasMoreElements();) {
+	    for (Enumeration<? extends ZipEntry> enumeration = zipFile
+		    .entries(); enumeration.hasMoreElements();) {
 		zipEntry = enumeration.nextElement();
 
 		// skip files starting with ".":
 		String zipEntryName = zipEntry.getName();
 		String[] zipEntryNameParts = zipEntryName.split("/");
-		if (zipEntryNameParts[zipEntryNameParts.length - 1].startsWith("."))
+		if (zipEntryNameParts[zipEntryNameParts.length - 1]
+			.startsWith("."))
 		    continue;
 
-		entryFile = new File(newGameDirName + "/" + zipEntry.getName());
+		entryFile = new File(newGameDirName
+			+ "/"
+			+ zipEntry.getName());
 
 		// in case the entry is a directory:
 		if (zipEntryName.endsWith("/")) {
-		    if (!entryFile.exists() || !entryFile.isDirectory())
+		    if (!entryFile.exists()
+			    || !entryFile.isDirectory())
 			entryFile.mkdir();
 		    continue; // now it exists that's enough for directories ...
 		}
@@ -102,7 +110,9 @@ public class GameLoader {
 		do {
 		    bytesRead = entryStream.read(content);
 		    if (bytesRead > 0)
-			fos.write(content, 0, bytesRead);
+			fos.write(content,
+				  0,
+				  bytesRead);
 		} while (bytesRead > 0);
 
 		fos.flush();
@@ -110,16 +120,24 @@ public class GameLoader {
 
 		// set timestamp of new loaded gamefile to serverside timestamp:
 		if (entryFile.getName().equals("game.xml")) {
-		    boolean timeStampOK = entryFile.setLastModified(gameZipFile.lastModified());
+		    boolean timeStampOK = entryFile.setLastModified(gameZipFile
+			    .lastModified());
 		    if (!timeStampOK)
-			Log.e(TAG, "Time stamp of game file for \"" + gameZipFile.getName() + "\" could not be set.");
+			Log.e(TAG,
+			      "Time stamp of game file for \""
+				      + gameZipFile.getName()
+				      + "\" could not be set.");
 		}
 	    }
 	} catch (ZipException e) {
-	    Log.d(TAG, "ZipException creating zipfile from " + gameZipFile);
+	    Log.d(TAG,
+		  "ZipException creating zipfile from "
+			  + gameZipFile);
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    Log.d(TAG, "IOException creating zipfile from " + gameZipFile);
+	    Log.d(TAG,
+		  "IOException creating zipfile from "
+			  + gameZipFile);
 	    e.printStackTrace();
 	}
     }
@@ -130,7 +148,8 @@ public class GameLoader {
      *         subdirectories have been deleted. Otherwise {@code false}.
      */
     private static boolean deleteDir(File dir) {
-	if (!dir.exists() || !dir.isDirectory())
+	if (!dir.exists()
+		|| !dir.isDirectory())
 	    return false;
 	boolean deleted = true;
 	File[] filesToDelete = dir.listFiles();
@@ -143,18 +162,27 @@ public class GameLoader {
 	return deleted;
     }
 
-    public static String loadTextFile(File gameDir, String relativeResourcePath) {
-	String resourcePath = gameDir.getAbsolutePath() + "/" + relativeResourcePath;
-	Log.d(TAG + ".loadTextFile()", "Loading text file from " + resourcePath);
+    public static String loadTextFile(File gameDir,
+				      String relativeResourcePath) {
+	String resourcePath = gameDir.getAbsolutePath()
+		+ "/"
+		+ relativeResourcePath;
+	Log.d(TAG
+		      + ".loadTextFile()",
+	      "Loading text file from "
+		      + resourcePath);
 	StringBuffer result = new StringBuffer();
 	try {
-	    BufferedReader br = new BufferedReader(new FileReader(new File(resourcePath)));
+	    BufferedReader br = new BufferedReader(new FileReader(new File(
+		    resourcePath)));
 	    String line;
 	    while ((line = br.readLine()) != null) {
 		result.append(line);
 	    }
 	} catch (FileNotFoundException e) {
-	    Log.w(TAG + ".loadTextFile()", e.toString());
+	    Log.w(TAG
+			  + ".loadTextFile()",
+		  e.toString());
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
@@ -169,13 +197,20 @@ public class GameLoader {
      * TODO: check if SD Card is available and accessible. Otherwise display
      * error or even switch to "just online" gaming.
      */
-    public static void loadGame(Handler handler, CharSequence repoName, String gameFileName) {
-	URL url = GeoQuestApp.makeGameURL(repoName, gameFileName);
-	File newGameZipFile = new File(GameDataManager.getLocalRepoDir(repoName), gameFileName + ".zip");
+    public static void loadGame(Handler handler,
+				CharSequence repoName,
+				String gameFileName) {
+	URL url = GeoQuestApp.makeGameURL(repoName,
+					  gameFileName);
+	File newGameZipFile = new File(GameDataManager
+		.getLocalRepoDir(repoName), gameFileName
+		+ ".zip");
 	InputStream in;
 	final int BYTE_SIZE = 1024;
 
-	Log.d(TAG, "start download: '" + url);
+	Log.d(TAG,
+	      "start download: '"
+		      + url);
 
 	removeOldGameFile(newGameZipFile);
 	FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
@@ -188,16 +223,21 @@ public class GameLoader {
 	    // other msg to handler.
 	    Message msg = handler.obtainMessage();
 	    msg.what = GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
-	    msg.arg1 = lenght / BYTE_SIZE;
+	    msg.arg1 = lenght
+		    / BYTE_SIZE;
 	    msg.arg2 = R.string.start_downloadGame;
 	    handler.sendMessage(msg);
 
 	    byte by[] = new byte[BYTE_SIZE];
 	    int c;
 
-	    while ((c = in.read(by, 0, BYTE_SIZE)) != -1) {
+	    while ((c = in.read(by,
+				0,
+				BYTE_SIZE)) != -1) {
 		// TODO check access to SDCard!
-		fOutLocal.write(by, 0, c);
+		fOutLocal.write(by,
+				0,
+				c);
 		// trigger progress bar to proceed:
 		handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
 	    }
@@ -208,7 +248,9 @@ public class GameLoader {
 	    e.printStackTrace();
 	}
 
-	Log.d(TAG, "completed download: '" + url);
+	Log.d(TAG,
+	      "completed download: '"
+		      + url);
 	handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
 
 	GameLoader.unzipGameArchive(newGameZipFile);
@@ -221,7 +263,8 @@ public class GameLoader {
 	try {
 	    fOutLocal = new FileOutputStream(newGameZipFile);
 	} catch (FileNotFoundException e) {
-	    Log.e(TAG, e.toString());
+	    Log.e(TAG,
+		  e.toString());
 	}
 	return fOutLocal;
     }
@@ -237,15 +280,24 @@ public class GameLoader {
 
     /**
      * Starts the game from the given local file.
+     * 
+     * @param handler
+     * @param gameXMLFile
+     * @param predefinedUIFactories
+     *            if not empty, the first string in array is taken as name of
+     *            UIFactory and overrides settings in game xml specification.
      */
-    public static void startGame(Handler handler, File gameXMLFile) {
+    public static void
+	    startGame(Handler handler,
+		      File gameXMLFile,
+		      Class<? extends UIFactory>... predefinedUIFactories) {
 	endLastGame();
 	GeoQuestApp.resetAdaptionEngine();
 	resetContextManager();
 	// expand missions
 	try {
 	    Mission.documentRoot = getDocument(gameXMLFile).getRootElement();
-	    setGlobalMissionLayout();
+	    setGlobalMissionLayout(predefinedUIFactories);
 	    setAdaptionType();
 	    setGameDuration();
 
@@ -262,11 +314,14 @@ public class GameLoader {
 
 	    if (firstMission != null) {
 		// TODO ReportingService muss jetzt schon gestartet sein!
-		GameSessionManager.setSessionID(Mission.documentRoot.attributeValue("name"));
+		GameSessionManager.setSessionID(Mission.documentRoot
+			.attributeValue("name"));
 		firstMission.startMission();
 	    }
 	} catch (Exception e) {
-	    Log.e(TAG, "DocumentException while parsing game: " + gameXMLFile);
+	    Log.e(TAG,
+		  "DocumentException while parsing game: "
+			  + gameXMLFile);
 	    if (handler != null) {
 		Message msg = handler.obtainMessage();
 		msg.what = GeoQuestProgressHandler.MSG_ABORT_BY_ERROR;
@@ -289,13 +344,16 @@ public class GameLoader {
     }
 
     private static void setGameDuration() {
-	String maxDurationStr = Mission.documentRoot.attributeValue(xmlTagsContext.MAX_DURATION.getString());
+	String maxDurationStr = Mission.documentRoot
+		.attributeValue(xmlTagsContext.MAX_DURATION.getString());
 	if (maxDurationStr != null) {
-	    GeoQuestActivity.contextManager.setMaximalGameDuration(Long.parseLong(maxDurationStr) * 60 * 1000);
+	    GeoQuestActivity.contextManager.setMaximalGameDuration(Long
+		    .parseLong(maxDurationStr) * 60 * 1000);
 	}
     }
 
-    private static Document getDocument(File gameXMLFile) throws DocumentException {
+    private static Document getDocument(File gameXMLFile)
+	    throws DocumentException {
 	SAXReader reader = new SAXReader();
 	Document document = reader.read(gameXMLFile);
 	return document;
@@ -310,7 +368,10 @@ public class GameLoader {
 	Iterator iterator = missionNodes.iterator(); iterator.hasNext();) {
 	    Element missionNode = (Element) iterator.next();
 	    String idOfMission = missionNode.attributeValue("id");
-	    Mission curMission = Mission.create(idOfMission, null, missionNode, handler);
+	    Mission curMission = Mission.create(idOfMission,
+						null,
+						missionNode,
+						handler);
 	    if (first) {
 		firstMission = curMission;
 		first = false;
@@ -337,13 +398,29 @@ public class GameLoader {
 
     private static int countMissions() {
 	XPath xpath1 = Mission.documentRoot.createXPath("count(//mission)");
-	int num_missions = xpath1.numberValueOf(Mission.documentRoot).intValue();
+	int num_missions = xpath1.numberValueOf(Mission.documentRoot)
+		.intValue();
 	return num_missions;
     }
 
-    private static void setGlobalMissionLayout() {
+    /**
+     * @param predefinedUIFactoryArray
+     *            if not empty, the first string in array is taken as name of
+     *            UIFactory and overrides settings in game xml specification.
+     */
+    private static
+	    void
+	    setGlobalMissionLayout(Class<? extends UIFactory>... predefinedUIFactoryArray) {
+	if (predefinedUIFactoryArray.length == 0)
+	    UIFactory.selectUIStyle(Mission.documentRoot
+		    .attributeValue("uistyle"));
+	else
+	    UIFactory.setFactory(predefinedUIFactoryArray[0]);
+
+	// TODO get rid of the rest, i.e. the old html layout mechanism:
 	String layoutAttr = Mission.documentRoot.attributeValue("layout");
-	if (layoutAttr != null && layoutAttr.equals("html")) {
+	if (layoutAttr != null
+		&& layoutAttr.equals("html")) {
 	    Mission.setUseWebLayoutGlobally(true);
 	}
     }
@@ -351,8 +428,10 @@ public class GameLoader {
     private static void setAdaptionType() {
 	String adaptionType = null;
 	if (GeoQuestApp.useAdaptionEngine) {
-	    adaptionType = Mission.documentRoot.attributeValue(AdaptionEngineInterface.xmlTagAdaptionType);
-	    if (adaptionType == null || (adaptionType.trim()).length() <= 0) {
+	    adaptionType = Mission.documentRoot
+		    .attributeValue(AdaptionEngineInterface.xmlTagAdaptionType);
+	    if (adaptionType == null
+		    || (adaptionType.trim()).length() <= 0) {
 		GeoQuestApp.useAdaptionEngine = false;
 	    } else {
 		GeoQuestApp.adaptionEngine.setType(adaptionType);
@@ -362,8 +441,10 @@ public class GameLoader {
 
     private static void initAdaptionEngine(File gameDirectory) {
 	if (GeoQuestApp.useAdaptionEngine) {
-	    File cFile = new File(gameDirectory.getAbsolutePath() + "/contextpool.xml");
-	    File mFile = new File(gameDirectory.getAbsolutePath() + "/missionpool.xml");
+	    File cFile = new File(gameDirectory.getAbsolutePath()
+		    + "/contextpool.xml");
+	    File mFile = new File(gameDirectory.getAbsolutePath()
+		    + "/missionpool.xml");
 	    try {
 		// TODO -- Sabine -- runtimeTest löschen
 		// XmlToolsContextPool creator = new XmlToolsContextPool();
@@ -372,22 +453,27 @@ public class GameLoader {
 		AlternativeMission.setMissionPoolDocument(getDocument(mFile));
 	    } catch (Exception e) {
 		GeoQuestApp.useAdaptionEngine = false;
-		Log.d(TAG, "AdaptionEngine was stoped. The file contextpool.xml or missionpool.xml "
-			+ "weren't found or couldn't be parsed.");
+		Log.d(TAG,
+		      "AdaptionEngine was stoped. The file contextpool.xml or missionpool.xml "
+			      + "weren't found or couldn't be parsed.");
 	    }
 	}
     }
 
-    public static boolean existsGameOnClient(String repoName, String gameName) {
+    public static boolean existsGameOnClient(String repoName,
+					     String gameName) {
 	// TODO: extend to check whether the game is complete (all referred
 	// resources available).
-	File repoDir = new File(Environment.getExternalStorageDirectory(), GameDataManager.getLocalRepoDir(null) + "/"
-		+ repoName);
+	File repoDir = new File(Environment.getExternalStorageDirectory(),
+		GameDataManager.getLocalRepoDir(null)
+			+ "/"
+			+ repoName);
 	if (!repoDir.exists())
 	    return false;
 	File gameDir = new File(repoDir, gameName);
 	File gameXMLFile = new File(gameDir, "game.xml");
-	if (!gameDir.exists() || !gameXMLFile.exists())
+	if (!gameDir.exists()
+		|| !gameXMLFile.exists())
 	    return false;
 	return true;
     }

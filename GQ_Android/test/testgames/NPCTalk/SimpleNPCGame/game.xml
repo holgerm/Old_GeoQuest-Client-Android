@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="SimpleNPCGame"
+	xmlformat="5"
+>
+	<mission
+		type="NPCTalk"
+		id="m1"
+		image="drawable/ploppschutz.png"
+	>
+		<dialogitem>This NPCTalk mission offers just three only text dialog items.
+		</dialogitem>
+		<dialogitem>This is the second dialog item.
+		</dialogitem>
+		<dialogitem>
+	This is the third and last dialog item.</dialogitem>
+	</mission>
+</game>
