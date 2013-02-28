@@ -31,6 +31,7 @@
     <string name="sortByDate">Date (newest first)</string>
     <string name="sortByDistance">Distance</string>
     <string name="sortByLastPlayed">Last played</string>
+    <string name="game_list_sort">Sort...</string>
 
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">Accept</string>

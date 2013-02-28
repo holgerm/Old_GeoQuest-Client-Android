@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="lib" path="libs/apache-mime-4j/apache-mime4j-0.6.jar" sourcepath="libs/apache-mime-4j/apache-mime4j-0.6-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/GeoQuest/libs/apache-mime-4j/apache-mime4j-0.6-javadoc.jar!/"/>
@@ -13,14 +13,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="libs/httpmime/httpmime-4.0.1.jar" sourcepath="libs/httpmime/httpmime-4.0.1-sources.jar"/>
-	<classpathentry kind="lib" path="libs/wikitudearintent.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/wikitudearintent.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/jaxen/jaxen-1.1.4/jaxen-1.1.4.jar" sourcepath="libs/jaxen/jaxen-1.1.4/src">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/GeoQuest/libs/jaxen/jaxen-1.1.4/docs/apidocs/index.html!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/Users/muegge/projects/geoquest/impl/player/android/GQ_Android/libs/osmdroid/osmdroid-third-party-3.0.8.jar" sourcepath="/Users/muegge/.m2/repository/org/osmdroid/osmdroid-third-party/3.0.8/osmdroid-third-party-3.0.8-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/muegge/projects/geoquest/impl/player/android/GQ_Android/libs/osmdroid/slf4j-android-1.6.1-RC1.jar" sourcepath="libs/osmdroid/slf4j-1.7.2.zip"/>
-	<classpathentry exported="true" kind="lib" path="/Users/muegge/projects/geoquest/impl/player/android/GQ_Android/libs/osmdroid/osmdroid-android-3.0.8.jar" sourcepath="/Users/muegge/.m2/repository/org/osmdroid/osmdroid-android/3.0.8/osmdroid-android-3.0.8-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/osmdroid/osmdroid-android-3.0.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/osmdroid/osmdroid-third-party-3.0.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/osmdroid/slf4j-android-1.6.1-RC1.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

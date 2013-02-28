@@ -169,6 +169,7 @@ public class GameListActivity extends GeoQuestListActivity {
 	startGame(gameItem,
 		  selectedRepo);
     }
+    
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -179,4 +180,17 @@ public class GameListActivity extends GeoQuestListActivity {
 				Intent i = new Intent(GeoQuestApp.getContext(), edu.bonn.mobilegaming.geoquest.SortingOptionsActivity.class);
 				startActivity(i);
 				return false;
+			}
+		});
+		return true;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Init data adapter
+		gameListAdapter = new ArrayAdapter<String>(this, R.layout.game_item,
+				GeoQuestApp.getGameNamesForRepository(repoName.toString()));
+		setListAdapter(gameListAdapter);
+	}
 }
