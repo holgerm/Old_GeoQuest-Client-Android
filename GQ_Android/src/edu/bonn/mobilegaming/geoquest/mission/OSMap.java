@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -68,6 +69,8 @@ public class OSMap extends GeoQuestMapActivity implements HotspotListener {
 
     private LocationManager myLocationManager;
     private GeoQuestLocationListener locationListener;
+    
+    private MapHelper mapHelper;
 
     /*
      * handler is used to schedule location retrieves in particular when using
@@ -132,6 +135,8 @@ public class OSMap extends GeoQuestMapActivity implements HotspotListener {
 	// myMapView.displayZoomControls(false);
 
 	myMapCtrl = myMapView.getController();
+	mapHelper.setOSMapController(myMapCtrl);
+
 
 	myMapCtrl.setZoom(18);
 	String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
@@ -289,11 +294,7 @@ public class OSMap extends GeoQuestMapActivity implements HotspotListener {
 	    }
 	    break;
 	case CENTER_MAP_ON_CURRENT_LOCATION_ID:
-	    // TODO duplicated code cf. MapOverview; How to extract?
-	    Location lastLoc = locationListener.getLastLocation();
-	    if (lastLoc != null)
-		myMapCtrl.animateTo(location2GP(locationListener
-			.getLastLocation()));
+	    mapHelper.centerMap(locationListener);
 	    break;
 	}
 

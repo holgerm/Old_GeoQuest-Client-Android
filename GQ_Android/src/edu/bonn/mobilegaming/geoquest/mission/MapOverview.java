@@ -34,6 +34,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
+import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -87,6 +88,8 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
     private List<HotspotOld> hotspots = new ArrayList<HotspotOld>();
     private LinearLayout startMissionPanel;
 
+    private MapHelper mapHelper;
+
     /**
      * used by the android framework
      * 
@@ -106,6 +109,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	Log.d(this.getClass().getName(),
 	      "creating activity");
 	super.onCreate(savedInstanceState);
+	
 
 	// get extras
 	Bundle extras = getIntent().getExtras();
@@ -128,6 +132,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    myMapView.setSatellite(true);
 
 	myMapCtrl = myMapView.getController();
+	mapHelper.setGoogleMapController(myMapCtrl);
 
 	myMapCtrl.setZoom(18);
 	String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
@@ -288,10 +293,7 @@ public class MapOverview extends GeoQuestMapActivity implements HotspotListener 
 	    startARViewBasic();
 	    break;
 	case CENTER_MAP_ON_CURRENT_LOCATION_ID:
-	    Location lastLoc = locationListener.getLastLocation();
-	    if (lastLoc != null)
-		myMapCtrl.animateTo(location2GP(locationListener
-			.getLastLocation()));
+	    mapHelper.centerMap(locationListener);
 	    break;
 	}
 
