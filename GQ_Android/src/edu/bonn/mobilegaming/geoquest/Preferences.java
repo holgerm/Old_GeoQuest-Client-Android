@@ -44,6 +44,7 @@ public class Preferences extends PreferenceActivity implements
 	public static final String PREF_KEY_PASSWORD = "pref_password";
 	public static final String PREF_KEY_SERVER_URL = "pref_server_url";
 	public static final String PREF_KEY_CLEAN_SDCARD = "pref_clean_sdcard";
+	public static final String PREF_KEY_SORTING_MODE = "pref_sorting_mode";
 
 	private SharedPreferences mainPrefs;
 	private boolean clickAutoStartQuestChooser = false;

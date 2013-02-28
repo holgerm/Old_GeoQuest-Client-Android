@@ -1,9 +1,20 @@
 package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import com.google.android.maps.GeoPoint;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
+import edu.bonn.mobilegaming.geoquest.HotspotOld;
+
+import android.location.Location;
+import android.util.Log;
 
 /**
  * This is a data object class representing a repository as runtime object.
@@ -12,11 +23,11 @@ import java.util.Map;
  * 
  */
 public class RepositoryItem {
-
+	
 	private String name;
 	private boolean onServer = false;
 	private boolean onClient = false;
-	private Map<String, GameItem> games = new HashMap<String, GameItem>();
+	private List<GameItem> games = new ArrayList<GameItem>();
 
 	public String getName() {
 		return name;
@@ -36,15 +47,38 @@ public class RepositoryItem {
 	}
 
 	public void addGame(GameItem gameItem) {
-		games.put(gameItem.getName(), gameItem);
+		games.add(gameItem);
+	}
+	
+	public void sortGameItemsBy(int sortMode){
+		for(int i = 0; i<games.size(); i++){
+			games.get(i).setSortingMode(sortMode);
+		}
+		Collections.sort(games);
+	}
+	
+	public void sortGameItemsBy(int sortMode, Location location){
+		for(int i = 0; i<games.size(); i++){
+			games.get(i).setDeviceLocation(location);
+			games.get(i).setSortingMode(sortMode);
+		}
+		Collections.sort(games);
 	}
 
-	public List<String> gameNames() {
-		return new ArrayList<String>(games.keySet());
+	public List<String> gameNames() {	
+		List<String> gameNames = new ArrayList<String>();
+		for(int i = 0; i<games.size(); i++){
+			gameNames.add(games.get(i).getName());
+		}
+		
+		return gameNames;
 	}
 
 	public GameItem getGameItem(String gameName) {
-		return games.get(gameName);
+		
+		for(int i = 0; i<games.size(); i++){
+			if(games.get(i).getName().equals(gameName)) return games.get(i);
+		}
+		return null;
 	}
-
 }
