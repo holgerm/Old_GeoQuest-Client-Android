@@ -1,56 +1,54 @@
 package com.qeevee.gq.tests.mission.ui.standard;
 
 import static com.qeevee.gq.tests.util.TestUtils.getFieldValue;
-import static com.qeevee.gq.tests.util.TestUtils.historyListShouldHaveLength;
 import static com.qeevee.gq.tests.util.TestUtils.prepareMission;
 import static com.qeevee.gq.tests.util.TestUtils.startGameForTest;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
+import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.ZoomImageView;
 
+import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault.WordTicker;
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultTests {
-    NPCTalk npcTalkM;
     NPCTalkUIDefault ui;
     ZoomImageView imageView;
-    TextView talkView;
+    TextView textView;
     Button proceedBT;
-    CountDownTimer timer;
     private Start start;
     private NPCTalk npcTalk;
+    private WordTicker ticker;
 
-    @SuppressWarnings("unchecked")
-    public void initTestMission(String missionID) {
-	npcTalkM = (NPCTalk) prepareMission("NPCTalk",
-					    missionID,
-					    startGameForTest("npctalk/NPCTalkTest"));
-	npcTalkM.onCreate(null);
-	ui = (NPCTalkUIDefault) getFieldValue(npcTalkM,
+    public void initUIFields() {
+	ui = (NPCTalkUIDefault) getFieldValue(npcTalk,
 					      "ui");
 	imageView = (ZoomImageView) getFieldValue(ui,
 						  "charImage");
-	talkView = (TextView) getFieldValue(ui,
+	textView = (TextView) getFieldValue(ui,
 					    "dialogText");
 	proceedBT = (Button) getFieldValue(ui,
 					   "button");
-	timer = (CountDownTimer) getFieldValue(npcTalkM,
-					       "myCountDownTimer");
+	ticker = (WordTicker) getFieldValue(ui,
+					    "ticker");
     }
 
     @After
@@ -61,15 +59,11 @@ public class NPCTalkUIDefaultTests {
 	History.getInstance().clear();
     }
 
-    @Before
-    public void prepare() {
-    }
-
     // === TESTS FOLLOW =============================================
 
     @SuppressWarnings("unchecked")
     @Test
-    public void initGame() {
+    public void startFirstMission_DoNotShowAllWordsYet() {
 	// GIVEN:
 	start = startGameForTest("npctalk/NPCTalkStandard",
 				 DefaultUIFactory.class);
@@ -78,28 +72,129 @@ public class NPCTalkUIDefaultTests {
 					   start);
 
 	// WHEN:
-	npcTalk.onCreate(null);
+	startMission(npcTalk);
 
 	// THEN:
-	historyListShouldHaveLength(0);
+	buttonShouldBeDisabled();
+	buttonShouldShowNextDialogItemText();
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void startFirstMission() {
+    public void wordTickerDisplaysTextWordByWord() {
 	// GIVEN:
-	start = startGameForTest("npctalk/NPCTalkStandard",
+	start = startGameForTest("npctalk/WordCountTest",
 				 DefaultUIFactory.class);
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
-					   "m1",
+					   "3210WordsInDialogItems",
 					   start);
+	startMission(npcTalk);
 
 	// WHEN:
-	npcTalk.onCreate(null);
+	ticker.onTick(0);
+	// THEN:
+	npcTextShouldShowAtEnd("One ");
+
+	// WHEN:
+	ticker.onTick(0);
+	// THEN:
+	npcTextShouldShowAtEnd("two ");
+
+	// WHEN:
+	ticker.onTick(0);
+	// THEN:
+	npcTextShouldShowAtEnd("three\n");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void buttonEnabledOnlyWhenWordTickerFinished() {
+	// GIVEN:
+	start = startGameForTest("npctalk/WordCountTest",
+				 DefaultUIFactory.class);
+	npcTalk = (NPCTalk) prepareMission("NPCTalk",
+					   "3210WordsInDialogItems",
+					   start);
+	startMission(npcTalk);
+	ticker.onTick(0);
+	ticker.onTick(0);
+	ticker.onTick(0);
 
 	// THEN:
+	buttonShouldBeDisabled();
+
+	// WHEN:
+	ticker.onFinish();
+	// THEN:
+	npcTextShouldShowAtEnd("One two three\n");
+	buttonShouldBeEnabled();
+	buttonShouldShowNextDialogItemText();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void goToThroughDialogItems() {
+	// GIVEN:
+	start = startGameForTest("npctalk/WordCountTest",
+				 DefaultUIFactory.class);
+	npcTalk = (NPCTalk) prepareMission("NPCTalk",
+					   "3210WordsInDialogItems",
+					   start);
+	startMission(npcTalk);
+	ticker.onFinish();
+
+	// WHEN:
+	proceedBT.performClick();
+
+	// THEN:
+	buttonShouldBeDisabled();
+
+	// WHEN:
+	ticker.onFinish();
+
+	// THEN:
+	npcTextShouldShowAtEnd("Just two\n");
+	buttonShouldBeEnabled();
+
+	// WHEN:
+	proceedBT.performClick();
+	ticker.onFinish();
+
+	// THEN:
+	npcTextShouldShowAtEnd("Emptyfollows\n");
+	buttonShouldBeEnabled();
+
+	// WHEN:
+	proceedBT.performClick();
+	ticker.onFinish();
+
+	// THEN:
+	npcTextShouldShowAtEnd("Emptyfollows\n\n");
+	buttonShouldBeEnabled();
     }
 
     // === HELPER METHODS FOLLOW =============================================
+
+    private void startMission(MissionActivity mission) {
+	mission.onCreate(null);
+	initUIFields();
+    }
+
+    private void buttonShouldBeEnabled() {
+	assertTrue(proceedBT.isEnabled());
+    }
+
+    private void buttonShouldBeDisabled() {
+	assertFalse(proceedBT.isEnabled());
+    }
+
+    private void buttonShouldShowNextDialogItemText() {
+	assertEquals(TestUtils.getResString(R.string.button_text_next),
+		     proceedBT.getText());
+    }
+
+    private void npcTextShouldShowAtEnd(String expectedStringAtEnd) {
+	assertTrue(textView.getText().toString().endsWith(expectedStringAtEnd));
+    }
 
 }

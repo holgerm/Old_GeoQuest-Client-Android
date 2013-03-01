@@ -306,8 +306,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     }
 
     public static boolean loadRepoData(GeoQuestProgressHandler handler) {
-//	boolean result = loadRepoDataFromServer(handler);
-//	result |= loadRepoDataFromClient(handler);
+	// boolean result = loadRepoDataFromServer(handler);
+	// result |= loadRepoDataFromClient(handler);
 	boolean result = loadRepoDataFromClient(handler);
 
 	handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
@@ -319,6 +319,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	return result;
     }
 
+    @SuppressWarnings("unused")
     private static
 	    boolean
 	    loadRepoDataFromServer(final GeoQuestProgressHandler progressHandler) {
@@ -342,12 +343,14 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	    File localRepoDir = GameDataManager.getLocalRepoDir(null);
 
-	    if (localRepoDir != null && localRepoDir.list() != null
+	    if (localRepoDir != null
+		    && localRepoDir.list() != null
 		    && nodesFromRemoteRepo != null) {
 		msg.arg1 = nodesFromRemoteRepo.size()
 			+ GameDataManager.getLocalRepoDir(null).list().length;
 		// we also need some space for local loading progress
-	    } else if (localRepoDir != null && localRepoDir.list() != null) {
+	    } else if (localRepoDir != null
+		    && localRepoDir.list() != null) {
 		msg.arg1 = localRepoDir.list().length;
 		Message errorMsg = new Message();
 		errorMsg.arg1 = R.string.error_fetching_remote_repo_list;
@@ -403,11 +406,13 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	} catch (Exception e) {
 	    Log.d(TAG,
-		  "getServerRepositories() : " + e);
+		  "getServerRepositories() : "
+			  + e);
 	    e.printStackTrace();
 	    success = false;
 	    File repoDir = GameDataManager.getLocalRepoDir(null);
-	    if (repoDir != null && repoDir.list() != null) {
+	    if (repoDir != null
+		    && repoDir.list() != null) {
 		Message setMaxToLocal = new Message();
 		setMaxToLocal.arg1 = repoDir.list().length;
 		setMaxToLocal.what = GeoQuestProgressHandler.MSG_TELL_MAX;
@@ -476,7 +481,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	File[] gameDirs = localRepoDir.listFiles(new FileFilter() {
 
 	    public boolean accept(File file) {
-		if (!file.exists() || !file.isDirectory())
+		if (!file.exists()
+			|| !file.isDirectory())
 		    return false;
 		String[] gameFileNames = file.list();
 		for (int i = 0; i < gameFileNames.length; i++) {
@@ -498,7 +504,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		})[0];
 		Document doc = xmlReader.read(localGameFile);
 		XPath xpathSelector = DocumentHelper.createXPath("//game");
-		Element gameNode = (Element) xpathSelector.selectSingleNode(doc);
+		Element gameNode = (Element) xpathSelector
+			.selectSingleNode(doc);
 		String localGameName = gameNode.attributeValue("name");
 
 		if (repoItem.gameNames().contains(localGameName)) {
@@ -556,19 +563,34 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		.getString(Preferences.PREF_KEY_SERVER_URL,
 			   GeoQuestApp.getContext()
 				   .getString(R.string.geoquest_server_url))
-		+ "/" + "repositories";
+		+ "/"
+		+ "repositories";
 
 	try {
-	    url = new URL(gamelistURL + "/" + repositoryName + "/games/"
-		    + gameName + ".zip");
+	    url = new URL(gamelistURL
+		    + "/"
+		    + repositoryName
+		    + "/games/"
+		    + gameName
+		    + ".zip");
 	} catch (MalformedURLException e) {
 	    Log.d(TAG,
-		  "MalformedURLException: " + gamelistURL + "/"
-			  + repositoryName + "/games/" + gameName + ".zip");
+		  "MalformedURLException: "
+			  + gamelistURL
+			  + "/"
+			  + repositoryName
+			  + "/games/"
+			  + gameName
+			  + ".zip");
 	} catch (Exception e) {
 	    Log.d(TAG,
-		  "Exception: " + gamelistURL + "/" + repositoryName
-			  + "/games/" + gameName + ".zip");
+		  "Exception: "
+			  + gamelistURL
+			  + "/"
+			  + repositoryName
+			  + "/games/"
+			  + gameName
+			  + ".zip");
 	}
 	return url;
     }
@@ -610,7 +632,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
     public static File getGameXMLFile(CharSequence repoName,
 				      String gameFileName) {
-	return new File(getLocalRepoDir(repoName), gameFileName + "/game.xml");
+	return new File(getLocalRepoDir(repoName), gameFileName
+		+ "/game.xml");
 	// TODO deal with the case that thie game xml file does not exist or
 	// even the game dir.
     }
@@ -624,14 +647,18 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     }
 
     public static File getGameRessourceFile(String ressourceFilePath) {
-	String resourcePath = getRunningGameDir().getAbsolutePath() + "/"
+	String resourcePath = getRunningGameDir().getAbsolutePath()
+		+ "/"
 		+ ressourceFilePath;
 	File file = new File(resourcePath);
-	if (file.exists() && file.canRead())
+	if (file.exists()
+		&& file.canRead())
 	    return file;
 	else
 	    throw new IllegalArgumentException(
-		    "No ressource file found at path \"" + resourcePath + "\".");
+		    "No ressource file found at path \""
+			    + resourcePath
+			    + "\".");
     }
 
     // SOUND STUFF FOLLOWS:
@@ -639,7 +666,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private static MediaPlayer mPlayer = null;
 
     public static void cleanMediaPlayer() {
-	if (mPlayer != null && mPlayer.isLooping()) {
+	if (mPlayer != null
+		&& mPlayer.isLooping()) {
 	    Log.d(TAG,
 		  "MediaPlayer Resources were cleaned");
 	    mPlayer.stop();
@@ -648,7 +676,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     }
 
     public static void stopMediaPlayer() {
-	if (mPlayer != null && mPlayer.isPlaying()) {
+	if (mPlayer != null
+		&& mPlayer.isPlaying()) {
 	    Log.d(TAG,
 		  "MediaPlayer was stoped");
 	    mPlayer.stop();
@@ -686,15 +715,18 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		blockInteractionOnCurrentActivityByMediaPlayer();
 	} catch (IllegalArgumentException e) {
 	    Log.e(TAG,
-		  "Could not start Media Player. " + e);
+		  "Could not start Media Player. "
+			  + e);
 	    return false;
 	} catch (IllegalStateException e) {
 	    Log.e(TAG,
-		  "Could not start Media Player. " + e);
+		  "Could not start Media Player. "
+			  + e);
 	    return false;
 	} catch (IOException e) {
 	    Log.e(TAG,
-		  "Could not start Media Player. " + e);
+		  "Could not start Media Player. "
+			  + e);
 	    return false;
 	}
 	return true;
@@ -716,8 +748,13 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
      * completely played yet.
      */
     public static void blockInteractionOnCurrentActivityByMediaPlayer() {
-	final BlockableAndReleasable releaseCallBack = getCurrentActivity()
-		.blockInteraction(getInstance());
+	final BlockableAndReleasable releaseCallBack;
+	if (getCurrentActivity().getUI() != null)
+	    releaseCallBack = getCurrentActivity().getUI()
+		    .blockInteraction(getInstance());
+	else
+	    releaseCallBack = getCurrentActivity()
+		    .blockInteraction(getInstance());
 	mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
 	    public void onCompletion(MediaPlayer mp) {
@@ -797,7 +834,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		    relativePath);
 	} else {
 	    repoDir = new File(Environment.getExternalStorageDirectory(),
-		    relativePath + repositoryName + "/");
+		    relativePath
+			    + repositoryName
+			    + "/");
 	}
 	return repoDir;
     }
@@ -808,24 +847,16 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
      * @return the path of the directory containing all repositories.
      */
     static String repoBaseDirPath() {
-	return "/Android/data/" + getInstance().getPackageName()
+	return "/Android/data/"
+		+ getInstance().getPackageName()
 		+ "/repositories/";
     }
 
     public void refreshMapDisplay() {
-	if (googleMap != null)
-	    googleMap.postInvalidate();
+	if (getGoogleMap() != null)
+	    getGoogleMap().postInvalidate();
 
-	if (osmap != null)
-	    osmap.postInvalidate();
+	if (getOsmap() != null)
+	    getOsmap().postInvalidate();
     }
-
-    // TODO -- Sabine -- location-Methoden löschen
-    // public Location getLastKnownLocation() {
-    // return lastKnownLocation;
-    // }
-    //
-    // public void setLastKnownLocation(Location loc) {
-    // this.lastKnownLocation = loc;
-    // }
 }

@@ -15,6 +15,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class VideoPlay extends InteractiveMission {
 
@@ -160,5 +161,10 @@ public class VideoPlay extends InteractiveMission {
 	outState.putInt("position",
 			videoView.getCurrentPosition());
 	super.onSaveInstanceState(outState);
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

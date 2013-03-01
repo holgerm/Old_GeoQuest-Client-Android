@@ -24,6 +24,7 @@ import com.qeevee.gq.tests.util.TestUtils;
 
 import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
@@ -32,7 +33,6 @@ public class NPCTalkMissionTests {
     NPCTalkUI ui;
     private Start start;
     private NPCTalk npcTalk;
-
 
     @After
     public void cleanUp() {
@@ -74,7 +74,7 @@ public class NPCTalkMissionTests {
 					   start);
 
 	// WHEN:
-	npcTalk.onCreate(null);
+	startMission(npcTalk);
 
 	// THEN:
 	shouldHaveTriggeredOnStartEvent();
@@ -105,7 +105,7 @@ public class NPCTalkMissionTests {
 					   start);
 
 	// WHEN:
-	npcTalk.onCreate(null);
+	startMission(npcTalk);
 
 	// THEN:
 	historyListShouldHaveLength(1);
@@ -126,9 +126,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m1",
 					   start);
-	npcTalk.onCreate(null);
-	ui = (NPCTalkUI) getFieldValue(npcTalk,
-				       "ui");
+	startMission(npcTalk);
 
 	// WHEN:
 	ui.showNextDialogItem();
@@ -146,9 +144,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m1",
 					   start);
-	npcTalk.onCreate(null);
-	ui = (NPCTalkUI) getFieldValue(npcTalk,
-				       "ui");
+	startMission(npcTalk);
 	ui.showNextDialogItem();
 
 	// WHEN:
@@ -167,9 +163,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m1",
 					   start);
-	npcTalk.onCreate(null);
-	ui = (NPCTalkUI) getFieldValue(npcTalk,
-				       "ui");
+	startMission(npcTalk);
 	ui.showNextDialogItem();
 	ui.showNextDialogItem();
 
@@ -189,9 +183,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m1",
 					   start);
-	npcTalk.onCreate(null);
-	ui = (NPCTalkUI) getFieldValue(npcTalk,
-				       "ui");
+	startMission(npcTalk);
 	ui.showNextDialogItem();
 	ui.showNextDialogItem();
 
@@ -219,9 +211,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m1",
 					   start);
-	npcTalk.onCreate(null);
-	ui = (NPCTalkUI) getFieldValue(npcTalk,
-				       "ui");
+	startMission(npcTalk);
 	ui.showNextDialogItem();
 	ui.showNextDialogItem();
 	ui.finishMission();
@@ -230,7 +220,7 @@ public class NPCTalkMissionTests {
 	npcTalk = (NPCTalk) prepareMission("NPCTalk",
 					   "m2",
 					   start);
-	npcTalk.onCreate(null);
+	startMission(npcTalk);
 
 	// THEN:
 	historyListShouldHaveLength(5);
@@ -243,6 +233,12 @@ public class NPCTalkMissionTests {
     }
 
     // === HELPER METHODS FOLLOW =============================================
+
+    private void startMission(MissionActivity mission) {
+	mission.onCreate(null);
+	ui = (NPCTalkUI) getFieldValue(npcTalk,
+				       "ui");
+    }
 
     private void indexOfCurrentDialogItemShouldBe(int expectedIndex) {
 	assertEquals(expectedIndex,

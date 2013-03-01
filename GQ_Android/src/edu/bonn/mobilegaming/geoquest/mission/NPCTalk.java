@@ -12,6 +12,7 @@ import com.qeevee.gq.history.TransitionItem;
 
 import android.os.Bundle;
 import edu.bonn.mobilegaming.geoquest.Globals;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
@@ -31,7 +32,6 @@ public class NPCTalk extends MissionActivity {
 
     private Iterator<Element> dialogItemIterator;
 
-    @SuppressWarnings("unused")
     private NPCTalkUI ui;
 
     private int nrOfDialogItems;
@@ -53,6 +53,7 @@ public class NPCTalk extends MissionActivity {
 	nrOfDialogItems = dialogItemList.size();
 	indexOfCurrentDialogItem = 0;
 	ui = UIFactory.getInstance().createUI(this);
+	ui.init();
     }
 
     public void finishMission() {
@@ -197,22 +198,23 @@ public class NPCTalk extends MissionActivity {
 	    return textElements.length;
 	}
 
+	public boolean hasNextPart() {
+	    return textElements.length > counter;
+	}
+
 	/**
-	 * get the next word
-	 * 
 	 * @return returns each word as a CharSquence or null of there is no
-	 *         word left
+	 *         word left.
 	 */
 	public CharSequence getNextPart() {
 	    if (counter >= textElements.length)
 		return null;
-	    if (counter == textElements.length - 1)
-		return textElements[counter++]
-			+ "\n";
-
-	    return textElements[counter++]
-		    + " "; // add white space for all words
-			   // but the last
+	    else
+		return textElements[counter++];
 	}
+    }
+
+    public MissionOrToolUI getUI() {
+	return ui;
     }
 }

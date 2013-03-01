@@ -21,6 +21,7 @@ import com.qeevee.gq.history.TextType;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
  * Simple multiple choice question and answer mission.
@@ -252,6 +253,11 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 
     public void onBlockingStateUpdated(boolean blocking) {
 	mcButtonPanel.setEnabled(!blocking);
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

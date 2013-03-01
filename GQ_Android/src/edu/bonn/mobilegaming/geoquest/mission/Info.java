@@ -22,6 +22,7 @@ import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
  * Similar to an NPC Talk, but with new Layout containing multiple virtual
@@ -101,5 +102,10 @@ public class Info extends MissionActivity {
     public void onBlockingStateUpdated(boolean blocking) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

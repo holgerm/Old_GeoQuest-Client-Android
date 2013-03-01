@@ -9,7 +9,6 @@ public class NPCTalkUIMock extends NPCTalkUI {
 
     public NPCTalkUIMock(NPCTalk activity) {
 	super(activity);
-	showNextDialogItem();
     }
 
     @Override

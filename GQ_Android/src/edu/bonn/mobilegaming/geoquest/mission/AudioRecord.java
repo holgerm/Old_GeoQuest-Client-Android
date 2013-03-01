@@ -14,6 +14,7 @@ import android.widget.TextView;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class AudioRecord extends InteractiveMission {
 
@@ -51,8 +52,9 @@ public class AudioRecord extends InteractiveMission {
 	setContentView(R.layout.audiorecord);
 
 	mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-		+ "/" + getMissionAttribute("file",
-					    R.string.audiorecord_file_default);
+		+ "/"
+		+ getMissionAttribute("file",
+				      R.string.audiorecord_file_default);
 
 	// mURL = getMissionAttribute("url",
 	// XMLUtilities.OPTIONAL_ATTRIBUTE);
@@ -228,7 +230,8 @@ public class AudioRecord extends InteractiveMission {
 	    break;
 	default:
 	    Log.e(TAG,
-		  "Undefined mode " + newMode);
+		  "Undefined mode "
+			  + newMode);
 	}
     }
 
@@ -246,7 +249,8 @@ public class AudioRecord extends InteractiveMission {
 		    break;
 		default:
 		    Log.e(TAG,
-			  "Record Button should not be enabled in mode " + mode);
+			  "Record Button should not be enabled in mode "
+				  + mode);
 		}
 	    }
 	});
@@ -263,7 +267,8 @@ public class AudioRecord extends InteractiveMission {
 		    break;
 		default:
 		    Log.e(TAG,
-			  "Play Button should not be enabled in mode " + mode);
+			  "Play Button should not be enabled in mode "
+				  + mode);
 		}
 
 	    }
@@ -284,7 +289,8 @@ public class AudioRecord extends InteractiveMission {
 		    break;
 		default:
 		    Log.e(TAG,
-			  "Use Button should not be enabled in mode " + mode);
+			  "Use Button should not be enabled in mode "
+				  + mode);
 		}
 	    }
 
@@ -415,6 +421,11 @@ public class AudioRecord extends InteractiveMission {
     public void onBlockingStateUpdated(boolean blocking) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

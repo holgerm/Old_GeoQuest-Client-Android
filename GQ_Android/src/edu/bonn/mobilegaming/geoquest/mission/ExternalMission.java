@@ -15,6 +15,7 @@ import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.ubonn.gq.extmissionhelper.ExternalMissionHelper;
 
 /**
@@ -149,5 +150,10 @@ public class ExternalMission extends MissionActivity {
 	public void onBlockingStateUpdated(boolean blocking) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public MissionOrToolUI getUI() {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 }

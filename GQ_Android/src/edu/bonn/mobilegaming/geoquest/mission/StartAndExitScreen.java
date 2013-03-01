@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
  * Start and exit screen mission. The first mission to be started (gets the id
@@ -109,5 +110,10 @@ public class StartAndExitScreen extends MissionActivity {
     public void onBlockingStateUpdated(boolean blocking) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

@@ -24,6 +24,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
  * Text question and answer mission. It shows the player a question and lets him
@@ -216,6 +217,11 @@ public class TextQuestion extends InteractiveMission {
 
     public void onBlockingStateUpdated(boolean blocking) {
 	button.setEnabled(!blocking);
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

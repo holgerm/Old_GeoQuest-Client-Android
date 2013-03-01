@@ -16,6 +16,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.jsinterface.NPCTalkJSInterface;
 import edu.bonn.mobilegaming.geoquest.jsinterface.QuestionAndAnswerJSInterface;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class WebTech extends MissionActivity {
 
@@ -288,5 +289,10 @@ public class WebTech extends MissionActivity {
 	public void onBlockingStateUpdated(boolean blocking) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public MissionOrToolUI getUI() {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 }

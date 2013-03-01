@@ -27,10 +27,12 @@ public class NPCTalkUIDefault extends NPCTalkUI {
     private ScrollView scrollView;
 
     private DialogItem currentDialogItem = null;
-
+    private WordTicker ticker = null;
     private static final long milliseconds_per_part = 100;
-    private static final int MODE_NEXT_DIALOG_ITEM = 0;
-    private static final int MODE_END = 1;
+
+    private int mode = 0;
+    private static final int MODE_NEXT_DIALOG_ITEM = 1;
+    private static final int MODE_END = 2;
 
     private OnClickListener showNextDialogListener = new OnClickListener() {
 	public void onClick(View v) {
@@ -43,8 +45,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	    getNPCTalk().finishMission();
 	}
     };
+
     private CharSequence nextDialogButtonTextDefault;
-    private int mode;
 
     public NPCTalkUIDefault(NPCTalk activity) {
 	super(activity);
@@ -52,7 +54,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	setNextDialogButtonText(getNPCTalk()
 		.getMissionAttribute("nextdialogbuttontext",
 				     R.string.button_text_next));
-	showNextDialogItem();
     }
 
     private void
@@ -96,7 +97,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	    if (currentDialogItem.getAudioFilePath() != null)
 		GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
 				      currentDialogItem.blocking);
-	    WordTicker ticker = new WordTicker();
+	    ticker = new WordTicker();
 	    ticker.start();
 	}
 	refreshButton();
@@ -129,48 +130,28 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	mode = newMode;
 	switch (mode) {
 	case MODE_NEXT_DIALOG_ITEM:
-	    button.setOnClickListener(endMissionListener);
-	    setButtonTextEndMission();
+	    button.setOnClickListener(showNextDialogListener);
+	    if (currentDialogItem.getNextDialogButtonText() != null)
+		button.setText(currentDialogItem.getNextDialogButtonText());
+	    else
+		button.setText(R.string.button_text_next);
 	    break;
 	case MODE_END:
-	    button.setOnClickListener(showNextDialogListener);
-	    setButtonTextNextDialogItem();
+	    button.setOnClickListener(endMissionListener);
+	    if (getNPCTalk().getMissionAttribute("endbuttontext") != null)
+		button.setText(getNPCTalk()
+			.getMissionAttribute("endbuttontext"));
+	    else
+		button.setText(R.string.button_text_proceed);
 	    break;
 	}
 
-    }
-
-    private void setButtonTextNextDialogItem() {
-	if (currentDialogItem.getNextDialogButtonText() != null)
-	    button.setText(currentDialogItem.getNextDialogButtonText());
-	else
-	    button.setText(R.string.button_text_next);
-    }
-
-    private void setButtonTextEndMission() {
-	if (getNPCTalk().getMissionAttribute("endbuttontext") != null)
-	    button.setText(getNPCTalk().getMissionAttribute("endbuttontext"));
-	else
-	    button.setText(R.string.button_text_proceed);
-    }
-
-    private void updateButtonText(DialogItem di) {
-	CharSequence buttonText = null;
-	if (getNPCTalk().hasMoreDialogItems()) {
-	    if (di.getNextDialogButtonText() != null)
-		buttonText = di.getNextDialogButtonText();
-	    else
-		buttonText = activity.getText(R.string.button_text_next);
-	} else {
-	    buttonText = activity.getText(R.string.button_text_proceed);
-	}
-	button.setText(buttonText);
     }
 
     /**
      * Display the text of the given DialogItem word by word.
      */
-    private class WordTicker extends CountDownTimer implements
+    public class WordTicker extends CountDownTimer implements
 	    InteractionBlocker {
 
 	private WordTicker() {
@@ -180,16 +161,19 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	    // block interaction on the NPCTalk using this Timer as Blocker
 	    // monitor:
 	    blockInteraction(this);
-	    updateButtonText(currentDialogItem);
+	    refreshButton();
 	}
 
 	@Override
 	public void onTick(long millisUntilFinished) {
 	    CharSequence next = currentDialogItem.getNextPart();
-	    if (next != null) {
+	    if (next != null)
 		dialogText.append(next);
-		scrollView.fullScroll(View.FOCUS_DOWN);
-	    }
+	    if (currentDialogItem.hasNextPart())
+		dialogText.append(" ");
+	    else
+		dialogText.append("\n");
+	    scrollView.fullScroll(View.FOCUS_DOWN);
 	}
 
 	@Override
@@ -199,25 +183,24 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	    CharSequence next = currentDialogItem.getNextPart();
 	    while (next != null) {
 		dialogText.append(next);
-		scrollView.fullScroll(View.FOCUS_DOWN);
 		next = currentDialogItem.getNextPart();
+		if (next != null)
+		    dialogText.append(" ");
+		else
+		    dialogText.append("\n");
+		scrollView.fullScroll(View.FOCUS_DOWN);
 	    }
 	    scrollView.fullScroll(View.FOCUS_DOWN);
 	    getNPCTalk().hasShownDialogItem(currentDialogItem);
-	    // release
-	    // blocked
-	    // interaction
-	    // on the
-	    // NPCTalk using
-	    // this Timer as
-	    // Blocker monitor:
-	    getNPCTalk().releaseInteraction(this);
+	    releaseInteraction(NPCTalkUIDefault.this.ticker);
+	    NPCTalkUIDefault.this.ticker = null;
 	}
 
     }
 
     public void onBlockingStateUpdated(boolean isBlocking) {
 	button.setEnabled(!isBlocking);
+	scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
     @Override

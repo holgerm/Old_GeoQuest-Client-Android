@@ -18,6 +18,13 @@ public abstract class NPCTalkUI extends MissionUI {
     }
 
     /**
+     * Starts the interaction.
+     */
+    public void init() {
+	showNextDialogItem();
+    }
+
+    /**
      * Shows the next dialog item of this mission, if there is yet another one.
      */
     public abstract void showNextDialogItem();

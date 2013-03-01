@@ -22,6 +22,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 // TODO: test
 // TODO: fehlendes intro testen
@@ -381,5 +382,10 @@ public class QuestionAndAnswer extends InteractiveMission {
     public void onBlockingStateUpdated(boolean blocking) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

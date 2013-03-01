@@ -33,6 +33,7 @@ import com.qeevee.ui.ZoomImageView;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
  * Photo Taking Mission.
@@ -216,5 +217,10 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
     public void onBlockingStateUpdated(boolean blocking) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public MissionOrToolUI getUI() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }
