@@ -17,7 +17,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,11 +26,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
@@ -40,10 +37,8 @@ import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
-import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
-import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
@@ -66,29 +61,11 @@ public class MapOverview extends MapNavigation implements HotspotListener {
     static final private int START_AR_VIEW_ID = FIRST_LOCAL_MENU_ID + 1;
     static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
-    private LocationManager myLocationManager;
-
-    /*
-     * handler is used to schedule location retrieves in particular when using
-     * location mockup.
-     */
-    Handler handler = new Handler();
-
-    LocationSource locationSource;
-
     private MapView myMapView;
-    private MapController myMapCtrl;
     private MyLocationOverlay myLocationOverlay;
 
     private LinearLayout startMissionPanel;
 
-    private MapHelper mapHelper;
-
-    /**
-     * used by the android framework
-     * 
-     * @return false
-     */
     @Override
     protected boolean isRouteDisplayed() {
 	return false;
@@ -100,16 +77,7 @@ public class MapOverview extends MapNavigation implements HotspotListener {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-	Log.d(this.getClass().getName(),
-	      "creating activity");
 	super.onCreate(savedInstanceState);
-
-	// get extras
-	Bundle extras = getIntent().getExtras();
-	String id = extras.getString("missionID");
-	mission = Mission.get(id);
-	mission.setStatus(Globals.STATUS_RUNNING);
-
 	setContentView(R.layout.main);
 
 	// Setup Google MapView
@@ -124,46 +92,11 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 	else
 	    myMapView.setSatellite(true);
 
-	myMapCtrl = myMapView.getController();
 	mapHelper = new MapHelper(this);
 	mapHelper.centerMap();
 
-	myMapCtrl.setZoom(18);
-	String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
-	if (zoomLevel != null) {
-	    int zoomLevelInt = Integer.parseInt(zoomLevel);
-	    if (zoomLevelInt > 0
-		    && zoomLevelInt < 24)
-		myMapCtrl.setZoom(zoomLevelInt);
-	}
-
-	// Setup Zoom Controls:
-	Button zoomIn = (Button) findViewById(R.id.zoom_in);
-	zoomIn.setOnClickListener(new OnClickListener() {
-
-	    public void onClick(View v) {
-		myMapCtrl.zoomIn();
-	    }
-	});
-
-	Button zoomOut = (Button) findViewById(R.id.zoom_out);
-	zoomOut.setOnClickListener(new OnClickListener() {
-
-	    public void onClick(View v) {
-		myMapCtrl.zoomOut();
-	    }
-	});
-
-	try {
-	    long timeStepMockMode = Long
-		    .parseLong(getText(R.string.map_mockGPSTimeInterval)
-			    .toString());
-	    locationSource = new LocationSource(getApplicationContext(),
-		    mapHelper.getLocationListener(), handler, timeStepMockMode);
-	    locationSource.setMode(LocationSource.REAL_MODE);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+	initZoom();
+	initGPSMock();
 
 	// startMissionsList
 	startMissionPanel = (LinearLayout) findViewById(R.id.startMissionPanel);
@@ -521,55 +454,8 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 	}
     }
 
-    // /////////////////////////////////////////////////////////////////////////////
-    // imported from MissionActivity
-    // /////////////////////////////////////////////////////////////////////////////
-    protected Mission mission;
-
     /** Intent used to return values to the parent mission */
     protected Intent result;
-
-    /**
-     * Back button Handler quits the Mission, when back button is hit.
-     */
-    @Override
-    public boolean onKeyDown(int keyCode,
-			     KeyEvent event) {
-	if (keyCode == KeyEvent.KEYCODE_BACK) { // Back => Cancel
-	    if (mission.cancelStatus == 0) {
-		Log.d(this.getClass().getName(),
-		      "Back Button was pressed, but mission may not be cancelled.");
-		return true;
-	    } else {
-		finish(mission.cancelStatus);
-		return true;
-	    }
-	}
-	return super.onKeyDown(keyCode,
-			       event);
-    }
-
-    /**
-     * Finishes the mission activity and sets the result code
-     * 
-     * @param status
-     *            Mission.STATUS_SUCCESS or FAIL or NEW
-     */
-    public void finish(Double status) {
-	mission.setStatus(status);
-	mission.applyOnEndRules();
-	finish();
-    }
-
-    public void onBlockingStateUpdated(boolean isBlocking) {
-	// TODO Auto-generated method stub
-
-    }
-
-    public MissionOrToolUI getUI() {
-	// TODO Auto-generated method stub
-	return null;
-    }
 
     @Override
     public IMapView getMapView() {
@@ -578,7 +464,8 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 
     @Override
     public IMapController getMapController() {
-	return new org.osmdroid.google.wrapper.MapController(myMapCtrl);
+	return new org.osmdroid.google.wrapper.MapController(myMapView
+		.getController());
     }
 
 }
