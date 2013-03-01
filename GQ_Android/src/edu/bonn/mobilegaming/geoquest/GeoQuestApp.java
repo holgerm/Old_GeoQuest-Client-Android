@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.os.Environment;
@@ -192,6 +194,12 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			   theApp.getText(R.string.local_default_repository)
 				   .toString());
     }
+    public static int getRecentSortingMode(){
+    	return theApp
+    			.getSharedPreferences(GeoQuestApp.MAIN_PREF_FILE_NAME,
+    					      Context.MODE_PRIVATE)
+    			.getInt(Preferences.PREF_KEY_SORTING_MODE, GameItem.SORT_GAMELIST_BY_DEFAULT);
+    }
 
     public static String getRecentGameFileName() {
 	return theApp.getSharedPreferences(GeoQuestApp.MAIN_PREF_FILE_NAME,
@@ -232,6 +240,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    if (curRepoItem.gameNames().size() > 0)
 		namesOfNonEmptyRepos.add(curRepoItem.getName());
 	}
+	//sort repolist by name
+	Collections.sort(namesOfNonEmptyRepos);
 	return namesOfNonEmptyRepos;
     }
 
@@ -247,6 +257,23 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    Log.e(TAG,
 		  "Error: repoitem is null");
 	}
+	currentSortMode = getRecentSortingMode();
+	if(currentSortMode == GameItem.SORT_GAMELIST_BY_DISTANCE){
+		GeoQuestLocationListener locationListener = new GeoQuestLocationListener(getContext());
+		locationListener.connect();
+		Location aktLocation = locationListener.getLastLocation();
+		locationListener.disconnect();
+		if(aktLocation == null){
+			Toast.makeText(getContext(), R.string.error_getting_device_location, Toast.LENGTH_SHORT).show();
+		}
+		else{
+			repoItem.sortGameItemsBy(currentSortMode, aktLocation);
+		}	
+	}
+	else{
+		repoItem.sortGameItemsBy(currentSortMode);
+	}
+	
 	return repoItem.gameNames();
     }
 
@@ -267,6 +294,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private static Map<String, RepositoryItem> repositoryItems = new HashMap<String, RepositoryItem>();
     private static File runningGameDir;
     private boolean repoDataAvailable = false;
+    public static int currentSortMode = GameItem.SORT_GAMELIST_BY_DEFAULT;
     private org.osmdroid.views.MapView osmap;
 
     public org.osmdroid.views.MapView getOsmap() {
