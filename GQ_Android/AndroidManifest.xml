@@ -128,7 +128,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mission.NFCMission"
+            android:name="edu.bonn.mobilegaming.geoquest.mission.NFCTag"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>

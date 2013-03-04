@@ -4,6 +4,7 @@ import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
 import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
 import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
+import edu.bonn.mobilegaming.geoquest.mission.NFCTag;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
@@ -16,6 +17,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
@@ -30,6 +32,10 @@ public class DefaultUIFactory extends UIFactory {
 
     public DefaultUIFactory() {
 	super();
+    }
+
+    public NFCTagUI createUI(NFCTag activity) {
+	return new NFCTagUIDefault(activity);
     }
 
     public NPCTalkUI createUI(NPCTalk activity) {
