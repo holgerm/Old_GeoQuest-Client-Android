@@ -39,7 +39,7 @@ import edu.bonn.mobilegaming.geoquest.R;
  */
 public class OSMap extends MapNavigation implements HotspotListener {
 
-    private static String TAG = "MapOverview";
+    private static String TAG = "OSMap";
 
     // set theese two parameters to use Cloudmade Style
     private static String APIKey = null; // eg
