@@ -13,17 +13,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
-import org.osmdroid.tileprovider.MapTileProviderArray;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
-import org.osmdroid.tileprovider.modules.ArchiveFileFactory;
-import org.osmdroid.tileprovider.modules.IArchiveFile;
-import org.osmdroid.tileprovider.modules.MapTileDownloader;
-import org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider;
-import org.osmdroid.tileprovider.modules.MapTileModuleProviderBase;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
-import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
-import org.osmdroid.tileprovider.tilesource.*;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.osmdroid.views.overlay.Overlay;
@@ -38,7 +29,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +64,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 
     private MapView myMapView;
     private MyLocationOverlay myLocationOverlay;
+    private TilesOverlay tilesOverlay;
 
     private LinearLayout startMissionPanel;
 
@@ -85,6 +76,10 @@ public class OSMap extends MapNavigation implements HotspotListener {
     @Override
     protected boolean isRouteDisplayed() {
 	return false;
+    }
+    
+    public TilesOverlay getCustomTilesOverlay(){
+    	return this.tilesOverlay;
     }
 
     /**
@@ -113,60 +108,24 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	File tileFileSrc = new File(localTilePath + "customTiles.zip");
 	if(tileFileSrc.exists()){
 		File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
+		File tileFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/");
+		tileFolder.mkdirs();
+		
 		try {
 			copyFile(tileFileSrc, tileFileDest);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		XYTileSource myTileSource = new XYTileSource("customTiles", null, 10, 18, 256, ".png");		
+		XYTileSource myTileSource = new XYTileSource("customTiles", null, 1, 18, 256, ".png");		
 		final MapTileProviderBasic tileProvider = new MapTileProviderBasic(getApplicationContext()); 
 		tileProvider.setTileSource(myTileSource); 
-		final TilesOverlay tilesOverlay = new TilesOverlay(tileProvider, this.getBaseContext()); 
+		tilesOverlay = new TilesOverlay(tileProvider, this); 
 		tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
 		tilesOverlay.setUseDataConnection(false);
 		myMapView.getOverlays().add(tilesOverlay);
 	}
-	
-//	String localTilePath = GeoQuestApp.getRunningGameDir().getAbsolutePath() + "/maptiles/";
-//	
-//	File tileFile = new File(localTilePath + "maptiles.zip");
-//
-//	IArchiveFile[] tileArchive = new IArchiveFile[1];
-//	tileArchive[0] = ArchiveFileFactory.getArchiveFile(tileFile);
-//	ITileSource tileSource = new XYTileSource("Mapnik", null, 1, 18, 256, ".png", "");
-//	MapTileModuleProviderBase[] tileProvider = new MapTileModuleProviderBase[1];
-//	tileProvider[0] = new MapTileFileArchiveProvider(new SimpleRegisterReceiver(getApplicationContext()), tileSource, tileArchive);
-//
-//	MapTileProviderArray MyTileProvider = new MapTileProviderArray(tileSource, null, tileProvider);
-//	TilesOverlay MyTilesOverlay = new TilesOverlay(MyTileProvider, getApplicationContext());
-//	MyTilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
-////	MyTilesOverlay.setUseDataConnection(false);
-//	myMapView.getOverlays().add(MyTilesOverlay);
-	 
-
-//	        mapView.setTileSource(TileSourceFactory.BASE);
-//
-//	        mapView.setBuiltInZoomControls(true);
-//
-//	 
-//
-//	
-//    final MapTileProviderBasic tileProvider = new MapTileProviderBasic(getApplicationContext());
-//    final ITileSource tileSource = new XYTileSource("CustomTiles", null, 0, 18, 256, ".png.tile", localTilePath);
-//    tileProvider.setTileSource(tileSource);
-//    final TilesOverlay tilesOverlay = new TilesOverlay(tileProvider, this.getBaseContext());
-////    tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
-//    tilesOverlay.setUseDataConnection(false);
-////    tilesOverlay.useDataConnection();
-//    myMapView.getOverlays().add(tilesOverlay);
-////    myMapView.getOverlays().add(myLocationoverlay);
-//	
-//	
-//	
-////	myMapView.setTileSource(new XYTileSource("customtiles", ResourceProxy.string.offline_mode, 0, 18, 256, ".png", localTilePath));
-//
-//	// myMapView.displayZoomControls(false);
+// 	myMapView.displayZoomControls(false);
 
 	mapHelper = new MapHelper(this);
 	mapHelper.centerMap();
@@ -227,6 +186,11 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	if (myLocationManager != null)
 	    myLocationManager.removeUpdates(mapHelper.getLocationListener());
 	GeoQuestApp.getInstance().setGoogleMap(null);
+	
+	//delete customTile.zip in osmdroid folder
+	File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
+	if(tileFileDest.exists()) tileFileDest.delete();
+	
 	super.onDestroy();
     }
 

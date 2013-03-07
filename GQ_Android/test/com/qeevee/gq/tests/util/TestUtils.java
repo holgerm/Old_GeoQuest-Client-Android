@@ -25,6 +25,7 @@ import com.xtremelabs.robolectric.Robolectric;
 import edu.bonn.mobilegaming.geoquest.GameLoader;
 import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
@@ -102,6 +103,32 @@ public class TestUtils {
 	Robolectric.shadowOf(missionActivity).setIntent(startMissionIntent);
 	
 	return missionActivity;
+    }
+    
+    //Does the same as prepareMission() but handles GeoQuestMapActivity instead of GeoAuestActivity
+    public static GeoQuestMapActivity prepareMapMission(String missionType,
+			  String missionID,
+			  Start start) {
+    	Class<?> missionClass = null;
+    	GeoQuestMapActivity missionActivity = null;
+
+    	try {
+    		missionClass = Class.forName(MissionActivity.getPackageBaseName()
+    				+ missionType);
+    		missionActivity = (GeoQuestMapActivity) missionClass.newInstance();
+    	} catch (InstantiationException e) {
+    		throw new RuntimeException(e);
+    	} catch (IllegalAccessException e) {
+    		throw new RuntimeException(e);
+    	} catch (ClassNotFoundException e) {
+    		throw new RuntimeException(e);
+    	}
+    	Intent startMissionIntent = new Intent(start, missionClass);
+    	startMissionIntent.putExtra("missionID",
+    			missionID);
+    	Robolectric.shadowOf(missionActivity).setIntent(startMissionIntent);
+
+    	return missionActivity;
     }
 
     /**
@@ -289,6 +316,23 @@ public class TestUtils {
 			     new Class<?>[] { Bundle.class },
 			     new Object[] { null });
 	return mission;
+    }
+    
+    public static GeoQuestMapActivity
+    	startMapMissionInGame(String game,
+    			String missionType,
+    			String missionID,
+    			Class<? extends UIFactory>... uiFactoryClass) {
+    	Start start = TestUtils.startGameForTest(game,
+    			uiFactoryClass);
+    	GeoQuestMapActivity mission = TestUtils.prepareMapMission(missionType,
+    			missionID,
+    			start);
+    	TestUtils.callMethod(mission,
+    			"onCreate",
+    			new Class<?>[] { Bundle.class },
+    			new Object[] { null });
+   	return mission;
     }
 
     public static void setMockUIFactory() {
