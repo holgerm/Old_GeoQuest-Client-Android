@@ -1,5 +1,11 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,15 +13,19 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
+import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.TilesOverlay;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -54,6 +64,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 
     private MapView myMapView;
     private MyLocationOverlay myLocationOverlay;
+    private TilesOverlay tilesOverlay;
 
     private LinearLayout startMissionPanel;
 
@@ -66,6 +77,10 @@ public class OSMap extends MapNavigation implements HotspotListener {
     protected boolean isRouteDisplayed() {
 	return false;
     }
+    
+    public TilesOverlay getCustomTilesOverlay(){
+    	return this.tilesOverlay;
+    }
 
     /**
      * Called when the activity is first created. Setups google mapView, the map
@@ -76,7 +91,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.osmap);
 
-	// Setup Google Map0View
+	// Setup OSM MapView
 	myMapView = (MapView) findViewById(R.id.osmapview);
 	myMapView.setBuiltInZoomControls(false);
 	if (APIKey != null
@@ -88,8 +103,29 @@ public class OSMap extends MapNavigation implements HotspotListener {
 			    + CmStyleId
 			    + "/256/"));
 	}
-
-	// myMapView.displayZoomControls(false);
+	//handling local custom maptiles here
+	String localTilePath = GeoQuestApp.getRunningGameDir().getAbsolutePath() + "/customTiles/";
+	File tileFileSrc = new File(localTilePath + "customTiles.zip");
+	if(tileFileSrc.exists()){
+		File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
+		File tileFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/");
+		tileFolder.mkdirs();
+		
+		try {
+			copyFile(tileFileSrc, tileFileDest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		XYTileSource myTileSource = new XYTileSource("customTiles", null, 1, 18, 256, ".png");		
+		final MapTileProviderBasic tileProvider = new MapTileProviderBasic(getApplicationContext()); 
+		tileProvider.setTileSource(myTileSource); 
+		tilesOverlay = new TilesOverlay(tileProvider, this); 
+		tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
+		tilesOverlay.setUseDataConnection(false);
+		myMapView.getOverlays().add(tilesOverlay);
+	}
+// 	myMapView.displayZoomControls(false);
 
 	mapHelper = new MapHelper(this);
 	mapHelper.centerMap();
@@ -115,6 +151,20 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	mission.applyOnStartRules();
 
     }
+    
+    private void copyFile(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+    }
 
     /**
      * called by the android framework when the activity gets inactive. Disables
@@ -136,6 +186,11 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	if (myLocationManager != null)
 	    myLocationManager.removeUpdates(mapHelper.getLocationListener());
 	GeoQuestApp.getInstance().setGoogleMap(null);
+	
+	//delete customTile.zip in osmdroid folder
+	File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
+	if(tileFileDest.exists()) tileFileDest.delete();
+	
 	super.onDestroy();
     }
 

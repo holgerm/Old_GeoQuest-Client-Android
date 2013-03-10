@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="CustomMapTilesTest"
+	xmlformat="5"
+>
+	<mission
+		type="OSMap"
+		id="Map_Mission"
+		mapkind="map"
+		zoomlevel="18"
+	>
+		
+	</mission>
+</game>
