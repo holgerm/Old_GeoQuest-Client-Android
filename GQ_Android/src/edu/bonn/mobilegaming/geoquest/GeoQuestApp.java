@@ -43,6 +43,7 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
 import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
+import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 
 public class GeoQuestApp extends Application implements InteractionBlocker {
@@ -73,6 +74,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private static GeoQuestApp theApp = null;
 
     private ArrayList<Activity> activities = new ArrayList<Activity>();
+    private Map<String, MissionActivity> missionActivities = new HashMap<String, MissionActivity>();
+
     private static File currentGameDir = null;
 
     private static MissionOrToolActivity currentActivity;
@@ -114,6 +117,12 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     public void addActivity(Activity newActivityOfThisApp) {
 	if (!activities.contains(newActivityOfThisApp))
 	    activities.add(newActivityOfThisApp);
+	if (newActivityOfThisApp instanceof MissionActivity) {
+	    MissionActivity missionActivity = (MissionActivity) newActivityOfThisApp;
+	    String id = missionActivity.getMission().id;
+	    missionActivities.put(id,
+				  missionActivity);
+	}
 	// if (isGameActivity(newActivityOfThisApp) && newActivityOfThisApp
 	// instanceof MissionOrToolActivity)
 	// setCurrentActivity((MissionOrToolActivity)newActivityOfThisApp);
@@ -194,11 +203,12 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			   theApp.getText(R.string.local_default_repository)
 				   .toString());
     }
-    public static int getRecentSortingMode(){
-    	return theApp
-    			.getSharedPreferences(GeoQuestApp.MAIN_PREF_FILE_NAME,
-    					      Context.MODE_PRIVATE)
-    			.getInt(Preferences.PREF_KEY_SORTING_MODE, GameItem.SORT_GAMELIST_BY_DEFAULT);
+
+    public static int getRecentSortingMode() {
+	return theApp.getSharedPreferences(GeoQuestApp.MAIN_PREF_FILE_NAME,
+					   Context.MODE_PRIVATE)
+		.getInt(Preferences.PREF_KEY_SORTING_MODE,
+			GameItem.SORT_GAMELIST_BY_DEFAULT);
     }
 
     public static String getRecentGameFileName() {
@@ -240,7 +250,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    if (curRepoItem.gameNames().size() > 0)
 		namesOfNonEmptyRepos.add(curRepoItem.getName());
 	}
-	//sort repolist by name
+	// sort repolist by name
 	Collections.sort(namesOfNonEmptyRepos);
 	return namesOfNonEmptyRepos;
     }
@@ -258,22 +268,24 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		  "Error: repoitem is null");
 	}
 	currentSortMode = getRecentSortingMode();
-	if(currentSortMode == GameItem.SORT_GAMELIST_BY_DISTANCE){
-		GeoQuestLocationListener locationListener = new GeoQuestLocationListener(getContext());
-		locationListener.connect();
-		Location aktLocation = locationListener.getLastLocation();
-		locationListener.disconnect();
-		if(aktLocation == null){
-			Toast.makeText(getContext(), R.string.error_getting_device_location, Toast.LENGTH_SHORT).show();
-		}
-		else{
-			repoItem.sortGameItemsBy(currentSortMode, aktLocation);
-		}	
+	if (currentSortMode == GameItem.SORT_GAMELIST_BY_DISTANCE) {
+	    GeoQuestLocationListener locationListener = new GeoQuestLocationListener(
+		    getContext());
+	    locationListener.connect();
+	    Location aktLocation = locationListener.getLastLocation();
+	    locationListener.disconnect();
+	    if (aktLocation == null) {
+		Toast.makeText(getContext(),
+			       R.string.error_getting_device_location,
+			       Toast.LENGTH_SHORT).show();
+	    } else {
+		repoItem.sortGameItemsBy(currentSortMode,
+					 aktLocation);
+	    }
+	} else {
+	    repoItem.sortGameItemsBy(currentSortMode);
 	}
-	else{
-		repoItem.sortGameItemsBy(currentSortMode);
-	}
-	
+
 	return repoItem.gameNames();
     }
 
@@ -858,5 +870,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	if (getOsmap() != null)
 	    getOsmap().postInvalidate();
+    }
+
+    public static boolean isMissionRunning(String id) {
+	return getInstance().missionActivities.containsKey(id);
     }
 }

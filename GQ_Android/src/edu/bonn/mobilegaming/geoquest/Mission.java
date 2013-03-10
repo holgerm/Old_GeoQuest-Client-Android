@@ -28,9 +28,12 @@ import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
  * 
  */
 public class Mission implements Serializable {
+    private static final String MISSION_ID = "missionID";
+
     private static final long serialVersionUID = 1L;
 
-    private static final String PACKAGE_BASE_NAME = MissionActivity.getPackageBaseName();
+    private static final String PACKAGE_BASE_NAME = MissionActivity
+	    .getPackageBaseName();
     private static final String LOG_TAG = Mission.class.getName();
 
     private static boolean useWebLayoutGlobally = false;
@@ -124,23 +127,28 @@ public class Mission implements Serializable {
 			    Element missionNode,
 			    Handler loadHandler) {
 	Log.d(mission.getClass().getName(),
-	      "initing mission. id=" + mission.id);
+	      "initing mission. id="
+		      + mission.id);
 	mission.xmlMissionNode = missionNode;
 	mission.setParent(parent);
 	mission.loadXML(loadHandler);
     }
 
     public void setStatus(Double status) {
-	Variables.setValue(Variables.SYSTEM_PREFIX + id
+	Variables.setValue(Variables.SYSTEM_PREFIX
+				   + id
 				   + Variables.STATUS_SUFFIX,
 			   status);
     }
 
     public Double getStatus() throws IllegalStateException {
-	if (Variables.isDefined(id + Variables.STATUS_SUFFIX)) {
-	    return (Double) Variables.getValue(id + Variables.STATUS_SUFFIX);
+	if (Variables.isDefined(id
+		+ Variables.STATUS_SUFFIX)) {
+	    return (Double) Variables.getValue(id
+		    + Variables.STATUS_SUFFIX);
 	}
-	throw new IllegalStateException("Mission state of mission " + id
+	throw new IllegalStateException("Mission state of mission "
+		+ id
 		+ " not defined!");
     }
 
@@ -166,7 +174,8 @@ public class Mission implements Serializable {
      */
     Mission(String id) {
 	Log.d(getClass().getName(),
-	      "creating mission. id=" + id);
+	      "creating mission. id="
+		      + id);
 	this.id = id;
 	this.setStatus(Globals.STATUS_NEW);
     }
@@ -176,14 +185,16 @@ public class Mission implements Serializable {
 	String mType = xmlMissionNode.attributeValue("type");
 	try {
 	    if (useWebLayout) {
-		return Class.forName(PACKAGE_BASE_NAME + "WebTech");
+		return Class.forName(PACKAGE_BASE_NAME
+			+ "WebTech");
 	    } else {
 		return Class.forName(PACKAGE_BASE_NAME
 			+ xmlMissionNode.attributeValue("type"));
 	    }
 	} catch (ClassNotFoundException e) {
 	    Log.d(LOG_TAG,
-		  " Invalid type specified. Mission type not found: " + mType);
+		  " Invalid type specified. Mission type not found: "
+			  + mType);
 	    e.printStackTrace();
 	}
 	// return abstract class as signal for error (could be better with a
@@ -195,7 +206,7 @@ public class Mission implements Serializable {
 	missionType = missionType();
 	chooseMissionLayout();
 	startingIntent = new Intent(getMainActivity(), missionType);
-	startingIntent.putExtra("missionID",
+	startingIntent.putExtra(MISSION_ID,
 				id);
 	setCancelStatus();
 	createRules();
@@ -230,7 +241,8 @@ public class Mission implements Serializable {
 
     private void setCancelStatus() {
 	String cancelstr = xmlMissionNode.attributeValue("cancel");
-	if (cancelstr == null || cancelstr.equals("no")) {
+	if (cancelstr == null
+		|| cancelstr.equals("no")) {
 	    cancelStatus = 0.0;
 	} else if (cancelstr.equals("success")) {
 	    cancelStatus = Globals.STATUS_SUCCEEDED;
@@ -241,8 +253,11 @@ public class Mission implements Serializable {
 	} else {
 	    cancelStatus = Globals.STATUS_FAIL;
 	    Log.d("Mission",
-		  "cancel attribute has invalid value: '" + cancelstr
-			  + "', mission id='" + id + "'");
+		  "cancel attribute has invalid value: '"
+			  + cancelstr
+			  + "', mission id='"
+			  + id
+			  + "'");
 	}
     }
 
@@ -307,6 +322,14 @@ public class Mission implements Serializable {
 	}
 
 	if (startingIntent != null) {
+	    String id = startingIntent.getStringExtra(MISSION_ID);
+	    if (GeoQuestApp.isMissionRunning(id)) {
+		Log.e(this.getClass().getName(),
+		      "Mission "
+			      + id
+			      + " is already running and not started again.");
+		return;
+	    }
 	    GeoQuestApp.stopAudio();
 	    getMainActivity().startActivityForResult(startingIntent,
 						     1);
@@ -380,7 +403,10 @@ public class Mission implements Serializable {
     }
 
     public String toString() {
-	return missionType.getSimpleName() + " id=" + id + "; "
+	return missionType.getSimpleName()
+		+ " id="
+		+ id
+		+ "; "
 		+ super.toString();
     }
 

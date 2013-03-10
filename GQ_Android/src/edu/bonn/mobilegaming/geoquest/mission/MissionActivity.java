@@ -23,6 +23,10 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	MissionOrToolActivity {
     protected Mission mission;
 
+    public Mission getMission() {
+	return mission;
+    }
+
     private ContextManager contextManager;
     protected int missionResultInPercent = 100;
 
@@ -103,18 +107,19 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	GeoQuestApp.setCurrentActivity(this);
 	ibm = new InteractionBlockingManager(this);
 
-	super.onCreate(savedInstanceState);
-
 	// get extras
 	Bundle extras = getIntent().getExtras();
 	String id = extras.getString("missionID");
 	mission = Mission.get(id);
 
 	contextManager = GeoQuestActivity.contextManager;
-	contextManager.setStartValues(id);
+	if (contextManager != null)
+	    contextManager.setStartValues(id);
 
 	mission.setStatus(Globals.STATUS_RUNNING);
 	mission.applyOnStartRules();
+
+	super.onCreate(savedInstanceState);
     }
 
     /**
@@ -139,7 +144,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
      *             if the attribute is necessary but not given in the game.xml
      */
     public CharSequence getMissionAttribute(String attributeName,
-					       int defaultAsResourceID) {
+					    int defaultAsResourceID) {
 	return XMLUtilities.getAttribute(attributeName,
 					 defaultAsResourceID,
 					 mission.xmlMissionNode);
