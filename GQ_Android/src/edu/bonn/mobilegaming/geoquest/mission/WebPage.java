@@ -44,7 +44,12 @@ public class WebPage extends MissionActivity implements OnClickListener {
 	WebSettings webSettings = webview.getSettings();
 	webSettings.setJavaScriptEnabled(true);
 	webSettings.setBuiltInZoomControls(true);
+	webSettings.setUseWideViewPort(true);
+	webSettings.setLoadWithOverviewMode(true);
 	webSettings.setDefaultTextEncodingName(Encoding.UTF_8.toString());
+	webSettings
+		.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120427 Firefox/15.0a1");
+	webview.setInitialScale(20);
 	webview.setWebViewClient(new HelloWebViewClient());
 
 	okButton = (Button) findViewById(R.id.webviewbutton);
@@ -81,8 +86,10 @@ public class WebPage extends MissionActivity implements OnClickListener {
     }
 
     private void loadLocalFile(String relativeFilePath) {
-	String pathToLocalFile = "file://" + GeoQuestApp.getRunningGameDir()
-		+ "/" + relativeFilePath;
+	String pathToLocalFile = "file://"
+		+ GeoQuestApp.getRunningGameDir()
+		+ "/"
+		+ relativeFilePath;
 	this.webview.loadUrl(pathToLocalFile);
     }
 
@@ -103,7 +110,8 @@ public class WebPage extends MissionActivity implements OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode,
 			     KeyEvent event) {
-	if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
+	if ((keyCode == KeyEvent.KEYCODE_BACK)
+		&& webview.canGoBack()) {
 	    webview.goBack();
 	    return true;
 	}
@@ -116,7 +124,8 @@ public class WebPage extends MissionActivity implements OnClickListener {
 	public boolean shouldOverrideUrlLoading(WebView view,
 						String urlString) {
 	    Uri uri = Uri.parse(urlString);
-	    if (urlString.toLowerCase().endsWith(".html")) {
+	    if (urlString.toLowerCase().endsWith(".html")
+		    || urlString.toLowerCase().endsWith(".htm")) {
 		view.loadUrl(urlString);
 	    } else if (urlString.toLowerCase().endsWith(".mp4")) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
