@@ -123,14 +123,17 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    missionActivities.put(id,
 				  missionActivity);
 	}
-	// if (isGameActivity(newActivityOfThisApp) && newActivityOfThisApp
-	// instanceof MissionOrToolActivity)
-	// setCurrentActivity((MissionOrToolActivity)newActivityOfThisApp);
     }
 
     void removeActivity(Activity finishedActivity) {
 	if (activities.contains(finishedActivity))
 	    activities.remove(finishedActivity);
+    }
+
+    public void removeMissionActivity(String missionID) {
+	if (missionActivities.containsKey(missionID)) {
+	    missionActivities.remove(missionID);
+	}
     }
 
     @Override
@@ -612,13 +615,17 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	Mission.clean();
 	HotspotOld.clean();
 	Variables.clean();
-	// TODO use separate list of game activities
 	Activity[] allActivities = new Activity[activities.size()];
 	activities.toArray(allActivities);
 	for (int i = 0; i < allActivities.length; i++) {
 	    if (isGameActivity(allActivities[i])) {
 		activities.remove(allActivities[i]);
 		allActivities[i].finish();
+	    }
+	    if (allActivities[i] instanceof MissionActivity) {
+		MissionActivity missionActivity = (MissionActivity) allActivities[i];
+		GeoQuestApp.getInstance().removeMissionActivity(missionActivity
+			.getMission().id);
 	    }
 	}
 	setInGame(false);

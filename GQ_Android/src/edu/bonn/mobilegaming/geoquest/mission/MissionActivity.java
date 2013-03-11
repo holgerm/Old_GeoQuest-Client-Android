@@ -82,7 +82,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	// aufrufen. mission.getResult()....
 	// contextManager.setEndValues(mission.id, missionResultInPercent);
 	mission.applyOnEndRules();
-
+	GeoQuestApp.getInstance().removeMissionActivity(mission.id);
 	finish();
     }
 
