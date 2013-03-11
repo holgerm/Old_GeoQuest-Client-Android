@@ -77,9 +77,9 @@ public class OSMap extends MapNavigation implements HotspotListener {
     protected boolean isRouteDisplayed() {
 	return false;
     }
-    
-    public TilesOverlay getCustomTilesOverlay(){
-    	return this.tilesOverlay;
+
+    public TilesOverlay getCustomTilesOverlay() {
+	return this.tilesOverlay;
     }
 
     /**
@@ -103,29 +103,39 @@ public class OSMap extends MapNavigation implements HotspotListener {
 			    + CmStyleId
 			    + "/256/"));
 	}
-	//handling local custom maptiles here
-	String localTilePath = GeoQuestApp.getRunningGameDir().getAbsolutePath() + "/customTiles/";
-	File tileFileSrc = new File(localTilePath + "customTiles.zip");
-	if(tileFileSrc.exists()){
-		File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
-		File tileFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/");
-		tileFolder.mkdirs();
-		
-		try {
-			copyFile(tileFileSrc, tileFileDest);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		XYTileSource myTileSource = new XYTileSource("customTiles", null, 1, 18, 256, ".png");		
-		final MapTileProviderBasic tileProvider = new MapTileProviderBasic(getApplicationContext()); 
-		tileProvider.setTileSource(myTileSource); 
-		tilesOverlay = new TilesOverlay(tileProvider, this); 
-		tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
-		tilesOverlay.setUseDataConnection(false);
-		myMapView.getOverlays().add(tilesOverlay);
+	// handling local custom maptiles here
+	String localTilePath = GeoQuestApp.getRunningGameDir()
+		.getAbsolutePath()
+		+ "/customTiles/";
+	File tileFileSrc = new File(localTilePath
+		+ "customTiles.zip");
+	if (tileFileSrc.exists()) {
+	    File tileFileDest = new File(Environment
+		    .getExternalStorageDirectory().getAbsolutePath()
+		    + "/osmdroid/customTiles.zip");
+	    File tileFolder = new File(Environment
+		    .getExternalStorageDirectory().getAbsolutePath()
+		    + "/osmdroid/");
+	    tileFolder.mkdirs();
+
+	    try {
+		copyFile(tileFileSrc,
+			 tileFileDest);
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    XYTileSource myTileSource = new XYTileSource("customTiles", null,
+		    1, 18, 256, ".png");
+	    final MapTileProviderBasic tileProvider = new MapTileProviderBasic(
+		    getApplicationContext());
+	    tileProvider.setTileSource(myTileSource);
+	    tilesOverlay = new TilesOverlay(tileProvider, this);
+	    tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
+	    tilesOverlay.setUseDataConnection(false);
+	    myMapView.getOverlays().add(tilesOverlay);
 	}
-// 	myMapView.displayZoomControls(false);
+	// myMapView.displayZoomControls(false);
 
 	mapHelper = new MapHelper(this);
 	mapHelper.centerMap();
@@ -151,19 +161,22 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	mission.applyOnStartRules();
 
     }
-    
-    private void copyFile(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
 
-        // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
-        in.close();
-        out.close();
+    private void copyFile(File src,
+			  File dst) throws IOException {
+	InputStream in = new FileInputStream(src);
+	OutputStream out = new FileOutputStream(dst);
+
+	// Transfer bytes from in to out
+	byte[] buf = new byte[1024];
+	int len;
+	while ((len = in.read(buf)) > 0) {
+	    out.write(buf,
+		      0,
+		      len);
+	}
+	in.close();
+	out.close();
     }
 
     /**
@@ -186,11 +199,14 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	if (myLocationManager != null)
 	    myLocationManager.removeUpdates(mapHelper.getLocationListener());
 	GeoQuestApp.getInstance().setGoogleMap(null);
-	
-	//delete customTile.zip in osmdroid folder
-	File tileFileDest = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
-	if(tileFileDest.exists()) tileFileDest.delete();
-	
+
+	// delete customTile.zip in osmdroid folder
+	File tileFileDest = new File(Environment.getExternalStorageDirectory()
+		.getAbsolutePath()
+		+ "/osmdroid/customTiles.zip");
+	if (tileFileDest.exists())
+	    tileFileDest.delete();
+
 	super.onDestroy();
     }
 
