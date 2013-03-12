@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.osmdroid.views.overlay.Overlay;
@@ -59,7 +62,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
     // Menu IDs:
     static final private int FIRST_LOCAL_MENU_ID = GeoQuestMapActivity.MENU_ID_OFFSET;
     static final private int LOCATION_MOCKUP_SWITCH_ID = FIRST_LOCAL_MENU_ID;
-    static final private int START_AR_VIEW_ID = FIRST_LOCAL_MENU_ID + 1;
+    static final private int ZOOM_TO_BOUNDING_BOX = FIRST_LOCAL_MENU_ID + 1;
     static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
     private MapView myMapView;
@@ -138,7 +141,6 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	// myMapView.displayZoomControls(false);
 
 	mapHelper = new MapHelper(this);
-	mapHelper.centerMap();
 
 	initZoom();
 	initGPSMock();
@@ -215,6 +217,20 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	super.onResume();
 	myLocationOverlay.enableCompass();
 	myLocationOverlay.enableMyLocation();
+	mapHelper.setCenter();
+    }
+
+    private void zoomToBoundingBox() {
+	// TODO check if good; evtl. filter inactive hotspots ...
+	ArrayList<GeoPoint> hotspotPoints = new ArrayList<GeoPoint>();
+	com.google.android.maps.GeoPoint curHotspotGP;
+	for (int i = 0; i < getHotspots().size(); i++) {
+	    curHotspotGP = getHotspots().get(i).getPosition();
+	    hotspotPoints.add(new GeoPoint(curHotspotGP.getLatitudeE6(),
+		    curHotspotGP.getLongitudeE6()));
+	}
+	BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
+	myMapView.zoomToBoundingBox(boundingBox);
     }
 
     /**
@@ -229,9 +245,9 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		 0,
 		 R.string.map_menu_mockGPS);
 	menu.add(0,
-		 START_AR_VIEW_ID,
+		 ZOOM_TO_BOUNDING_BOX,
 		 0,
-		 R.string.startARViewMenu);
+		 R.string.map_menu_bounding_box);
 	menu.add(0,
 		 CENTER_MAP_ON_CURRENT_LOCATION_ID,
 		 0,
@@ -270,6 +286,9 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	    break;
 	case CENTER_MAP_ON_CURRENT_LOCATION_ID:
 	    mapHelper.centerMap();
+	    break;
+	case ZOOM_TO_BOUNDING_BOX:
+	    zoomToBoundingBox();
 	    break;
 	}
 
@@ -333,7 +352,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
     // while false main thread may not
     // access 'hotspots'
 
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(int id,
+				    Bundle b) {
 	switch (id) {
 	case READXML_DIALOG:
 	    readxmlDialog = new ProgressDialog(this);

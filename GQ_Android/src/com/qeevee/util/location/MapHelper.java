@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapController;
 
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
@@ -15,6 +14,7 @@ public class MapHelper {
 
     private IMapController mapController;
     private GeoQuestLocationListener locationListener;
+    private MapNavigation mapMission;
 
     /**
      * Constructor for Google Map based Navigation Mission.
@@ -23,6 +23,7 @@ public class MapHelper {
      * @param mapCtrl
      */
     public MapHelper(final MapNavigation mapMission) {
+	this.mapMission = mapMission;
 	mapController = mapMission.getMapController();
 
 	// register location changed listener:
@@ -49,6 +50,20 @@ public class MapHelper {
 	if (lastLoc != null)
 	    mapController.animateTo(location2GP(locationListener
 		    .getLastLocation()));
+    }
+
+    public void setCenter() {
+	Location lastLoc = locationListener.getLastLocation();
+	if (lastLoc != null)
+	    mapController.setCenter(location2GP(locationListener
+		    .getLastLocation()));
+	else {
+	    com.google.android.maps.GeoPoint firstAGP = this.mapMission
+		    .getHotspots().get(0).getPosition();
+	    GeoPoint centerGP = new GeoPoint(firstAGP.getLatitudeE6(), firstAGP
+		    .getLongitudeE6());
+	    mapController.setCenter(centerGP);
+	}
     }
 
     private GeoPoint location2GP(Location location) {

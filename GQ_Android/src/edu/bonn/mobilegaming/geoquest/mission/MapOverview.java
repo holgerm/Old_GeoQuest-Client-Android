@@ -159,7 +159,7 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 	menu.add(0,
 		 START_AR_VIEW_ID,
 		 0,
-		 R.string.startARViewMenu);
+		 R.string.map_menu_bounding_box);
 	menu.add(0,
 		 CENTER_MAP_ON_CURRENT_LOCATION_ID,
 		 0,

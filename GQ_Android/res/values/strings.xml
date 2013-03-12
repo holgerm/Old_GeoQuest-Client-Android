@@ -25,7 +25,7 @@
     <string name="start_gameList_headerPart">Games in</string>
     <string name="start_repoList_header">Accessible Repositories</string>
 
- 	<!-- GameListActivity -->
+    <!-- GameListActivity -->
     <string name="sortoptionsHeaderStart">Sort by:</string>
     <string name="sortByName">Name</string>
     <string name="sortByDate">Date (newest first)</string>
@@ -61,7 +61,6 @@
     <string name="audiorecord_file_default">audiorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
-    <string name="startARViewMenu">AR View</string>
     <string name="startingARView">Starting AR View ...</string>
 
     <!-- External MISSION -->
@@ -79,6 +78,7 @@
     <string name="map_menu_mockGPS">Switch to mocked location</string>
     <string name="map_menu_realGPS">Switch to real location</string>
     <string name="map_mockGPSTimeInterval">2000</string>
+    <string name="map_menu_bounding_box">Zoom in Game Area</string>
 
     <!-- MultipleChoiceQuestion MISSION -->
     <string name="multipleChoiceQuestion_default_shuffle_mode">false</string>

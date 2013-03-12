@@ -61,7 +61,6 @@
     <string name="audiorecord_file_default">audiorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
-    <string name="startARViewMenu">AR View</string>
     <string name="startingARView">Starte AR View</string>
 
     <!-- External MISSION -->
@@ -79,6 +78,7 @@
     <string name="map_menu_mockGPS">GPS simulieren</string>
     <string name="map_menu_realGPS">Reales GPS nutzen</string>
     <string name="map_mockGPSTimeInterval">2000</string>
+    <string name="map_menu_bounding_box">Zoom auf Quest</string>
 
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Spiel fortsetzen</string>
