@@ -66,7 +66,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	LayoutInflater inflater = (LayoutInflater) activity
 		.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-	view = inflater.inflate(R.layout.npctalk,
+	view = inflater.inflate(R.layout.m_default_npctalk,
 				null);
 	charImage = (ZoomImageView) view.findViewById(R.id.npcimage);
 	button = (Button) view.findViewById(R.id.proceedButton);
