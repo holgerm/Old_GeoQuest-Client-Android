@@ -44,10 +44,6 @@ public class MapHelper {
 	};
     }
 
-    public void setOSMapController(MapController mapCtrl) {
-	mapController = mapCtrl;
-    }
-
     public void centerMap() {
 	Location lastLoc = locationListener.getLastLocation();
 	if (lastLoc != null)
