@@ -3,6 +3,10 @@
 
     <string name="default_endButtonText">Spiel fortsetzen</string>
 
+    <!-- CUSTOMER VALUES -->
+    <string name="erzbistum">Erzbistum Köln - Familienpastoral</string>
+    <string name="q3">Q3</string>
+
     <!-- Generic Values -->
     <string name="xmlformat">5</string>
     <string name="app_name">GeoQuest</string>

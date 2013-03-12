@@ -17,10 +17,11 @@
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-sdk
-		android:minSdkVersion="4"
+		android:minSdkVersion="8"
 		android:targetSdkVersion="9" />
 	<application
 		android:name="GeoQuestApp"
+		android:allowBackup="true"
 		android:icon="@drawable/radioranzen"
 		android:label="RadioRanzen"
 		android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
