@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -115,16 +116,16 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
     }
 
     protected void initGPSMock() {
-        try {
-            long timeStepMockMode = Long
-        	    .parseLong(getText(R.string.map_mockGPSTimeInterval)
-        		    .toString());
-            locationSource = new LocationSource(getApplicationContext(),
-        	    mapHelper.getLocationListener(), handler, timeStepMockMode);
-            locationSource.setMode(LocationSource.REAL_MODE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	try {
+	    long timeStepMockMode = Long
+		    .parseLong(getText(R.string.map_mockGPSTimeInterval)
+			    .toString());
+	    locationSource = new LocationSource(getApplicationContext(),
+		    mapHelper.getLocationListener(), handler, timeStepMockMode);
+	    locationSource.setMode(LocationSource.REAL_MODE);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 
     /**
@@ -134,9 +135,33 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
      *            Mission.STATUS_SUCCESS or FAIL or NEW
      */
     public void finish(Double status) {
-        mission.setStatus(status);
-        mission.applyOnEndRules();
-        finish();
+	mission.setStatus(status);
+	mission.applyOnEndRules();
+	finish();
     }
 
+    /**
+     * Back button Handler quits the Mission, when back button is hit.
+     */
+    @Override
+    public boolean onKeyDown(final int keyCode,
+			     KeyEvent event) {
+	switch (keyCode) {
+
+	case KeyEvent.KEYCODE_BACK: // Back => Cancel
+	    if (mission.cancelStatus == 0) {
+		Log.d(this.getClass().getName(),
+		      "Back Button was pressed, but mission may not be cancelled.");
+		return true;
+	    } else {
+		finish(mission.cancelStatus);
+		return true;
+	    }
+	case KeyEvent.KEYCODE_SEARCH:
+	    // ignore search button
+	    break;
+	}
+	return super.onKeyDown(keyCode,
+			       event);
+    }
 }
