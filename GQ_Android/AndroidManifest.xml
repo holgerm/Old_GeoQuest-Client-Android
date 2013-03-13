@@ -24,7 +24,7 @@
     <application
         android:name="GeoQuestApp"
         android:allowBackup="true"
-        android:icon="@drawable/erzbistumkoeln_fam_logo"
+        android:icon="@drawable/bibelwegapplogo"
         android:label="Bibelweg Köln" >
         <uses-library android:name="com.google.android.maps" />
 
