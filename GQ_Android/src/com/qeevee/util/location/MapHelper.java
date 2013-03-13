@@ -1,6 +1,7 @@
 package com.qeevee.util.location;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
@@ -58,11 +59,14 @@ public class MapHelper {
 	    mapController.setCenter(location2GP(locationListener
 		    .getLastLocation()));
 	else {
-	    com.google.android.maps.GeoPoint firstAGP = this.mapMission
-		    .getHotspots().get(0).getPosition();
-	    GeoPoint centerGP = new GeoPoint(firstAGP.getLatitudeE6(), firstAGP
-		    .getLongitudeE6());
-	    mapController.setCenter(centerGP);
+	    List<HotspotOld> hotspots = this.mapMission.getHotspots();
+	    if (hotspots.size() > 0) {
+		com.google.android.maps.GeoPoint firstAGP = hotspots.get(0)
+			.getPosition();
+		GeoPoint centerGP = new GeoPoint(firstAGP.getLatitudeE6(),
+			firstAGP.getLongitudeE6());
+		mapController.setCenter(centerGP);
+	    }
 	}
     }
 
