@@ -3,4 +3,7 @@
     <issue id="MissingTranslation">
         <ignore path="res/values-de" />
     </issue>
+    <issue id="NewApi">
+        <ignore path="src\edu\bonn\mobilegaming\geoquest\mission\NFCTag.java" />
+    </issue>
 </lint>

@@ -18,7 +18,7 @@ public class RepoListActivity extends GeoQuestListActivity {
     private static final String TAG = "GeoQuestListActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 
 	setContentView(R.layout.repolist);

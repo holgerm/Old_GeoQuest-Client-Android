@@ -281,6 +281,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		Toast.makeText(getContext(),
 			       R.string.error_getting_device_location,
 			       Toast.LENGTH_SHORT).show();
+		repoItem.sortGameItemsBy(currentSortMode, null);
 	    } else {
 		repoItem.sortGameItemsBy(currentSortMode,
 					 aktLocation);
@@ -324,8 +325,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	// boolean result = loadRepoDataFromServer(handler);
 	// result |= loadRepoDataFromClient(handler);
 	boolean result = loadRepoDataFromClient(handler);
-
-	handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
+	
+	if(handler != null) handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
 
 	if (getInstance() != null) {
 	    getInstance().setRepoDataAvailable(result);
@@ -445,12 +446,11 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	try {
 	    String[] localRepoNames = GameDataManager.getLocalRepoDir(null)
 		    .list();
-
 	    RepositoryItem curRepoItem;
 	    if (localRepoNames == null)
 		return success;
 	    for (int i = 0; i < localRepoNames.length; i++) {
-		handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
+	    if(handler != null) handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
 		boolean alsoOnServer = false;
 		for (Iterator<Map.Entry<String, RepositoryItem>> iterator = repositoryItems
 			.entrySet().iterator(); iterator.hasNext();) {
@@ -475,7 +475,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    Message msg = new Message();
 	    msg.arg1 = R.string.error_fetching_local_repo_list;
 	    msg.what = GeoQuestProgressHandler.MSG_ABORT_BY_ERROR;
-	    handler.sendMessage(msg);
+	    if(handler != null) handler.sendMessage(msg);
 	    success = false;
 	}
 

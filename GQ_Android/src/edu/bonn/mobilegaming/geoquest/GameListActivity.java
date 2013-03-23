@@ -29,7 +29,7 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 public class GameListActivity extends GeoQuestListActivity {
 
     ListAdapter gameListAdapter;
-    CharSequence repoName;
+    public CharSequence repoName;
 
     private final static boolean enable_long_click_auto_game = false;
 
@@ -172,7 +172,7 @@ public class GameListActivity extends GeoQuestListActivity {
     
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {		
 		MenuItem sortItem = menu.add(R.string.game_list_sort);
 		sortItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			
@@ -182,6 +182,7 @@ public class GameListActivity extends GeoQuestListActivity {
 				return false;
 			}
 		});
+		super.onCreateOptionsMenu(menu);
 		return true;
 	}
 	

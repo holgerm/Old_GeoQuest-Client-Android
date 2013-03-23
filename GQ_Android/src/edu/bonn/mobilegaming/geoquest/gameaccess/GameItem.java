@@ -160,7 +160,7 @@ public class GameItem implements Comparable<GameItem>{
 			RepositoryItem repoItem) {
 		String name = gameNode.attributeValue("name");
 		String gameXMLFormat = gameNode.attributeValue("xmlformat");
-
+		GeoQuestApp.getInstance();
 		if (name == null
 				|| gameXMLFormat == null
 				|| gameXMLFormat.compareToIgnoreCase(GeoQuestApp.getInstance()
@@ -171,6 +171,21 @@ public class GameItem implements Comparable<GameItem>{
 		GameItem gameItem = new GameItem(name, repoItem);
 		gameItem.setLastmodifiedClientSide(localGameLastModified);
 		gameItem.setFileName(gameFileName);
+		
+		String tmp = gameNode.attributeValue("latitude");
+		if (tmp == null) {
+			gameItem.setLatitude(0);
+		} else {
+			gameItem.setLatitude(Double.parseDouble(tmp));
+		}
+
+		tmp = gameNode.attributeValue("longitude");
+		if (tmp == null) {
+			gameItem.setLongitude(0);
+		} else {
+			gameItem.setLongitude(Double.parseDouble(tmp));
+		}
+		
 		gameItem.setOnClient(true);
 
 		return gameItem;
@@ -260,8 +275,18 @@ public class GameItem implements Comparable<GameItem>{
         	  //put games without location at the end of the list
         	  if(this.latitude == 0 || this.longitude == 0) return 1;
         	  
-        	  double distanceThis = Distance.distance(this.latitude, this.longitude, deviceLocation.getLatitude(), deviceLocation.getLongitude());
-        	  double distanceCompareObject = Distance.distance(compareObject.latitude, compareObject.longitude, deviceLocation.getLatitude(), deviceLocation.getLongitude());
+        	  double deviceLat;
+        	  double deviceLong;
+        	  if(deviceLocation == null){
+        		  deviceLat = 0;
+        		  deviceLong = 0;
+        	  }
+        	  else{
+        		  deviceLat = deviceLocation.getLatitude();
+        		  deviceLong = deviceLocation.getLongitude();
+        	  }
+        	  double distanceThis = Distance.distance(this.latitude, this.longitude, deviceLat, deviceLong);
+        	  double distanceCompareObject = Distance.distance(compareObject.latitude, compareObject.longitude, deviceLat, deviceLong);
         	  
         	  if (distanceThis < distanceCompareObject)
     			  return -1;
