@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +32,10 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 
 public class GameListActivity extends GeoQuestListActivity {
 
-    ListAdapter gameListAdapter;
+    private ListAdapter gameListAdapter;
+    private ListAdapter gameListAdapterNoLoc;
+    private ListAdapter gameListAdapterLoc;
+    private ListView lv2;
     public CharSequence repoName;
 
     private final static boolean enable_long_click_auto_game = false;
@@ -36,19 +43,13 @@ public class GameListActivity extends GeoQuestListActivity {
     private GameListActivity getInstance() {
 	return this;
     }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 
-	setContentView(R.layout.gamelist);
-
-	this.repoName = getIntent()
-		.getCharSequenceExtra("edu.bonn.mobilegaming.geoquest.REPO");
-
-	String headerText = getText(R.string.start_gameList_headerPart).toString()
-		+ " \"" + this.repoName + "\":";
-	((TextView) findViewById(R.id.gamelistHeader)).setText(headerText);
+	this.repoName = getIntent().getCharSequenceExtra("edu.bonn.mobilegaming.geoquest.REPO");
 
 //		// Init data adapter - moved this code to onResume():
 //		gameListAdapter = new ArrayAdapter<String>(this, R.layout.game_item,
@@ -161,7 +162,7 @@ public class GameListActivity extends GeoQuestListActivity {
 			      v,
 			      position,
 			      id);
-	final String gameName = (String) gameListAdapter.getItem(position);
+	final String gameName = (String) l.getAdapter().getItem(position);
 	final GameItem gameItem = GeoQuestApp.getGameItem(repoName,
 							  gameName);
 	final String selectedRepo = repoName.toString();
@@ -172,7 +173,8 @@ public class GameListActivity extends GeoQuestListActivity {
     
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {		
+	public boolean onCreateOptionsMenu(Menu menu) {	
+		super.onCreateOptionsMenu(menu);
 		MenuItem sortItem = menu.add(R.string.game_list_sort);
 		sortItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			
@@ -182,16 +184,49 @@ public class GameListActivity extends GeoQuestListActivity {
 				return false;
 			}
 		});
-		super.onCreateOptionsMenu(menu);
 		return true;
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		// Init data adapter
-		gameListAdapter = new ArrayAdapter<String>(this, R.layout.game_item,
-				GeoQuestApp.getGameNamesForRepository(repoName.toString()));
-		setListAdapter(gameListAdapter);
+		lv2 = null;
+		
+		if(GeoQuestApp.currentSortMode == GameItem.SORT_GAMELIST_BY_DISTANCE){
+			setContentView(R.layout.gamelistbydistance);
+			String headerTextNoLoc = getText(R.string.start_gameList_headerPart).toString()
+					+ " \"" + this.repoName + "\": "
+					+ getText(R.string.start_gameList_headerPartNoLoc).toString();
+			((TextView) findViewById(R.id.gamelistHeaderNoLoc)).setText(headerTextNoLoc);
+				
+			String headerTextLoc = getText(R.string.start_gameList_headerPart).toString()
+					+ " \"" + this.repoName + "\": "
+					+ getText(R.string.start_gameList_headerPartLoc).toString();
+			((TextView) findViewById(R.id.gamelistHeaderLoc)).setText(headerTextLoc);
+			
+			List<String> repoNamesWithoutLoc = GeoQuestApp.getGameNamesForRepositoryWithoutLocation(repoName.toString());
+			List<String> repoNamesWithLoc = GeoQuestApp.getGameNamesForRepositoryWithLocation(repoName.toString());
+			
+			gameListAdapterNoLoc = new ArrayAdapter<String>(this, R.layout.game_item, repoNamesWithoutLoc);
+			gameListAdapterLoc = new ArrayAdapter<String>(this, R.layout.game_item, repoNamesWithLoc);
+			setListAdapter(gameListAdapterNoLoc);
+		    lv2 = (ListView) findViewById (R.id.gameList2);
+		    lv2.setOnItemClickListener(new OnItemClickListener(){
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					onListItemClick((ListView)(arg0), arg1, arg2, arg2);
+				}		
+			});
+		    lv2.setAdapter(gameListAdapterLoc);   
+		}
+		else{
+			setContentView(R.layout.gamelist);
+			String headerText = getText(R.string.start_gameList_headerPart).toString()
+					+ " \"" + this.repoName + "\":";
+			((TextView) findViewById(R.id.gamelistHeader)).setText(headerText);
+				
+			// Init data adapter
+			gameListAdapter = new ArrayAdapter<String>(this, R.layout.game_item,GeoQuestApp.getGameNamesForRepository(repoName.toString()));
+			setListAdapter(gameListAdapter);	
+		}
 	}
 }

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="MyNPCTalk"
+	latitude="-10.0"
+	longitude="20.0"
+	xmlformat="5"
+>
+
+    <mission
+		id="start"
+		image="drawable/232ploppschutz.png"
+		type="NPCTalk"
+	>
+		<onStart>
+			<rule>
+				<action type="Vibrate" />
+			</rule>
+		</onStart>
+		<dialogitem>Hallo ich bin der Radiobot! Herzlich
+			Willkommen in der Mission „Rettet die Frequenz des
+			Schulradioranzens“!
+		</dialogitem>
+		<dialogitem>
+		</dialogitem>
+		<dialogitem>UKW bedeutet Ultrakurzwelle und ist der
+			wichtigste Frequenzbereich für Radiowellen. In Europa liegt der
+			Frequenzbereich von UKW zwischen 87,5 und 108 MHz.
+		</dialogitem>
+	</mission>
+
+</game>

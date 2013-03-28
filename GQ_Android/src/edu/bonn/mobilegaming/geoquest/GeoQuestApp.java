@@ -77,6 +77,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private Map<String, MissionActivity> missionActivities = new HashMap<String, MissionActivity>();
 
     private static File currentGameDir = null;
+    
+    public static int currentSortMode = GameItem.SORT_GAMELIST_BY_DEFAULT;
 
     private static MissionOrToolActivity currentActivity;
 
@@ -112,6 +114,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		    .commit();
 	}
 	includeAdaptionEngine();
+	currentSortMode = getRecentSortingMode();
     }
 
     public void addActivity(Activity newActivityOfThisApp) {
@@ -270,27 +273,65 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	    Log.e(TAG,
 		  "Error: repoitem is null");
 	}
-	currentSortMode = getRecentSortingMode();
-	if (currentSortMode == GameItem.SORT_GAMELIST_BY_DISTANCE) {
-	    GeoQuestLocationListener locationListener = new GeoQuestLocationListener(
-		    getContext());
-	    locationListener.connect();
-	    Location aktLocation = locationListener.getLastLocation();
-	    locationListener.disconnect();
-	    if (aktLocation == null) {
-		Toast.makeText(getContext(),
-			       R.string.error_getting_device_location,
-			       Toast.LENGTH_SHORT).show();
-		repoItem.sortGameItemsBy(currentSortMode, null);
-	    } else {
-		repoItem.sortGameItemsBy(currentSortMode,
-					 aktLocation);
-	    }
-	} else {
-	    repoItem.sortGameItemsBy(currentSortMode);
-	}
-
+	repoItem.sortGameItemsBy(currentSortMode);
 	return repoItem.gameNames();
+    }
+    
+    
+    public static List<String> getGameNamesForRepositoryWithoutLocation(String repositoryName) {
+    	if (repositoryItems == null) return new ArrayList<String>();
+    	RepositoryItem repoItem = repositoryItems.get(repositoryName);
+    	if (repoItem == null) {
+    	    Log.e(TAG, "Error: repoitem is null");
+    	}
+    	GeoQuestLocationListener locationListener = new GeoQuestLocationListener(getContext());
+    	locationListener.connect();
+    	Location aktLocation = locationListener.getLastLocation();
+    	locationListener.disconnect();
+    	if (aktLocation == null) {
+    		Toast.makeText(getContext(), R.string.error_getting_device_location, Toast.LENGTH_SHORT).show();
+    		repoItem.sortGameItemsBy(currentSortMode, null);
+    	} else {
+    		repoItem.sortGameItemsBy(currentSortMode, aktLocation);
+    	}
+   
+    	List<String> gameNamesWithoutLoc = new ArrayList<String>();
+    	Iterator<String> iterator = repoItem.gameNames().iterator();
+    	for(;iterator.hasNext();){
+    		GameItem gi = repoItem.getGameItem(iterator.next());
+    		if(gi.getLatitude() == 0. && gi.getLongitude() == 0.){
+    			gameNamesWithoutLoc.add(gi.getName());
+    		}
+    	}
+    	return gameNamesWithoutLoc;
+    }
+    
+    public static List<String> getGameNamesForRepositoryWithLocation(String repositoryName) {
+    	if (repositoryItems == null) return new ArrayList<String>();
+    	RepositoryItem repoItem = repositoryItems.get(repositoryName);
+    	if (repoItem == null) {
+    	    Log.e(TAG, "Error: repoitem is null");
+    	}
+    	GeoQuestLocationListener locationListener = new GeoQuestLocationListener(getContext());
+    	locationListener.connect();
+    	Location aktLocation = locationListener.getLastLocation();
+    	locationListener.disconnect();
+    	if (aktLocation == null) {
+    		Toast.makeText(getContext(), R.string.error_getting_device_location, Toast.LENGTH_SHORT).show();
+    		repoItem.sortGameItemsBy(currentSortMode, null);
+    	} else {
+    		repoItem.sortGameItemsBy(currentSortMode, aktLocation);
+    	}
+   
+    	List<String> gameNamesWithLoc = new ArrayList<String>();
+    	Iterator<String> iterator = repoItem.gameNames().iterator();
+    	for(;iterator.hasNext();){
+    		GameItem gi = repoItem.getGameItem(iterator.next());
+    		if(gi.getLatitude() != 0. || gi.getLongitude() != 0.){
+    			gameNamesWithLoc.add(gi.getName());
+    		}
+    	}
+    	return gameNamesWithLoc;
     }
 
     public static List<String> getLocalGamesInRepository(String repositoryName) {
@@ -310,7 +351,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private static Map<String, RepositoryItem> repositoryItems = new HashMap<String, RepositoryItem>();
     private static File runningGameDir;
     private boolean repoDataAvailable = false;
-    public static int currentSortMode = GameItem.SORT_GAMELIST_BY_DEFAULT;
     private org.osmdroid.views.MapView osmap;
 
     public org.osmdroid.views.MapView getOsmap() {
@@ -442,6 +482,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
     private static boolean
 	    loadRepoDataFromClient(GeoQuestProgressHandler handler) {
 	boolean success = false;
+	repositoryItems.clear();
 
 	try {
 	    String[] localRepoNames = GameDataManager.getLocalRepoDir(null)

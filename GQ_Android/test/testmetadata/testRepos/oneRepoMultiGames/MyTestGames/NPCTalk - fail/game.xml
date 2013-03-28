@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="MyNPCTalkfail"
+	latitude="100.0"
+	longitude="0.0"
+	xmlformat="5"
+>
+
+    <mission
+		id="start"
+		endbuttontext="Datt wars"
+		nextdialogbuttontext="wigger..."
+		image="drawable/23sd2ploppschutz.png"
+		type="NPCTalk"
+	>
+		<onStart>
+			<rule>
+				<action type="Vibrate" />
+			</rule>
+		</onStart>
+		<dialogitem>Hallo ich bin der Radiobot! Herzlich
+			Willkommen in der Mission „Rettet die Frequenz des
+			Schulradioranzens“!
+		</dialogitem>
+		<dialogitem>Bevor ihr loslegen könnt…. Wisst ihr
+			eigentlich was UKW bedeutet?
+		</dialogitem>
+		<dialogitem>UKW bedeutet Ultrakurzwelle und ist der
+			wichtigste Frequenzbereich für Radiowellen. In Europa liegt der
+			Frequenzbereich von UKW zwischen 87,5 und 108 MHz.
+		</dialogitem>
+	</mission>
+
+</game>

@@ -32,6 +32,9 @@ public class RepositoryItem {
 	public String getName() {
 		return name;
 	}
+	public List<GameItem> getGames(){
+		return games;
+	}
 
 	public RepositoryItem(String repoName) {
 		this.name = repoName;

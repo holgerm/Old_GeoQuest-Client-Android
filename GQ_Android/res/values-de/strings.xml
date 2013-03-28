@@ -29,6 +29,8 @@
     <string name="start_initializeGame">Spiel wird initialisiert</string>
     <string name="start_gameFileCouldNotBeParsed">Quest Datei ist fehlerhaft!</string>
     <string name="start_gameList_headerPart">Quests in</string>
+    <string name="start_gameList_headerPartNoLoc">ohne Location</string>
+    <string name="start_gameList_headerPartLoc">mit Location</string>
     <string name="start_repoList_header">Verfügbare Repositories</string>
 
     <!-- GameListActivity -->

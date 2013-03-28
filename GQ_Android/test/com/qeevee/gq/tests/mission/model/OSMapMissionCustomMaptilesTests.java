@@ -10,14 +10,20 @@
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //
+//import android.content.Intent;
+//import android.os.Bundle;
 //import android.os.Environment;
 //
 //import com.qeevee.gq.history.History;
 //import com.qeevee.gq.tests.robolectric.GQTestRunner;
 //import com.qeevee.gq.tests.util.TestUtils;
+//import com.xtremelabs.robolectric.Robolectric;
 //
+//import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+//import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 //import edu.bonn.mobilegaming.geoquest.Start;
 //import edu.bonn.mobilegaming.geoquest.Variables;
+//import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 //import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 //
 //@RunWith(GQTestRunner.class)
@@ -44,7 +50,7 @@
 //    @Test
 //    public void testIfTilesOverlayIsNullIfNoTilefileExists() {
 //	// GIVEN:
-//	start = startGameForTest("NoCustomMapTilesTest");
+//	start = startGameForTest("NoCustomMapTilesTest");	
 //	osMap = (OSMap) TestUtils.prepareMapMission("OSMap", "Map_Mission", start);
 //	
 //	// WHEN:
@@ -52,7 +58,6 @@
 //
 //	// THEN: TilesOverlay in OSMap should be null
 //	assertNull(osMap.getCustomTilesOverlay());
-//	
 //    }
 //    
 //    
@@ -62,13 +67,13 @@
 //	// GIVEN:
 //	start = startGameForTest("CustomMapTilesTest");
 //	osMap = (OSMap) TestUtils.prepareMapMission("OSMap", "Map_Mission", start);
+//
 //	
 //	// WHEN:
 //	osMap.onCreate(null);
 //
 //	// THEN: TilesOverlay in OSMap should not be null
 //	assertNotNull(osMap.getCustomTilesOverlay());
-//	
 //    } 
 //    
 //    
@@ -84,6 +89,7 @@
 //
 //	// THEN: "/osmdroid/customTiles.zip" should exist
 //	File testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");
+//	System.out.println(testFile.getAbsolutePath());
 //	assertTrue(testFile.exists());	
 //    } 
 //    
@@ -97,7 +103,7 @@
 //	
 //	// WHEN:
 //	osMap.onCreate(null);
-//	osMap.finish();
+//	GeoQuestApp.getInstance().endGame();
 //
 //	// THEN: "/osmdroid/customTiles.zip" should not exist
 //	File testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/customTiles.zip");

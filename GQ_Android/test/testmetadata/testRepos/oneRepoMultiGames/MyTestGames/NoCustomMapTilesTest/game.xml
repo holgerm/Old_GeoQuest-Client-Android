@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="NoCustomMapTilesTest"
+	latitude="-10.0"
+	longitude="-10.0"	
+	xmlformat="5"
+>
+	<mission
+		type="OSMap"
+		id="Map_Mission"
+		mapkind="map"
+		zoomlevel="18"
+	>
+		<hotspots>
+			<hotspot
+				id="HS_Drache_Blau"
+				latlong="47.69164,11.889138"
+				radius="30"
+				initialVisibility="true"
+				img="drawable/Dragon-Blue-Icon.png"
+			>
+			</hotspot>
+		</hotspots>
+		
+	</mission>
+</game>

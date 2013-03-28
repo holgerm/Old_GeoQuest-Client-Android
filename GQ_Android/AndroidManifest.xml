@@ -47,6 +47,10 @@
             android:label="@string/erzbistum"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".SortingOptionsActivity"
+            android:label="@string/erzbistum"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.qeevee.gq.history.HistoryActivity"
             android:label="@string/erzbistum"
             android:screenOrientation="portrait" />

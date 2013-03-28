@@ -112,6 +112,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		+ "/customTiles/";
 	File tileFileSrc = new File(localTilePath
 		+ "customTiles.zip");
+	System.out.println(localTilePath);
+	System.out.println(tileFileSrc.getAbsolutePath());
 	if (tileFileSrc.exists()) {
 	    File tileFileDest = new File(Environment
 		    .getExternalStorageDirectory().getAbsolutePath()
