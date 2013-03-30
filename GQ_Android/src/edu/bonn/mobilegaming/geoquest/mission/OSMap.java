@@ -97,6 +97,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	// Setup OSM MapView
 	myMapView = (MapView) findViewById(R.id.osmapview);
 	myMapView.setBuiltInZoomControls(false);
+	myMapView.setMultiTouchControls(true);
 	if (APIKey != null
 		&& CmStyleId != null) {
 	    myMapView.setTileSource(new XYTileSource("cmMap", null, 0, 15, 256,
