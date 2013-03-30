@@ -214,8 +214,6 @@ public class GameAndRepoSortTests {
     	
     	//THEN: gamelist should be sorted by distance 
     	int noOfGames = gameListActivity.getListAdapter().getCount();
-		double deviceLat = 0;
-		double deviceLong = 0;
 		
     	for(int i = 0; i<noOfGames-1; i++){  
     		String gameName = (String) gameListActivity.getListAdapter().getItem(i);

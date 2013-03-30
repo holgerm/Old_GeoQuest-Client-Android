@@ -273,7 +273,7 @@ public class GameItem implements Comparable<GameItem>{
           case SORT_GAMELIST_BY_DISTANCE:
         	  
         	  //put games without location at the end of the list
-        	  if(this.latitude == 0 || this.longitude == 0) return 1;
+        	  if(this.latitude == 0 && this.longitude == 0) return 1;
         	  
         	  double deviceLat;
         	  double deviceLong;
@@ -287,6 +287,7 @@ public class GameItem implements Comparable<GameItem>{
         	  }
         	  double distanceThis = Distance.distance(this.latitude, this.longitude, deviceLat, deviceLong);
         	  double distanceCompareObject = Distance.distance(compareObject.latitude, compareObject.longitude, deviceLat, deviceLong);
+        	  if(compareObject.latitude == 0 && compareObject.longitude == 0) distanceCompareObject = Double.MAX_VALUE;
         	  
         	  if (distanceThis < distanceCompareObject)
     			  return -1;
