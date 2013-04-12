@@ -6,11 +6,12 @@ import java.util.List;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
+import android.os.Bundle;
+
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TransitionItem;
 
-import android.os.Bundle;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;

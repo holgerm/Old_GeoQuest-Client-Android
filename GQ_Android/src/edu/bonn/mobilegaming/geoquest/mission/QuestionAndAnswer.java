@@ -259,8 +259,8 @@ public class QuestionAndAnswer extends InteractiveMission {
 		} else {
 		    // end of mission, show outro
 
-		    // TODO: Bitte nicht mit try-catch arbeiten au�er in
-		    // fehlerf�llen. (hm)
+		    // TODO: Bitte nicht mit try-catch arbeiten au���er in
+		    // fehlerf���llen. (hm)
 
 		    ll.removeAllViews();
 		    if (correctAnswers >= correctAnswersNeeded) {

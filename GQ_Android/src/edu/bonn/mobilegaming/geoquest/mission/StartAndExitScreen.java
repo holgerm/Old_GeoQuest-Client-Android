@@ -1,13 +1,14 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
-import com.qeevee.ui.BitmapUtil;
-
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+
+import com.qeevee.ui.BitmapUtil;
+
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;

@@ -1,5 +1,6 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
  * @author Holger Muegge
  */
 
+@SuppressLint("SetJavaScriptEnabled")
 public class WebPage extends MissionActivity implements OnClickListener {
 
     private Button okButton;
@@ -42,7 +44,7 @@ public class WebPage extends MissionActivity implements OnClickListener {
 
 	this.webview = (WebView) findViewById(R.id.webview);
 	WebSettings webSettings = webview.getSettings();
-	webSettings.setJavaScriptEnabled(true);
+		webSettings.setJavaScriptEnabled(true);
 	webSettings.setBuiltInZoomControls(true);
 	webSettings.setUseWideViewPort(true);
 	webSettings.setLoadWithOverviewMode(true);

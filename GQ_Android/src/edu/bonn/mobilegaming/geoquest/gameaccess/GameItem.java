@@ -5,10 +5,11 @@ import java.util.Locale;
 
 import org.dom4j.Element;
 
-import com.qeevee.util.location.Distance;
-
 import android.location.Location;
 import android.util.Log;
+
+import com.qeevee.util.location.Distance;
+
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 

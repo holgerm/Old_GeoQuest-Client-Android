@@ -8,7 +8,6 @@ package edu.bonn.mobilegaming.geoquest;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
-
 import android.os.Handler;
 import android.util.Log;
 
