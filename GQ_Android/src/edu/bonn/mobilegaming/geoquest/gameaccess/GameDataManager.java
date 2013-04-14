@@ -4,6 +4,7 @@
 package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.io.File;
+import java.util.List;
 
 import android.os.Environment;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -20,8 +21,11 @@ public class GameDataManager {
 
 	/**
 	 * 
-	 * TODO does it have to be public? (hm:) No as soon as we have all game loading
-	 * stuff moved into this package we can make it default visible.
+	 * TODO does it have to be public? (hm:) No as soon as we have all game
+	 * loading stuff moved into this package we can make it default visible.
+	 * 
+	 * TODO we (hm) will replace this method by a more abstract
+	 * getRepositories() and getGames().
 	 * 
 	 * @param repositoryName
 	 *            the name of the repository directory you want the File to
@@ -50,6 +54,18 @@ public class GameDataManager {
 	private static String repoBaseDirPath() {
 		return "/Android/data/" + GeoQuestApp.getInstance().getPackageName()
 				+ "/repositories/";
+	}
+
+	/**
+	 * This method collects all accessible repositories, including those
+	 * delivered statically with the app, those that the user has downloaded and
+	 * which are locally stored on the device as well as those that are
+	 * available from the server.
+	 * 
+	 * @return a list of all accessible repositories.
+	 */
+	public static List<RepositoryItem> getRepositories() {
+		return null;
 	}
 
 }
