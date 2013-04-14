@@ -27,7 +27,7 @@ public class GameDataManager {
 	 *            the name of the repository directory you want the File to
 	 *            (optional parameter). If null is given, the root directory of
 	 *            all local game repositories is returned.
-	 * @return either the directory of the goven game repository or (if
+	 * @return either the directory of the given game repository or (if
 	 *         repositoryName is null) the root directory of all game
 	 *         repositories.
 	 */
