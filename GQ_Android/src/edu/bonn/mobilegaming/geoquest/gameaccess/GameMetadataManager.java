@@ -20,6 +20,7 @@ import org.dom4j.io.SAXReader;
  * managed by the {@link GameDataManager} class.
  * 
  * @author muegge
+ * @deprecated we are going to eliminate this class soon.
  * 
  */
 public class GameMetadataManager {
