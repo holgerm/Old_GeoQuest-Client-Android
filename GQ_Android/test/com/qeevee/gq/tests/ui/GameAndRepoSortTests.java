@@ -253,7 +253,6 @@ public class GameAndRepoSortTests {
     	copyRepositoryToRightLocation("oneRepoOneGameWithoutLocation");
        
     	//THEN: sorting should work too
-    	System.out.println("should have no loc!");
     	excecuteSorting(GameItem.SORT_GAMELIST_BY_DISTANCE);
     	ListView lvWithLoc = (ListView) (getFieldValue(gameListActivity, "lv2"));
     	String gameName = (String) gameListActivity.getListAdapter().getItem(0);
