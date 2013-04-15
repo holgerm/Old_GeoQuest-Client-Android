@@ -10,16 +10,19 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 public class GQTestRunner extends RobolectricTestRunner {
 
-    public static final String GQ_ANDROID_PROJECT_PATH = "../GQ_Android/";
+	public static final File MANIFEST_FILE = new File(
+			"../GQ_Android/AndroidManifest.xml");
+	public static final File RESOURCE_DIR = new File("../GQ_Android/res/");
+	public static final File ASSETS_DIR = new File("../GQ_Android/assets/");
 
-    public GQTestRunner(Class<?> testClass) throws InitializationError {
-	super(testClass, new RobolectricConfig(
-		new File(GQ_ANDROID_PROJECT_PATH)));
-    }
+	public GQTestRunner(Class<?> testClass) throws InitializationError {
+		super(testClass, new RobolectricConfig(MANIFEST_FILE, RESOURCE_DIR,
+				ASSETS_DIR));
+	}
 
-    @Override
-    protected void bindShadowClasses() {
-	Robolectric.bindShadowClass(ShadowGQBitmap.class);
-    }
+	@Override
+	protected void bindShadowClasses() {
+		Robolectric.bindShadowClass(ShadowGQBitmap.class);
+	}
 
 }
