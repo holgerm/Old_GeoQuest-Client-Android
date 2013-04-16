@@ -145,10 +145,7 @@ public class TestUtils {
     public static Start
 	    startGameForTest(String gameFileName,
 			     Class<? extends UIFactory>... uistyles) {
-	Start start = new Start();
-	GeoQuestApp app = (GeoQuestApp) start.getApplication();
-	app.onCreate();
-	Mission.setMainActivity(start);
+	Start start = startApp();
 	Class<? extends UIFactory> uiFactory = (uistyles.length == 0) ? MockUIFactory.class
 		: uistyles[0];
 	GameLoader.startGame(null,
@@ -156,6 +153,14 @@ public class TestUtils {
 			     uiFactory);
 	return start;
     }
+
+	public static Start startApp() {
+		Start start = new Start();
+		GeoQuestApp app = (GeoQuestApp) start.getApplication();
+		app.onCreate();
+		Mission.setMainActivity(start);
+		return start;
+	}
 
     /**
      * Lets you access the values of private or protected fields in your tests.
