@@ -20,8 +20,8 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
  * 
  */
 @RunWith(GQTestRunner.class)
-@WithAssets("../GQ_Android/test/testassets/empty/")
-public class StaticGames_Empty_Tests { 
+@WithAssets("../GQ_Android/test/testassets/empty_x/")
+public class InAppGameDeployment_empty_x_Test { 
  
 	// === TESTS FOLLOW =============================================
 
