@@ -4,14 +4,11 @@
 package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
-import android.content.res.AssetManager;
 import android.os.Environment;
-import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 /**
@@ -23,8 +20,6 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
  * 
  */
 public class GameDataManager {
-
-	private static final String TAG = GameDataManager.class.getCanonicalName();
 
 	/**
 	 * 
@@ -77,4 +72,18 @@ public class GameDataManager {
 		return repositories;
 	}
 
+	/**
+	 * @param repoName
+	 * @return null iff no repository with given name repoName found.
+	 */
+	public static RepositoryItem getRepository(String repoName) {
+		List<RepositoryItem> repositories = getRepositories();
+		for (Iterator<RepositoryItem> iterator = repositories.iterator(); iterator
+				.hasNext();) {
+			RepositoryItem repositoryItem = (RepositoryItem) iterator.next();
+			if (repoName.equals(repositoryItem.getName()))
+				return repositoryItem;
+		}
+		return null;
+	}
 }
