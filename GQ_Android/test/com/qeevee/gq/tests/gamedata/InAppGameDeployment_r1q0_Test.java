@@ -1,16 +1,13 @@
 package com.qeevee.gq.tests.gamedata;
 
+import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositories;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test; 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.WithAssets;
-
-import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 
 /**
  * Tests the case when the GeoQuest app does not come with any preloaded quests.
@@ -26,7 +23,7 @@ public class InAppGameDeployment_r1q0_Test {
 	// === TESTS FOLLOW =============================================
 
 	@Test
-	public void noRepositoriesFoundInEmptyAssetsDir() {
+	public void ignoreTheEmptyRepo() {
 		// GIVEN:
 		// nothing
 
@@ -34,14 +31,9 @@ public class InAppGameDeployment_r1q0_Test {
 		startApp();
 
 		// THEN:
-		shouldHaveNoRepositories();
+		shouldHaveRepositories(0);
 	}
 
 	// === HELPERS FOLLOW =============================================
-
-	private void shouldHaveNoRepositories() {
-		assertNotNull(GameDataManager.getRepositories());
-		assertEquals(1, GameDataManager.getRepositories().size());
-	}
 
 }

@@ -1,5 +1,6 @@
 package com.qeevee.gq.tests.gamedata;
 
+import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.repoShouldHaveQuests;
 import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositories;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
@@ -17,21 +18,22 @@ import com.qeevee.gq.tests.robolectric.WithAssets;
  * 
  */
 @RunWith(GQTestRunner.class)
-@WithAssets("../GQ_Android/test/testassets/empty/")
-public class InAppGameDeployment_empty_Test {
+@WithAssets("../GQ_Android/test/testassets/r1q1/")
+public class InAppGameDeployment_r1q1_Test {
 
 	// === TESTS FOLLOW =============================================
 
 	@Test
-	public void noRepositoriesFoundInEmptyAssetsDir() {
+	public void findOneRepo() {
 		// GIVEN:
 		// nothing
-
+ 
 		// WHEN:
 		startApp();
 
 		// THEN:
-		shouldHaveRepositories(0);
+		shouldHaveRepositories(1, new String[] { "repo1" });
+		repoShouldHaveQuests("repo1", 1, new String[] { "r1q1-test-game" });
 	}
 
 	// === HELPERS FOLLOW =============================================
