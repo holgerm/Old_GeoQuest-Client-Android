@@ -14,59 +14,53 @@ import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public class RepoListActivity extends GeoQuestListActivity {
 
-    @SuppressWarnings("unused")
-    private static final String TAG = "GeoQuestListActivity";
+	@SuppressWarnings("unused")
+	private static final String TAG = "GeoQuestListActivity";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-	setContentView(R.layout.repolist);
+		setContentView(R.layout.repolist);
 
-	((TextView) findViewById(R.id.repolistHeader))
-		.setText(getText(R.string.start_repoList_header));
+		((TextView) findViewById(R.id.repolistHeader))
+				.setText(getText(R.string.start_repoList_header));
 
-	ListAdapter repoListAdapter = new ArrayAdapter<String>(
-		RepoListActivity.this, R.layout.game_item, GeoQuestApp
-			.getNotEmptyRepositoryNamesAsList());
-	setListAdapter(repoListAdapter);
-    }
+		ListAdapter repoListAdapter = new ArrayAdapter<String>(
+				RepoListActivity.this, R.layout.game_item,
+				GeoQuestApp.getNotEmptyRepositoryNamesAsList());
+		setListAdapter(repoListAdapter);
+	}
 
-    @Override
-    protected void onListItemClick(ListView l,
-				   View v,
-				   int position,
-				   long id) {
-	String nameOfSelectedRepo = (String) getListView()
-		.getItemAtPosition(position);
-	Intent intent = new Intent(GeoQuestApp.getContext(),
-		edu.bonn.mobilegaming.geoquest.GameListActivity.class);
-	intent.putExtra("edu.bonn.mobilegaming.geoquest.REPO",
-			nameOfSelectedRepo);
-	startActivity(intent);
-    }
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		String nameOfSelectedRepo = (String) getListView().getItemAtPosition(
+				position);
+		Intent intent = new Intent(GeoQuestApp.getContext(),
+				edu.bonn.mobilegaming.geoquest.GameListActivity.class);
+		intent.putExtra("edu.bonn.mobilegaming.geoquest.REPO",
+				nameOfSelectedRepo);
+		startActivity(intent);
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-	super.onCreateOptionsMenu(menu);
-	menuMaker.addMenuItem(MenuMaker.RELOAD_GAMES_MENU_ID,
-			      new OnMenuItemClickListener() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menuMaker.addMenuItem(MenuMaker.RELOAD_GAMES_MENU_ID,
+				new OnMenuItemClickListener() {
 
-				  public boolean onMenuItemClick(MenuItem item) {
-				      Intent i = new Intent(
-					      GeoQuestApp.getContext(),
-					      edu.bonn.mobilegaming.geoquest.Start.class);
-				      i.putExtra(Start.RELOAD_REPO_DATA,
-						 true);
-				      i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-				      setResult(RESULT_OK,
-						i);
-				      finish();
-				      return false;
-				  }
-			      });
-	menuMaker.setupMenu(menu);
-	return true;
-    }
+					public boolean onMenuItemClick(MenuItem item) {
+						Intent i = new Intent(GeoQuestApp.getContext(),
+								edu.bonn.mobilegaming.geoquest.Start.class);
+						i.putExtra(Start.RELOAD_REPO_DATA, true);
+						i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+						setResult(RESULT_OK, i);
+						finish();
+						return false;
+					}
+				});
+		menuMaker.setupMenu(menu);
+		return true;
+	}
 
 }
