@@ -7,8 +7,13 @@ import static com.qeevee.gq.tests.util.TestUtils.startApp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.content.Intent;
+
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.WithAssets;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.Start;
 
 /**
  * Tests the case when the GeoQuest app does not come with any preloaded quests.
@@ -24,7 +29,7 @@ public class InAppGameDeployment_r3q312_Test {
 	// === TESTS FOLLOW =============================================
 
 	@Test
-	public void findOneRepo() {
+	public void findReposAndQuests() {
 		// GIVEN:
 		// nothing
 
@@ -39,6 +44,24 @@ public class InAppGameDeployment_r3q312_Test {
 				new String[] { "r3q302-test-game-2_1" });
 		repoShouldHaveQuests("repo3", 2, new String[] { "r3q302-test-game-3_1",
 				"r3q302-test-game-3_2" });
+	}
+
+	@Test
+	public void checkReposShownInRepoView() {
+		// GIVEN:
+		Start startAct = startApp();
+
+		// WHEN:
+		loadRepoView(startAct);
+
+		// THEN:
+		
+	}
+
+	private void loadRepoView(Start startAct) {
+		Intent intent = new Intent(GeoQuestApp.getContext(),
+				edu.bonn.mobilegaming.geoquest.RepoListActivity.class);
+		startAct.startActivityForResult(intent, 101);
 	}
 
 	// === HELPERS FOLLOW =============================================
