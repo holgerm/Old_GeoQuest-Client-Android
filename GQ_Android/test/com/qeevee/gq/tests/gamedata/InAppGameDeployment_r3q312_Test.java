@@ -55,15 +55,15 @@ public class InAppGameDeployment_r3q312_Test {
 		loadRepoView(startAct);
 
 		// THEN:
-		
+
 	}
+
+	// === HELPERS FOLLOW =============================================
 
 	private void loadRepoView(Start startAct) {
 		Intent intent = new Intent(GeoQuestApp.getContext(),
 				edu.bonn.mobilegaming.geoquest.RepoListActivity.class);
 		startAct.startActivityForResult(intent, 101);
 	}
-
-	// === HELPERS FOLLOW =============================================
 
 }
