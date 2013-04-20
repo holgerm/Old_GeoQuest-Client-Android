@@ -43,6 +43,7 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
 import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
+import edu.bonn.mobilegaming.geoquest.gameaccess.StaticallyDeployedGames;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 
@@ -360,10 +361,14 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		this.osmap = osmap;
 	}
 
+	/**
+	 * @param handler
+	 * @return true if at least one repository and quest has been loaded.
+	 */
 	public static boolean loadRepoData(GeoQuestProgressHandler handler) {
 		// boolean result = loadRepoDataFromServer(handler);
-		// result |= loadRepoDataFromClient(handler);
-		boolean result = loadRepoDataFromClient(handler);
+		boolean result = loadStaticRepoDataFromClient(handler);
+		result |= loadRepoDataFromClient(handler);
 
 		if (handler != null)
 			handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
@@ -373,6 +378,19 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		}
 
 		return result;
+	}
+
+	private static boolean loadStaticRepoDataFromClient(
+			GeoQuestProgressHandler handler) {
+		boolean loadedAtLeastOneRepo = false;
+		for (Iterator<RepositoryItem> iterator = GameDataManager
+				.getRepositories().iterator(); iterator.hasNext();) {
+			RepositoryItem repoItem = (RepositoryItem) iterator.next();
+			repositoryItems.put(repoItem.getName(), repoItem);
+			loadedAtLeastOneRepo = true;
+		}
+		;
+		return loadedAtLeastOneRepo;
 	}
 
 	@SuppressWarnings("unused")
@@ -793,7 +811,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			Log.d(TAG, "Resetting AdaptionEngine.");
 			useAdaptionEngine = true;
 		}
-	} 
+	}
 
 	public void setInGame(boolean isInGame) {
 		this.isInGame = isInGame;
