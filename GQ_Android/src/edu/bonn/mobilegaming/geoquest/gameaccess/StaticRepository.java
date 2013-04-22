@@ -13,19 +13,28 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class StaticRepository extends RepositoryItem {
+	protected boolean initialized = false;
 
 	public StaticRepository(String repoName) {
 		super(repoName);
 	}
 
 	public List<GameItem> getGames() {
-		List<GameItem> gameItems = new ArrayList<GameItem>();
+		if (!initialized) {
+			initializeGames();
+		}
+
+		initializeGames();
+		return games;
+	}
+
+	protected void initializeGames() {
+		games = new ArrayList<GameItem>();
 		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
 		try {
 			String[] questDirNames = assetManager
@@ -52,14 +61,14 @@ public class StaticRepository extends RepositoryItem {
 				XPath xpathSelector = DocumentHelper.createXPath("//game");
 				Element gameNode = (Element) xpathSelector
 						.selectSingleNode(questDoc);
-				gameItems.add(GameItem.createFromGameFileGameNode(gameNode, 0,
+				games.add(GameItem.createFromGameFileGameNode(gameNode, 0,
 						questDirNames[i], this));
 			}
 		} catch (IOException e) {
 			Log.e(StaticRepository.class.getCanonicalName(), e.getMessage());
 			e.printStackTrace();
 		}
-		return gameItems;
+		initialized = true;
 	}
 
 }

@@ -43,7 +43,6 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
 import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
-import edu.bonn.mobilegaming.geoquest.gameaccess.StaticallyDeployedGames;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 
@@ -366,6 +365,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	 * @return true if at least one repository and quest has been loaded.
 	 */
 	public static boolean loadRepoData(GeoQuestProgressHandler handler) {
+		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
 		boolean result = loadStaticRepoDataFromClient(handler);
 		result |= loadRepoDataFromClient(handler);
@@ -397,7 +397,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	private static boolean loadRepoDataFromServer(
 			final GeoQuestProgressHandler progressHandler) {
 		boolean success = false;
-		repositoryItems.clear();
 		if (!GeoQuestApp.getInstance().isOnline())
 			return false;
 		try {
@@ -494,7 +493,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	private static boolean loadRepoDataFromClient(
 			GeoQuestProgressHandler handler) {
 		boolean success = false;
-		repositoryItems.clear();
+		// repositoryItems.clear();
 
 		try {
 			String[] localRepoNames = GameDataManager.getLocalRepoDir(null)
