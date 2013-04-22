@@ -6,7 +6,7 @@ import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import static org.junit.Assert.assertEquals;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.WithAssets;
 
@@ -27,7 +27,7 @@ public class InAppGameDeployment_r1q1_Test {
 	public void findOneRepo() {
 		// GIVEN:
 		// nothing
- 
+
 		// WHEN:
 		startApp();
 

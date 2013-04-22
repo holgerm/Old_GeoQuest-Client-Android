@@ -6,13 +6,15 @@ import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.junit.Assert.assertEquals;
 
-import android.content.Intent;
+import android.widget.ListView;
 
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.WithAssets;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.RepoListActivity;
 import edu.bonn.mobilegaming.geoquest.Start;
 
 /**
@@ -25,6 +27,8 @@ import edu.bonn.mobilegaming.geoquest.Start;
 @RunWith(GQTestRunner.class)
 @WithAssets("../GQ_Android/test/testassets/r3q312/")
 public class InAppGameDeployment_r3q312_Test {
+
+	RepoListActivity repoListAct;
 
 	// === TESTS FOLLOW =============================================
 
@@ -51,19 +55,22 @@ public class InAppGameDeployment_r3q312_Test {
 		// GIVEN:
 		Start startAct = startApp();
 
+		repoListAct = new RepoListActivity();
+
 		// WHEN:
-		loadRepoView(startAct);
+		repoListAct.onCreate(null);
 
 		// THEN:
+		shouldShowRepositories(3, new String[] { "repo1", "repo2", "repo3" });
 
 	}
 
 	// === HELPERS FOLLOW =============================================
 
-	private void loadRepoView(Start startAct) {
-		Intent intent = new Intent(GeoQuestApp.getContext(),
-				edu.bonn.mobilegaming.geoquest.RepoListActivity.class);
-		startAct.startActivityForResult(intent, 101);
+	private void shouldShowRepositories(int expectedNumberOfShownRepos,
+			String... strings) {
+		ListView lv = (ListView) repoListAct.findViewById(R.id.repolistList);
+		assertEquals(expectedNumberOfShownRepos, lv.getChildCount());
 	}
 
 }
