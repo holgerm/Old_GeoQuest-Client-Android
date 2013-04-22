@@ -18,9 +18,9 @@ public class RepoListActivity extends GeoQuestListActivity {
 	private static final String TAG = "GeoQuestListActivity";
 
 	@Override
+	// TODO perhaps we should move most of this function to onResume() (hm)
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.repolist);
 
 		((TextView) findViewById(R.id.repolistHeader))

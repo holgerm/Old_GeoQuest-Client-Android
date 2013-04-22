@@ -5,6 +5,11 @@ import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositori
 import static com.qeevee.gq.tests.util.TestUtils.callMethod;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+import java.util.Iterator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +25,9 @@ import edu.bonn.mobilegaming.geoquest.GameListActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.RepoListActivity;
+import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
+import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
+import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
 
 /**
  * Tests the case when the GeoQuest app does not come with any preloaded quests.
@@ -53,6 +61,20 @@ public class InAppGameDeployment_r3q312_Test {
 				new String[] { "r3q312-test-game-2_1" });
 		repoShouldHaveQuests("repo3", 2, new String[] { "r3q312-test-game-3_1",
 				"r3q312-test-game-3_2" });
+	}
+
+	@Test
+	public void checkRepoFeatures() {
+		// GIVEN:
+		startApp();
+
+		// WHEN:
+		// start repo list activity:
+		repoListAct = new RepoListActivity();
+		repoListAct.onCreate(null);
+
+		// THEN:
+		repoShouldBeOnClient(1);
 	}
 
 	@Test
@@ -94,7 +116,20 @@ public class InAppGameDeployment_r3q312_Test {
 		// THEN:
 		shoudShowQuests(2, new String[] { "r3q312-test-game-3_1",
 				"r3q312-test-game-3_2" });
+	}
 
+	@Test
+	public void checkGameFeatures() {
+		// GIVEN:
+		startApp();
+		repoListAct = new RepoListActivity();
+		repoListAct.onCreate(null);
+
+		// WHEN:
+		selectRepo("repo1");
+
+		// THEN:
+		gameShouldBeOnClient("repo1", 1);
 	}
 
 	// === HELPERS FOLLOW =============================================
@@ -131,4 +166,23 @@ public class InAppGameDeployment_r3q312_Test {
 		assertEquals(expectedNumberOfShownGames, lv.getChildCount());
 	}
 
+	private void repoShouldBeOnClient(int repoNr) {
+		ListView lv = (ListView) repoListAct.findViewById(R.id.repolistList);
+		String shownNameOfRepo = (String) lv.getItemAtPosition(repoNr);
+		assertNotNull(GameDataManager.getRepository(shownNameOfRepo));
+		assertTrue(GameDataManager.getRepository(shownNameOfRepo).isOnClient());
+	}
+
+	private void gameShouldBeOnClient(String repoName, int gameNr) {
+		ListView lv = (ListView) gameListAct.findViewById(R.id.gamelistList);
+		String shownNameOfGame = (String) lv.getItemAtPosition(gameNr);
+		RepositoryItem repo = GameDataManager.getRepository(repoName);
+		assertNotNull(repo);
+		for (Iterator<GameItem> iterator = repo.getGames().iterator(); iterator
+				.hasNext();) {
+			GameItem gameItem = (GameItem) iterator.next();
+			assertTrue(gameItem.isOnClient());
+			assertFalse(gameItem.isDownloadNeeded());
+		}
+	}
 }

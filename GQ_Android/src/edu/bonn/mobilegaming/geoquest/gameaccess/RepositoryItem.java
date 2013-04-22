@@ -76,4 +76,12 @@ public class RepositoryItem {
 		}
 		return null;
 	}
+
+	public boolean isOnServer() {
+		return onServer;
+	}
+
+	public boolean isOnClient() {
+		return onClient;
+	}
 }

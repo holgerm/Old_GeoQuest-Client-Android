@@ -22,6 +22,7 @@ public class StaticRepository extends RepositoryItem {
 
 	public StaticRepository(String repoName) {
 		super(repoName);
+		this.setOnClient();
 	}
 
 	public List<GameItem> getGames() {
