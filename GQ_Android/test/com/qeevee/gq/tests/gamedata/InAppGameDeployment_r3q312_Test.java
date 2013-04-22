@@ -1,16 +1,19 @@
 package com.qeevee.gq.tests.gamedata;
 
-import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.repoShouldHaveQuests;
+import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.checkAllReposAndQuests;
 import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositories;
 import static com.qeevee.gq.tests.util.TestUtils.callMethod;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,6 +46,19 @@ public class InAppGameDeployment_r3q312_Test {
 	RepoListActivity repoListAct;
 	GameListActivity gameListAct;
 
+	Map<String, String[]> expectedReposAndQuests = new HashMap<String, String[]>();
+
+	@Before
+	public void setupReposAndQuests() {
+		expectedReposAndQuests.put("repo1", new String[] {
+				"r3q312-test-game-1_1", "r3q312-test-game-1_2",
+				"r3q312-test-game-1_3" });
+		expectedReposAndQuests.put("repo2",
+				new String[] { "r3q312-test-game-2_1" });
+		expectedReposAndQuests.put("repo3", new String[] {
+				"r3q312-test-game-3_1", "r3q312-test-game-3_2" });
+	}
+
 	// === TESTS FOLLOW =============================================
 
 	@Test
@@ -54,13 +70,8 @@ public class InAppGameDeployment_r3q312_Test {
 		startApp();
 
 		// THEN:
-		shouldHaveRepositories(3, new String[] { "repo1", "repo2", "repo3" });
-		repoShouldHaveQuests("repo1", 3, new String[] { "r3q312-test-game-1_1",
-				"r3q312-test-game-1_2", "r3q312-test-game-1_3" });
-		repoShouldHaveQuests("repo2", 1,
-				new String[] { "r3q312-test-game-2_1" });
-		repoShouldHaveQuests("repo3", 2, new String[] { "r3q312-test-game-3_1",
-				"r3q312-test-game-3_2" });
+		shouldHaveRepositories(expectedReposAndQuests.keySet());
+		checkAllReposAndQuests(expectedReposAndQuests);
 	}
 
 	@Test
@@ -174,8 +185,6 @@ public class InAppGameDeployment_r3q312_Test {
 	}
 
 	private void gameShouldBeOnClient(String repoName, int gameNr) {
-		ListView lv = (ListView) gameListAct.findViewById(R.id.gamelistList);
-		String shownNameOfGame = (String) lv.getItemAtPosition(gameNr);
 		RepositoryItem repo = GameDataManager.getRepository(repoName);
 		assertNotNull(repo);
 		for (Iterator<GameItem> iterator = repo.getGames().iterator(); iterator

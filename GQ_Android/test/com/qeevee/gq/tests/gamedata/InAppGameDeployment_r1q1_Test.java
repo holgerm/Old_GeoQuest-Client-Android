@@ -6,7 +6,7 @@ import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.assertEquals;
+
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.WithAssets;
 
@@ -32,8 +32,8 @@ public class InAppGameDeployment_r1q1_Test {
 		startApp();
 
 		// THEN:
-		shouldHaveRepositories(1, new String[] { "repo1" });
-		repoShouldHaveQuests("repo1", 1, new String[] { "r1q1-test-game" });
+		shouldHaveRepositories(new String[] { "repo1" });
+		repoShouldHaveQuests("repo1", new String[] { "r1q1-test-game" });
 	}
 
 	// === HELPERS FOLLOW =============================================

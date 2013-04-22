@@ -2,12 +2,15 @@ package com.qeevee.gq.tests.gamedata;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
@@ -20,22 +23,39 @@ public class TestGameDataUtil {
 	 * @param expectedRepoNames
 	 *            - in the order of appearance
 	 */
-	public static void shouldHaveRepositories(int expectedNumberOfRepos,
-			String... expectedRepoNames) {
+	public static void shouldHaveRepositories(
+			Collection<String> expectedRepoNames) {
+		shouldHaveRepositories(expectedRepoNames.size());
+		for (Iterator<RepositoryItem> iterator = GameDataManager
+				.getRepositories().iterator(); iterator.hasNext();) {
+			RepositoryItem repositoryItem = (RepositoryItem) iterator.next();
+			assertTrue("Repository " + repositoryItem.getName()
+					+ " was found but not expected",
+					expectedRepoNames.contains(repositoryItem.getName()));
+		}
+	}
+
+	public static void shouldHaveRepositories(String[] expectedRepoNames) {
+		shouldHaveRepositories(Arrays.asList(expectedRepoNames));
+	}
+
+	public static void shouldHaveRepositories(int expectedNrOfRepos) {
 		assertNotNull(GameDataManager.getRepositories());
 		List<RepositoryItem> repos = GameDataManager.getRepositories();
-		assertEquals(expectedNumberOfRepos, repos.size());
-		int i = 0;
-		for (Iterator<RepositoryItem> iterator = repos.iterator(); iterator
-				.hasNext() && i <= expectedNumberOfRepos; i++) {
-			RepositoryItem repositoryItem = (RepositoryItem) iterator.next();
-			assertEquals("Repository Name was expected to be different",
-					expectedRepoNames[i], repositoryItem.getName());
+		assertEquals(expectedNrOfRepos, repos.size());
+	}
+
+	public static void checkAllReposAndQuests(
+			Map<String, String[]> expectedReposAndQuests) {
+		for (Iterator<String> iterator = expectedReposAndQuests.keySet()
+				.iterator(); iterator.hasNext();) {
+			String repoName = (String) iterator.next();
+			repoShouldHaveQuests(repoName, expectedReposAndQuests.get(repoName));
 		}
 	}
 
 	public static void repoShouldHaveQuests(String repoName,
-			int expectedNumberOfQuests, String... expectedQuestNames) {
+			String... expectedQuestNames) {
 		RepositoryItem repo = GameDataManager.getRepository(repoName);
 		assertNotNull(repo);
 		List<String> expectedButNotYetFoundQuests = new ArrayList<String>(
