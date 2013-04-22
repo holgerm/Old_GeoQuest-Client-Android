@@ -20,7 +20,6 @@ import edu.bonn.mobilegaming.geoquest.GameListActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.RepoListActivity;
-import edu.bonn.mobilegaming.geoquest.Start;
 
 /**
  * Tests the case when the GeoQuest app does not come with any preloaded quests.
@@ -59,7 +58,7 @@ public class InAppGameDeployment_r3q312_Test {
 	@Test
 	public void checkReposShownInRepoView() {
 		// GIVEN:
-		Start startAct = startApp();
+		startApp();
 		repoListAct = new RepoListActivity();
 
 		// WHEN:
@@ -72,7 +71,7 @@ public class InAppGameDeployment_r3q312_Test {
 	@Test
 	public void checkQuestsShownInGameListView() {
 		// GIVEN:
-		Start startAct = startApp();
+		startApp();
 		repoListAct = new RepoListActivity();
 		repoListAct.onCreate(null);
 
