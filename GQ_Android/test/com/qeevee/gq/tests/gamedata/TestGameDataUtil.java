@@ -33,6 +33,20 @@ public class TestGameDataUtil {
 					+ " was found but not expected",
 					expectedRepoNames.contains(repositoryItem.getName()));
 		}
+		List<String> repoNames = new ArrayList<String>();
+		for (Iterator<RepositoryItem> iterator = GameDataManager
+				.getRepositories().iterator(); iterator.hasNext();) {
+			RepositoryItem repoItem = (RepositoryItem) iterator.next();
+			repoNames.add(repoItem.getName());
+		}
+		for (Iterator<String> iterator = expectedRepoNames.iterator(); iterator
+				.hasNext();) {
+			String expectedRepoName = (String) iterator.next();
+
+			assertTrue("Repository " + expectedRepoName
+					+ " was expected but not found",
+					repoNames.contains(expectedRepoName));
+		}
 	}
 
 	public static void shouldHaveRepositories(String[] expectedRepoNames) {

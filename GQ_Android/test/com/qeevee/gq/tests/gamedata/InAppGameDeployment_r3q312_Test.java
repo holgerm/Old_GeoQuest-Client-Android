@@ -47,6 +47,7 @@ public class InAppGameDeployment_r3q312_Test {
 	GameListActivity gameListAct;
 
 	Map<String, String[]> expectedReposAndQuests = new HashMap<String, String[]>();
+	Map<String, String[]> expectedReposAndQuestFileNames = new HashMap<String, String[]>();
 
 	@Before
 	public void setupReposAndQuests() {
@@ -57,6 +58,14 @@ public class InAppGameDeployment_r3q312_Test {
 				new String[] { "r3q312-test-game-2_1" });
 		expectedReposAndQuests.put("repo3", new String[] {
 				"r3q312-test-game-3_1", "r3q312-test-game-3_2" });
+		
+		expectedReposAndQuestFileNames.put("repo1", new String[] {
+				"quest1_1", "quest1_2",
+				"quest1_3" });
+		expectedReposAndQuestFileNames.put("repo2",
+				new String[] { "quest2_1" });
+		expectedReposAndQuestFileNames.put("repo3", new String[] {
+				"quest3_1", "quest3_2" });
 	}
 
 	// === TESTS FOLLOW =============================================
@@ -141,6 +150,12 @@ public class InAppGameDeployment_r3q312_Test {
 
 		// THEN:
 		gameShouldBeOnClient("repo1", 1);
+		gamesShouldHaveCorrectFilenames(expectedReposAndQuestFileNames);
+	}
+
+	private void gamesShouldHaveCorrectFilenames(Map<String, String[]> expectedReposAndQuestFileNames) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	// === HELPERS FOLLOW =============================================
