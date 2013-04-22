@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="MissingRegistered">
+        <ignore path="res/layout/main.xml" />
+        <ignore path="res/layout/osmap.xml" />
+    </issue>
     <issue id="MissingTranslation">
         <ignore path="res/values-de" />
     </issue>
