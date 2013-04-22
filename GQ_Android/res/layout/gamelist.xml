@@ -10,7 +10,7 @@
 	android:paddingLeft="3dp" android:paddingRight="3dp"
 	android:paddingTop="3dp" android:paddingBottom="3dp" />
 
-	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_weight="1"
+	<ListView android:id="@+id/gamelistList" android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1"
 		android:drawSelectorOnTop="false" />
 </LinearLayout>
