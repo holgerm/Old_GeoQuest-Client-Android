@@ -26,6 +26,8 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
  */
 public class GameDataManager {
 
+	private static final String TAG = GameDataManager.class.getCanonicalName();
+
 	/**
 	 * 
 	 * TODO does it have to be public? (hm:) No as soon as we have all game
@@ -114,13 +116,13 @@ public class GameDataManager {
 			if (blocking)
 				GeoQuestApp.blockInteractionOnCurrentActivityByMediaPlayer();
 		} catch (IllegalArgumentException e) {
-			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			Log.e(TAG, "Could not start Media Player. " + e);
 			return false;
 		} catch (IllegalStateException e) {
-			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			Log.e(TAG, "Could not start Media Player. " + e);
 			return false;
 		} catch (IOException e) {
-			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			Log.e(TAG, "Could not start Media Player. " + e);
 			return false;
 		}
 		return true;
@@ -128,7 +130,7 @@ public class GameDataManager {
 
 	public static void cleanMediaPlayer() {
 		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isLooping()) {
-			Log.d(GeoQuestApp.TAG, "MediaPlayer Resources were cleaned");
+			Log.d(TAG, "MediaPlayer Resources were cleaned");
 			GameDataManager.mPlayer.stop();
 			GameDataManager.mPlayer.release();
 		}
@@ -136,7 +138,7 @@ public class GameDataManager {
 
 	public static void stopMediaPlayer() {
 		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isPlaying()) {
-			Log.d(GeoQuestApp.TAG, "MediaPlayer was stoped");
+			Log.d(TAG, "MediaPlayer was stoped");
 			GameDataManager.mPlayer.stop();
 		}
 	}

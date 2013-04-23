@@ -66,7 +66,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static final int DIALOG_ID_DOWNLOAD_REPO_DATA = 2;
 
 	public static ExecutorService singleThreadExecutor;
-	public static final String TAG = "GeoQuestApp";
+	private static final String TAG = "GeoQuestApp";
 	public static final String MAIN_PREF_FILE_NAME = "GeoQuestPreferences";
 	public static final String GQ_MANUAL_LOCATION_PROVIDER = "GeoQuest Manual Location Provider";
 	private static GeoQuestApp theApp = null;
