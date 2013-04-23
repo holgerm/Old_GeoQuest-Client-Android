@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.qeevee.ui.ZoomImageView;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
@@ -95,7 +95,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	    currentDialogItem = getNPCTalk().getNextDialogItem();
 	    displaySpeaker();
 	    if (currentDialogItem.getAudioFilePath() != null)
-		GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
+		GameDataManager.playAudio(currentDialogItem.getAudioFilePath(),
 				      currentDialogItem.blocking);
 	    ticker = new WordTicker();
 	    ticker.start();

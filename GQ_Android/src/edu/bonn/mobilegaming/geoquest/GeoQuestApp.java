@@ -2,7 +2,6 @@ package edu.bonn.mobilegaming.geoquest;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
-import com.qeevee.gq.res.ResourceManager;
 
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
@@ -68,7 +66,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static final int DIALOG_ID_DOWNLOAD_REPO_DATA = 2;
 
 	public static ExecutorService singleThreadExecutor;
-	private static final String TAG = "GeoQuestApp";
+	public static final String TAG = "GeoQuestApp";
 	public static final String MAIN_PREF_FILE_NAME = "GeoQuestPreferences";
 	public static final String GQ_MANUAL_LOCATION_PROVIDER = "GeoQuest Manual Location Provider";
 	private static GeoQuestApp theApp = null;
@@ -181,7 +179,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			activities.remove(allActivities[i]);
 			allActivities[i].finish();
 		}
-		cleanMediaPlayer();
+		GameDataManager.cleanMediaPlayer();
 		System.exit(0);
 	}
 
@@ -639,7 +637,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public void endGame() {
-		stopAudio();
+		GameDataManager.stopAudio();
 		Mission.clean();
 		HotspotOld.clean();
 		Variables.clean();
@@ -658,7 +656,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		}
 		setInGame(false);
 		setRunningGameDir(null);
-		cleanMediaPlayer();
+		GameDataManager.cleanMediaPlayer();
 	}
 
 	private boolean isGameActivity(Activity activity) {
@@ -701,75 +699,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 					"No ressource file found at path \"" + resourcePath + "\".");
 	}
 
-	// SOUND STUFF FOLLOWS:
-
-	private static MediaPlayer mPlayer = null;
-
-	public static void cleanMediaPlayer() {
-		if (mPlayer != null && mPlayer.isLooping()) {
-			Log.d(TAG, "MediaPlayer Resources were cleaned");
-			mPlayer.stop();
-			mPlayer.release();
-		}
-	}
-
-	public static void stopMediaPlayer() {
-		if (mPlayer != null && mPlayer.isPlaying()) {
-			Log.d(TAG, "MediaPlayer was stoped");
-			mPlayer.stop();
-		}
-	}
-
-	public static boolean mediaPlayerIsPlaying() {
-		if (mPlayer != null) {
-			return mPlayer.isPlaying();
-		}
-		return false;
-	}
-
-	/**
-	 * Plays a resource sound file either blocking or non-blocking regarding the
-	 * user interaction options on the currently active mission or tool.
-	 * 
-	 * @param path
-	 *            is relative as specified in the game.xml (e.g.
-	 *            "sounds/beep.mp3").
-	 * @param blocking
-	 *            determines whether the interaction is blocked until the media
-	 *            file has been played completely.
-	 * @return false if player could not start for some reason.
-	 */
-	public static boolean playAudio(String path, boolean blocking) {
-		stopAudio();
-		mPlayer = new MediaPlayer();
-		try {
-			mPlayer.setDataSource(ResourceManager.getResourcePath(path));
-			mPlayer.prepare();
-			mPlayer.start();
-			if (blocking)
-				blockInteractionOnCurrentActivityByMediaPlayer();
-		} catch (IllegalArgumentException e) {
-			Log.e(TAG, "Could not start Media Player. " + e);
-			return false;
-		} catch (IllegalStateException e) {
-			Log.e(TAG, "Could not start Media Player. " + e);
-			return false;
-		} catch (IOException e) {
-			Log.e(TAG, "Could not start Media Player. " + e);
-			return false;
-		}
-		return true;
-	}
-
-	public static void stopAudio() {
-		if (mPlayer != null) {
-			if (mPlayer.isPlaying()) {
-				mPlayer.stop();
-			}
-			mPlayer.reset();
-		}
-	}
-
 	/**
 	 * Blocks the user interaction on the currently active mission or tool until
 	 * the media player signals completion. This is used for example to prevent
@@ -784,13 +713,14 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		else
 			releaseCallBack = getCurrentActivity().blockInteraction(
 					getInstance());
-		mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+		GameDataManager.mPlayer
+				.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
-			public void onCompletion(MediaPlayer mp) {
-				// TODO Auto-generated method stub
-				releaseCallBack.releaseInteraction(getInstance());
-			}
-		});
+					public void onCompletion(MediaPlayer mp) {
+						// TODO Auto-generated method stub
+						releaseCallBack.releaseInteraction(getInstance());
+					}
+				});
 	}
 
 	public boolean isInGame() {

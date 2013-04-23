@@ -19,6 +19,7 @@ import android.util.Log;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 
+import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.mission.InteractiveMission;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 
@@ -300,7 +301,7 @@ public class Mission implements Serializable {
 						+ " is already running and not started again.");
 				return;
 			}
-			GeoQuestApp.stopAudio();
+			GameDataManager.stopAudio();
 			getMainActivity().startActivityForResult(startingIntent, 1);
 		} else
 			Log.e(this.getClass().getName(),

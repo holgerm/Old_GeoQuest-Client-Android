@@ -1,6 +1,6 @@
 package com.qeevee.gq.rules.act;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 
 public class PlayAudio extends Action {
 
@@ -12,7 +12,7 @@ public class PlayAudio extends Action {
     @Override
     public void execute() {
 	if (params.containsKey("file"))
-	    GeoQuestApp.playAudio(params.get("file"),
+	    GameDataManager.playAudio(params.get("file"),
 				  false);
     }
 

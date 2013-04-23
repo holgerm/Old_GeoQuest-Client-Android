@@ -4,11 +4,16 @@
 package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.qeevee.gq.res.ResourceManager;
+
+import android.media.MediaPlayer;
 import android.os.Environment;
+import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 /**
@@ -86,4 +91,71 @@ public class GameDataManager {
 		}
 		return null;
 	}
+
+	/**
+	 * Plays a resource sound file either blocking or non-blocking regarding the
+	 * user interaction options on the currently active mission or tool.
+	 * 
+	 * @param path
+	 *            is relative as specified in the game.xml (e.g.
+	 *            "sounds/beep.mp3").
+	 * @param blocking
+	 *            determines whether the interaction is blocked until the media
+	 *            file has been played completely.
+	 * @return false if player could not start for some reason.
+	 */
+	public static boolean playAudio(String path, boolean blocking) {
+		GameDataManager.stopAudio();
+		GameDataManager.mPlayer = new MediaPlayer();
+		try {
+			GameDataManager.mPlayer.setDataSource(ResourceManager.getResourcePath(path));
+			GameDataManager.mPlayer.prepare();
+			GameDataManager.mPlayer.start();
+			if (blocking)
+				GeoQuestApp.blockInteractionOnCurrentActivityByMediaPlayer();
+		} catch (IllegalArgumentException e) {
+			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			return false;
+		} catch (IllegalStateException e) {
+			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			return false;
+		} catch (IOException e) {
+			Log.e(GeoQuestApp.TAG, "Could not start Media Player. " + e);
+			return false;
+		}
+		return true;
+	}
+
+	public static void cleanMediaPlayer() {
+		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isLooping()) {
+			Log.d(GeoQuestApp.TAG, "MediaPlayer Resources were cleaned");
+			GameDataManager.mPlayer.stop();
+			GameDataManager.mPlayer.release();
+		}
+	}
+
+	public static void stopMediaPlayer() {
+		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isPlaying()) {
+			Log.d(GeoQuestApp.TAG, "MediaPlayer was stoped");
+			GameDataManager.mPlayer.stop();
+		}
+	}
+
+	public static boolean mediaPlayerIsPlaying() {
+		if (GameDataManager.mPlayer != null) {
+			return GameDataManager.mPlayer.isPlaying();
+		}
+		return false;
+	}
+
+	public static void stopAudio() {
+		if (GameDataManager.mPlayer != null) {
+			if (GameDataManager.mPlayer.isPlaying()) {
+				GameDataManager.mPlayer.stop();
+			}
+			GameDataManager.mPlayer.reset();
+		}
+	}
+
+	public static MediaPlayer mPlayer = null;
 }
