@@ -176,4 +176,8 @@
     <string name="error_dialog_title">Sorry, but there is a problem.</string>
     <string name="error_getting_device_location">Unfortunately the current position could not be determined.</string>
 
+    <!-- Score -->
+    <string name="scoreIncreasedTo">Yeah: You increased your score to</string>
+    <string name="scoreDecreasedTo">Oops: Your score ran down to only</string>
+    
 </resources>

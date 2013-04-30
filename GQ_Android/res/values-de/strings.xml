@@ -180,4 +180,8 @@
     <string name="error_fetching_local_repo_list">Fehler beim Laden oder Verarbeiten der lokalen Repository-Daten!</string>
     <string name="error_dialog_title">Entschuldigung, aber es gibt ein Problem.</string>
 
+    <!-- Score -->
+    <string name="scoreIncreasedTo">Prima: Dein Punktestand ist jetzt schon</string>
+    <string name="scoreDecreasedTo">Oh weh: Dein Punktestand ist nur noch</string>
+
 </resources>
