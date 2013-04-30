@@ -48,7 +48,7 @@ public abstract class GeoQuestActivity extends Activity {
 	startLocalGameDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 	startLocalGameDialog.setCancelable(false);
 
-	startContextManager();
+//	startContextManager();
     }
 
     @Override
