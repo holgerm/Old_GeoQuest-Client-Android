@@ -19,8 +19,8 @@ public class SetVariable extends Action {
 	@Override
 	public void execute() {
 		Variables.setValue(params.get("var"),
-				Expressions.evaluate((Element)elements.get("value").selectSingleNode("*")));
+				Expressions.evaluate((Element) elements.get("value")
+						.selectSingleNode("*")));
 	}
 
 }
-

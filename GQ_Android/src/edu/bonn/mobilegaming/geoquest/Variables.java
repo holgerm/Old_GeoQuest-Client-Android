@@ -47,9 +47,9 @@ public class Variables {
 	 */
 	public static final String LOCATION_SUFFIX = ".location";
 
-	public static final String LOCATION_LAT = "$_location.lat";
-	public static final String LOCATION_LONG = "$_location.long";
 	public static final String SYSTEM_PREFIX = "$_";
+	public static final String LOCATION_LAT = SYSTEM_PREFIX + "location.lat";
+	public static final String LOCATION_LONG = SYSTEM_PREFIX + "location.long";
 
 	/**
 	 * Checks if the given key exists in the variables hashmap.
@@ -73,7 +73,8 @@ public class Variables {
 	 * 
 	 * @param varName
 	 *            [HOTSPOT_PREFIX]{id}{SUFFIX}
-	 * @return the stored value or if no variable among that name is stored "0.0"
+	 * @return the stored value or if no variable among that name is stored
+	 *         "0.0"
 	 */
 	public static Object getValue(String var) {
 		String varName = var.trim();
