@@ -27,25 +27,26 @@ public class Score extends Action {
 		if (!Variables.isDefined(SCORE_VARIABLE_NAME)) {
 			Variables.setValue(SCORE_VARIABLE_NAME, 0);
 		}
-		int score = Integer.parseInt(params.get("value"));
-		int newScore = storeScore(score);
-		if (score > 0) {
+		int deltaScore = Integer.parseInt(params.get("value"));
+		int resultingScore = addToScore(deltaScore);
+		if (deltaScore > 0) {
 			GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedTo)
-					+ " " + newScore);
+					+ " " + resultingScore);
 		}
-		if (score < 0) {
+		if (deltaScore < 0) {
 			GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedTo)
-					+ " " + newScore);
+					+ " " + resultingScore);
 		}
-		storeScore(score);
 	}
 
-	private int storeScore(int score) {
-		String varName = SCORE_VARIABLE_NAME;
-		Variables.setValue(varName, (Integer) Variables.getValue(varName)
-				+ score);
-		return (Integer) Variables.getValue(varName);
+	private int addToScore(int score) {
+		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE_NAME)
+				+ score;
+		if (resultScore < 0)
+			resultScore = 0;
+		Variables.setValue(SCORE_VARIABLE_NAME, resultScore);
+		return resultScore;
 	}
 }
