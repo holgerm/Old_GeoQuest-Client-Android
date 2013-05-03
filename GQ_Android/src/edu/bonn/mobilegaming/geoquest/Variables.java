@@ -132,6 +132,12 @@ public class Variables {
 		variables.put(varName.trim(), value);
 	}
 
+	public static void setValueIfUndefined(String varName, Object value) {
+		if (!isDefined(varName)) {
+			setValue(varName, value);
+		}
+	}
+
 	public static void clean() {
 		variables.clear();
 	}

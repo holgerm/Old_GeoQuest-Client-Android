@@ -10,7 +10,7 @@ import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class Score extends Action {
 
-	private static final String SCORE_VARIABLE_NAME = Variables.SYSTEM_PREFIX
+	static final String SCORE_VARIABLE = Variables.SYSTEM_PREFIX
 			+ "score";
 
 	private Context ctx = GeoQuestApp.getContext();
@@ -24,8 +24,8 @@ public class Score extends Action {
 
 	@Override
 	public void execute() {
-		if (!Variables.isDefined(SCORE_VARIABLE_NAME)) {
-			Variables.setValue(SCORE_VARIABLE_NAME, 0);
+		if (!Variables.isDefined(SCORE_VARIABLE)) {
+			Variables.setValue(SCORE_VARIABLE, 0);
 		}
 		int deltaScore = Integer.parseInt(params.get("value"));
 		int resultingScore = addToScore(deltaScore);
@@ -42,11 +42,11 @@ public class Score extends Action {
 	}
 
 	private int addToScore(int score) {
-		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE_NAME)
+		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE)
 				+ score;
 		if (resultScore < 0)
 			resultScore = 0;
-		Variables.setValue(SCORE_VARIABLE_NAME, resultScore);
+		Variables.setValue(SCORE_VARIABLE, resultScore);
 		return resultScore;
 	}
 }

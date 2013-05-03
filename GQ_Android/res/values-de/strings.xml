@@ -184,4 +184,8 @@
     <string name="scoreIncreasedTo">Prima: Dein Punktestand ist jetzt schon</string>
     <string name="scoreDecreasedTo">Oh weh: Dein Punktestand ist nur noch</string>
 
+    <!-- Variable Defaults -->
+    <string name="varDefaultUserName">Unbenannter Spieler</string>
+    <string name="varDefaultUserID">0</string>
+
 </resources>
