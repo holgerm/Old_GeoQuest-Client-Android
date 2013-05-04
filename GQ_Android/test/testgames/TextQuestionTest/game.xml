@@ -158,4 +158,40 @@
 			</rule>
 		</onEnd>
 	</mission>
+	<mission
+		id="RexExp_WordsAccepted"
+		type="TextQuestion"
+		loopUntilSuccess="true"
+		prompt="This is my personal hint for you ..."
+		question="Text of the question."
+		storeAcceptedAnswerInVariable="testVariable"
+	>
+		<onFail>
+			<rule>
+				<action
+					type="SetVariable"
+					var="onFail"
+				>
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action
+					type="SetVariable"
+					var="onEnd"
+				>
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onEnd>
+		<answers>
+			<answer>(\w+\s*)+</answer>
+		</answers>
+			</mission>
 </game>
