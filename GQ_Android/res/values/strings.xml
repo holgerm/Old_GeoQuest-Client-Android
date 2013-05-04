@@ -181,5 +181,7 @@
     <string name="scoreDecreasedTo">Oops: Your score ran down to only</string>
 
     <!-- Variable Defaults -->
-    <string name="varDefaultUserName">Unnamed Player</string><string name="varDefaultUserID">0</string>
+    <string name="varDefaultUserName">Unnamed Player</string>
+    <string name="varDefaultUserID">0</string>
+
 </resources>
