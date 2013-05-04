@@ -180,7 +180,7 @@ public class TextQuestion extends InteractiveMission {
 		boolean found = false;
 		for (Iterator<String> iterator = answers.iterator(); iterator.hasNext();) {
 			String answer = (String) iterator.next();
-			found |= answer.equals(givenAnswer);
+			found |= givenAnswer.matches(answer);
 		}
 		return found;
 	}
@@ -192,7 +192,6 @@ public class TextQuestion extends InteractiveMission {
 			setMode(MODE_REPLY_TO_WRONG_ANSWER);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void initContent() {
 		questionText = getMissionAttribute("question",
 				XMLUtilities.NECESSARY_ATTRIBUTE);
@@ -201,6 +200,7 @@ public class TextQuestion extends InteractiveMission {
 		replyTextOnWrong = getMissionAttribute("replyOnWrong",
 				R.string.question_reply_wrong_default);
 
+		@SuppressWarnings("unchecked")
 		List<Element> xmlAnswers = ((Element) mission.xmlMissionNode)
 				.selectNodes("answers/answer");
 		for (Iterator<Element> j = xmlAnswers.iterator(); j.hasNext();) {
