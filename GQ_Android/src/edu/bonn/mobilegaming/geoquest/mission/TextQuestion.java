@@ -24,6 +24,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
@@ -52,6 +53,7 @@ public class TextQuestion extends InteractiveMission {
 	private static final int MODE_REPLY_TO_WRONG_ANSWER = 3;
 
 	public List<String> answers = new ArrayList<String>();
+	private String storeVariable;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class TextQuestion extends InteractiveMission {
 		// real change in mode:
 		mode = newMode;
 
+		String givenAnswer = answerEditText.getText().toString();
+
 		switch (mode) {
 		case MODE_QUESTION:
 			textView.setText(questionText);
@@ -83,8 +87,10 @@ public class TextQuestion extends InteractiveMission {
 			textView.setText(replyTextOnCorrect);
 			answerEditText.setVisibility(View.INVISIBLE);
 			button.setText(R.string.button_text_proceed);
-			registerMissionResult(mission.id, answerEditText.getText()
-					.toString());
+			registerMissionResult(mission.id, givenAnswer);
+			if (storeVariable != null) {
+				Variables.setValue(storeVariable, givenAnswer);
+			}
 			invokeOnSuccessEvents();
 			button.setOnClickListener(replyModeButtonOnClickListener);
 			break;
@@ -95,8 +101,7 @@ public class TextQuestion extends InteractiveMission {
 				button.setText(R.string.button_text_repeat);
 			else
 				button.setText(R.string.button_text_proceed);
-			registerMissionResult(mission.id, answerEditText.getText()
-					.toString());
+			registerMissionResult(mission.id, givenAnswer);
 			invokeOnFailEvents();
 			button.setOnClickListener(replyModeButtonOnClickListener);
 			break;
@@ -191,7 +196,7 @@ public class TextQuestion extends InteractiveMission {
 		else
 			setMode(MODE_REPLY_TO_WRONG_ANSWER);
 	}
-
+ 
 	private void initContent() {
 		questionText = getMissionAttribute("question",
 				XMLUtilities.NECESSARY_ATTRIBUTE);
@@ -199,6 +204,9 @@ public class TextQuestion extends InteractiveMission {
 				R.string.question_reply_correct_default);
 		replyTextOnWrong = getMissionAttribute("replyOnWrong",
 				R.string.question_reply_wrong_default);
+		storeVariable = (String) getMissionAttribute(
+				"storeAcceptedAnswerInVariable",
+				XMLUtilities.OPTIONAL_ATTRIBUTE);
 
 		@SuppressWarnings("unchecked")
 		List<Element> xmlAnswers = ((Element) mission.xmlMissionNode)
