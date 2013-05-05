@@ -177,9 +177,10 @@
     <string name="error_getting_device_location">Unfortunately the current position could not be determined.</string>
 
     <!-- Score -->
-    <string name="scoreIncreasedTo">Yeah: You increased your score to</string>
-    <string name="scoreDecreasedTo">Oops: Your score ran down to only</string>
-
+    <string name="scoreIncreasedBy">Yeah: You increased your score by </string>
+    <string name="scoreDecreasedBy">Oops: Your score ran down by </string>
+    <string name="scoreZero">Ooh: Your score is zero!</string>
+    
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
     <string name="varDefaultUserID">0</string>

@@ -10,8 +10,7 @@ import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class Score extends Action {
 
-	static final String SCORE_VARIABLE = Variables.SYSTEM_PREFIX
-			+ "score";
+	static final String SCORE_VARIABLE = Variables.SYSTEM_PREFIX + "score";
 
 	private Context ctx = GeoQuestApp.getContext();
 
@@ -29,21 +28,21 @@ public class Score extends Action {
 		}
 		int deltaScore = Integer.parseInt(params.get("value"));
 		int resultingScore = addToScore(deltaScore);
-		if (deltaScore > 0) {
-			GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
-			GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedTo)
+		if (resultingScore == 0) {
+			GeoQuestApp.showMessage(ctx.getText(R.string.scoreZero));
+		} else if (deltaScore > 0) {
+			// GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
+			GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedBy)
 					+ " " + resultingScore);
-		}
-		if (deltaScore < 0) {
-			GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
-			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedTo)
+		} else if (deltaScore < 0) {
+			// GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
+			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
 					+ " " + resultingScore);
 		}
 	}
 
 	private int addToScore(int score) {
-		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE)
-				+ score;
+		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE) + score;
 		if (resultScore < 0)
 			resultScore = 0;
 		Variables.setValue(SCORE_VARIABLE, resultScore);
