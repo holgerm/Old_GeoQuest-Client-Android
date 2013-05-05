@@ -104,6 +104,7 @@ public class TextQuestion extends InteractiveMission {
 			registerMissionResult(mission.id, givenAnswer);
 			invokeOnFailEvents();
 			button.setOnClickListener(replyModeButtonOnClickListener);
+			button.setEnabled(true);
 			break;
 		}
 
@@ -196,7 +197,7 @@ public class TextQuestion extends InteractiveMission {
 		else
 			setMode(MODE_REPLY_TO_WRONG_ANSWER);
 	}
- 
+
 	private void initContent() {
 		questionText = getMissionAttribute("question",
 				XMLUtilities.NECESSARY_ATTRIBUTE);
