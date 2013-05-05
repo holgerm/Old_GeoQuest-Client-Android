@@ -30,11 +30,11 @@ public class Score extends Action {
 		} else if (deltaScore > 0) {
 			// GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedBy)
-					+ " " + resultingScore);
+					+ " " + deltaScore);
 		} else if (deltaScore < 0) {
 			// GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
-					+ " " + resultingScore);
+					+ " " + deltaScore);
 		}
 	}
 
