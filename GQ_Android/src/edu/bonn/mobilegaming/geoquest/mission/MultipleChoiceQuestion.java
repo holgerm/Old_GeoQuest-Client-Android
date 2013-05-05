@@ -88,21 +88,18 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 
 	private void setMCButtonPanel(boolean loop) {
 		mcButtonPanel.addView(bottomButton);
-		// set the button text:
-		if (selectedAnswer.nextbuttontext != null) {
-			// game specific if specified:
-			bottomButton.setText(selectedAnswer.nextbuttontext);
-		} else {
-			// generic if not specified:
-			if (!selectedAnswer.correct && loop) {
+
+		if (!selectedAnswer.correct && loop) {
+			if (selectedAnswer.nextbuttontext != null)
+				// game specific if specified:
+				bottomButton.setText(selectedAnswer.nextbuttontext);
+			else
 				bottomButton
 						.setText(getString(R.string.question_repeat_button));
-				bottomButton.setOnClickListener(restart);
-			} else {
-				bottomButton
-						.setText(getString(R.string.question_proceed_button));
-				bottomButton.setOnClickListener(proceed);
-			}
+			bottomButton.setOnClickListener(restart);
+		} else {
+			bottomButton.setText(getString(R.string.question_proceed_button));
+			bottomButton.setOnClickListener(proceed);
 		}
 	}
 
