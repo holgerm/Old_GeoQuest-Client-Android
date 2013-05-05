@@ -869,4 +869,5 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean isMissionRunning(String id) {
 		return getInstance().missionActivities.containsKey(id);
 	}
+
 }

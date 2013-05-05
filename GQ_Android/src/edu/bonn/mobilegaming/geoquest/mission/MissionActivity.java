@@ -20,163 +20,156 @@ import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
 
 public abstract class MissionActivity extends GeoQuestActivity implements
-	MissionOrToolActivity {
-    protected Mission mission;
+		MissionOrToolActivity {
+	protected Mission mission;
 
-    public Mission getMission() {
-	return mission;
-    }
-
-    private ContextManager contextManager;
-    protected int missionResultInPercent = 100;
-
-    /** Intent used to return values to the parent mission */
-    protected Intent result;
-
-    public static String getPackageBaseName() {
-	String className = MissionActivity.class.getName();
-	int indexOfLastDot = className.lastIndexOf('.');
-	return className.substring(0,
-				   indexOfLastDot + 1);
-    }
-
-    /**
-     * Back button Handler quits the Mission, when back button is hit.
-     */
-    @Override
-    public boolean onKeyDown(final int keyCode,
-			     KeyEvent event) {
-	switch (keyCode) {
-
-	case KeyEvent.KEYCODE_BACK: // Back => Cancel
-	    if (mission.cancelStatus == 0) {
-		Log.d(this.getClass().getName(),
-		      "Back Button was pressed, but mission may not be cancelled.");
-		return true;
-	    } else {
-		finish(mission.cancelStatus);
-		return true;
-	    }
-	case KeyEvent.KEYCODE_SEARCH:
-	    // ignore search button
-	    break;
+	public Mission getMission() {
+		return mission;
 	}
-	return super.onKeyDown(keyCode,
-			       event);
-    }
 
-    /**
-     * Finishes the mission activity and sets the result code
-     * 
-     * TODO only real stati should be allowed, i.e. FAIL and SUCCESS. Hence, we
-     * can use boolena here and make calls much more readable. Cf.
-     * {@link MultipleChoiceQuestion}.
-     * 
-     * @param status
-     *            Mission.STATUS_SUCCESS or FAIL or NEW
-     */
-    public void finish(Double status) {
-	mission.setStatus(status);
+	private ContextManager contextManager;
+	protected int missionResultInPercent = 100;
 
-	// TODO -- Sabine -- Result anpassen., bzw. in jeder Mission einzel
-	// aufrufen. mission.getResult()....
-	// contextManager.setEndValues(mission.id, missionResultInPercent);
-	mission.applyOnEndRules();
-	GeoQuestApp.getInstance().removeMissionActivity(mission.id);
-	finish();
-    }
+	/** Intent used to return values to the parent mission */
+	protected Intent result;
 
-    @Override
-    protected void onResume() {
-	super.onResume();
-	GeoQuestApp.setCurrentActivity(this);
-    }
+	public static String getPackageBaseName() {
+		String className = MissionActivity.class.getName();
+		int indexOfLastDot = className.lastIndexOf('.');
+		return className.substring(0, indexOfLastDot + 1);
+	}
 
-    /**
-     * Called by the android framework when the mission is created. Reads some
-     * basic informations from the xml file.
-     * 
-     * @param savedInstanceState
-     *            Bundle with the id of the mission. If null then this is the
-     *            first mission and the id is zero.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	Log.d(this.getClass().getName(),
-	      "creating activity");
-	GeoQuestApp.setCurrentActivity(this);
-	ibm = new InteractionBlockingManager(this);
+	/**
+	 * Back button Handler quits the Mission, when back button is hit.
+	 */
+	@Override
+	public boolean onKeyDown(final int keyCode, KeyEvent event) {
+		switch (keyCode) {
 
-	// get extras
-	Bundle extras = getIntent().getExtras();
-	String id = extras.getString("missionID");
-	mission = Mission.get(id);
+		case KeyEvent.KEYCODE_BACK: // Back => Cancel
+			if (mission.cancelStatus == 0) {
+				Log.d(this.getClass().getName(),
+						"Back Button was pressed, but mission may not be cancelled.");
+				return true;
+			} else {
+				finish(mission.cancelStatus);
+				return true;
+			}
+		case KeyEvent.KEYCODE_SEARCH:
+			// ignore search button
+			break;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
-	contextManager = GeoQuestActivity.contextManager;
-	if (contextManager != null)
-	    contextManager.setStartValues(id);
+	/**
+	 * Finishes the mission activity and sets the result code
+	 * 
+	 * TODO only real stati should be allowed, i.e. FAIL and SUCCESS. Hence, we
+	 * can use boolena here and make calls much more readable. Cf.
+	 * {@link MultipleChoiceQuestion}.
+	 * 
+	 * @param status
+	 *            Mission.STATUS_SUCCESS or FAIL or NEW
+	 */
+	public void finish(Double status) {
+		mission.setStatus(status);
 
-	mission.setStatus(Globals.STATUS_RUNNING);
-	mission.applyOnStartRules();
+		// TODO -- Sabine -- Result anpassen., bzw. in jeder Mission einzel
+		// aufrufen. mission.getResult()....
+		// contextManager.setEndValues(mission.id, missionResultInPercent);
+		mission.applyOnEndRules();
+		GeoQuestApp.getInstance().removeMissionActivity(mission.id);
+		finish();
+	}
 
-	super.onCreate(savedInstanceState);
-    }
+	@Override
+	protected void onResume() {
+		super.onResume();
+		GeoQuestApp.setCurrentActivity(this);
+	}
 
-    /**
-     * TODO should be moved to an XMLHelper class as a static helper method.
-     * Requires the mission node to be passed as additional argument.
-     * 
-     * TODO create versions for boolean and Integer also.
-     * 
-     * Also move the static flag NECESSARY_ATTRIBUTE.
-     * 
-     * @param attributeName
-     * @param defaultAsResourceID
-     *            either a defined resource string or
-     *            {@link XMLUtilities#NECESSARY_ATTRIBUTE} to specify that this
-     *            attribute MUST be given explicitly, or
-     *            {@link XMLUtilities#OPTIONAL_ATTRIBUTE} to state that it can
-     *            be omitted even without a default. In the latter case the
-     *            method returns null.
-     * @return the corresponding attribute value as specified in the game.xml or
-     *         null if the attribute is optional and not specified
-     * @throws IllegalArgumentException
-     *             if the attribute is necessary but not given in the game.xml
-     */
-    public CharSequence getMissionAttribute(String attributeName,
-					    int defaultAsResourceID) {
-	return XMLUtilities.getAttribute(attributeName,
-					 defaultAsResourceID,
-					 mission.xmlMissionNode);
-    }
+	/**
+	 * Called by the android framework when the mission is created. Reads some
+	 * basic informations from the xml file.
+	 * 
+	 * @param savedInstanceState
+	 *            Bundle with the id of the mission. If null then this is the
+	 *            first mission and the id is zero.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Log.d(this.getClass().getName(), "creating activity");
+		GeoQuestApp.setCurrentActivity(this);
+		ibm = new InteractionBlockingManager(this);
 
-    /**
-     * Same as {@link #getMissionAttribute(String, int)} but assuming an
-     * optional attribute (cf. {@link XMLUtilities#OPTIONAL_ATTRIBUTE}).
-     * 
-     * @param attributeName
-     * @return
-     */
-    public CharSequence getMissionAttribute(String attributeName) {
-	return XMLUtilities.getAttribute(attributeName,
-					 XMLUtilities.OPTIONAL_ATTRIBUTE,
-					 mission.xmlMissionNode);
-    }
+		// get extras
+		Bundle extras = getIntent().getExtras();
+		String id = extras.getString("missionID");
+		mission = Mission.get(id);
 
-    public Element getXML() {
-	return mission.xmlMissionNode;
-    }
+		contextManager = GeoQuestActivity.contextManager;
+		if (contextManager != null)
+			contextManager.setStartValues(id);
 
-    // TODO Blocking stuff should be moved to UI class:
-    protected InteractionBlockingManager ibm;
+		mission.setStatus(Globals.STATUS_RUNNING);
+		mission.applyOnStartRules();
 
-    public BlockableAndReleasable
-	    blockInteraction(InteractionBlocker newBlocker) {
-	return ibm.blockInteraction(newBlocker);
-    }
+		super.onCreate(savedInstanceState);
+	}
 
-    public void releaseInteraction(InteractionBlocker blocker) {
-	ibm.releaseInteraction(blocker);
-    }
+	/**
+	 * TODO should be moved to an XMLHelper class as a static helper method.
+	 * Requires the mission node to be passed as additional argument.
+	 * 
+	 * TODO create versions for boolean and Integer also.
+	 * 
+	 * Also move the static flag NECESSARY_ATTRIBUTE.
+	 * 
+	 * @param attributeName
+	 * @param defaultAsResourceID
+	 *            either a defined resource string or
+	 *            {@link XMLUtilities#NECESSARY_ATTRIBUTE} to specify that this
+	 *            attribute MUST be given explicitly, or
+	 *            {@link XMLUtilities#OPTIONAL_ATTRIBUTE} to state that it can
+	 *            be omitted even without a default. In the latter case the
+	 *            method returns null.
+	 * @return the corresponding attribute value as specified in the game.xml or
+	 *         null if the attribute is optional and not specified
+	 * @throws IllegalArgumentException
+	 *             if the attribute is necessary but not given in the game.xml
+	 */
+	public CharSequence getMissionAttribute(String attributeName,
+			int defaultAsResourceID) {
+		return XMLUtilities.getAttribute(attributeName, defaultAsResourceID,
+				mission.xmlMissionNode);
+	}
+
+	/**
+	 * Same as {@link #getMissionAttribute(String, int)} but assuming an
+	 * optional attribute (cf. {@link XMLUtilities#OPTIONAL_ATTRIBUTE}).
+	 * 
+	 * @param attributeName
+	 * @return
+	 */
+	public CharSequence getMissionAttribute(String attributeName) {
+		return XMLUtilities.getAttribute(attributeName,
+				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+	}
+
+	public Element getXML() {
+		return mission.xmlMissionNode;
+	}
+
+	// TODO Blocking stuff should be moved to UI class:
+	protected InteractionBlockingManager ibm;
+
+	public BlockableAndReleasable blockInteraction(InteractionBlocker newBlocker) {
+		return ibm.blockInteraction(newBlocker);
+	}
+
+	public void releaseInteraction(InteractionBlocker blocker) {
+		ibm.releaseInteraction(blocker);
+	}
 
 }

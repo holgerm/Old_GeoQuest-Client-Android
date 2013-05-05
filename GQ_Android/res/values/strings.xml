@@ -109,7 +109,7 @@
 
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
-
+    
     <!-- VideoPlay MISSION -->
     <string name="videoplay_finishdialog_title">Terminate this mission?</string>
     <string name="videoplay_finishdialog_message">Leave the video?</string>
