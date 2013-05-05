@@ -1,9 +1,6 @@
 package com.qeevee.gq.rules.act;
 
 import android.content.Context;
-
-import com.qeevee.gq.res.ResourceManager;
-
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
