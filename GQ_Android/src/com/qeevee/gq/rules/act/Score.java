@@ -7,7 +7,7 @@ import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class Score extends Action {
 
-	static final String SCORE_VARIABLE = Variables.SYSTEM_PREFIX + "score";
+	static final String SCORE_VARIABLE = "score";
 
 	private Context ctx = GeoQuestApp.getContext();
 

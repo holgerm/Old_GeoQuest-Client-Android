@@ -40,12 +40,9 @@ public class PostScore extends Action {
 
 	private static String TAG = PostScore.class.getCanonicalName();
 
-	private static final String USER_NAME_VARIABLE = Variables.SYSTEM_PREFIX
-			+ "user_name";
-	private static final String USER_ID_VARIABLE = Variables.SYSTEM_PREFIX
-			+ "user_id";
-	private static final String USER_SCORE_RANK_VARIABLE = Variables.SYSTEM_PREFIX
-			+ "user_score_rank";
+	private static final String USER_NAME_VARIABLE = "user_name";
+	private static final String USER_ID_VARIABLE = "user_id";
+	private static final String USER_SCORE_RANK_VARIABLE = "user_score_rank";
 	private static final String SCORE_POST_SCRIPT_PATH = "easyhighscore/easyhighscore-post.php";
 
 	private Context ctx = GeoQuestApp.getContext();
