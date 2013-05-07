@@ -77,6 +77,7 @@ public class TextQuestion extends InteractiveMission {
 
 		switch (mode) {
 		case MODE_QUESTION:
+			outerView.setBackgroundResource(R.drawable.background_question);
 			textView.setText(questionText);
 			answerEditText.setVisibility(View.VISIBLE);
 			answerEditText.setText("");
@@ -84,6 +85,7 @@ public class TextQuestion extends InteractiveMission {
 			button.setOnClickListener(questionModeButtonOnClickListener);
 			break;
 		case MODE_REPLY_TO_CORRECT_ANSWER:
+			outerView.setBackgroundResource(R.drawable.background_correct);
 			textView.setText(replyTextOnCorrect);
 			answerEditText.setVisibility(View.INVISIBLE);
 			button.setText(R.string.button_text_proceed);
@@ -95,6 +97,7 @@ public class TextQuestion extends InteractiveMission {
 			button.setOnClickListener(replyModeButtonOnClickListener);
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
+			outerView.setBackgroundResource(R.drawable.background_wrong);
 			textView.setText(replyTextOnWrong);
 			answerEditText.setVisibility(View.INVISIBLE);
 			if (loopUntilSuccess && answers.size() > 0)
@@ -116,6 +119,7 @@ public class TextQuestion extends InteractiveMission {
 	 */
 	private void init() {
 		setContentView(R.layout.textquestion);
+		outerView = findViewById(R.id.outerview);
 		textView = (TextView) findViewById(R.id.textquestion_questionTV);
 		initButton();
 		initAnswerEditText();

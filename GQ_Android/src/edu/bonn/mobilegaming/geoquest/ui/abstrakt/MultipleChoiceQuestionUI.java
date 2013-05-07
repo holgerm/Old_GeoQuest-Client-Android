@@ -1,10 +1,10 @@
 package edu.bonn.mobilegaming.geoquest.ui.abstrakt;
 
-import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
+import edu.bonn.mobilegaming.geoquest.MissionOrToolActivity;
 
 public class MultipleChoiceQuestionUI {
 
-    public MultipleChoiceQuestionUI(MultipleChoiceQuestion activity) {
+    public MultipleChoiceQuestionUI(MissionOrToolActivity activity) {
 	// TODO Auto-generated constructor stub
     }
 

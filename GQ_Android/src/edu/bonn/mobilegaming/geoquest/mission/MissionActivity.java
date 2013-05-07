@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.qeevee.gq.xml.XMLUtilities;
 
@@ -163,6 +164,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 
 	// TODO Blocking stuff should be moved to UI class:
 	protected InteractionBlockingManager ibm;
+	protected View outerView;
 
 	public BlockableAndReleasable blockInteraction(InteractionBlocker newBlocker) {
 		return ibm.blockInteraction(newBlocker);

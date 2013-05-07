@@ -32,7 +32,7 @@ public class TextQuestionMissionRegExpTests {
 		// WHEN:
 		// were doing it all in one here, since it is more readable this time:
 
-		// THEN:
+		// THEN:  
 		shouldRejectAnswer("");
 		shouldAcceptAndStoreAnswer("Asterix der Gallier");
 		shouldAcceptAndStoreAnswer("Asterix");

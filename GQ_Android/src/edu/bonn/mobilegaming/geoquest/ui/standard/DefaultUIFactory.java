@@ -30,60 +30,62 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebTechUI;
 
 public class DefaultUIFactory extends UIFactory {
 
-    public DefaultUIFactory() {
-	super();
-    }
+	public DefaultUIFactory() {
+		super();
+	}
 
-    public NFCTagUI createUI(NFCTag activity) {
-	return new NFCTagUIDefault(activity);
-    }
+	public NFCTagUI createUI(NFCTag activity) {
+		return new NFCTagUIDefault(activity);
+	}
 
-    public NPCTalkUI createUI(NPCTalk activity) {
-	return new NPCTalkUIDefault(activity);
-    }
+	public NPCTalkUI createUI(NPCTalk activity) {
+		return new NPCTalkUIDefault(activity);
+	}
 
-    public ImageCaptureUI createUI(ImageCapture activity) {
-	return new ImageCaptureUIDefault(activity);
-    }
+	public ImageCaptureUI createUI(ImageCapture activity) {
+		return new ImageCaptureUIDefault(activity);
+	}
 
-    public ExternalMissionUI createUI(ExternalMission activity) {
-	return new ExternalMissionUIDefault(activity);
-    }
+	public ExternalMissionUI createUI(ExternalMission activity) {
+		return new ExternalMissionUIDefault(activity);
+	}
 
-    public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
-	return new MultipleChoiceQuestionDefault(activity);
-    }
+	public TextQuestionUI createUI(TextQuestion activity) {
+		return new TextQuestionDefault(activity);
+	}
 
-    public TextQuestionUI createUI(TextQuestion activity) {
-	return new TextQuestionDefault(activity);
-    }
+	public WebTechUI createUI(WebTech activity) {
+		return new WebTechUIDefault(activity);
+	}
 
-    public WebTechUI createUI(WebTech activity) {
-	return new WebTechUIDefault(activity);
-    }
+	public AudioRecordUI createUI(AudioRecord activity) {
+		return new AudioRecordUIDefault(activity);
+	}
 
-    public AudioRecordUI createUI(AudioRecord activity) {
-	return new AudioRecordUIDefault(activity);
-    }
+	public VideoPlayUI createUI(VideoPlay activity) {
+		return new VideoPlayUIDefault(activity);
+	}
 
-    public VideoPlayUI createUI(VideoPlay activity) {
-	return new VideoPlayUIDefault(activity);
-    }
+	public WebPageUI createUI(WebPage activity) {
+		return new WebPageUIDefault(activity);
+	}
 
-    public WebPageUI createUI(WebPage activity) {
-	return new WebPageUIDefault(activity);
-    }
+	public StartAndExitScreenUI createUI(StartAndExitScreen activity) {
+		return new StartAndExitScreenUIDefault(activity);
+	}
 
-    public StartAndExitScreenUI createUI(StartAndExitScreen activity) {
-	return new StartAndExitScreenUIDefault(activity);
-    }
+	public QRTagReadingTreasureUI createUI(QRTagReadingTreasure activity) {
+		return new QRTagReadingTreasureUIDefault(activity);
+	}
 
-    public QRTagReadingTreasureUI createUI(QRTagReadingTreasure activity) {
-	return new QRTagReadingTreasureUIDefault(activity);
-    }
+	public QRTagReadingProductUI createUI(QRTagReadingProduct activity) {
+		return new QRTagReadingProductUIDefault(activity);
+	}
 
-    public QRTagReadingProductUI createUI(QRTagReadingProduct activity) {
-	return new QRTagReadingProductUIDefault(activity);
-    }
+	@Override
+	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

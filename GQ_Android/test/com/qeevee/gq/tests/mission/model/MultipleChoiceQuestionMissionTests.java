@@ -31,6 +31,7 @@ import com.xtremelabs.robolectric.Robolectric;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
 
 @RunWith(GQTestRunner.class)
@@ -49,7 +50,7 @@ public class MultipleChoiceQuestionMissionTests {
     private static String DEFAULT_RESPONSE_ON_CORRECT_ANSWER;
     private static String DEFAULT_RESPONSE_ON_WRONG_ANSWER;
 
-    private MultipleChoiceQuestion mcqM;
+    private MissionActivity mcqM;
     private String questionText;
     private List<Button> answerButtons;
     private int mode;
@@ -65,7 +66,7 @@ public class MultipleChoiceQuestionMissionTests {
 
     @SuppressWarnings("unchecked")
     public void initTestMission(String missionID) {
-	mcqM = (MultipleChoiceQuestion) prepareMission("MultipleChoiceQuestion",
+	mcqM = (MissionActivity) prepareMission("MultipleChoiceQuestion",
 						       missionID,
 						       startGameForTest("MultipleChoiceQuestionTest"));
 	try {

@@ -77,7 +77,7 @@ public class TextQuestionMissionPlainTextTests {
 	}
 
 	@Test
-	public void acceptButtonOnlyEnabledWhenAnswerTextNotEmpty() {
+	public void acceptButtonOnlyEnabledWhenAnswerTextNotEmpty() { 
 		initTestMission("With_Defaults");
 		assertFalse("Button should be disabled initially", bt.isEnabled());
 		assertEquals("Button label should be accept",

@@ -20,6 +20,7 @@ import com.qeevee.gq.history.TextType;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.R.id;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
@@ -44,9 +45,7 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 	private Answer selectedAnswer;
 	private String questionText;
 	private OnClickListener proceed, restart;
-
 	private final static String SHUFFLE_ANSWERS = "true";
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,11 +70,13 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 			setUpQuestionView();
 			break;
 		case MODE_REPLY_TO_CORRECT_ANSWER:
+			outerView.setBackgroundResource(R.drawable.background_correct);
 			setMCTextViewToReply();
 			setMCButtonPanel(loopUntilSuccess);
 			invokeOnSuccessEvents();
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
+			outerView.setBackgroundResource(R.drawable.background_wrong);
 			setMCTextViewToReply();
 			if (loopUntilSuccess)
 				setMCButtonPanel(loopUntilSuccess);
@@ -119,6 +120,7 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 
 	private void initContentView() {
 		setContentView(R.layout.multiplechoice);
+		outerView = findViewById(id.outerview);
 		mcTextView = (TextView) findViewById(R.id.mcTextView);
 		mcButtonPanel = (LinearLayout) findViewById(R.id.mcButtonPanel);
 		// prefab neccessary buttons:
@@ -197,7 +199,9 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 	}
 
 	private void setUpQuestionView() {
+		outerView.setBackgroundResource(R.drawable.background_question);
 		mcButtonPanel.removeAllViews();
+
 		// show question:
 		mcTextView.setText(questionText);
 		new TextItem(questionText, this, TextType.QUESTION);
