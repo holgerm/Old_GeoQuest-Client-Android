@@ -34,7 +34,7 @@ public class Score extends Action {
 		} else if (deltaScore < 0) {
 			// GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
-					+ " " + deltaScore);
+					+ " " + (-deltaScore));
 		}
 	}
 
