@@ -181,9 +181,9 @@
     <string name="error_dialog_title">Entschuldigung, aber es gibt ein Problem.</string>
 
     <!-- Score -->
-    <string name="scoreIncreasedBy">Prima: Dein Punktestand steigt um </string>
-    <string name="scoreDecreasedBy">Oh weh: Dein Punktestand sinkt um </string>
-    <string name="scoreZero">Oh weh: Dein Punktestand ist null!</string>
+    <string name="scoreIncreasedBy">Prima: Euer Punktestand steigt um </string>
+    <string name="scoreDecreasedBy">Oh weh: Euer Punktestand sinkt um </string>
+    <string name="scoreZero">Oh weh: Euer Punktestand ist null!</string>
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
