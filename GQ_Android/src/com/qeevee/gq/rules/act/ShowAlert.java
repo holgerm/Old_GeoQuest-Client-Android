@@ -21,15 +21,15 @@ public class ShowAlert extends Action {
 	@Override
 	public void execute() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
-				(Context) GeoQuestApp.getCurrentActivity()).setMessage(
+				(Context) GeoQuestApp.getCurrentActivity()).setTitle(
 				(params.get("message"))).setPositiveButton(R.string.ok,
 				new OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 					}
 				});
-		if (params.containsKey("icon")) {
-			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("icon"), false);
+		if (params.containsKey("image")) {
+			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("image"), false);
 			builder.setIcon(new BitmapDrawable(bitmap));
 		}
 		builder.show();
