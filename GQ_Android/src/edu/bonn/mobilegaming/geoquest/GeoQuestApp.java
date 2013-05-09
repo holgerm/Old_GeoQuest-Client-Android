@@ -33,6 +33,7 @@ import android.os.Environment;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
@@ -582,8 +583,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static void showMessage(CharSequence text) {
-		Toast.makeText(GeoQuestApp.getContext(), text, Toast.LENGTH_SHORT)
-				.show();
+		Toast t = Toast.makeText(GeoQuestApp.getContext(), text,
+				Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
 	}
 
 	/**
