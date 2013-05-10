@@ -99,7 +99,7 @@ public abstract class GeoQuestListActivity extends ListActivity {
 				if (gameMustBeDownloaded) {
 					// if selected game is only on server or newer there:
 					// (re-)load it from server:
-					GameLoader.loadGame(downloadGameHandler, repoName,
+					GameLoader.downloadGame(downloadGameHandler, repoName,
 							gameFileName);
 				}
 				GameLoader.startGame(startGameHandler,
