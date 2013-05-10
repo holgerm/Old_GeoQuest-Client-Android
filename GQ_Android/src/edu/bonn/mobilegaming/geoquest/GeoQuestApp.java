@@ -387,7 +387,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			repositoryItems.put(repoItem.getName(), repoItem);
 			loadedAtLeastOneRepo = true;
 		}
-		;
 		return loadedAtLeastOneRepo;
 	}
 
