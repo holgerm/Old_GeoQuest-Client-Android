@@ -24,6 +24,7 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
+import android.content.res.AssetManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,10 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 public class GameLoader {
 
 	static final String TAG = "GameLoader";
+
+	private static final String AUTOSTART_GAME_NAME = "game";
+
+	private static final CharSequence AUTOSTART_REPO_NAME = "autostart";
 
 	/**
 	 * Points to the currently selected game the user is playing.
@@ -171,22 +176,21 @@ public class GameLoader {
 		return result.toString();
 	}
 
+	final static int BYTE_SIZE = 1024;
+
 	/**
-	 * loads the game. Currently this method may only be used once at the
-	 * beginning of the app. TODO: implement a way to reload a game, after
-	 * another one has started.
+	 * downloads the game.
 	 * 
 	 * TODO: check if SD Card is available and accessible. Otherwise display
 	 * error or even switch to "just online" gaming.
 	 */
-	public static void loadGame(Handler handler, CharSequence repoName,
+	public static void downloadGame(Handler handler, CharSequence repoName,
 			String gameFileName) {
 		URL url = GeoQuestApp.makeGameURL(repoName, gameFileName);
 		File newGameZipFile = new File(
 				GameDataManager.getLocalRepoDir(repoName), gameFileName
 						+ ".zip");
 		InputStream in;
-		final int BYTE_SIZE = 1024;
 
 		Log.d(TAG, "start download: '" + url);
 
@@ -433,6 +437,59 @@ public class GameLoader {
 		if (!gameDir.exists() || !gameXMLFile.exists())
 			return false;
 		return true;
+	}
+
+	public static void loadGameFromAssets() {
+		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
+		String[] assetFiles = null;
+		InputStream is;
+		try {
+			assetFiles = assetManager.list("autostartgame.zip");
+			if (assetFiles == null || assetFiles.length != 1)
+				return;
+			// AssetFileDescriptor afd = assetManager.openFd(assetFiles[0]);
+			// TODO get length and show progress bar
+			is = new BufferedInputStream(assetManager.open(assetFiles[0]),
+					BYTE_SIZE);
+			File newRepoFile = GameDataManager
+					.getLocalRepoDir(AUTOSTART_REPO_NAME);
+			if (!newRepoFile.exists()) {
+				newRepoFile.mkdirs();
+			}
+			File newGameZipFile = new File(newRepoFile, AUTOSTART_GAME_NAME
+					+ ".zip");
+			FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
+
+			// TODO: care about lenght == -1, i.e. if info not available,
+			// send
+			// other msg to handler.
+			// Message msg = handler.obtainMessage();
+			// msg.what = GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
+			// msg.arg1 = lenght / BYTE_SIZE;
+			// msg.arg2 = R.string.start_downloadGame;
+			// handler.sendMessage(msg);
+
+			byte by[] = new byte[BYTE_SIZE];
+			int c;
+
+			while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
+				// TODO check access to SDCard!
+				fOutLocal.write(by, 0, c);
+				// trigger progress bar to proceed:
+				// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
+			}
+
+			is.close();
+			fOutLocal.close();
+
+			Log.d(TAG, "completed extraction: '" + assetFiles[0]);
+			// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
+
+			GameLoader.unzipGameArchive(newGameZipFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
+		}
 	}
 
 }

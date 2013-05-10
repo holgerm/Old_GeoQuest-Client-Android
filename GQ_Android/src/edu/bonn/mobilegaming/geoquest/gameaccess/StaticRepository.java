@@ -30,7 +30,6 @@ public class StaticRepository extends RepositoryItem {
 			initializeGames();
 		}
 
-		initializeGames();
 		return games;
 	}
 
