@@ -26,6 +26,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
  */
 public class GameDataManager {
 
+	private static final String REPOSITORIES_BASE_PATH = "/repositories/";
 	private static final String TAG = GameDataManager.class.getCanonicalName();
 
 	/**
@@ -62,7 +63,7 @@ public class GameDataManager {
 	 */
 	private static String repoBaseDirPath() {
 		return "/Android/data/" + GeoQuestApp.getInstance().getPackageName()
-				+ "/repositories/";
+				+ REPOSITORIES_BASE_PATH;
 	}
 
 	/**
