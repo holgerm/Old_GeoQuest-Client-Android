@@ -3,6 +3,7 @@ package com.qeevee.gq.tests.gamedata;
 import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositories;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,10 +17,11 @@ import com.qeevee.gq.tests.robolectric.WithAssets;
  * @author muegge
  * 
  */
+@Ignore
 @RunWith(GQTestRunner.class)
 @WithAssets("../GQ_Android/test/testassets/empty_x/")
-public class InAppGameDeployment_empty_x_Test { 
- 
+public class InAppGameDeployment_empty_x_Test {
+
 	// === TESTS FOLLOW =============================================
 
 	@Test

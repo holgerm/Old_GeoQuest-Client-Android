@@ -4,6 +4,7 @@ import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.repoShouldHaveQuests
 import static com.qeevee.gq.tests.gamedata.TestGameDataUtil.shouldHaveRepositories;
 import static com.qeevee.gq.tests.util.TestUtils.startApp;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,6 +18,7 @@ import com.qeevee.gq.tests.robolectric.WithAssets;
  * @author muegge
  * 
  */
+@Ignore
 @RunWith(GQTestRunner.class)
 @WithAssets("../GQ_Android/test/testassets/r1q1/")
 public class InAppGameDeployment_r1q1_Test {

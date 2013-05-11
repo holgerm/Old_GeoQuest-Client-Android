@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,7 +27,6 @@ import com.xtremelabs.robolectric.Robolectric;
 
 import edu.bonn.mobilegaming.geoquest.GameListActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.RepoListActivity;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
@@ -39,6 +39,7 @@ import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
  * @author muegge
  * 
  */
+@Ignore
 @RunWith(GQTestRunner.class)
 @WithAssets("../GQ_Android/test/testassets/r3q312/")
 public class InAppGameDeployment_r3q312_Test {
@@ -58,14 +59,13 @@ public class InAppGameDeployment_r3q312_Test {
 				new String[] { "r3q312-test-game-2_1" });
 		expectedReposAndQuests.put("repo3", new String[] {
 				"r3q312-test-game-3_1", "r3q312-test-game-3_2" });
-		
-		expectedReposAndQuestFileNames.put("repo1", new String[] {
-				"quest1_1", "quest1_2",
-				"quest1_3" });
-		expectedReposAndQuestFileNames.put("repo2",
-				new String[] { "quest2_1" });
-		expectedReposAndQuestFileNames.put("repo3", new String[] {
-				"quest3_1", "quest3_2" });
+
+		expectedReposAndQuestFileNames.put("repo1", new String[] { "quest1_1",
+				"quest1_2", "quest1_3" });
+		expectedReposAndQuestFileNames
+				.put("repo2", new String[] { "quest2_1" });
+		expectedReposAndQuestFileNames.put("repo3", new String[] { "quest3_1",
+				"quest3_2" });
 	}
 
 	// === TESTS FOLLOW =============================================
@@ -153,9 +153,10 @@ public class InAppGameDeployment_r3q312_Test {
 		gamesShouldHaveCorrectFilenames(expectedReposAndQuestFileNames);
 	}
 
-	private void gamesShouldHaveCorrectFilenames(Map<String, String[]> expectedReposAndQuestFileNames) {
+	private void gamesShouldHaveCorrectFilenames(
+			Map<String, String[]> expectedReposAndQuestFileNames) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	// === HELPERS FOLLOW =============================================
@@ -165,7 +166,7 @@ public class InAppGameDeployment_r3q312_Test {
 		if (expectedRepoNames.length != expectedNumberOfShownRepos)
 			throw new IllegalArgumentException(
 					"Number of expected repos differs from given array of expected repo names.");
-		ListView lv = (ListView) repoListAct.findViewById(R.id.repolistList);
+		ListView lv = (ListView) repoListAct.findViewById(android.R.id.list);
 		assertEquals(expectedNumberOfShownRepos, lv.getChildCount());
 		for (int i = 0; i < expectedRepoNames.length; i++) {
 			assertEquals(expectedRepoNames[i], lv.getItemAtPosition(i)
@@ -188,12 +189,12 @@ public class InAppGameDeployment_r3q312_Test {
 		if (expectedGameNames.length != expectedNumberOfShownGames)
 			throw new IllegalArgumentException(
 					"Number of expected games differs from given array of expected game names.");
-		ListView lv = (ListView) gameListAct.findViewById(R.id.gamelistList);
+		ListView lv = (ListView) gameListAct.findViewById(android.R.id.list);
 		assertEquals(expectedNumberOfShownGames, lv.getChildCount());
 	}
 
 	private void repoShouldBeOnClient(int repoNr) {
-		ListView lv = (ListView) repoListAct.findViewById(R.id.repolistList);
+		ListView lv = (ListView) repoListAct.findViewById(android.R.id.list);
 		String shownNameOfRepo = (String) lv.getItemAtPosition(repoNr);
 		assertNotNull(GameDataManager.getRepository(shownNameOfRepo));
 		assertTrue(GameDataManager.getRepository(shownNameOfRepo).isOnClient());
