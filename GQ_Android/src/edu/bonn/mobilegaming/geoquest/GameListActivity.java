@@ -204,7 +204,7 @@ public class GameListActivity extends GeoQuestListActivity {
 			gameListAdapterLoc = new ArrayAdapter<String>(this,
 					R.layout.game_item, repoNamesWithLoc);
 			setListAdapter(gameListAdapterNoLoc);
-			lv2 = (ListView) findViewById(R.id.gameList2);
+			lv2 = (ListView) findViewById(android.R.id.list);
 			lv2.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
