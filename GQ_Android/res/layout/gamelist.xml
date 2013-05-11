@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:paddingLeft="8dp"
-	android:paddingRight="8dp">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
-	<TextView android:id="@+id/gamelistHeader"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:textSize="25sp" android:background="#444444"
-	android:paddingLeft="3dp" android:paddingRight="3dp"
-	android:paddingTop="3dp" android:paddingBottom="3dp" />
+    <TextView
+        android:id="@+id/gamelistHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#444444"
+        android:paddingBottom="3dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="3dp"
+        android:textSize="25sp" />
 
-	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_weight="1"
-		android:drawSelectorOnTop="false" />
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false" />
+
 </LinearLayout>

@@ -69,7 +69,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static final int DIALOG_ID_DOWNLOAD_REPO_DATA = 2;
 
 	public static ExecutorService singleThreadExecutor;
-	private static final String TAG = "GeoQuestApp";
+	private static final String TAG = GeoQuestApp.class.getCanonicalName();
 	public static final String MAIN_PREF_FILE_NAME = "GeoQuestPreferences";
 	public static final String GQ_MANUAL_LOCATION_PROVIDER = "GeoQuest Manual Location Provider";
 	private static GeoQuestApp theApp = null;
@@ -182,7 +182,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			activities.remove(allActivities[i]);
 			allActivities[i].finish();
 		}
-		cleanMediaPlayer();
+		GameDataManager.cleanMediaPlayer();
 		System.exit(0);
 	}
 
@@ -361,10 +361,16 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		this.osmap = osmap;
 	}
 
+	/**
+	 * @param handler
+	 * @return true if at least one repository and quest has been loaded.
+	 */
 	public static boolean loadRepoData(GeoQuestProgressHandler handler) {
+		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
-		// result |= loadRepoDataFromClient(handler);
-		boolean result = loadRepoDataFromClient(handler);
+		// boolean result = loadStaticRepoDataFromClient(handler);
+		boolean result = GameLoader.loadGameFromAssets();
+		result |= loadRepoDataFromClient(handler);
 
 		if (handler != null)
 			handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
@@ -380,7 +386,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	private static boolean loadRepoDataFromServer(
 			final GeoQuestProgressHandler progressHandler) {
 		boolean success = false;
-		repositoryItems.clear();
 		if (!GeoQuestApp.getInstance().isOnline())
 			return false;
 		try {

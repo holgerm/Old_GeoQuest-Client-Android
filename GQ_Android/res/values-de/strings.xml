@@ -15,7 +15,7 @@
     <string name="cancel">Abbrechen</string>
 
     <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten vom Server</string>
+    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
     <string name="start_text_game_list_progress_process_text">Verarbeite Repository-Daten</string>
     <string name="start_button_game_list_text">Wähle ein neues Quest</string>
     <string name="start_welcome">Willkommen zu GeoQuest!</string>
@@ -179,6 +179,7 @@
     <string name="error_fetching_remote_repo_list_document">Fehlerhafte Spieldaten vom Server erhalten!</string>
     <string name="error_fetching_local_repo_list">Fehler beim Laden oder Verarbeiten der lokalen Repository-Daten!</string>
     <string name="error_dialog_title">Entschuldigung, aber es gibt ein Problem.</string>
+    <string name="error_getting_device_location">Leider kann Ihre Position im Moment nicht bestimmt werden.</string>
 
     <!-- Score -->
     <string name="scoreIncreasedBy">Prima: Euer Punktestand steigt um </string>
