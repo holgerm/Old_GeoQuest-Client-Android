@@ -15,7 +15,7 @@
     <string name="cancel">Abbrechen</string>
 
     <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten vom Server</string>
+    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
     <string name="start_text_game_list_progress_process_text">Verarbeite Repository-Daten</string>
     <string name="start_button_game_list_text">Wähle ein neues Quest</string>
     <string name="start_welcome">Willkommen zu GeoQuest!</string>
