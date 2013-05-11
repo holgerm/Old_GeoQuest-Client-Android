@@ -439,57 +439,68 @@ public class GameLoader {
 		return true;
 	}
 
-	public static void loadGameFromAssets() {
+	public static boolean loadGameFromAssets() {
 		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
 		String[] assetFiles = null;
 		InputStream is;
 		try {
-			assetFiles = assetManager.list("autostartgame.zip");
-			if (assetFiles == null || assetFiles.length != 1)
-				return;
-			// AssetFileDescriptor afd = assetManager.openFd(assetFiles[0]);
-			// TODO get length and show progress bar
-			is = new BufferedInputStream(assetManager.open(assetFiles[0]),
-					BYTE_SIZE);
-			File newRepoFile = GameDataManager
-					.getLocalRepoDir(AUTOSTART_REPO_NAME);
-			if (!newRepoFile.exists()) {
-				newRepoFile.mkdirs();
+			assetFiles = assetManager.list("autostart");
+			if (assetFiles == null || assetFiles.length < 1)
+				return false;
+			else {
+				for (int i = 0; i < assetFiles.length; i++) {
+					// AssetFileDescriptor afd =
+					// assetManager.openFd(assetFiles[0]);
+					// TODO get length and show progress bar
+					is = new BufferedInputStream(assetManager.open("autostart"
+							+ File.separator + assetFiles[i],
+							AssetManager.ACCESS_BUFFER), BYTE_SIZE);
+					File newRepoFile = GameDataManager
+							.getLocalRepoDir(AUTOSTART_REPO_NAME);
+					if (!newRepoFile.exists()) {
+						newRepoFile.mkdirs();
+					}
+					File newGameZipFile = new File(newRepoFile,
+							AUTOSTART_GAME_NAME + ".zip");
+					FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
+
+					// TODO: care about lenght == -1, i.e. if info not
+					// available,
+					// send
+					// other msg to handler.
+					// Message msg = handler.obtainMessage();
+					// msg.what =
+					// GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
+					// msg.arg1 = lenght / BYTE_SIZE;
+					// msg.arg2 = R.string.start_downloadGame;
+					// handler.sendMessage(msg);
+
+					byte by[] = new byte[BYTE_SIZE];
+					int c;
+
+					while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
+						// TODO check access to SDCard!
+						fOutLocal.write(by, 0, c);
+						// trigger progress bar to proceed:
+						// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
+					}
+
+					is.close();
+					fOutLocal.close();
+
+					Log.d(TAG, "completed extraction: '" + assetFiles[0]);
+					// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
+
+					GameLoader.unzipGameArchive(newGameZipFile);
+					
+				}
 			}
-			File newGameZipFile = new File(newRepoFile, AUTOSTART_GAME_NAME
-					+ ".zip");
-			FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
-
-			// TODO: care about lenght == -1, i.e. if info not available,
-			// send
-			// other msg to handler.
-			// Message msg = handler.obtainMessage();
-			// msg.what = GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
-			// msg.arg1 = lenght / BYTE_SIZE;
-			// msg.arg2 = R.string.start_downloadGame;
-			// handler.sendMessage(msg);
-
-			byte by[] = new byte[BYTE_SIZE];
-			int c;
-
-			while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
-				// TODO check access to SDCard!
-				fOutLocal.write(by, 0, c);
-				// trigger progress bar to proceed:
-				// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
-			}
-
-			is.close();
-			fOutLocal.close();
-
-			Log.d(TAG, "completed extraction: '" + assetFiles[0]);
-			// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
-
-			GameLoader.unzipGameArchive(newGameZipFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
+			return false;
 		}
+		return true;
 	}
 
 }
