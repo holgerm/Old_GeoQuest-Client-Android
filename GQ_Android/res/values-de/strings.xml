@@ -33,6 +33,9 @@
     <string name="start_gameList_headerPartLoc">mit Location</string>
     <string name="start_repoList_header">Verfügbare Repositories</string>
 
+    <!-- Repository -->
+    <string name="predefinedRepoName">Vorinstallierte Quests</string>
+
     <!-- GameListActivity -->
     <string name="sortoptionsHeaderStart">Sortiere nach:</string>
     <string name="sortByName">Name</string>

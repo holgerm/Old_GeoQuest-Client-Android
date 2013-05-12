@@ -38,8 +38,6 @@ public class GameLoader {
 
 	static final String TAG = "GameLoader";
 
-	private static final CharSequence PREDEFINED_REPO_NAME = "predefined";
-
 	/**
 	 * Points to the currently selected game the user is playing.
 	 */
@@ -454,7 +452,8 @@ public class GameLoader {
 							+ File.separator + assetFiles[i],
 							AssetManager.ACCESS_BUFFER), BYTE_SIZE);
 					File newRepoFile = GameDataManager
-							.getLocalRepoDir(PREDEFINED_REPO_NAME);
+							.getLocalRepoDir(GeoQuestApp.getContext().getText(
+									R.string.predefinedRepoName));
 					if (!newRepoFile.exists()) {
 						newRepoFile.mkdirs();
 					}

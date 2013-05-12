@@ -31,6 +31,9 @@
     <string name="start_gameList_headerPartLoc">with Location</string>
     <string name="start_repoList_header">Accessible Repositories</string>
 
+    <!-- Repository -->
+    <string name="predefinedRepoName">Preinstalled quests</string>
+
     <!-- GameListActivity -->
     <string name="sortoptionsHeaderStart">Sort by:</string>
     <string name="sortByName">Name</string>
@@ -113,7 +116,7 @@
 
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
-    
+
     <!-- VideoPlay MISSION -->
     <string name="videoplay_finishdialog_title">Terminate this mission?</string>
     <string name="videoplay_finishdialog_message">Leave the video?</string>
@@ -184,7 +187,7 @@
     <string name="scoreIncreasedBy">Yeah: You increased your score by </string>
     <string name="scoreDecreasedBy">Oops: Your score ran down by </string>
     <string name="scoreZero">Ooh: Your score is zero!</string>
-    
+
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
     <string name="varDefaultUserID">0</string>
