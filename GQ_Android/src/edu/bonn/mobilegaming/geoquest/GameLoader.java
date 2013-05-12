@@ -251,6 +251,8 @@ public class GameLoader {
 	/**
 	 * Starts the game from the given local file.
 	 * 
+	 * TODO: move to GameStarter
+	 * 
 	 * @param handler
 	 * @param gameXMLFile
 	 * @param predefinedUIFactories
@@ -266,6 +268,7 @@ public class GameLoader {
 		try {
 			Mission.documentRoot = getDocument(gameXMLFile).getRootElement();
 			setGlobalMissionLayout(predefinedUIFactories);
+			makeImprint(getDocument(gameXMLFile).getRootElement());
 			setAdaptionType();
 			setGameDuration();
 
@@ -276,6 +279,9 @@ public class GameLoader {
 			// TODO initHotspots(document.getRootElement());
 			GeoQuestApp.setRunningGameDir(getGameDirectory(gameXMLFile));
 			// Only from now on we can access game ressources.
+
+			Imprint imprint = new Imprint(
+					Mission.documentRoot.element("imprint"));
 
 			if (handler != null)
 				handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
@@ -299,6 +305,15 @@ public class GameLoader {
 		}
 	}
 
+	private static void makeImprint(Element root) {
+		String imprintMissionID = root.attributeValue("imprint");
+		if (imprintMissionID == null) {
+			// TODO ... make standard GQ imprint 
+		} else {
+			// TODO make specific imprint
+		}
+	}
+
 	private static File getGameDirectory(File gameXMLFile) {
 		return gameXMLFile.getParentFile();
 	}
@@ -318,6 +333,13 @@ public class GameLoader {
 		}
 	}
 
+	/**
+	 * TODO: perhaps move to GameStarter (?)
+	 * 
+	 * @param gameXMLFile
+	 * @return
+	 * @throws DocumentException
+	 */
 	private static Document getDocument(File gameXMLFile)
 			throws DocumentException {
 		SAXReader reader = new SAXReader();
@@ -325,6 +347,12 @@ public class GameLoader {
 		return document;
 	}
 
+	/**
+	 * TODO move to GameStarter
+	 * 
+	 * @param handler
+	 * @return
+	 */
 	private static Mission createMissions(Handler handler) {
 		@SuppressWarnings("rawtypes")
 		List missionNodes = Mission.documentRoot.selectNodes("child::mission");
