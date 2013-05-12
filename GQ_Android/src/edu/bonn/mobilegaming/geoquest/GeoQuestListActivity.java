@@ -48,7 +48,16 @@ public abstract class GeoQuestListActivity extends ListActivity {
 						startActivity(settingsActivity);
 						return true;
 					}
+				});
+		menuMaker.addMenuItem(MenuMaker.IMPRINT_MENU_ID,
+				new OnMenuItemClickListener() {
 
+					public boolean onMenuItemClick(MenuItem item) {
+						Intent imprintActivity = new Intent(getBaseContext(),
+								ImprintActivity.class);
+						startActivity(imprintActivity);
+						return true;
+					}
 				});
 		menuMaker.setupMenu(menu);
 		return true;

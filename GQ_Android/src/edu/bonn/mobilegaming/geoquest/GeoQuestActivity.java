@@ -84,8 +84,7 @@ public abstract class GeoQuestActivity extends Activity {
 					public boolean onMenuItemClick(MenuItem item) {
 						Intent imprintActivity = new Intent(getBaseContext(),
 								ImprintActivity.class);
-						// startActivity(imprintActivity);
-						GeoQuestApp.showMessage("Imprint coming soon ...");
+						startActivity(imprintActivity);
 						return true;
 					}
 
