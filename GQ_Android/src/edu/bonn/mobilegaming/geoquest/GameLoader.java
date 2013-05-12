@@ -38,9 +38,7 @@ public class GameLoader {
 
 	static final String TAG = "GameLoader";
 
-	private static final String AUTOSTART_GAME_NAME = "game";
-
-	private static final CharSequence AUTOSTART_REPO_NAME = "autostart";
+	private static final CharSequence PREDEFINED_REPO_NAME = "predefined";
 
 	/**
 	 * Points to the currently selected game the user is playing.
@@ -456,12 +454,11 @@ public class GameLoader {
 							+ File.separator + assetFiles[i],
 							AssetManager.ACCESS_BUFFER), BYTE_SIZE);
 					File newRepoFile = GameDataManager
-							.getLocalRepoDir(AUTOSTART_REPO_NAME);
+							.getLocalRepoDir(PREDEFINED_REPO_NAME);
 					if (!newRepoFile.exists()) {
 						newRepoFile.mkdirs();
 					}
-					File newGameZipFile = new File(newRepoFile,
-							AUTOSTART_GAME_NAME + ".zip");
+					File newGameZipFile = new File(newRepoFile, assetFiles[i]);
 					FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
 
 					// TODO: care about lenght == -1, i.e. if info not
@@ -492,7 +489,7 @@ public class GameLoader {
 					// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
 
 					GameLoader.unzipGameArchive(newGameZipFile);
-					
+
 				}
 			}
 		} catch (IOException e) {
