@@ -33,6 +33,7 @@ public class MenuMaker {
 	public static final int PREFS_MENU_ID = 3;
 	public static final int HISTORY_MENU_ID = 4;
 	public static final int RELOAD_GAMES_MENU_ID = 5;
+	public static final int IMPRINT_MENU_ID = 6;
 
 	private static SparseIntArray menuItemTextResources = new SparseIntArray();
 	private static SparseIntArray menuItemDrawables = new SparseIntArray();
@@ -68,6 +69,8 @@ public class MenuMaker {
 		menuItemTextResources.put(RELOAD_GAMES_MENU_ID,
 				R.string.reloadGamesMenu);
 		menuItemDrawables.put(RELOAD_GAMES_MENU_ID, R.drawable.icon_reload);
+		menuItemTextResources.put(IMPRINT_MENU_ID, R.string.imprintMenu);
+		menuItemDrawables.put(IMPRINT_MENU_ID, R.drawable.icon_imprint);
 	}
 
 	private static OnMenuItemClickListener NULL_OMICL = new OnMenuItemClickListener() {

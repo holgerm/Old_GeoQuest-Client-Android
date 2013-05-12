@@ -60,7 +60,8 @@
     <string name="prefsMenu">Einstellungen</string>
     <string name="historyMenu">Verlauf</string>
     <string name="reloadGamesMenu">Spiele neu laden</string>
-
+    <string name="imprintMenu">Impressum</string>
+    
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>

@@ -123,5 +123,9 @@
 			android:name=".mission.ExternalMission"
 			android:label="@string/app_name"
 			android:screenOrientation="portrait" />
-	</application>
+		<activity
+			android:name=".mission.ImprintActivity"
+			android:label="@string/app_name"
+			android:screenOrientation="portrait" />
+			</application>
 </manifest>

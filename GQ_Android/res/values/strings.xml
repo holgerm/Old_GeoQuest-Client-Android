@@ -60,7 +60,8 @@
     <string name="prefsMenu">Prefs</string>
     <string name="historyMenu">History</string>
     <string name="reloadGamesMenu">Reload quests</string>
-
+    <string name="imprintMenu">Imprint</string>
+    
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
     <string name="audiorecord_activityIndicator_initial">No recording made yet!</string>
