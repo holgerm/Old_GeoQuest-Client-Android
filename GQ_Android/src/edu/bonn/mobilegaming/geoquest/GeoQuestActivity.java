@@ -18,71 +18,71 @@ import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public abstract class GeoQuestActivity extends Activity {
 
-    @Override
-    protected void onResume() {
-	super.onResume();
-    }
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
 
-    protected static final int MENU_ID_OFFSET = Menu.FIRST + 4;
-    public static ContextManager contextManager = null;
+	protected static final int MENU_ID_OFFSET = Menu.FIRST + 4;
+	public static ContextManager contextManager = null;
 
-    static final String TAG = "GeoQuestActivity";
+	static final String TAG = "GeoQuestActivity";
 
-    private ProgressDialog downloadAndStartGameDialog;
-    private ProgressDialog startLocalGameDialog;
-    
-    protected MenuMaker menuMaker = new MenuMaker();
+	private ProgressDialog downloadAndStartGameDialog;
+	private ProgressDialog startLocalGameDialog;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	((GeoQuestApp) getApplication()).addActivity(this);
+	protected MenuMaker menuMaker = new MenuMaker();
 
-	// Init progress dialogs:
-	downloadAndStartGameDialog = new ProgressDialog(this);
-	downloadAndStartGameDialog
-		.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-	downloadAndStartGameDialog.setCancelable(false);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		((GeoQuestApp) getApplication()).addActivity(this);
 
-	startLocalGameDialog = new ProgressDialog(this);
-	startLocalGameDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-	startLocalGameDialog.setCancelable(false);
+		// Init progress dialogs:
+		downloadAndStartGameDialog = new ProgressDialog(this);
+		downloadAndStartGameDialog
+				.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		downloadAndStartGameDialog.setCancelable(false);
 
-//	startContextManager();
-    }
+		startLocalGameDialog = new ProgressDialog(this);
+		startLocalGameDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		startLocalGameDialog.setCancelable(false);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-	super.onCreateOptionsMenu(menu);
-	menuMaker.addMenuItems(MenuMaker.END_GAME_MENU_ID,
-						    MenuMaker.QUIT_MENU_ID);
-	menuMaker.addMenuItem(MenuMaker.PREFS_MENU_ID,
-		       new OnMenuItemClickListener() {
+		// startContextManager();
+	}
 
-			   public boolean onMenuItemClick(MenuItem item) {
-			       Intent settingsActivity = new Intent(
-				       getBaseContext(), Preferences.class);
-			       startActivity(settingsActivity);
-			       return true;
-			   }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menuMaker.addMenuItems(MenuMaker.END_GAME_MENU_ID,
+				MenuMaker.QUIT_MENU_ID);
+		menuMaker.addMenuItem(MenuMaker.PREFS_MENU_ID,
+				new OnMenuItemClickListener() {
 
-		       });
-	menuMaker.addMenuItem(MenuMaker.HISTORY_MENU_ID,
-		       new OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						Intent settingsActivity = new Intent(getBaseContext(),
+								Preferences.class);
+						startActivity(settingsActivity);
+						return true;
+					}
 
-			   public boolean onMenuItemClick(MenuItem item) {
-			       Intent historyActivity = new Intent(
-				       getBaseContext(), HistoryActivity.class);
-			       startActivity(historyActivity);
-			       return true;
-			   }
+				});
+		menuMaker.addMenuItem(MenuMaker.HISTORY_MENU_ID,
+				new OnMenuItemClickListener() {
 
-		       });
-	menuMaker.setupMenu(menu);
-	return true;
-    }
+					public boolean onMenuItemClick(MenuItem item) {
+						Intent historyActivity = new Intent(getBaseContext(),
+								HistoryActivity.class);
+						startActivity(historyActivity);
+						return true;
+					}
 
-    public void startContextManager() {
+				});
+		menuMaker.setupMenu(menu);
+		return true;
+	}
+
+	public void startContextManager() {
 		if (contextManager == null) {
 			contextManager = new ContextManager(this.getApplicationContext());
 		}
