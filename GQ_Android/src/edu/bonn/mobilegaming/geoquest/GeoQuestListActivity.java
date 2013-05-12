@@ -95,6 +95,7 @@ public abstract class GeoQuestListActivity extends ListActivity {
 		final String gameName = gameItem.getName();
 		GeoQuestApp.singleThreadExecutor.execute(new Runnable() {
 
+			@SuppressWarnings("unchecked")
 			public void run() {
 				if (gameMustBeDownloaded) {
 					// if selected game is only on server or newer there:
