@@ -36,6 +36,8 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
 
+	private static final String ASSET_DIR_4_PREDEFINED_QUESTS = "autostart";
+
 	static final String TAG = "GameLoader";
 
 	/**
@@ -468,7 +470,7 @@ public class GameLoader {
 		String[] assetFiles = null;
 		InputStream is;
 		try {
-			assetFiles = assetManager.list("autostart");
+			assetFiles = assetManager.list(ASSET_DIR_4_PREDEFINED_QUESTS);
 			if (assetFiles == null || assetFiles.length < 1)
 				return false;
 			else {
@@ -476,7 +478,7 @@ public class GameLoader {
 					// AssetFileDescriptor afd =
 					// assetManager.openFd(assetFiles[0]);
 					// TODO get length and show progress bar
-					is = new BufferedInputStream(assetManager.open("autostart"
+					is = new BufferedInputStream(assetManager.open(ASSET_DIR_4_PREDEFINED_QUESTS
 							+ File.separator + assetFiles[i],
 							AssetManager.ACCESS_BUFFER), BYTE_SIZE);
 					File newRepoFile = GameDataManager
