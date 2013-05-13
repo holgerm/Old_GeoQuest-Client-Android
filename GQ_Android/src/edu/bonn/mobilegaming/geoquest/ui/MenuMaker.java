@@ -2,6 +2,10 @@ package edu.bonn.mobilegaming.geoquest.ui;
 
 import java.util.Vector;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -58,6 +62,29 @@ public class MenuMaker {
 
 					public boolean onMenuItemClick(MenuItem item) {
 						GeoQuestApp.getInstance().endGame();
+						return false;
+					}
+
+				});
+		menuItemTextResources.put(IMPRINT_MENU_ID, R.string.imprintMenu);
+		menuItemDrawables.put(IMPRINT_MENU_ID, R.drawable.icon_imprint);
+		standardMenuItemClickListeners.put(IMPRINT_MENU_ID,
+				new OnMenuItemClickListener() {
+
+					public boolean onMenuItemClick(MenuItem item) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								(Context) GeoQuestApp.getCurrentActivity());
+						builder.setTitle(R.string.imprintTitle);
+						builder.setPositiveButton(R.string.ok,
+								new OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.dismiss();
+									}
+								});
+						builder.setIcon(R.drawable.icon);
+						builder.setMessage("Hier folgt das Impressum");
+						builder.show();
 						return false;
 					}
 

@@ -55,7 +55,7 @@ public abstract class GeoQuestActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menuMaker.addMenuItems(MenuMaker.END_GAME_MENU_ID,
-				MenuMaker.QUIT_MENU_ID);
+				MenuMaker.QUIT_MENU_ID, MenuMaker.IMPRINT_MENU_ID);
 		menuMaker.addMenuItem(MenuMaker.PREFS_MENU_ID,
 				new OnMenuItemClickListener() {
 
@@ -74,17 +74,6 @@ public abstract class GeoQuestActivity extends Activity {
 						Intent historyActivity = new Intent(getBaseContext(),
 								HistoryActivity.class);
 						startActivity(historyActivity);
-						return true;
-					}
-
-				});
-		menuMaker.addMenuItem(MenuMaker.IMPRINT_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent imprintActivity = new Intent(getBaseContext(),
-								ImprintActivity.class);
-						startActivity(imprintActivity);
 						return true;
 					}
 
