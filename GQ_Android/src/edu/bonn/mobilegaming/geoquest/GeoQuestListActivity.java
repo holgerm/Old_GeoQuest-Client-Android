@@ -122,4 +122,10 @@ public abstract class GeoQuestListActivity extends ListActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		GeoQuestApp.setCurrentActivity(this);
+	}
+
 }

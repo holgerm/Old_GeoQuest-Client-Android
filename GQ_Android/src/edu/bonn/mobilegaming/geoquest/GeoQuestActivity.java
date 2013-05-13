@@ -21,6 +21,7 @@ public abstract class GeoQuestActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		GeoQuestApp.setCurrentActivity(this);
 	}
 
 	protected static final int MENU_ID_OFFSET = Menu.FIRST + 4;

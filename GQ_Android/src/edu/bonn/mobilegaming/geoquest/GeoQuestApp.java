@@ -81,9 +81,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public static int currentSortMode = GameItem.SORT_GAMELIST_BY_DEFAULT;
 
-	private static MissionOrToolActivity currentActivity;
+	private static Activity currentActivity;
 
-	public static MissionOrToolActivity getCurrentActivity() {
+	public static Activity getCurrentActivity() {
 		return currentActivity;
 	}
 
@@ -91,7 +91,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	 * @param currentActivity
 	 *            the currently activated mission or tool activity
 	 */
-	public static void setCurrentActivity(MissionOrToolActivity activity) {
+	public static void setCurrentActivity(Activity activity) {
 		currentActivity = activity;
 	}
 
@@ -769,12 +769,18 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	 */
 	public static void blockInteractionOnCurrentActivityByMediaPlayer() {
 		final BlockableAndReleasable releaseCallBack;
-		if (getCurrentActivity().getUI() != null)
-			releaseCallBack = getCurrentActivity().getUI().blockInteraction(
+		MissionOrToolActivity missionActivity;
+		try {
+			missionActivity = (MissionOrToolActivity) getCurrentActivity();
+		} catch (ClassCastException cce) {
+			Log.e(TAG, getCurrentActivity() + "can not be used for blocking.");
+			return;
+		}
+		if (missionActivity.getUI() != null)
+			releaseCallBack = missionActivity.getUI().blockInteraction(
 					getInstance());
 		else
-			releaseCallBack = getCurrentActivity().blockInteraction(
-					getInstance());
+			releaseCallBack = missionActivity.blockInteraction(getInstance());
 		mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
 			public void onCompletion(MediaPlayer mp) {

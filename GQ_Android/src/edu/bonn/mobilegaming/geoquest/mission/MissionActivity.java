@@ -87,7 +87,6 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		GeoQuestApp.setCurrentActivity(this);
 	}
 
 	/**
@@ -101,7 +100,6 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(this.getClass().getName(), "creating activity");
-		GeoQuestApp.setCurrentActivity(this);
 		ibm = new InteractionBlockingManager(this);
 
 		// get extras
