@@ -190,6 +190,9 @@
     <string name="scoreDecreasedBy">Oh weh: Euer Punktestand sinkt um </string>
     <string name="scoreZero">Oh weh: Euer Punktestand ist null!</string>
 
+    <!-- Imprint -->
+    <string name="imprintTitle">Impressum</string>
+    
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
     <string name="varDefaultUserID">0</string>

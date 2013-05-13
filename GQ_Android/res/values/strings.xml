@@ -189,6 +189,9 @@
     <string name="scoreDecreasedBy">Oops: Your score ran down by </string>
     <string name="scoreZero">Ooh: Your score is zero!</string>
 
+    <!-- Imprint -->
+    <string name="imprintTitle">Imprint</string>
+    
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
     <string name="varDefaultUserID">0</string>
