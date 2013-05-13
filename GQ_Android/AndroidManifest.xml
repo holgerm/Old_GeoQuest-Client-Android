@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -23,14 +24,13 @@
     <application
         android:name="GeoQuestApp"
         android:allowBackup="true"
-        android:icon="@drawable/radioranzen"
-        android:label="RadioRanzen"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        android:icon="@drawable/erzbistumkoeln_fam_logo"
+        android:label="Bibelweg Köln" >
         <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name=".Start"
-            android:label="RadioRanzen"
+            android:label="Bibelweg Köln"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,6 +87,10 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="edu.bonn.mobilegaming.geoquest.mission.NFCTag"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".mission.ImageCapture"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
@@ -121,6 +125,10 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".mission.ExternalMission"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="edu.bonn.mobilegaming.geoquest.mission.NFCTag"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>
