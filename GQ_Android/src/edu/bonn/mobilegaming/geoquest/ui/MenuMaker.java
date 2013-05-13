@@ -96,8 +96,6 @@ public class MenuMaker {
 		menuItemTextResources.put(RELOAD_GAMES_MENU_ID,
 				R.string.reloadGamesMenu);
 		menuItemDrawables.put(RELOAD_GAMES_MENU_ID, R.drawable.icon_reload);
-		menuItemTextResources.put(IMPRINT_MENU_ID, R.string.imprintMenu);
-		menuItemDrawables.put(IMPRINT_MENU_ID, R.drawable.icon_imprint);
 	}
 
 	private static OnMenuItemClickListener NULL_OMICL = new OnMenuItemClickListener() {
