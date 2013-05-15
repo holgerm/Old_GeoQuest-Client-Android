@@ -82,7 +82,7 @@ public class MenuMaker {
 										dialog.dismiss();
 									}
 								});
-						builder.setIcon(R.drawable.icon);
+						builder.setIcon(R.drawable.appicon);
 						builder.setMessage("Hier folgt das Impressum");
 						builder.show();
 						return false;
