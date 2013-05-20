@@ -7,7 +7,7 @@
 
     <!-- Generic Values -->
     <string name="xmlformat">5</string>
-    <string name="app_name">GeoQuest</string>
+    <string name="app_name">Akademie Rundgang</string>
     <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

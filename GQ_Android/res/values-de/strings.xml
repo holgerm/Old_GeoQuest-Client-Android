@@ -9,7 +9,7 @@
 
     <!-- Generic Values -->
     <string name="xmlformat">5</string>
-    <string name="app_name">GeoQuest</string>
+    <string name="app_name">Akademie Rundgang</string>
     <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
@@ -121,9 +121,9 @@
     <!-- VideoPlay MISSION -->
     <string name="videoplay_finishdialog_title">Diese Mission beenden?</string>
     <string name="videoplay_finishdialog_message">Video abbrechen?</string>
-    <string name="videoplay_finishdialog_keepwatching">Weiter ansehen</string>
+    <string name="videoplay_finishdialog_keepwatching">Noch ansehen</string>
     <string name="videoplay_finishdialog_watchagain">Noch einmal</string>
-    <string name="videoplay_finishdialog_leave">Fertig!</string>
+    <string name="videoplay_finishdialog_leave">Weiter!</string>
     <string name="videoplay_errordialog_message">Das Video kann nicht abgespielt werden.</string>
 
     <!-- HOTSPOTS -->
