@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -77,7 +79,7 @@ public class TextQuestion extends InteractiveMission {
 
 		switch (mode) {
 		case MODE_QUESTION:
-			outerView.setBackgroundResource(R.drawable.background_question);
+			setBackgroundQuestion();
 			textView.setText(questionText);
 			answerEditText.setVisibility(View.VISIBLE);
 			answerEditText.setText("");
@@ -85,7 +87,7 @@ public class TextQuestion extends InteractiveMission {
 			button.setOnClickListener(questionModeButtonOnClickListener);
 			break;
 		case MODE_REPLY_TO_CORRECT_ANSWER:
-			outerView.setBackgroundResource(R.drawable.background_correct);
+			setBackgroundCorrectReply();
 			textView.setText(replyTextOnCorrect);
 			answerEditText.setVisibility(View.INVISIBLE);
 			button.setText(R.string.button_text_proceed);
@@ -97,7 +99,7 @@ public class TextQuestion extends InteractiveMission {
 			button.setOnClickListener(replyModeButtonOnClickListener);
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
-			outerView.setBackgroundResource(R.drawable.background_wrong);
+			setBackgroundWrongReply();
 			textView.setText(replyTextOnWrong);
 			answerEditText.setVisibility(View.INVISIBLE);
 			if (loopUntilSuccess && answers.size() > 0)
@@ -112,6 +114,39 @@ public class TextQuestion extends InteractiveMission {
 		}
 
 		answerEditText.invalidate();
+	}
+
+	private void setBackgroundQuestion() {
+		String bg = (String) getMissionAttribute("bgQuestion",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, "bg");
+		if (bg == null)
+			outerView.setBackgroundResource(R.drawable.background_question);
+		else {
+			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(bg, true)));
+		}
+	}
+
+	private void setBackgroundWrongReply() {
+		String bg = (String) getMissionAttribute("bgOnWrongReply",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
+		if (bg == null)
+			outerView.setBackgroundResource(R.drawable.background_wrong);
+		else {
+			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(bg, true)));
+		}
+	}
+
+	private void setBackgroundCorrectReply() {
+		String bg = (String) getMissionAttribute("bgOnCorrectReply",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
+		if (bg == null)
+			outerView.setBackgroundResource(R.drawable.background_correct);
+		else {
+			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(bg, true)));
+		}
 	}
 
 	/**
