@@ -35,17 +35,6 @@ public class TestVariableReplacementInText {
 	}
 
 
-//	@Test
-//	public void systemVarNames() {
-//		// GIVEN:
-//		Variables.setValue("$_username", "Michael");
-//
-//		// WHEN:
-//		String input = "Dear @$_username@!";
-//
-//		// THEN:
-//		assertEquals("Dear Michael!", StringTools.replaceVariables(input));
-//	}
 
 	// === HELPER METHODS FOLLOW =============================================
 
