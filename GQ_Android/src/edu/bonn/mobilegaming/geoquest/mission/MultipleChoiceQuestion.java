@@ -29,7 +29,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
  * 
  * @author Holger Muegge
  */
-public class MultipleChoiceQuestion extends InteractiveMission {
+public class MultipleChoiceQuestion extends Question {
 	/** layout */
 	private LinearLayout mcButtonPanel;
 	/** text view for displaying text */
@@ -46,6 +46,7 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 	private String questionText;
 	private OnClickListener proceed, restart;
 	private final static String SHUFFLE_ANSWERS = "true";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,16 +68,17 @@ public class MultipleChoiceQuestion extends InteractiveMission {
 		mcButtonPanel.removeAllViews();
 		switch (mode) {
 		case MODE_QUESTION:
+			setBackgroundQuestion();
 			setUpQuestionView();
 			break;
 		case MODE_REPLY_TO_CORRECT_ANSWER:
-			outerView.setBackgroundResource(R.drawable.background_correct);
+			setBackgroundCorrectReply();
 			setMCTextViewToReply();
 			setMCButtonPanel(loopUntilSuccess);
 			invokeOnSuccessEvents();
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
-			outerView.setBackgroundResource(R.drawable.background_wrong);
+			setBackgroundWrongReply();
 			setMCTextViewToReply();
 			if (loopUntilSuccess)
 				setMCButtonPanel(loopUntilSuccess);
