@@ -168,7 +168,7 @@ public class TestUtils {
 	public static Object getFieldValue(Object obj, String fieldName) {
 		Object value = null;
 		try {
-			Field f = obj.getClass().getDeclaredField(fieldName);
+			Field f = getNearestFieldInHierarchy(obj.getClass(), fieldName);
 			f.setAccessible(true);
 			value = f.get(obj);
 		} catch (IllegalArgumentException e) {
@@ -185,6 +185,23 @@ public class TestUtils {
 					+ "\" misses a field named \"" + fieldName + "\"");
 		}
 		return value;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static Field getNearestFieldInHierarchy(Class clazz,
+			String fieldName) throws NoSuchFieldException {
+		Field foundField = null;
+		try {
+			foundField = clazz.getDeclaredField(fieldName);
+			return foundField;
+		} catch (NoSuchFieldException nsfe) {
+			Class superClass = clazz.getSuperclass();
+			if (superClass == null)
+				throw nsfe;
+			else
+				return getNearestFieldInHierarchy(superClass, fieldName);
+
+		}
 	}
 
 	/**
