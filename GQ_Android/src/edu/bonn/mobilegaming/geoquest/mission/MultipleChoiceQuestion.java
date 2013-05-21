@@ -201,7 +201,6 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	private void setUpQuestionView() {
-		outerView.setBackgroundResource(R.drawable.background_question);
 		mcButtonPanel.removeAllViews();
 
 		// show question:

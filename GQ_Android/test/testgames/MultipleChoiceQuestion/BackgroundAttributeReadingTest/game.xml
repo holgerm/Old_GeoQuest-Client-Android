@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST GAME SPEC for TextQuestion Mission Type -->
+<game name="BackgroundAttributeReadingTest" xmlformat="5">
+	<mission id="Defaults" type="MultipleChoiceQuestion"
+		loopUntilSuccess="true">
+		<question>
+			<questiontext>Text of the question.</questiontext>
+			<answer correct="1">Yes</answer>
+			<answer correct="0">No</answer>
+		</question>
+	</mission>
+	<mission id="AllUseSameBG" type="MultipleChoiceQuestion"
+		loopUntilSuccess="true" bg="drawable/background_question.png">
+		<question>
+			<questiontext>Text of the question.</questiontext>
+			<answer correct="1">Yes</answer>
+			<answer correct="0">No</answer>
+		</question>
+	</mission>
+	<mission id="UseBGQuestion" type="MultipleChoiceQuestion"
+		loopUntilSuccess="true" bgQuestion="drawable/background_question.png">
+		<question>
+			<questiontext>Text of the question.</questiontext>
+			<answer correct="1">Yes</answer>
+			<answer correct="0">No</answer>
+		</question>
+	</mission>
+	<mission id="UseBGReply" type="MultipleChoiceQuestion"
+		loopUntilSuccess="true" bgOnReply="drawable/background_reply.png">
+		<question>
+			<questiontext>Text of the question.</questiontext>
+			<answer correct="1">Yes</answer>
+			<answer correct="0">No</answer>
+		</question>
+	</mission>
+	<mission id="UseAllDifferentBGs" type="MultipleChoiceQuestion"
+		loopUntilSuccess="true" bgQuestion="drawable/background_question.png"
+		bgOnCorrectReply="drawable/background_correct.png" bgOnWrongReply="drawable/background_wrong.png">
+		<question>
+			<questiontext>Text of the question.</questiontext>
+			<answer correct="1">Yes</answer>
+			<answer correct="0">No</answer>
+		</question>
+	</mission>
+</game>

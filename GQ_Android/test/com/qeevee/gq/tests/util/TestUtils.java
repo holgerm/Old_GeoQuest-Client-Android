@@ -145,7 +145,7 @@ public class TestUtils {
 		GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
 				uiFactory);
 		return start;
-	}
+	} 
 
 	public static Start startApp() {
 		Start start = new Start();

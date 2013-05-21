@@ -21,19 +21,20 @@ import com.qeevee.gq.tests.util.TestUtils;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
+import edu.bonn.mobilegaming.geoquest.mission.Question;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionMissionPlainTextTests {
-	TextQuestion tq;
+	private static final String GAME_NAME = "TextQuestion/FunctionTest";
+	Question tq;
 	TextView tv;
 	EditText et;
 	Button bt;
 
 	@SuppressWarnings("unchecked")
 	public void initTestMission(String missionID) {
-		tq = (TextQuestion) TestUtils.prepareMission("TextQuestion", missionID,
-				startGameForTest("TextQuestionTest"));
+		tq = (Question) TestUtils.prepareMission("TextQuestion", missionID,
+				startGameForTest(GAME_NAME));
 		tq.onCreate(null);
 		tv = (TextView) getFieldValue(tq, "textView");
 		et = (EditText) getFieldValue(tq, "answerEditText");

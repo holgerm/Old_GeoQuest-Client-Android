@@ -1,4 +1,4 @@
-package com.qeevee.gq.tests.xml;
+package com.qeevee.gq.tests.mission.model;
 
 import static com.qeevee.gq.tests.util.TestUtils.getFieldValue;
 import static com.qeevee.gq.tests.util.TestUtils.startGameForTest;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.graphics.drawable.BitmapDrawable;
-import android.view.View;
+import android.view.View; 
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,13 +18,13 @@ import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
+import edu.bonn.mobilegaming.geoquest.mission.Question;
 
 @RunWith(GQTestRunner.class)
-public class ReadMissionAttributesTests {
+public class TextQuestionSetBackgroundTests {
 
-	final private String GAME_NAME = "BackgroundAttributeReadingTest";
-	private TextQuestion tq;
+	final private String GAME_NAME = "TextQuestion/BackgroundAttributeReadingTest";
+	private Question tq;
 	private EditText et;
 	private Button bt;
 	private View ov;
@@ -153,7 +153,7 @@ public class ReadMissionAttributesTests {
 
 	@SuppressWarnings("unchecked")
 	public void initTestMission(String missionID) {
-		tq = (TextQuestion) TestUtils.prepareMission("TextQuestion", missionID,
+		tq = (Question) TestUtils.prepareMission("TextQuestion", missionID,
 				startGameForTest(GAME_NAME));
 		tq.onCreate(null);
 		et = (EditText) getFieldValue(tq, "answerEditText");

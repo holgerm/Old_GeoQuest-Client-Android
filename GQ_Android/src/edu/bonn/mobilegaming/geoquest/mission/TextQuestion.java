@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +21,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -37,7 +35,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
  * 
  * @author Holger Muegge
  */
-public class TextQuestion extends InteractiveMission {
+public class TextQuestion extends Question {
 	/** text view for displaying text */
 	private TextView textView;
 	private EditText answerEditText;
@@ -114,39 +112,6 @@ public class TextQuestion extends InteractiveMission {
 		}
 
 		answerEditText.invalidate();
-	}
-
-	private void setBackgroundQuestion() {
-		String bg = (String) getMissionAttribute("bgQuestion",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, "bg");
-		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_question);
-		else {
-			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
-		}
-	}
-
-	private void setBackgroundWrongReply() {
-		String bg = (String) getMissionAttribute("bgOnWrongReply",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
-		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_wrong);
-		else {
-			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
-		}
-	}
-
-	private void setBackgroundCorrectReply() {
-		String bg = (String) getMissionAttribute("bgOnCorrectReply",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
-		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_correct);
-		else {
-			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
-		}
 	}
 
 	/**

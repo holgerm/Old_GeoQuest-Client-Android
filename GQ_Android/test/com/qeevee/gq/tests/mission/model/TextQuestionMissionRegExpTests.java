@@ -17,11 +17,11 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
 import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
+import edu.bonn.mobilegaming.geoquest.mission.Question;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionMissionRegExpTests {
-	TextQuestion tq;
+	Question tq;
 	TextView tv;
 	EditText et;
 	Button bt;
@@ -43,8 +43,8 @@ public class TextQuestionMissionRegExpTests {
 	@SuppressWarnings("unchecked")
 	private void initTestMission(String missionID) {
 		Variables.clean();
-		tq = (TextQuestion) TestUtils.prepareMission("TextQuestion", missionID,
-				startGameForTest("TextQuestionTest"));
+		tq = (Question) TestUtils.prepareMission("TextQuestion", missionID,
+				startGameForTest("TextQuestion/FunctionTest"));
 		tq.onCreate(null);
 		tv = (TextView) getFieldValue(tq, "textView");
 		et = (EditText) getFieldValue(tq, "answerEditText");
