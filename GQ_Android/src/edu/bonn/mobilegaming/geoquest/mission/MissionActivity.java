@@ -133,15 +133,28 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	 *            {@link XMLUtilities#OPTIONAL_ATTRIBUTE} to state that it can
 	 *            be omitted even without a default. In the latter case the
 	 *            method returns null.
+	 * @param alternativeAttributeNames
+	 *            list of attribute names that are used in case the
+	 *            attributeName does not result in a value. They are used in
+	 *            given order.
 	 * @return the corresponding attribute value as specified in the game.xml or
-	 *         null if the attribute is optional and not specified
+	 *         null if the attribute is optional and not specified and none of
+	 *         the alternative attributes are specified.
 	 * @throws IllegalArgumentException
 	 *             if the attribute is necessary but not given in the game.xml
 	 */
 	public CharSequence getMissionAttribute(String attributeName,
-			int defaultAsResourceID) {
-		return XMLUtilities.getAttribute(attributeName, defaultAsResourceID,
+			int defaultAsResourceID, String... alternativeAttributeNames) {
+		CharSequence result = null;
+		result = XMLUtilities.getAttribute(attributeName, defaultAsResourceID,
 				mission.xmlMissionNode);
+		int i = 0;
+		while (result == null && alternativeAttributeNames.length > i) {
+			result = XMLUtilities.getAttribute(alternativeAttributeNames[i],
+					defaultAsResourceID, mission.xmlMissionNode);
+			i++;
+		}
+		return result;
 	}
 
 	/**
@@ -151,9 +164,10 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	 * @param attributeName
 	 * @return
 	 */
-	public CharSequence getMissionAttribute(String attributeName) {
-		return XMLUtilities.getAttribute(attributeName,
-				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+	public CharSequence getMissionAttribute(String attributeName,
+			String... alternativeAttributeNames) {
+		return getMissionAttribute(attributeName,
+				XMLUtilities.OPTIONAL_ATTRIBUTE, alternativeAttributeNames);
 	}
 
 	public Element getXML() {
