@@ -478,9 +478,10 @@ public class GameLoader {
 					// AssetFileDescriptor afd =
 					// assetManager.openFd(assetFiles[0]);
 					// TODO get length and show progress bar
-					is = new BufferedInputStream(assetManager.open(ASSET_DIR_4_PREDEFINED_QUESTS
-							+ File.separator + assetFiles[i],
-							AssetManager.ACCESS_BUFFER), BYTE_SIZE);
+					is = new BufferedInputStream(
+							assetManager.open(ASSET_DIR_4_PREDEFINED_QUESTS
+									+ File.separator + assetFiles[i],
+									AssetManager.ACCESS_BUFFER), BYTE_SIZE);
 					File newRepoFile = GameDataManager
 							.getLocalRepoDir(GeoQuestApp.getContext().getText(
 									R.string.predefinedRepoName));
@@ -522,7 +523,6 @@ public class GameLoader {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 			return false;
 		}
