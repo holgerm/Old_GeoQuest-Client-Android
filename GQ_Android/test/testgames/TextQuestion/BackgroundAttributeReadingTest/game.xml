@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST GAME SPEC for TextQuestion Mission Type -->
+<game name="BackgroundAttributeReadingTest" xmlformat="5">
+	<mission id="Defaults" type="TextQuestion" loopUntilSuccess="true"
+		question="Text of the question.">
+		<answers>
+			<answer>Yes</answer>
+		</answers>
+	</mission>
+	<mission id="AllUseSameBG" type="TextQuestion"
+		loopUntilSuccess="true" question="Text of the question." bg="drawable/background_question.png">
+		<answers>
+			<answer>Yes</answer>
+		</answers>
+	</mission>
+	<mission id="UseBGQuestion" type="TextQuestion"
+		loopUntilSuccess="true" question="Text of the question." bgQuestion="drawable/background_question.png">
+		<answers>
+			<answer>Yes</answer>
+		</answers>
+	</mission>
+	<mission id="UseBGReply" type="TextQuestion" loopUntilSuccess="true"
+		question="Text of the question." bgOnReply="drawable/background_reply.png">
+		<answers>
+			<answer>Yes</answer>
+		</answers>
+	</mission>
+	<mission id="UseAllDifferentBGs" type="TextQuestion"
+		loopUntilSuccess="true" question="Text of the question." bgQuestion="drawable/background_question.png"
+		bgOnCorrectReply="drawable/background_correct.png" bgOnWrongReply="drawable/background_wrong.png">
+		<answers>
+			<answer>Yes</answer>
+		</answers>
+	</mission>
+</game>
