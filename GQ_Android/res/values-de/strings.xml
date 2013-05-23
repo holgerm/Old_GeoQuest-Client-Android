@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="default_endButtonText">Spiel fortsetzen</string>
-
-    <!-- CUSTOMER VALUES -->
-    <string name="erzbistum">Erzbistum Köln - Familienpastoral</string>
-    <string name="q3">Q3</string>
-
     <!-- Generic Values -->
     <string name="xmlformat">5</string>
-    <string name="app_name">Akademie Rundgang</string>
     <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
@@ -53,6 +46,8 @@
     <string name="button_text_repeat">Wiederholen</string>
     <string name="button_text_stop">Stop</string>
     <string name="button_text_use">Benutzen</string>
+    <!-- TODO: get rid -->
+    <string name="default_endButtonText">Spiel fortsetzen</string>
 
     <!-- Generic MENU Entries -->
     <string name="quitMenu">App beenden</string>
@@ -61,7 +56,7 @@
     <string name="historyMenu">Verlauf</string>
     <string name="reloadGamesMenu">Spiele neu laden</string>
     <string name="imprintMenu">Impressum</string>
-    
+
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
@@ -192,7 +187,7 @@
 
     <!-- Imprint -->
     <string name="imprintTitle">Impressum</string>
-    
+
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
     <string name="varDefaultUserID">0</string>

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- CUSTOMER VALUES -->
-    <string name="erzbistum">Erzbistum Köln - Familienpastoral</string>
-    <string name="q3">Q3</string>
-
     <!-- Generic Values -->
     <string name="xmlformat">5</string>
-    <string name="app_name">Akademie Rundgang</string>
     <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
