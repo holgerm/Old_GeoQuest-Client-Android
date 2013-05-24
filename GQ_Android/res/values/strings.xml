@@ -123,7 +123,8 @@
 
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
-
+    <string name="hotspot_default_activity">true</string>
+    
     <!-- PREFERENCES -->
     <string name="preferencesTitle">Preferences</string>
     <!-- Password protected prefs -->

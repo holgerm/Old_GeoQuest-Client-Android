@@ -24,6 +24,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
 import com.qeevee.gq.rules.Rule;
+import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
 /**
@@ -320,6 +321,9 @@ public class HotspotOld /* extends Overlay */{
 						"false")) {
 			this.setVisible(false);
 		}
+
+		setActive("true".equals(XMLUtilities.getAttribute("initialActivity",
+				R.string.hotspot_default_activity, _hotspotNode)));
 
 		// Retrieve name attribute:
 		if (_hotspotNode.attributeValue("name") != null)

@@ -7,7 +7,7 @@ public class SetHotspotActivity extends Action {
 
 	@Override
 	protected boolean checkInitialization() {
-		return params.containsKey("id") && params.containsKey("visible");
+		return params.containsKey("id") && params.containsKey("mode");
 	}
 
 	@Override
@@ -15,11 +15,11 @@ public class SetHotspotActivity extends Action {
 		HotspotOld hotspot = HotspotOld.getExisting(params.get("id"));
 		if (hotspot == null)
 			return;
-		if (params.get("visible").equals("true")) {
-			hotspot.setVisible(true);
+		if (params.get("mode").equals("true")) {
+			hotspot.setActive(true);
 		}
-		if (params.get("visible").equals("false")) {
-			hotspot.setVisible(false);
+		if (params.get("mode").equals("false")) {
+			hotspot.setActive(false);
 		}
 
 		GeoQuestApp.getInstance().refreshMapDisplay();
