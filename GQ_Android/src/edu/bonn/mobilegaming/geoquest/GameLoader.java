@@ -36,7 +36,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
 
-	private static final String ASSET_DIR_4_PREDEFINED_QUESTS = "autostart";
+	private static final String ASSET_DIR_4_PREDEFINED_QUESTS = "included";
 
 	static final String TAG = "GameLoader";
 
