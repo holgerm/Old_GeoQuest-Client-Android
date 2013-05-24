@@ -37,10 +37,12 @@ public class MapHelper {
 				// calculate distance to hotspots
 				for (Iterator<HotspotOld> i = mapMission.getHotspots()
 						.listIterator(); i.hasNext();) {
-					HotspotOld hotspot = i.next(); // TODO: throws a
+					HotspotOld hotspot = i.next();
+					// TODO: throws a
 					// ConcurrentModificationException
 					// sometimes (hm)
-					hotspot.inRange(location);
+					if (hotspot.isActive())
+						hotspot.inRange(location);
 				}
 			}
 		};
