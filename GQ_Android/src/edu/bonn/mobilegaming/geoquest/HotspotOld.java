@@ -369,6 +369,11 @@ public class HotspotOld /* extends Overlay */{
 	private List<Rule> onTapRules = new ArrayList<Rule>();
 	private float halfBitmapHeight;
 	private float halfBitmapWidth;
+	private boolean active;
+
+	public boolean isActive() {
+		return active;
+	}
 
 	private void createRules(Element hotspotNode) {
 		addRulesToList(onEnterRules, "onEnter/rule", hotspotNode);
@@ -498,12 +503,8 @@ public class HotspotOld /* extends Overlay */{
 		this.description = description;
 	}
 
-	// public String getIconRessource() {
-	// return iconRessource;
-	// }
-
-	// private void setIconRessource(String iconRessource) {
-	// this.iconRessource = iconRessource;
-	// }
+	public void setActive(boolean newActivityValue) {
+		this.active = newActivityValue;
+	}
 
 }
