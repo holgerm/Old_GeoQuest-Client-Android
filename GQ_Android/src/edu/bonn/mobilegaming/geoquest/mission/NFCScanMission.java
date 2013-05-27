@@ -25,12 +25,13 @@ import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class NFCScanMission extends InteractiveMission implements
-		ParseTagListener {
+		ParseTagListener, NeedsNFCCapability {
 
 	private static final String TAG = "NFCScanMission";
 	private Context ctx;
@@ -198,7 +199,9 @@ public class NFCScanMission extends InteractiveMission implements
 				String id = "info_" + this.id;
 				if (id.equals(iModel.getId())) {
 
-					//TODO In second implementation cycle inventory concept will be introduced. Currently we are simulating this with class variable.
+					// TODO In second implementation cycle inventory concept
+					// will be introduced. Currently we are simulating this with
+					// class variable.
 					// This means just add item to inventory
 					if ("true".equals(this.earnFruit)) {
 

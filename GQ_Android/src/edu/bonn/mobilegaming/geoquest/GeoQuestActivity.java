@@ -3,7 +3,6 @@ package edu.bonn.mobilegaming.geoquest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,40 +14,39 @@ import android.widget.Toast;
 import com.qeevee.gq.history.HistoryActivity;
 import com.uni.bonn.nfc4mg.NFCEventManager;
 
+import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public abstract class GeoQuestActivity extends Activity {
 
-	// Adding support for NFC in GeoQuest
 	private NFCEventManager mNFCEventManager = null;
-	private Context ctx;
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		// NFC Mission Support : start
-		if (null != mNFCEventManager) {
-			mNFCEventManager.attachNFCListener(GeoQuestActivity.this);
-		}
-		// NFC Mission Support : end
-
+		attachNFCEventListener();
 		GeoQuestApp.setCurrentActivity(this);
 	}
-	
-	
 
-	// NFC Mission Support : start
+	private void attachNFCEventListener() {
+		if (this instanceof NeedsNFCCapability && null != mNFCEventManager) {
+			mNFCEventManager.attachNFCListener(GeoQuestActivity.this);
+		}
+	}
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (null != mNFCEventManager) {
+		detachNFCEventListener();
+	}
+
+	private void detachNFCEventListener() {
+		if (this instanceof NeedsNFCCapability && null != mNFCEventManager) {
 			mNFCEventManager.removeNFCListener(GeoQuestActivity.this);
 		}
 	}
-	// NFC Mission Support : end
 
 	protected static final int MENU_ID_OFFSET = Menu.FIRST + 4;
 	public static ContextManager contextManager = null;
@@ -64,14 +62,7 @@ public abstract class GeoQuestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.ctx = this;
-		try {
-			mNFCEventManager = new NFCEventManager(this.ctx);
-			mNFCEventManager.initialize(this.ctx, GeoQuestActivity.this);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(this.ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
-		}
+		checkAndInitializeNFCEventManager();
 
 		((GeoQuestApp) getApplication()).addActivity(this);
 
@@ -86,6 +77,18 @@ public abstract class GeoQuestActivity extends Activity {
 		startLocalGameDialog.setCancelable(false);
 
 		// startContextManager();
+	}
+
+	private void checkAndInitializeNFCEventManager() {
+		if (this instanceof NeedsNFCCapability) {
+			try {
+				mNFCEventManager = new NFCEventManager(this);
+				mNFCEventManager.initialize(this, GeoQuestActivity.this);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	@Override

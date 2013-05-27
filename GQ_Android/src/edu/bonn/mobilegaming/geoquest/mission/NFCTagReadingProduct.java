@@ -21,12 +21,13 @@ import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class NFCTagReadingProduct extends InteractiveMission implements
-		ParseTagListener {
+		ParseTagListener, NeedsNFCCapability {
 
 	private static final String TAG = "NFCTagReadingProduct";
 	private Context ctx;
@@ -116,7 +117,7 @@ public class NFCTagReadingProduct extends InteractiveMission implements
 		case TagConstants.TAG_TYPE_GPS:
 
 			GPSTagModel gModel = mHandler.getmGPSTagModel();
-			
+
 			Log.d(TAG, "Data = " + gModel.getData());
 			// set scanned result in mission specific variable:
 			Variables.registerMissionResult(mission.id, gModel.getData());
