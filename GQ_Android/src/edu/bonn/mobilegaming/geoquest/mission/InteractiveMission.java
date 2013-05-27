@@ -73,7 +73,7 @@ public abstract class InteractiveMission extends MissionActivity {
 		List<Element> xmlRuleNodes;
 		xmlRuleNodes = getXML().selectNodes(xpath);
 		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule, this.mission.id));
+			ruleList.add(Rule.createFromXMLElement(xmlRule));
 		}
 	}
 

@@ -43,7 +43,7 @@ public class RuleTests {
 	}
 
 	private void applyRule(int i) {
-		Rule rule = Rule.createFromXMLElement((Element) rules.get(i), "");
+		Rule rule = Rule.createFromXMLElement((Element) rules.get(i));
 		rule.apply();
 	}
 

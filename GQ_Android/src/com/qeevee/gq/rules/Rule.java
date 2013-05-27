@@ -23,22 +23,23 @@ import com.qeevee.gq.rules.cond.True;
  */
 public class Rule {
 
+	private static boolean ruleFired;
 	private Condition precondition;
 	private List<Action> actions;
-	private String missionID;
 
 	/**
 	 * Checks the precondition of this rule and if it is fulfilled executes the
 	 * actions in the order defined by the according rule xml element.
 	 * 
 	 * @return wheather the condition is fulfilled and the action list is not
-	 *         empty, i.e. wheather actions are executed.
+	 *         empty, i.e. whether actions are executed.
 	 */
 	public final boolean apply() {
 		if (precondition.isFulfilled()) {
 			for (Action currentAction : actions) {
 				currentAction.execute();
 			}
+			Rule.ruleFired = true;
 			return true;
 		} else
 			return false;
@@ -46,8 +47,7 @@ public class Rule {
 
 	// //////////////// STATIC FACTORY STUFF FOLLOWS: ///////////////////
 
-	private Rule(String id) {
-		this.missionID = id;
+	private Rule() {
 		this.actions = new ArrayList<Action>();
 	}
 
@@ -86,8 +86,8 @@ public class Rule {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Rule createFromXMLElement(Element xmlRuleContent, String id) {
-		Rule rule = new Rule(id);
+	public static Rule createFromXMLElement(Element xmlRuleContent) {
+		Rule rule = new Rule();
 
 		// create precondition:
 		Element xmlCondition = (Element) xmlRuleContent
@@ -115,6 +115,10 @@ public class Rule {
 		for (Element xmlAction : xmlActionNodes) {
 			actions.add(ActionFactory.create(xmlAction));
 		}
+	}
+
+	public static void resetRuleFiredTracker() {
+		Rule.ruleFired = false;
 	}
 
 }

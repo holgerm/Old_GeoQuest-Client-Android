@@ -391,7 +391,7 @@ public class HotspotOld /* extends Overlay */{
 		List<Element> xmlRuleNodes;
 		xmlRuleNodes = hotspotNode.selectNodes(xpath);
 		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule, id));
+			ruleList.add(Rule.createFromXMLElement(xmlRule));
 		}
 	}
 

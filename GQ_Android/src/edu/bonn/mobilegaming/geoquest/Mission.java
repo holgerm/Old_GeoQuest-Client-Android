@@ -139,6 +139,7 @@ public class Mission implements Serializable {
 
 	/** runs the appropriate onStart Events when the mission starts */
 	public void applyOnStartRules() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onStartRules) {
 			rule.apply();
 		}
@@ -401,7 +402,7 @@ public class Mission implements Serializable {
 		List<Element> xmlRuleNodes;
 		xmlRuleNodes = xmlMissionNode.selectNodes(xpath);
 		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule, id));
+			ruleList.add(Rule.createFromXMLElement(xmlRule));
 		}
 	}
 }

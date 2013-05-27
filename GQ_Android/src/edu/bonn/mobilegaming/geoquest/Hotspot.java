@@ -52,7 +52,7 @@ public class Hotspot {
 		List<Element> ruleElements = (List<Element>) eventElement
 				.selectNodes("rule");
 		for (Element ruleElement : ruleElements) {
-			rulesList.add(Rule.createFromXMLElement(ruleElement, this.id));
+			rulesList.add(Rule.createFromXMLElement(ruleElement));
 		}
 		return rulesList;
 	}
