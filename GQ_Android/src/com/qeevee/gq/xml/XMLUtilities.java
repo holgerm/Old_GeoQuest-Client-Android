@@ -105,8 +105,8 @@ public class XMLUtilities {
 	 */
 	public static CharSequence getAttribute(String attributeName,
 			int defaultAsResourceID, Element xmlElement) {
-		String attributeAsText = xmlElement.attributeValue(attributeName);
-		if (attributeAsText == null)
+		if (xmlElement == null
+				|| xmlElement.attributeValue(attributeName) == null)
 			if (defaultAsResourceID == NECESSARY_ATTRIBUTE) {
 				// attribute needed but not found => error in game.xml:
 				IllegalArgumentException e = new IllegalArgumentException(
@@ -122,7 +122,7 @@ public class XMLUtilities {
 				// referenced resource as default and return its value:
 				return GeoQuestApp.getInstance().getText(defaultAsResourceID);
 		else
-			return (CharSequence) attributeAsText;
+			return (CharSequence) xmlElement.attributeValue(attributeName);
 	}
 
 	/**
