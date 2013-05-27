@@ -11,10 +11,8 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.qeevee.gq.history.TransitionItem;
-import com.uni.bonn.nfc4mg.NFCEventManager;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
@@ -25,7 +23,7 @@ public class NFCMission extends InteractiveMission {
 
 	private static final String TAG = "NFCMission";
 	private Context ctx;
-	private NFCEventManager mNFCEventManager = null;
+	// private NFCEventManager mNFCEventManager = null;
 
 	// Global Tag reference
 	private Tag mTag = null;
@@ -41,13 +39,12 @@ public class NFCMission extends InteractiveMission {
 		Log.d(TAG, "Inside NFCMission");
 
 		this.ctx = this;
-		try {
-			mNFCEventManager = new NFCEventManager(this.ctx);
-			mNFCEventManager.initialize(this.ctx, NFCMission.this);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(this.ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
-		}
+		/*
+		 * try { mNFCEventManager = new NFCEventManager(this.ctx);
+		 * mNFCEventManager.initialize(this.ctx, NFCMission.this); } catch
+		 * (Exception e) { e.printStackTrace(); Toast.makeText(this.ctx,
+		 * e.getMessage(), Toast.LENGTH_SHORT).show(); }
+		 */
 
 		List<Element> initialize = mission.xmlMissionNode
 				.selectNodes("./initialize");
@@ -60,7 +57,6 @@ public class NFCMission extends InteractiveMission {
 		ui = UIFactory.getInstance().createUI(this);
 	}
 
-	
 	public void finishMission() {
 		new TransitionItem(this);
 		if (hasMoreDialogItems())
@@ -81,21 +77,17 @@ public class NFCMission extends InteractiveMission {
 		return initTagItemIterator.next();
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (null != mNFCEventManager) {
-			mNFCEventManager.removeNFCListener(NFCMission.this);
-		}
-	}
+	/*
+	 * @Override public void onPause() { super.onPause(); if (null !=
+	 * mNFCEventManager) { mNFCEventManager.removeNFCListener(NFCMission.this);
+	 * } }
+	 */
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (null != mNFCEventManager) {
-			mNFCEventManager.attachNFCListener(NFCMission.this);
-		}
-	}
+	/*
+	 * @Override public void onResume() { super.onResume(); if (null !=
+	 * mNFCEventManager) { mNFCEventManager.attachNFCListener(NFCMission.this);
+	 * } }
+	 */
 
 	@Override
 	protected void onNewIntent(Intent intent) {
