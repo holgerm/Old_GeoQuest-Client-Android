@@ -147,6 +147,7 @@ public class Mission implements Serializable {
 
 	/** runs the GQEvents when the mission ends */
 	public void applyOnEndRules() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onEndRules) {
 			rule.apply();
 		}

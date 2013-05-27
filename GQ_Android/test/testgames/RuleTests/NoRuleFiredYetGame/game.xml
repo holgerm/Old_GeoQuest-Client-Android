@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST GAME SPEC for TextQuestion Mission Type -->
+<game name="NoRuleFiredYet" xmlformat="5">
+	<mission id="Intro" type="NPCTalk">
+		<onStart>
+			<rule>
+				<action type="SetVariable" var="one">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+			<rule>
+				<if>
+					<noRuleFiredYet />
+				</if>
+				<action type="SetVariable" var="shouldNotHaveFired">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<if>
+					<eq>
+						<var>one</var>
+						<num>0</num>
+					</eq>
+				</if>
+				<action type="Vibrate" />
+			</rule>
+			<rule>
+				<if>
+					<eq>
+						<var>one</var>
+						<num>2</num>
+					</eq>
+				</if>
+				<action type="Vibrate" />
+			</rule>
+			<rule>
+				<if>
+					<noRuleFiredYet />
+				</if>
+				<action type="SetVariable" var="shouldHaveFired">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onEnd>
+	</mission>
+</game>

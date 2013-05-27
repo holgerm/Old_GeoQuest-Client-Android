@@ -229,18 +229,21 @@ public class HotspotOld /* extends Overlay */{
 	};
 
 	public void runOnTapEvent() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onTapRules) {
 			rule.apply();
 		}
 	}
 
 	public void runOnEnterEvent() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onEnterRules) {
 			rule.apply();
 		}
 	}
 
 	public void runOnLeaveEvent() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onLeaveRules) {
 			rule.apply();
 		}

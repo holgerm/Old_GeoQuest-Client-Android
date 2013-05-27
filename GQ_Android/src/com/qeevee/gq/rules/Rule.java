@@ -121,4 +121,8 @@ public class Rule {
 		Rule.ruleFired = false;
 	}
 
+	public static boolean getRuleFiredTracker() {
+		return Rule.ruleFired;
+	}
+
 }

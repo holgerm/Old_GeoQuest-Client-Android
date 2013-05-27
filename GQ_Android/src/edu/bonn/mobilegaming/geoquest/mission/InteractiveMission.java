@@ -78,12 +78,14 @@ public abstract class InteractiveMission extends MissionActivity {
 	}
 
 	protected void invokeOnSuccessEvents() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onSuccessRules) {
 			rule.apply();
 		}
 	}
 
 	protected void invokeOnFailEvents() {
+		Rule.resetRuleFiredTracker();
 		for (Rule rule : onFailRules) {
 			rule.apply();
 		}
