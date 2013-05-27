@@ -25,11 +25,7 @@ public class Rule {
 
 	private Condition precondition;
 	private List<Action> actions;
-
-	public Rule(Condition cond, List<Action> actions) {
-		precondition = cond;
-		this.actions = new ArrayList<Action>(actions);
-	}
+	private String missionID;
 
 	/**
 	 * Checks the precondition of this rule and if it is fulfilled executes the
@@ -50,7 +46,8 @@ public class Rule {
 
 	// //////////////// STATIC FACTORY STUFF FOLLOWS: ///////////////////
 
-	private Rule() {
+	private Rule(String id) {
+		this.missionID = id;
 		this.actions = new ArrayList<Action>();
 	}
 
@@ -85,11 +82,12 @@ public class Rule {
 	 * @param xmlRuleContent
 	 *            the content of the xml element {@code<rule>} which typically
 	 *            is {@code<if>...</if><then>...</then>}.
+	 * @param id
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Rule createFromXMLElement(Element xmlRuleContent) {
-		Rule rule = new Rule();
+	public static Rule createFromXMLElement(Element xmlRuleContent, String id) {
+		Rule rule = new Rule(id);
 
 		// create precondition:
 		Element xmlCondition = (Element) xmlRuleContent
@@ -107,7 +105,7 @@ public class Rule {
 			 */
 			rule.precondition = ConditionFactory.create(xmlCondition);
 		}
-		
+
 		rule.addActionsToList(xmlRuleContent.selectNodes("action"));
 
 		return rule;

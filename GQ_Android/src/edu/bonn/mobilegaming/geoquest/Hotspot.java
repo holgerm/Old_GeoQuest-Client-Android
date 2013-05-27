@@ -43,14 +43,16 @@ public class Hotspot {
 	private ArrayList<Rule> readRules(Element hotspotElement, String eventTag) {
 		ArrayList<Rule> rulesList = new ArrayList<Rule>();
 		@SuppressWarnings("unchecked")
-		List<Element> eventElements = (List<Element>) hotspotElement.selectNodes(eventTag);
+		List<Element> eventElements = (List<Element>) hotspotElement
+				.selectNodes(eventTag);
 		if (eventElements == null || eventElements.size() == 0)
 			return rulesList;
 		Element eventElement = eventElements.get(0);
 		@SuppressWarnings("unchecked")
-		List<Element> ruleElements = (List<Element>)eventElement.selectNodes("rule");
+		List<Element> ruleElements = (List<Element>) eventElement
+				.selectNodes("rule");
 		for (Element ruleElement : ruleElements) {
-			rulesList.add(Rule.createFromXMLElement(ruleElement));
+			rulesList.add(Rule.createFromXMLElement(ruleElement, this.id));
 		}
 		return rulesList;
 	}

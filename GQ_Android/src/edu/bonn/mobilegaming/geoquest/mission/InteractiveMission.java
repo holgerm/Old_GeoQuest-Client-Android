@@ -21,9 +21,9 @@ import edu.bonn.mobilegaming.geoquest.Variables;
  * {@link Variables#RESULT_SUFFIX} and then call any specified rules for the
  * onInteractionPerformed event.
  * 
- * Examples are {@link QRTagReadingProduct} where the Scan is the event triggering
- * interaction, and {@link QuestionAndAnswer} where it is the choice of one
- * answer.
+ * Examples are {@link QRTagReadingProduct} where the Scan is the event
+ * triggering interaction, and {@link QuestionAndAnswer} where it is the choice
+ * of one answer.
  * 
  * @author muegge
  * 
@@ -45,9 +45,10 @@ public abstract class InteractiveMission extends MissionActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		// read loop behaviour from game spec:
-		CharSequence loopCS = getMissionAttribute("loopUntilSuccess", XMLUtilities.OPTIONAL_ATTRIBUTE);
+		CharSequence loopCS = getMissionAttribute("loopUntilSuccess",
+				XMLUtilities.OPTIONAL_ATTRIBUTE);
 		if (loopCS != null && loopCS.equals("true")) {
 			loopUntilSuccess = true;
 		}
@@ -72,7 +73,7 @@ public abstract class InteractiveMission extends MissionActivity {
 		List<Element> xmlRuleNodes;
 		xmlRuleNodes = getXML().selectNodes(xpath);
 		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule));
+			ruleList.add(Rule.createFromXMLElement(xmlRule, this.mission.id));
 		}
 	}
 
@@ -89,15 +90,13 @@ public abstract class InteractiveMission extends MissionActivity {
 	}
 
 	public void onBlockingStateUpdated(boolean isBlocking) {
-	    // TODO Auto-generated method stub
-	    
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void finish(Double status) {
-	    super.finish(status);
+		super.finish(status);
 	}
-	
-	
 
 }

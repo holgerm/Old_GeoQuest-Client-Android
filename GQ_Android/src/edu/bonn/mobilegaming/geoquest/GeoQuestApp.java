@@ -263,6 +263,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		RepositoryItem repoItem = repositoryItems.get(repositoryName);
 		if (repoItem == null) {
 			Log.e(TAG, "Error: repoitem is null");
+			return null;
 		}
 		repoItem.sortGameItemsBy(currentSortMode);
 		return repoItem.gameNames();

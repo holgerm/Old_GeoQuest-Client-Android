@@ -401,7 +401,7 @@ public class Mission implements Serializable {
 		List<Element> xmlRuleNodes;
 		xmlRuleNodes = xmlMissionNode.selectNodes(xpath);
 		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule));
+			ruleList.add(Rule.createFromXMLElement(xmlRule, id));
 		}
 	}
 }
