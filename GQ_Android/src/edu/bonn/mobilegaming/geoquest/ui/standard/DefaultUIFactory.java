@@ -6,6 +6,7 @@ import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
+import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
@@ -20,6 +21,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
@@ -36,6 +38,11 @@ public class DefaultUIFactory extends UIFactory {
 		super();
 	}
 
+	
+	public NFCTagReadingProductUI createUI(NFCTagReadingProduct activity) {
+		return new NFCTagReadingProductUIDefault(activity);
+	}
+	
 	public NFCScanMissionUI createUI(NFCScanMission activity) {
 		return new NFCScanMissionUIDefault(activity);
 	}
