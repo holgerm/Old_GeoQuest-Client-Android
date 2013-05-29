@@ -116,6 +116,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		}
 		includeAdaptionEngine();
 		currentSortMode = getRecentSortingMode();
+		setImprint(new Imprint(null));
 	}
 
 	public void addActivity(Activity newActivityOfThisApp) {
@@ -653,6 +654,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		cleanMediaPlayer();
 	}
 
+	/**
+	 * TODO replace by asking for implementing an interface (similar to
+	 * NeedsNFC...)
+	 */
 	private boolean isGameActivity(Activity activity) {
 		@SuppressWarnings("rawtypes")
 		Class actClass = activity.getClass();
@@ -696,6 +701,11 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	// SOUND STUFF FOLLOWS:
 
 	private static MediaPlayer mPlayer = null;
+	private static Imprint imprint;
+
+	public static Imprint getImprint() {
+		return imprint;
+	}
 
 	public static void cleanMediaPlayer() {
 		if (mPlayer != null && mPlayer.isLooping()) {
@@ -883,6 +893,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public static boolean isMissionRunning(String id) {
 		return getInstance().missionActivities.containsKey(id);
+	}
+
+	public static void setImprint(Imprint imprint) {
+		GeoQuestApp.imprint = imprint;
 	}
 
 }

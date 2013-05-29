@@ -83,7 +83,8 @@ public class MenuMaker {
 									}
 								});
 						builder.setIcon(R.drawable.geoquest_appicon);
-						builder.setMessage("Hier folgt das Impressum");
+						builder.setMessage(GeoQuestApp.getImprint()
+								.getCompleteText());
 						builder.show();
 						return false;
 					}

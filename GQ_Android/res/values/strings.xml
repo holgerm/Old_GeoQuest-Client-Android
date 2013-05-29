@@ -56,7 +56,7 @@
     <string name="historyMenu">History</string>
     <string name="reloadGamesMenu">Reload quests</string>
     <string name="imprintMenu">Imprint</string>
-    
+
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
     <string name="audiorecord_activityIndicator_initial">No recording made yet!</string>
@@ -124,7 +124,7 @@
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
     <string name="hotspot_default_activity">true</string>
-    
+
     <!-- PREFERENCES -->
     <string name="preferencesTitle">Preferences</string>
     <!-- Password protected prefs -->
@@ -187,7 +187,18 @@
 
     <!-- Imprint -->
     <string name="imprintTitle">Imprint</string>
-    
+    <string name="imprint_authorNameLabel">Author</string>
+    <string name="imprint_legalFormLabel">Legal form</string>
+    <string name="imprint_streetAndNrLabel">Street</string>
+    <string name="imprint_postalCodeLabel">Postcode</string>
+    <string name="imprint_cityLabel">City</string>
+    <string name="imprint_emailLabel">Email</string>
+    <string name="imprint_phoneLabel">Phone</string>
+    <string name="imprint_faxLabel">Fax</string>
+    <string name="imprint_registeredOfficeLabel">Registered Office</string>
+    <string name="imprint_registrationNumberLabel">Registration number</string>
+    <string name="imprint_vatIdNrLabel">VAT ID</string>
+
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
     <string name="varDefaultUserID">0</string>

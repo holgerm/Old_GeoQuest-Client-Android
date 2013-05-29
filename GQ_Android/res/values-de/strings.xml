@@ -187,6 +187,17 @@
 
     <!-- Imprint -->
     <string name="imprintTitle">Impressum</string>
+    <string name="imprint_authorNameLabel">Autor</string>
+    <string name="imprint_legalFormLabel">Rechtsform</string>
+    <string name="imprint_streetAndNrLabel">Straße</string>
+    <string name="imprint_postalCodeLabel">PLZ</string>
+    <string name="imprint_cityLabel">Stadt</string>
+    <string name="imprint_emailLabel">Email</string>
+    <string name="imprint_phoneLabel">Tel</string>
+    <string name="imprint_faxLabel">Fax</string>
+    <string name="imprint_registeredOfficeLabel">Sitz</string>
+    <string name="imprint_registrationNumberLabel">Registernummer</string>
+    <string name="imprint_vatIdNrLabel">Umsatzsteuer ID</string>
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>

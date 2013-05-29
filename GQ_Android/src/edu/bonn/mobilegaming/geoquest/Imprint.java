@@ -1,48 +1,60 @@
 package edu.bonn.mobilegaming.geoquest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.dom4j.Element;
 
 import com.qeevee.gq.xml.XMLUtilities;
 
 public class Imprint {
 
-	String authorName;
-	String legalForm;
-	String streetAndNr;
-	String postalCode;
-	String city;
-	String email;
-	String phone;
-	String fax;
-	String registeredOffice;
-	String registrationNumber;
-	String vatIdNr; // TODO rename rechtsform engl.
+	public static final String HIDDEN_FIELD = "HIDDEN";
+
+	public static final String[] FIELD_KEYS = new String[] { "authorName",
+			"legalForm", "streetAndNr", "postalCode", "city", "email", "phone",
+			"fax", "registeredOffice", "registrationNumber", "vatIdNr" };
+	private static final Integer[] FIELD_VALUE_DEFAULT_RES_IDs = new Integer[] {
+			R.string.imprint_authorName, R.string.imprint_legalForm,
+			R.string.imprint_streetAndNr, R.string.imprint_postalCode,
+			R.string.imprint_city, R.string.imprint_email,
+			R.string.imprint_phone, R.string.imprint_fax,
+			R.string.imprint_registeredOffice,
+			R.string.imprint_registrationNumber, R.string.imprint_vatIdNr };
+	private static final Integer[] FIELD_LABEL_DEFAULT_RES_IDs = new Integer[] {
+			R.string.imprint_authorNameLabel, R.string.imprint_legalFormLabel,
+			R.string.imprint_streetAndNrLabel,
+			R.string.imprint_postalCodeLabel, R.string.imprint_cityLabel,
+			R.string.imprint_emailLabel, R.string.imprint_phoneLabel,
+			R.string.imprint_faxLabel, R.string.imprint_registeredOfficeLabel,
+			R.string.imprint_registrationNumberLabel,
+			R.string.imprint_vatIdNrLabel };
+
+	private Map<String, String> fieldNames = new HashMap<String, String>();
+	private Map<String, String> fieldValues = new HashMap<String, String>();
+
+	String completeText;
 
 	public Imprint(Element imprintElement) {
-		authorName = (String) XMLUtilities.getAttribute("authorName",
-				R.string.imprint_authorName, imprintElement);
-		legalForm = (String) XMLUtilities.getAttribute("legalForm",
-				R.string.imprint_legalForm, imprintElement);
-		streetAndNr = (String) XMLUtilities.getAttribute("streetAndNr",
-				R.string.imprint_streetAndNr, imprintElement);
-		postalCode = (String) XMLUtilities.getAttribute("postalCode",
-				R.string.imprint_postalCode, imprintElement);
-		city = (String) XMLUtilities.getAttribute("city",
-				R.string.imprint_city, imprintElement);
-		email = (String) XMLUtilities.getAttribute("email",
-				R.string.imprint_email, imprintElement);
-		phone = (String) XMLUtilities.getAttribute("phone",
-				R.string.imprint_phone, imprintElement);
-		fax = (String) XMLUtilities.getAttribute("fax", R.string.imprint_fax,
-				imprintElement);
-		registeredOffice = (String) XMLUtilities.getAttribute(
-				"registeredOffice", R.string.imprint_registeredOffice,
-				imprintElement);
-		registrationNumber = (String) XMLUtilities.getAttribute(
-				"registrationNumber", R.string.imprint_registrationNumber,
-				imprintElement);
-		vatIdNr = (String) XMLUtilities.getAttribute("vatIdNr",
-				R.string.imprint_vatIdNr, imprintElement);
+		for (int i = 0; i < FIELD_KEYS.length; i++) {
+			fieldNames.put(FIELD_KEYS[i], (String) XMLUtilities.getAttribute(
+					FIELD_KEYS[i], FIELD_LABEL_DEFAULT_RES_IDs[i],
+					imprintElement));
+			fieldValues.put(FIELD_KEYS[i], (String) XMLUtilities.getAttribute(
+					FIELD_KEYS[i], FIELD_VALUE_DEFAULT_RES_IDs[i],
+					imprintElement));
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < FIELD_KEYS.length; i++) {
+			if (!HIDDEN_FIELD.equals(fieldValues.get(FIELD_KEYS[i])))
+				sb.append(fieldNames.get(FIELD_KEYS[i]) + ": \n\t"
+						+ fieldValues.get(FIELD_KEYS[i]) + "\n");
+		}
+		completeText = sb.toString();
 	}
 
+	public String getCompleteText() {
+		return completeText;
+	}
 }

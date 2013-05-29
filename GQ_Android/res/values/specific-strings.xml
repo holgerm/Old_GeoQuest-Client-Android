@@ -2,16 +2,18 @@
 <resources>
 
     <string name="app_name">Familien Pastoral - Rund um St. Martin</string>
+
+    <!-- IMPRINT -->
     <string name="imprint_authorName">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_legalForm">Kirche</string>
-    <string name="imprint_streetAndNr">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_postalCode">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_city">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_email">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_phone">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_fax">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_registeredOffice">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_registrationNumber">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_vatIdNr">Erzbistum Köln - Familien Pastoral</string>
+    <string name="imprint_legalForm">HIDDEN</string>
+    <string name="imprint_streetAndNr">Marzellenstraße 32</string>
+    <string name="imprint_postalCode">50668</string>
+    <string name="imprint_city">Köln</string>
+    <string name="imprint_email">info@erzbistum-koeln.de</string>
+    <string name="imprint_phone">02 21/16 42-0</string>
+    <string name="imprint_fax">02 21/16 42-17 00</string>
+    <string name="imprint_registeredOffice">HIDDEN</string>
+    <string name="imprint_registrationNumber">HIDDEN</string>
+    <string name="imprint_vatIdNr">HIDDEN</string>
 
 </resources>

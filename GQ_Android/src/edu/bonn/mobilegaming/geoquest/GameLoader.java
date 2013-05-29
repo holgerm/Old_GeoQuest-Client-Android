@@ -282,8 +282,8 @@ public class GameLoader {
 			GeoQuestApp.setRunningGameDir(getGameDirectory(gameXMLFile));
 			// Only from now on we can access game ressources.
 
-			Imprint imprint = new Imprint(
-					Mission.documentRoot.element("imprint"));
+			GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
+					.element("imprint")));
 
 			if (handler != null)
 				handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
