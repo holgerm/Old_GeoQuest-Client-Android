@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.reflections.Reflections;
@@ -21,6 +22,7 @@ import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
+@Ignore
 @RunWith(GQTestRunner.class)
 public class DefaultUIFactoryTests {
 
