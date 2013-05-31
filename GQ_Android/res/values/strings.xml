@@ -110,6 +110,9 @@
     <string name="qrtagreader_product_ifwrong">Sorry, but this is not what you are looking for.\nGo on to find it!</string>
     <string name="qrtagreader_treasure_feedback">"@result@"</string>
 
+    <!-- StartAndExitScreen MISSION -->
+    <string name="startAndExitScreen_duration_default">interactive</string>
+
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
 

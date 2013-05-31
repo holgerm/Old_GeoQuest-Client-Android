@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
@@ -38,7 +39,9 @@ public class StartAndExitScreen extends MissionActivity {
 
 		imageView = (ImageView) findViewById(R.id.startimage);
 
-		String duration = mission.xmlMissionNode.attributeValue("duration");
+		String duration = (String) XMLUtilities.getAttribute("duration",
+				R.string.startAndExitScreen_duration_default,
+				mission.xmlMissionNode);
 		if (duration != null && duration.equals("interactive")) {
 			endByTouch = true;
 			imageView.setOnClickListener(new OnClickListener() {
