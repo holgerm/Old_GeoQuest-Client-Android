@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Familien Pastoral - Rund um St. Martin</string>
+    <string name="app_name">Umweltcaching</string>
 
     <!-- IMPRINT -->
-    <string name="imprint_authorName">Erzbistum Köln - Familien Pastoral</string>
-    <string name="imprint_legalForm">HIDDEN</string>
-    <string name="imprint_streetAndNr">Marzellenstraße 32</string>
-    <string name="imprint_postalCode">50668</string>
-    <string name="imprint_city">Köln</string>
-    <string name="imprint_email">info@erzbistum-koeln.de</string>
-    <string name="imprint_phone">02 21/16 42-0</string>
-    <string name="imprint_fax">02 21/16 42-17 00</string>
+    <string name="imprint_authorName">Q3. Quartier für Medien.Bildung.Abenteuer</string>
+    <string name="imprint_legalForm">gemeinnützige GmbH</string>
+    <string name="imprint_streetAndNr">Bahnhofsstr. 32</string>
+    <string name="imprint_postalCode">83236</string>
+    <string name="imprint_city">Übersee</string>
+    <string name="imprint_email">dietsch@qdrei.info</string>
+    <string name="imprint_phone">08642-2383599</string>
+    <string name="imprint_fax">HIDDEN</string>
     <string name="imprint_registeredOffice">HIDDEN</string>
     <string name="imprint_registrationNumber">HIDDEN</string>
     <string name="imprint_vatIdNr">HIDDEN</string>
-
 </resources>
