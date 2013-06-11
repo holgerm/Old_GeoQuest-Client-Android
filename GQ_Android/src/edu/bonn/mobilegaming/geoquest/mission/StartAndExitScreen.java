@@ -58,9 +58,11 @@ public class StartAndExitScreen extends MissionActivity {
 				durationLong = Long.parseLong(duration);
 			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 		}
-		String imgsrc = mission.xmlMissionNode.attributeValue("image");
-		imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-				.loadBitmap(imgsrc, true)));
+		String imgsrc = (String) XMLUtilities.getAttribute("image",
+				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
+		if (imgsrc != null)
+			imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(imgsrc, true)));
 		if (!endByTouch)
 			myCountDownTimer.start();
 	}
