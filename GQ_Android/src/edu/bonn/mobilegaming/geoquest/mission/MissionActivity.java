@@ -136,7 +136,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	 * @param alternativeAttributeNames
 	 *            list of attribute names that are used in case the
 	 *            attributeName does not result in a value. They are used in
-	 *            given order.
+	 *            given order, i.e. the first found attribute value is used.
 	 * @return the corresponding attribute value as specified in the game.xml or
 	 *         null if the attribute is optional and not specified and none of
 	 *         the alternative attributes are specified.
