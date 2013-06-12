@@ -25,7 +25,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	private Button button;
 	private TextView dialogText;
 	private ScrollView scrollView;
-
 	private DialogItem currentDialogItem = null;
 	private WordTicker ticker = null;
 	private static final long milliseconds_per_part = 100;
@@ -50,6 +49,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 	public NPCTalkUIDefault(NPCTalk activity) {
 		super(activity);
+		setBackground();
 		setImage(getNPCTalk().getMissionAttribute("image"));
 		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
 				"nextdialogbuttontext", R.string.button_text_next));
@@ -66,6 +66,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		view = inflater.inflate(R.layout.m_default_npctalk, null);
+		outerView = (View) view.findViewById(R.id.outerview);
 		charImage = (ZoomImageView) view.findViewById(R.id.npcimage);
 		button = (Button) view.findViewById(R.id.proceedButton);
 		dialogText = (TextView) view.findViewById(R.id.npctext);

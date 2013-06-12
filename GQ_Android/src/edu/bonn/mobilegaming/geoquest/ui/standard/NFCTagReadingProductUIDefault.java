@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
+import org.dom4j.Element;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,5 +41,11 @@ public class NFCTagReadingProductUIDefault extends NFCTagReadingProductUI {
 		view = inflater.inflate(R.layout.nfc, null);
 		taskDescription = (TextView) view.findViewById(R.id.taskDescription);
 		return view;
+	}
+
+	@Override
+	protected Element getMissionXML() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

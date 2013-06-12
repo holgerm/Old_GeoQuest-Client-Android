@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest.ui.abstrakt;
 
+import org.dom4j.Element;
+
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 
 public abstract class NPCTalkUI extends MissionUI {
@@ -33,5 +35,10 @@ public abstract class NPCTalkUI extends MissionUI {
 	 * Ends this mission if the UI allows that at this moment.
 	 */
 	public abstract void finishMission();
+
+	@Override
+	protected Element getMissionXML() {
+		return getNPCTalk().getXML();
+	}
 
 }

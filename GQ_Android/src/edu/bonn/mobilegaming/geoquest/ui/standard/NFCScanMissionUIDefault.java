@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
+import org.dom4j.Element;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,6 +153,12 @@ public class NFCScanMissionUIDefault extends NFCScanMissionUI {
 	@Override
 	public void enableButton(boolean enable) {
 		button.setEnabled(enable);
+	}
+
+	@Override
+	protected Element getMissionXML() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

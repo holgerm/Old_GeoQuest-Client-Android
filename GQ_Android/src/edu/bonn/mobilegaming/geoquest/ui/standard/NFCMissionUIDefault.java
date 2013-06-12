@@ -2,6 +2,8 @@ package edu.bonn.mobilegaming.geoquest.ui.standard;
 
 import java.io.IOException;
 
+import org.dom4j.Element;
+
 import android.content.Context;
 import android.nfc.FormatException;
 import android.nfc.Tag;
@@ -236,5 +238,11 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 			button.setEnabled(true);
 			break;
 		}
+	}
+
+	@Override
+	protected Element getMissionXML() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
