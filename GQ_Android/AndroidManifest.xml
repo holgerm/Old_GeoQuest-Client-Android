@@ -27,7 +27,7 @@
 
 	<uses-permission android:name="android.permission.NFC" />
 
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="9" />
+	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="9" />
 
 	<application android:name="GeoQuestApp"
 		android:allowBackup="true" android:icon="@drawable/appicon"
