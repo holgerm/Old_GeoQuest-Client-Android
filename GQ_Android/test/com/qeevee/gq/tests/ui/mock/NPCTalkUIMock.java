@@ -7,33 +7,33 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 public class NPCTalkUIMock extends NPCTalkUI {
 
-    public NPCTalkUIMock(NPCTalk activity) {
-	super(activity);
-    }
-
-    @Override
-    public void onBlockingStateUpdated(boolean isBlocking) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showNextDialogItem() {
-	if (getNPCTalk().hasMoreDialogItems()) {
-	    DialogItem dialogItem = getNPCTalk().getNextDialogItem();
-	    getNPCTalk().hasShownDialogItem(dialogItem);
+	public NPCTalkUIMock(NPCTalk activity) {
+		super(activity);
 	}
-    }
 
-    @Override
-    public View createView() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	public void onBlockingStateUpdated(boolean isBlocking) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public void finishMission() {
-	getNPCTalk().finishMission();
-    }
+	}
+
+	@Override
+	public void showNextDialogItem() {
+		if (getNPCTalk().hasMoreDialogItems()) {
+			DialogItem dialogItem = getNPCTalk().getNextDialogItem();
+			getNPCTalk().hasShownDialogItem(dialogItem);
+		}
+	}
+
+	@Override
+	public View createView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void finishMission() {
+		getNPCTalk().finishMission();
+	}
 
 }
