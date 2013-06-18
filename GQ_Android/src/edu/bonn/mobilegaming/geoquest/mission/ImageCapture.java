@@ -69,7 +69,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 		// init task description text:
 		taskTextView = (TextView) findViewById(R.id.imageCaptureTextView);
-		taskTextView.setText(getMissionAttribute("taskdescription",
+		taskTextView.setText(getMissionAttribute("task",
 				R.string.qrtagreading_taskdescription_default));
 
 		// init upload url etc.:
