@@ -73,6 +73,7 @@
     <string name="external_mission_result_default">Back from external mission</string>
 
     <!-- ImageCapture MISSION -->
+    <string name="audiorecord_task_default">Your task: take a picture!</string>
     <string name="imageCapture_UploadOK">OK, your photo has been uploaded.</string>
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
     <string name="imageCaptureUploadURLDefault">http://geoquest.qeevee.org/upload-images/upload.php</string>

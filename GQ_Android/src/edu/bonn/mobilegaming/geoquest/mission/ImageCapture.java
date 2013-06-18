@@ -78,11 +78,11 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 		// initial image:
 		imageView = (ZoomImageView) findViewById(R.id.imageCaptureImageView);
-		setImage("initial_image");
+		setImage();
 	}
 
-	private void setImage(String attributeName) {
-		CharSequence imagePath = getMissionAttribute(attributeName,
+	private void setImage() {
+		CharSequence imagePath = getMissionAttribute("image",
 				XMLUtilities.OPTIONAL_ATTRIBUTE);
 		if (imagePath != null) {
 			this.imageView.setVisibility(View.VISIBLE);
