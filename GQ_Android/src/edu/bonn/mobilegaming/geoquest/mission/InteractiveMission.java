@@ -40,7 +40,7 @@ public abstract class InteractiveMission extends MissionActivity {
 	 * TODO discuss problems with specific actions. E.g. what happens if another
 	 * mission is started?
 	 */
-	protected boolean loopUntilSuccess = false;
+	protected boolean loopUntilSuccess;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,9 @@ public abstract class InteractiveMission extends MissionActivity {
 				XMLUtilities.OPTIONAL_ATTRIBUTE);
 		if (loopCS != null && loopCS.equals("true")) {
 			loopUntilSuccess = true;
+		}
+		else {
+			loopUntilSuccess = false;
 		}
 
 		// init interaction rules from game spec:
