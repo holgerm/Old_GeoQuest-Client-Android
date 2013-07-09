@@ -12,6 +12,7 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import com.qeevee.ui.WebViewUtil;
+import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Variables;
@@ -80,7 +81,21 @@ public class XMLUtilities {
 			Node node = (Node) iterator.next();
 			builder.append(node.asXML());
 		}
-		return builder.toString().replaceAll("\\s+", " ");
+		return textify(builder.toString());
+	}
+
+	private static String textify(String rawText) {
+		String cleanText;
+		cleanText = rawText.replaceAll("\\s+", " ").trim();
+		cleanText = StringTools.replaceVariables(cleanText);
+		if (cleanText.startsWith(" ")) {
+			cleanText = cleanText.substring(1);
+		}
+		return cleanText;
+	}
+
+	private static CharSequence textify(CharSequence rawText) {
+		return (CharSequence) textify(rawText.toString());
 	}
 
 	public static final int NECESSARY_ATTRIBUTE = 0;
@@ -120,9 +135,11 @@ public class XMLUtilities {
 			} else
 				// attribute not set in game.xml but given as parameter => use
 				// referenced resource as default and return its value:
-				return GeoQuestApp.getInstance().getText(defaultAsResourceID);
+				return textify(GeoQuestApp.getInstance().getText(
+						defaultAsResourceID));
 		else
-			return (CharSequence) xmlElement.attributeValue(attributeName);
+			return (CharSequence) textify(xmlElement
+					.attributeValue(attributeName));
 	}
 
 	/**
