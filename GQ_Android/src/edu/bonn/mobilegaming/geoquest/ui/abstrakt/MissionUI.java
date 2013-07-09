@@ -2,11 +2,12 @@ package edu.bonn.mobilegaming.geoquest.ui.abstrakt;
 
 import org.dom4j.Element;
 
-import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.ui.BitmapUtil;
-
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+
+import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.BlockableAndReleasable;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
@@ -46,7 +47,7 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 		String bgColor = (String) XMLUtilities.getAttribute("bgcolor",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
 		if (bgColor != null) {
-			outerView.setBackgroundColor(Integer.parseInt(bgColor));
+			outerView.setBackgroundColor(Color.parseColor(bgColor));
 			return;
 		}
 	};
