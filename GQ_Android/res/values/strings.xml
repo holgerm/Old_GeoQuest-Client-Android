@@ -63,7 +63,7 @@
     <string name="audiorecord_activityIndicator_recording">Recording ...</string>
     <string name="audiorecord_activityIndicator_ready">You made an audio record!\nRecord again? Use it? Replay?</string>
     <string name="audiorecord_activityIndicator_playing">Playing your recorded audio ...</string>
-    <string name="audiorecord_file_default">audiorecord.3gp</string>
+    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
     <string name="startingARView">Starting AR View ...</string>
@@ -76,7 +76,7 @@
     <string name="audiorecord_task_default">Your task: take a picture!</string>
     <string name="imageCapture_UploadOK">OK, your photo has been uploaded.</string>
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
-    <string name="imageCaptureUploadURLDefault">http://geoquest.qeevee.org/upload-images/upload.php</string>
+    <string name="imageCapture_file_default">gqImage.jpg</string>
 
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
