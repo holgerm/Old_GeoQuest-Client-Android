@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Umweltcaching</string>
-
-    <!-- IMPRINT -->
-    <string name="imprint_authorName">Q3. Quartier für Medien.Bildung.Abenteuer</string>
-    <string name="imprint_legalForm">gemeinnützige GmbH</string>
-    <string name="imprint_streetAndNr">Bahnhofsstr. 32</string>
-    <string name="imprint_postalCode">83236</string>
-    <string name="imprint_city">Übersee</string>
-    <string name="imprint_email">dietsch@qdrei.info</string>
-    <string name="imprint_phone">08642-2383599</string>
+    <string name="app_name">Grossvater Enkel App</string>
+    <string name="imprint_authorName">HIDDEN</string>
+    <string name="imprint_legalForm">HIDDEN</string>
+    <string name="imprint_streetAndNr">HIDDEN</string>
+    <string name="imprint_postalCode">HIDDEN</string>
+    <string name="imprint_city">Herford</string>
+    <string name="imprint_email">HIDDEN</string>
+    <string name="imprint_phone">HIDDEN</string>
     <string name="imprint_fax">HIDDEN</string>
     <string name="imprint_registeredOffice">HIDDEN</string>
     <string name="imprint_registrationNumber">HIDDEN</string>
     <string name="imprint_vatIdNr">HIDDEN</string>
+
 </resources>
