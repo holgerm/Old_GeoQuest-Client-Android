@@ -2,7 +2,6 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
@@ -20,7 +19,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,7 +55,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	private int endButtonMode;
 
 	private CharSequence uploadURL;
-	private File localImageFile = null;
+
+	// private File localImageFile = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		// init Button at bottom:
 		okButton = (Button) findViewById(R.id.imageCaptureStartButton);
 		okButton.setOnClickListener(this);
-		setEndbuttonMode(TAKE_PICTURE);
+		setMode(TAKE_PICTURE);
 
 		// init task description text:
 		taskTextView = (TextView) findViewById(R.id.imageCaptureTextView);
@@ -195,14 +194,14 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 			imageView.setImageBitmap(bitmap);
 			if (uploadURL != null)
 				uploadBitmap(bitmap);
-			setEndbuttonMode(AFTER_UPLOAD);
+			setMode(AFTER_UPLOAD);
 
 		} else {
 			GeoQuestApp.showMessage("Picture not taken.");
 		}
 	}
 
-	private void setEndbuttonMode(final int mode) {
+	private void setMode(final int mode) {
 		this.endButtonMode = mode;
 		switch (mode) {
 		case TAKE_PICTURE:
@@ -211,6 +210,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 			break;
 		case AFTER_UPLOAD:
 			okButton.setText(getText(R.string.button_text_proceed));
+			taskTextView.setText(getMissionAttribute("replyOnDone",
+					R.string.imageCapture_replyDone_default));
 			break;
 		}
 	}

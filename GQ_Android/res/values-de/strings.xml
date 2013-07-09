@@ -78,6 +78,7 @@
     <string name="imageCapture_UploadERROR">Fehler beim Upload!.</string>
     <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Mache ein eindrucksvolles Foto ...</string>
+    <string name="imageCapture_replyDone_default">OK, das Foto ist gespeichert.</string>
     
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Karte wird geladen</string>

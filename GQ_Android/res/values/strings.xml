@@ -78,6 +78,7 @@
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
     <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Take an impressive image ...</string>
+    <string name="imageCapture_replyDone_default">OK, your photo has been stored.</string>
     
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
