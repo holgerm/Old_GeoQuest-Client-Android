@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
@@ -19,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +57,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	private int endButtonMode;
 
 	private CharSequence uploadURL;
+	private File localImageFile = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,11 +73,18 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		// init task description text:
 		taskTextView = (TextView) findViewById(R.id.imageCaptureTextView);
 		taskTextView.setText(getMissionAttribute("task",
-				R.string.qrtagreading_taskdescription_default));
+				R.string.imageCapture_taskdescription_default));
 
 		// init upload url etc.:
 		uploadURL = getMissionAttribute("uploadURL",
-				R.string.imageCaptureUploadURLDefault);
+				XMLUtilities.OPTIONAL_ATTRIBUTE);
+		// if (uploadURL == null) {
+		// File localImageDir = Environment
+		// .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		// CharSequence imageFileName = getMissionAttribute("file",
+		// XMLUtilities.NECESSARY_ATTRIBUTE);
+		// localImageFile = new File(localImageDir, imageFileName.toString());
+		// }
 
 		// initial image:
 		imageView = (ZoomImageView) findViewById(R.id.imageCaptureImageView);
@@ -183,7 +193,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 			// redefine UI:
 			imageView.setImageBitmap(bitmap);
-			uploadBitmap(bitmap);
+			if (uploadURL != null)
+				uploadBitmap(bitmap);
 			setEndbuttonMode(AFTER_UPLOAD);
 
 		} else {
