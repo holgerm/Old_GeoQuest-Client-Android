@@ -24,13 +24,13 @@ import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
-import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault;
 import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault.WordTicker;
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultTests {
-	NPCTalkUIDefault ui;
+	MissionUI ui;
 	ZoomImageView imageView;
 	TextView textView;
 	Button proceedBT;
@@ -39,7 +39,7 @@ public class NPCTalkUIDefaultTests {
 	private WordTicker ticker;
 
 	public void initUIFields() {
-		ui = (NPCTalkUIDefault) getFieldValue(npcTalk, "ui");
+		ui = (MissionUI) getFieldValue(npcTalk, "ui");
 		imageView = (ZoomImageView) getFieldValue(ui, "charImage");
 		textView = (TextView) getFieldValue(ui, "dialogText");
 		proceedBT = (Button) getFieldValue(ui, "button");
