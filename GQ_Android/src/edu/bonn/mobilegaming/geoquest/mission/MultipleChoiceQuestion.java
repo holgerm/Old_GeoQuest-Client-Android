@@ -45,7 +45,6 @@ public class MultipleChoiceQuestion extends Question {
 	private Answer selectedAnswer;
 	private String questionText;
 	private OnClickListener proceed, restart;
-	private final static String SHUFFLE_ANSWERS = "true";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -195,7 +194,7 @@ public class MultipleChoiceQuestion extends Question {
 				R.string.multipleChoiceQuestion_default_shuffle_mode)
 				.toString();
 
-		if (shuffleString.equals(SHUFFLE_ANSWERS)) {
+		if (shuffleString.equals("true")) {
 			java.util.Collections.shuffle(answers);
 		}
 	}
