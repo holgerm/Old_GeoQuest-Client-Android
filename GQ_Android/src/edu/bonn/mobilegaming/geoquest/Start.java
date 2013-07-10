@@ -105,6 +105,17 @@ public class Start extends GeoQuestActivity {
 			disableLastGameButton(R.string.start_text_last_game_text_no_game);
 		}
 
+		boolean isAutoStartUsed = checkAndPerformAutostart();
+		if (!isAutoStartUsed)
+			loadRepoData(false);
+
+		super.onResume();
+	}
+
+	/**
+	 * @return true iff autostart is applied.
+	 */
+	private boolean checkAndPerformAutostart() {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (prefs.getBoolean(Preferences.PREF_KEY_AUTO_START_GAME_CHECK, false)) {
@@ -131,9 +142,11 @@ public class Start extends GeoQuestActivity {
 				GameItem gameItem = GeoQuestApp.getGameItem(repoName, gameName);
 				if (gameItem != null) {
 					startGame(gameItem, repoName);
+					return true;
 				} else {
 					Toast.makeText(this, "Error loading game info!",
 							Toast.LENGTH_SHORT).show();
+					return false;
 				}
 			} else {
 				/*
@@ -147,12 +160,10 @@ public class Start extends GeoQuestActivity {
 						Toast.LENGTH_LONG).show();
 				Log.i("Geoquest#" + TAG,
 						"AutoStartGame is checked but no quest was choosen!");
+				return false;
 			}
-		} else {
-			loadRepoData(false);
-		}
-
-		super.onResume();
+		} else
+			return false;
 	}
 
 	@Override
