@@ -116,6 +116,18 @@ public class Start extends GeoQuestActivity {
 	 * @return true iff autostart is applied.
 	 */
 	private boolean checkAndPerformAutostart() {
+		return checkAndPerformAutostartByAssets() && checkAndPerformAutostartFormPrefs();
+	}
+
+	private boolean checkAndPerformAutostartByAssets() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * @return true iff the user has specified autostart quest in preferences.
+	 */
+	private boolean checkAndPerformAutostartFormPrefs() {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (prefs.getBoolean(Preferences.PREF_KEY_AUTO_START_GAME_CHECK, false)) {
@@ -151,8 +163,8 @@ public class Start extends GeoQuestActivity {
 			} else {
 				/*
 				 * TODO: this shouldn't happen! Prevent at Preferences.java! For
-				 * the first application start we could also initialize this
-				 * these preference settings in GeoQuestApp.onCreate()
+				 * the first application start we could also initialize these
+				 * preference settings in GeoQuestApp.onCreate()
 				 */
 				Toast.makeText(
 						this,
