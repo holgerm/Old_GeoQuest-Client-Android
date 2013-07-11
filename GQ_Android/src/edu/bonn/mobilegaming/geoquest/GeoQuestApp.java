@@ -663,6 +663,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		setInGame(false);
 		setRunningGameDir(null);
 		cleanMediaPlayer();
+
+		if (isUsingAutostart())
+			terminateApp();
 	}
 
 	/**
