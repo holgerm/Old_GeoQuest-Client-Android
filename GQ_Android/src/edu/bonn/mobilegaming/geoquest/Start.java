@@ -105,8 +105,8 @@ public class Start extends GeoQuestActivity {
 			disableLastGameButton(R.string.start_text_last_game_text_no_game);
 		}
 
-		boolean isAutoStartUsed = checkAndPerformAutostart();
-		if (!isAutoStartUsed)
+		GeoQuestApp.getInstance().setUsingAutostart(checkAndPerformAutostart());
+		if (!GeoQuestApp.getInstance().isUsingAutostart())
 			loadRepoData(false);
 
 		super.onResume();
@@ -116,7 +116,8 @@ public class Start extends GeoQuestActivity {
 	 * @return true iff autostart is applied.
 	 */
 	private boolean checkAndPerformAutostart() {
-		return checkAndPerformAutostartByAssets() && checkAndPerformAutostartFormPrefs();
+		return checkAndPerformAutostartByAssets()
+				&& checkAndPerformAutostartFormPrefs();
 	}
 
 	private boolean checkAndPerformAutostartByAssets() {
