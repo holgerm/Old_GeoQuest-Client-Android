@@ -552,6 +552,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 		});
 
+		if (gameDirs == null)
+			return false;
+
 		SAXReader xmlReader = new SAXReader();
 		for (int i = 0; i < gameDirs.length; i++) {
 			try {
