@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dip"
-        android:layout_margin="5dip"
+        android:layout_marginTop="8dip"
+        android:layout_margin="8dip"
         android:gravity="center_horizontal"
         android:scaleType="fitCenter" />
 
@@ -21,8 +21,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dip"
-        android:layout_margin="5dip" />
+        android:layout_marginTop="8dip"
+        android:layout_margin="8dip" />
 
     <ScrollView
         android:id="@+id/npc_scroll_view"
@@ -30,13 +30,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/proceedButton"
         android:layout_below="@id/npcimage"
-        android:layout_margin="5dip" >
+        android:layout_margin="8dip" >
 
         <TextView
             android:id="@+id/npctext"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp" >
+            android:textSize="25sp" >
         </TextView>
     </ScrollView>
 
