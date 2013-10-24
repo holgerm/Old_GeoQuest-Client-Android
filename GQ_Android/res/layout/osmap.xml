@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
+  
     android:orientation="vertical" >
 
     <org.osmdroid.views.MapView
@@ -11,6 +12,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="true" />
+    
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/randcut"
+    android:orientation="vertical" >
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
