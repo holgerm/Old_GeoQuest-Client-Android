@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outerview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
     android:keepScreenOn="true" >
 
     <com.qeevee.ui.ZoomImageView
@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dip"
         android:layout_margin="8dip"
         android:gravity="center_horizontal"
         android:scaleType="fitCenter" />
@@ -21,22 +20,30 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dip"
-        android:layout_margin="8dip" />
+        android:layout_margin="8dip"
+        android:layout_marginTop="0dip"
+        android:background="@drawable/button"
+        android:padding="10dp"
+        android:textColor="#ffffff" />
 
     <ScrollView
         android:id="@+id/npc_scroll_view"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_above="@id/proceedButton"
         android:layout_below="@id/npcimage"
-        android:layout_margin="8dip" >
+        android:layout_marginBottom="0dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="0dip"
+        android:fillViewport="true" >
 
         <TextView
             android:id="@+id/npctext"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp" >
+            android:background="@drawable/background_text"
+            android:textSize="18sp" >
         </TextView>
     </ScrollView>
 
