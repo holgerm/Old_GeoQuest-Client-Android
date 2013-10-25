@@ -92,7 +92,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.osmap);
+		setContentView(R.layout.m_default_osmap);
 
 		// Setup OSM MapView
 		myMapView = (MapView) findViewById(R.id.osmapview);
@@ -245,7 +245,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.getItem(LOCATION_MOCKUP_SWITCH_ID - 1).setEnabled(
+		menu.getItem(LOCATION_MOCKUP_SWITCH_ID).setEnabled(
 				locationSource != null
 						&& LocationSource.canBeUsed(getApplicationContext()));
 		return true;
