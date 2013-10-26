@@ -16,6 +16,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -96,6 +97,8 @@ public class BitmapUtil {
 	 * @param ressourcePath
 	 *            as given in the game.xml to specify e.g. images
 	 * @return
+	 * @deprecated use {@link BitmapUtil#loadBitmap(String, int)} or
+	 *             {@link BitmapUtil#loadBitmap(String)}.
 	 */
 	public static Bitmap loadBitmap(String relativeResourcePath, boolean scale) {
 		String bitmapFilePath = getGameBitmapFile(relativeResourcePath);
@@ -104,6 +107,34 @@ public class BitmapUtil {
 		if (scale)
 			bitmap = scaleBitmapToScreenWidth(bitmap);
 		return bitmap;
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath,
+			int requiredWidth) {
+		// set butmap file path:
+		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+
+		// get bitmap width:
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(bitmapFilePath, options);
+		int imageWidth = options.outWidth;
+
+		// calculate sample size and store it in options:
+		options.inSampleSize = Math.round((float) imageWidth
+				/ (float) requiredWidth);
+
+		// load scaled bitmap:
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeFile(bitmapFilePath, options);
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath) {
+		// get display metrics:
+		DisplayMetrics displayMetrics = GeoQuestApp.getInstance()
+				.getResources().getDisplayMetrics();
+		return loadBitmap(relativeResourcePath, displayMetrics.widthPixels);
+
 	}
 
 	private static String getGameBitmapFile(String ressourceFilePath) {

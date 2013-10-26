@@ -43,7 +43,7 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
 		if (bg != null) {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
+					.loadBitmap(bg)));
 			return;
 		}
 		// IF NO BACKGROUND PICTURE IS GIVEN, TRY COLOR:

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -40,9 +41,10 @@ public class ZoomImageView extends ImageView {
 	}
 
 	public void setRelativePathToImageBitmap(String relativePath) {
+
 		bitmapRelPath = relativePath;
-		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(
-				BitmapUtil.loadBitmap(bitmapRelPath, true), 15);
+		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(BitmapUtil
+				.loadBitmap(bitmapRelPath), 15);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {
