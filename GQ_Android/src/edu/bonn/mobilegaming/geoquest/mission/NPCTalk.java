@@ -36,7 +36,7 @@ public class NPCTalk extends MissionActivity {
 
 	private NPCTalkUI ui;
 
-	private int nrOfDialogItems;
+	private int nrOfDialogItems; 
 
 	private int indexOfCurrentDialogItem;
 
@@ -195,7 +195,7 @@ public class NPCTalk extends MissionActivity {
 		/**
 		 * @return returns the number of words
 		 */
-		public int getNumParts() {
+		public int getNumberOfTextTokens() {
 			return textElements.length;
 		}
 
@@ -207,7 +207,7 @@ public class NPCTalk extends MissionActivity {
 		 * @return returns each word as a CharSquence or null of there is no
 		 *         word left.
 		 */
-		public CharSequence getNextPart() {
+		public CharSequence getNextTextToken() {
 			if (counter >= textElements.length)
 				return null;
 			else
