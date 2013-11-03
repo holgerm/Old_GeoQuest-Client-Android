@@ -35,7 +35,7 @@ public class StartAndExitScreen extends MissionActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.start);
+		setContentView(R.layout.m_default_startscreen);
 
 		imageView = (ImageView) findViewById(R.id.startimage);
 
@@ -58,13 +58,19 @@ public class StartAndExitScreen extends MissionActivity {
 				durationLong = Long.parseLong(duration);
 			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 		}
+		setImage();
+		if (!endByTouch)
+			myCountDownTimer.start();
+	}
+
+	private void setImage() {
 		String imgsrc = (String) XMLUtilities.getAttribute("image",
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
-			imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(imgsrc, true)));
-		if (!endByTouch)
-			myCountDownTimer.start();
+			imageView
+					.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+							.getRoundedCornerBitmap(
+									BitmapUtil.loadBitmap(imgsrc), 15)));
 	}
 
 	/**
@@ -80,10 +86,7 @@ public class StartAndExitScreen extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-
-		String imgsrc = mission.xmlMissionNode.attributeValue("image");
-		imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-				.loadBitmap(imgsrc, true)));
+		setImage();
 		if (!endByTouch)
 			myCountDownTimer.start();
 	}

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.ZoomImageView;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -30,9 +31,9 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	private WordTicker ticker = null;
 	private static final long milliseconds_per_part = 100;
 
-	private int mode = 0;
-	private static final int MODE_NEXT_DIALOG_ITEM = 1;
-	private static final int MODE_END = 2;
+	private int state = 0;
+	private static final int STATE_NEXT_DIALOG_ITEM = 1;
+	private static final int STATE_END = 2;
 
 	private OnClickListener showNextDialogListener = new OnClickListener() {
 		public void onClick(View v) {
@@ -47,6 +48,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	};
 
 	private CharSequence nextDialogButtonTextDefault;
+	private CharSequence mode;
 
 	public NPCTalkUIDefault(NPCTalk activity) {
 		super(activity);
@@ -54,6 +56,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		setImage(getNPCTalk().getMissionAttribute("image"));
 		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
 				"nextdialogbuttontext", R.string.button_text_next));
+		this.mode = XMLUtilities.getAttribute("mode",
+				R.string.npctalk_mode_default, getMissionXML());
 	}
 
 	private void setNextDialogButtonText(
@@ -98,10 +102,23 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			if (currentDialogItem.getAudioFilePath() != null)
 				GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
 						currentDialogItem.blocking);
+			initDialogItemPresenter();
+		}
+		refreshButton();
+	}
+
+	private void initDialogItemPresenter() {
+		if (this.mode.equals("chunk")) {
+			// display formatted text as a complete chunk:
+			dialogText.append(Html.fromHtml(currentDialogItem.getText()));
+			dialogText.append("\n");
+			scrollView.fullScroll(View.FOCUS_DOWN);
+		}
+		if (this.mode.equals("wordticker")) {
+			// show dialog item text word by word via ticker
 			ticker = new WordTicker();
 			ticker.start();
 		}
-		refreshButton();
 	}
 
 	private void displaySpeaker() {
@@ -117,23 +134,23 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 	private void refreshButton() {
 		if (getNPCTalk().hasMoreDialogItems()) {
-			setButtonMode(MODE_NEXT_DIALOG_ITEM);
+			setButtonMode(STATE_NEXT_DIALOG_ITEM);
 		} else {
-			setButtonMode(MODE_END);
+			setButtonMode(STATE_END);
 		}
 	}
 
 	private void setButtonMode(int newMode) {
-		mode = newMode;
-		switch (mode) {
-		case MODE_NEXT_DIALOG_ITEM:
+		state = newMode;
+		switch (state) {
+		case STATE_NEXT_DIALOG_ITEM:
 			button.setOnClickListener(showNextDialogListener);
 			if (currentDialogItem.getNextDialogButtonText() != null)
 				button.setText(currentDialogItem.getNextDialogButtonText());
 			else
 				button.setText(R.string.button_text_next);
 			break;
-		case MODE_END:
+		case STATE_END:
 			button.setOnClickListener(endMissionListener);
 			if (getNPCTalk().getMissionAttribute("endbuttontext") != null)
 				button.setText(getNPCTalk()
@@ -154,9 +171,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			InteractionBlocker {
 
 		private WordTicker() {
-			super(
-					milliseconds_per_part
-							* (currentDialogItem.getNumParts() + 1),
+			super(milliseconds_per_part
+					* (currentDialogItem.getNumberOfTextTokens() + 1),
 					milliseconds_per_part);
 			// block interaction on the NPCTalk using this Timer as Blocker
 			// monitor:
@@ -166,7 +182,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			CharSequence next = currentDialogItem.getNextPart();
+			CharSequence next = currentDialogItem.getNextTextToken();
 			if (next != null)
 				dialogText.append(next);
 			if (currentDialogItem.hasNextPart())
@@ -180,10 +196,10 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		public void onFinish() {
 			// Zur Sicherheit, da manchmal Wörter verschluckt werden (nicht
 			// ausreichend genauer timer!)
-			CharSequence next = currentDialogItem.getNextPart();
+			CharSequence next = currentDialogItem.getNextTextToken();
 			while (next != null) {
 				dialogText.append(next);
-				next = currentDialogItem.getNextPart();
+				next = currentDialogItem.getNextTextToken();
 				if (next != null)
 					dialogText.append(" ");
 				else
@@ -205,7 +221,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 	@Override
 	public void finishMission() {
-		if (mode == MODE_END)
+		if (state == STATE_END)
 			button.performClick();
 	}
 }
