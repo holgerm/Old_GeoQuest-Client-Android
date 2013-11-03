@@ -477,7 +477,8 @@ public class GameLoader {
 				return false;
 			else {
 				for (int i = 0; i < assetFiles.length; i++) {
-					loadGameFormAssets(ASSET_DIR_FOR_INCLUDED_QUESTS, assetFiles[i]);
+					loadGameFromAssets(ASSET_DIR_FOR_INCLUDED_QUESTS,
+							assetFiles[i]);
 				}
 			}
 		} catch (IOException e) {
@@ -487,7 +488,7 @@ public class GameLoader {
 		return true;
 	}
 
-	private static void loadGameFormAssets(String dirName, String fileName) {
+	private static void loadGameFromAssets(String dirName, String fileName) {
 		InputStream is;
 		try {
 			// AssetFileDescriptor afd =
@@ -517,6 +518,15 @@ public class GameLoader {
 
 			byte by[] = new byte[BYTE_SIZE];
 			int c;
+
+			try {
+				is.available();
+			} catch (IOException e) {
+				fOutLocal.close();
+				Log.w(TAG, "could not read from assets file)");
+				return;
+
+			}
 
 			while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
 				// TODO check access to SDCard!

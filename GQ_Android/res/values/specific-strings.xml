@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">GeoQuest - Carl Benz</string>
-    <string name="quest_name">Carl Benz in Karlsruhe</string>
+    <string name="app_name">Tour durch die ARS</string>
+    <string name="quest_name">Akademie Rundgang</string>
     <string name="imprint_authorName">HIDDEN</string>
     <string name="imprint_legalForm">HIDDEN</string>
     <string name="imprint_streetAndNr">HIDDEN</string>

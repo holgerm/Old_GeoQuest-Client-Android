@@ -43,8 +43,8 @@ public class ZoomImageView extends ImageView {
 	public void setRelativePathToImageBitmap(String relativePath) {
 
 		bitmapRelPath = relativePath;
-		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(BitmapUtil
-				.loadBitmap(bitmapRelPath), 15);
+		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(
+				BitmapUtil.loadBitmap(bitmapRelPath), 15);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {

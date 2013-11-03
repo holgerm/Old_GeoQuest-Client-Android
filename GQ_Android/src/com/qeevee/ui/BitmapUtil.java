@@ -126,14 +126,40 @@ public class BitmapUtil {
 
 		// load scaled bitmap:
 		options.inJustDecodeBounds = false;
-		return BitmapFactory.decodeFile(bitmapFilePath, options);
+		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
+		return Bitmap.createScaledBitmap(bitmap, requiredWidth,
+				Math.round((float) requiredWidth / 1.62f), false);
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath,
+			DisplayMetrics requiredMetrics) {
+		// set butmap file path:
+		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+
+		// get bitmap width:
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(bitmapFilePath, options);
+		int imageWidth = options.outWidth;
+
+		// calculate sample size and store it in options:
+		options.inSampleSize = Math.round((float) imageWidth
+				/ (float) requiredMetrics.widthPixels);
+		options.inScaled = true;
+		options.inDensity = requiredMetrics.densityDpi;
+		options.inTargetDensity = requiredMetrics.densityDpi;
+
+		// load scaled bitmap:
+		options.inJustDecodeBounds = false;
+		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
+		return bitmap;
 	}
 
 	public static Bitmap loadBitmap(String relativeResourcePath) {
 		// get display metrics:
 		DisplayMetrics displayMetrics = GeoQuestApp.getInstance()
 				.getResources().getDisplayMetrics();
-		return loadBitmap(relativeResourcePath, displayMetrics.widthPixels);
+		return loadBitmap(relativeResourcePath, displayMetrics);
 
 	}
 
