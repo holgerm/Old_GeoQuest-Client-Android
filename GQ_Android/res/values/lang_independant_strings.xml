@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="xmlformat">5</string>
+    <string name="local_default_repository">default</string>
+
+    <!-- QRTagReading MISSION -->
+    <string name="qrtagreader_treasure_feedback">"@result@"</string>
+
+    <!-- Server preferences -->
+    <string name="geoquest_server_url">http://geoquest.qeevee.org</string>
+    <string name="geoquest_repolist_relpath">/repositories/repolist.php</string>
+
+    <!-- Variable Defaults -->
+    <string name="varDefaultUserID">0</string>
+
+</resources>

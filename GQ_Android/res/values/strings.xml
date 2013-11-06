@@ -2,8 +2,6 @@
 <resources>
 
     <!-- Generic Values -->
-    <string name="xmlformat">5</string>
-    <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
@@ -79,7 +77,7 @@
     <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Take an impressive image ...</string>
     <string name="imageCapture_replyDone_default">OK, your photo has been stored.</string>
-    
+
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
     <string name="map_menu_centerMap">Center Map</string>
@@ -94,7 +92,7 @@
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Proceed</string>
     <string name="npctalk_mode_default">wordticker</string>
-    
+
     <!-- All Question MISSIONS -->
     <string name="question_reply_wrong_default">No, that was wrong.</string>
     <string name="question_reply_correct_default">Yes, that was correct.</string>
@@ -112,7 +110,6 @@
     <string name="qrtagreading_taskdescription_default">Search for the QR code and scan it ...</string>
     <string name="qrtagreader_product_ifright">You found it.\nCongratulations!</string>
     <string name="qrtagreader_product_ifwrong">Sorry, but this is not what you are looking for.\nGo on to find it!</string>
-    <string name="qrtagreader_treasure_feedback">"@result@"</string>
 
     <!-- StartAndExitScreen MISSION -->
     <string name="startAndExitScreen_duration_default">interactive</string>
@@ -145,8 +142,6 @@
     <string name="pref_server_url_summary">Defines the game server URL. Don\'t change this unless you want to use your own server.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>
     <string name="pref_server_url_dialog_message">Set the URL of the game server. By default, this is the Qeevee server. Only change this, if you want to use your own server.</string>
-    <string name="geoquest_server_url">http://geoquest.qeevee.org</string>
-    <string name="geoquest_repolist_relpath">/repositories/repolist.php</string>
 
     <!-- Game startup preferences -->
     <string name="pref_cat_game_start">Game start</string>
@@ -208,6 +203,5 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
-    <string name="varDefaultUserID">0</string>
 
 </resources>
