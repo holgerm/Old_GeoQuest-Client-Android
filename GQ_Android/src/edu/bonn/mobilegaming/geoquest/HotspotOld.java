@@ -35,7 +35,7 @@ import com.qeevee.ui.BitmapUtil;
  * @author Folker Hoffmann
  * 
  */
-public class HotspotOld /* extends Overlay */{
+public class HotspotOld {
 
 	/**
 	 * Hashtable mapping id to Hotspot
@@ -44,6 +44,12 @@ public class HotspotOld /* extends Overlay */{
 
 	public static Set<Entry<String, HotspotOld>> getAllHotspots() {
 		return allHotspots.entrySet();
+	}
+
+	public static List<HotspotOld> getListOfHotspots() {
+		List<HotspotOld> list = new ArrayList<HotspotOld>();
+		list.addAll(allHotspots.values());
+		return list;
 	}
 
 	/**
