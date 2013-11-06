@@ -24,14 +24,21 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.res.AssetManager;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.qeevee.util.locationmocker.LocationSource;
+
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
+import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
@@ -294,6 +301,9 @@ public class GameLoader {
 						.attributeValue("name"));
 				firstMission.startMission();
 			}
+
+			readXML(Mission.documentRoot);
+
 		} catch (Exception e) {
 			Log.e(TAG, "DocumentException while parsing game: " + gameXMLFile);
 			if (handler != null) {
@@ -548,6 +558,23 @@ public class GameLoader {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Gets the Hotspots data from the XML file.
+	 */
+	@SuppressWarnings("unchecked")
+	static private void readXML(Element document) throws DocumentException {
+		List<Element> list = document.selectNodes("hotspot");
+
+		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
+			Element hotspot = i.next();
+			try {
+				HotspotOld.create(null, hotspot);
+			} catch (HotspotOld.IllegalHotspotNodeException exception) {
+				Log.e(TAG, exception.toString());
+			}
+		}
 	}
 
 }

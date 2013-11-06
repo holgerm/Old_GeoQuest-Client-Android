@@ -3,6 +3,7 @@
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     android:keepScreenOn="true" >
 
     <com.qeevee.ui.ZoomImageView

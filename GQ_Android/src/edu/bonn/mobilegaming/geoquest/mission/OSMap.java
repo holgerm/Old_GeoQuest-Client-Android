@@ -92,7 +92,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.osmap);
+		setContentView(R.layout.m_default_osmap);
 
 		// Setup OSM MapView
 		myMapView = (MapView) findViewById(R.id.osmapview);
@@ -144,10 +144,13 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		// startMissionsList
 		startMissionPanel = (LinearLayout) findViewById(R.id.startMissionPanel);
 
+		
+		
 		// Players Location Overlay
 		myLocationOverlay = new MyLocationOverlay(this, myMapView);
 		myLocationOverlay.enableCompass(); // doesn't work in the emulator?
 		myLocationOverlay.enableMyLocation();
+		myLocationOverlay.setCompassCenter(60L,60L);
 		myMapView.getOverlays().add(myLocationOverlay);
 
 		GeoQuestApp.getInstance().setOSMap(myMapView);
@@ -245,7 +248,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.getItem(LOCATION_MOCKUP_SWITCH_ID - 1).setEnabled(
+		menu.getItem(LOCATION_MOCKUP_SWITCH_ID).setEnabled(
 				locationSource != null
 						&& LocationSource.canBeUsed(getApplicationContext()));
 		return true;

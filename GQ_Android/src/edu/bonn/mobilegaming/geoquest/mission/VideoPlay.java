@@ -28,7 +28,7 @@ public class VideoPlay extends InteractiveMission {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		this.setContentView(R.layout.videoplay);
+		this.setContentView(R.layout.m_default_videoplay);
 		videoView = (VideoView) this.findViewById(R.id.videoplay_videoview);
 		videoView.setVideoURI(initVideoUri());
 		MediaController mc = new MediaController(this);

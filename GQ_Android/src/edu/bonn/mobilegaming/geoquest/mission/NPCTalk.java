@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TransitionItem;
+import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
@@ -168,7 +169,9 @@ public class NPCTalk extends MissionActivity {
 			else
 				blocking = true;
 
-			text = xml.getText().replaceAll("\\s+", " ").trim();
+			// text = xml.getText().replaceAll("\\s+", " ").trim();
+			text = XMLUtilities.getXMLContent(xml).replaceAll("\\s+", " ")
+					.trim();
 			text = StringTools.replaceVariables(text);
 			if (text.startsWith(" ")) {
 				text = text.substring(1);

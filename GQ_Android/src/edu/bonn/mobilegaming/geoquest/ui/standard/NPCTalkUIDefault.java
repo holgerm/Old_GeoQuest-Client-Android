@@ -75,7 +75,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		charImage = (ZoomImageView) view.findViewById(R.id.npcimage);
 		button = (Button) view.findViewById(R.id.proceedButton);
 		dialogText = (TextView) view.findViewById(R.id.npctext);
-		dialogText.setTextColor(Color.BLACK);
+		dialogText.setTextColor(Color.WHITE);
 		scrollView = (ScrollView) view.findViewById(R.id.npc_scroll_view);
 		return view;
 	}

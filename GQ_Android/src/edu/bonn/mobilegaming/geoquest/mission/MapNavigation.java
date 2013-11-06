@@ -1,6 +1,5 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osmdroid.api.IMapController;
@@ -52,7 +51,6 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 	 * list of hotspots, inited in readxml. main thread may not access this
 	 * until readxml_completed is true
 	 * */
-	private List<HotspotOld> hotspots = new ArrayList<HotspotOld>();
 	protected MapHelper mapHelper;
 	protected LocationManager myLocationManager;
 	protected Handler handler = new Handler();
@@ -82,7 +80,7 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 	}
 
 	public List<HotspotOld> getHotspots() {
-		return hotspots;
+		return HotspotOld.getListOfHotspots();
 	}
 
 	protected void initZoom() {
