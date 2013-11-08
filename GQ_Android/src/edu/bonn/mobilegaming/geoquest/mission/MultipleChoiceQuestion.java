@@ -20,7 +20,6 @@ import com.qeevee.gq.history.TextType;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.R.id;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
@@ -121,7 +120,7 @@ public class MultipleChoiceQuestion extends Question {
 
 	private void initContentView() {
 		setContentView(R.layout.multiplechoice);
-		outerView = findViewById(id.outerview);
+		outerView = findViewById(R.id.outerview);
 		mcTextView = (TextView) findViewById(R.id.mcTextView);
 		mcButtonPanel = (LinearLayout) findViewById(R.id.mcButtonPanel);
 		// prefab neccessary buttons:

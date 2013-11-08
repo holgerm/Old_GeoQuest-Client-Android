@@ -9,6 +9,7 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
+import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
@@ -86,6 +87,8 @@ public abstract class UIFactory {
 	public abstract NFCMissionUI createUI(NFCMission activity);
 
 	public abstract NPCTalkUI createUI(NPCTalk activity);
+
+	public abstract OSMapUI createUI(OSMap activity);
 
 	public abstract ImageCaptureUI createUI(ImageCapture activity);
 

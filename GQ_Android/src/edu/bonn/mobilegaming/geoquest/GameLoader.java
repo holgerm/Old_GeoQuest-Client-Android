@@ -24,21 +24,14 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.res.AssetManager;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
-import com.qeevee.util.locationmocker.LocationSource;
-
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
-import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
@@ -480,7 +473,6 @@ public class GameLoader {
 	public static boolean loadIncludedQuests() {
 		assetManager = GeoQuestApp.getContext().getAssets();
 		String[] assetFiles = null;
-		InputStream is;
 		try {
 			assetFiles = assetManager.list(ASSET_DIR_FOR_INCLUDED_QUESTS);
 			if (assetFiles == null || assetFiles.length < 1)

@@ -71,7 +71,7 @@
     <string name="external_mission_result_default">Back from external mission</string>
 
     <!-- ImageCapture MISSION -->
-    <string name="audiorecord_task_default">Your task: take a picture!</string>
+    <string name="imageCapture_task_default">Your task: take a picture!</string>
     <string name="imageCapture_UploadOK">OK, your photo has been uploaded.</string>
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
     <string name="imageCapture_file_default">gqImage.jpg</string>
@@ -91,7 +91,6 @@
 
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Proceed</string>
-    <string name="npctalk_mode_default">wordticker</string>
 
     <!-- All Question MISSIONS -->
     <string name="question_reply_wrong_default">No, that was wrong.</string>
@@ -111,9 +110,6 @@
     <string name="qrtagreader_product_ifright">You found it.\nCongratulations!</string>
     <string name="qrtagreader_product_ifwrong">Sorry, but this is not what you are looking for.\nGo on to find it!</string>
 
-    <!-- StartAndExitScreen MISSION -->
-    <string name="startAndExitScreen_duration_default">interactive</string>
-
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
 
@@ -127,7 +123,6 @@
 
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
-    <string name="hotspot_default_activity">true</string>
 
     <!-- PREFERENCES -->
     <string name="preferencesTitle">Preferences</string>

@@ -8,6 +8,7 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
+import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
@@ -23,6 +24,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
@@ -99,6 +101,12 @@ public class DefaultUIFactory extends UIFactory {
 	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public OSMapUI createUI(OSMap activity) {
+		return new OSMapUIDefault(activity);
 	}
 
 }
