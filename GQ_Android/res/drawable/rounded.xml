@@ -5,7 +5,7 @@
 
         <shape android:shape="rectangle" >
 
-            <corners android:radius="10dp" />
+            <corners android:radius="@dimen/button_corner_radius" />
 
             <solid android:color="#55000000" />
 

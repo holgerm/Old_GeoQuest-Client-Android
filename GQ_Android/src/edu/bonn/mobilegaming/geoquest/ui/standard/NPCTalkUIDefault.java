@@ -52,7 +52,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 	public NPCTalkUIDefault(NPCTalk activity) {
 		super(activity);
-		setBackground();
 		setImage(getNPCTalk().getMissionAttribute("image"));
 		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
 				"nextdialogbuttontext", R.string.button_text_next));
@@ -66,18 +65,18 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	}
 
 	@Override
-	public View createView() {
+	public View createContentView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		view = inflater.inflate(R.layout.m_default_npctalk, null);
-		outerView = (View) view.findViewById(R.id.outerview);
-		charImage = (ZoomImageView) view.findViewById(R.id.npcimage);
-		button = (Button) view.findViewById(R.id.proceedButton);
-		dialogText = (TextView) view.findViewById(R.id.npctext);
+		contentView = inflater.inflate(R.layout.m_default_npctalk, null);
+		outerView = (View) contentView.findViewById(R.id.outerview);
+		charImage = (ZoomImageView) contentView.findViewById(R.id.npcimage);
+		button = (Button) contentView.findViewById(R.id.proceedButton);
+		dialogText = (TextView) contentView.findViewById(R.id.npctext);
 		dialogText.setTextColor(Color.WHITE);
-		scrollView = (ScrollView) view.findViewById(R.id.npc_scroll_view);
-		return view;
+		scrollView = (ScrollView) contentView.findViewById(R.id.npc_scroll_view);
+		return contentView;
 	}
 
 	private boolean setImage(CharSequence pathToImageFile) {

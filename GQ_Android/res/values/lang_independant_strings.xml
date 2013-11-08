@@ -4,6 +4,12 @@
     <string name="xmlformat">5</string>
     <string name="local_default_repository">default</string>
 
+    <!-- NPCTalk MISSION -->
+    <string name="npctalk_mode_default">wordticker</string>
+
+    <!-- StartAndExitScreen MISSION -->
+    <string name="startAndExitScreen_duration_default">interactive</string>
+
     <!-- QRTagReading MISSION -->
     <string name="qrtagreader_treasure_feedback">"@result@"</string>
 
@@ -13,5 +19,8 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserID">0</string>
+
+    <!-- HOTSPOTS -->
+    <string name="hotspot_default_activity">true</string>
 
 </resources>
