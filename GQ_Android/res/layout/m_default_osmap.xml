@@ -11,11 +11,10 @@
         android:id="@+id/osmapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="8dip"
-        android:background="@drawable/rounded"
         android:clickable="true" />
 
     <LinearLayout
+        android:id="@+id/outerview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/randcut"

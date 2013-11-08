@@ -10,6 +10,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.BlockableAndReleasable;
+import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
@@ -18,7 +19,27 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 
 	public MissionUI(MissionActivity activity) {
 		super(activity);
+		initUI();
+	}
+
+	/**
+	 * Does UI initialization which is common for both MissionActivities and
+	 * GeoQuestMapActivties.
+	 */
+	private void initUI() {
+		setBackground();
 		ibm = new InteractionBlockingManager(this);
+	}
+
+	public void disable() {
+	}
+
+	public void enable() {
+	}
+
+	public MissionUI(GeoQuestMapActivity activity) {
+		super(activity);
+		initUI();
 	}
 
 	protected InteractionBlockingManager ibm;
@@ -34,6 +55,10 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 
 	abstract protected Element getMissionXML();
 
+	/**
+	 * Applies mission attributes "bg" or "bgcolor" to that view that is named
+	 * "outerview" in layout. Cf. layouts for each mission type.
+	 */
 	protected void setBackground() {
 		if (outerView == null)
 			return;

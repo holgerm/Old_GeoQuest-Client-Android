@@ -307,9 +307,9 @@ public class HotspotOld {
 			longitude = Double.valueOf(longitudeA.getText()) * 1E6;
 
 		}
-		GeoPoint point = new GeoPoint((int) (latitude), (int) (longitude));
+		geoPoint = new GeoPoint((int) (latitude), (int) (longitude));
 		Variables.setValue(Variables.HOTSPOT_PREFIX + id
-				+ Variables.LOCATION_SUFFIX, point);
+				+ Variables.LOCATION_SUFFIX, geoPoint);
 
 		// image
 		String imgsrc = _hotspotNode.attributeValue("img");
@@ -356,13 +356,6 @@ public class HotspotOld {
 
 		createRules(_hotspotNode);
 
-		geoPoint = point;
-		new org.osmdroid.google.wrapper.GeoPoint(point);
-
-		// TODO: use an animation
-		// bitmapActive =
-		// BitmapFactory.decodeResource(parentMission.getResources(),
-		// R.drawable.icon_active);
 		drawCircle = false;
 		isInRange = false;
 		// TODO: add features like name, description, icon to use in Augmented

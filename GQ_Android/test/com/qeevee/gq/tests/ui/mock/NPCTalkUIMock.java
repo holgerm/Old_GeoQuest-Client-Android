@@ -26,7 +26,7 @@ public class NPCTalkUIMock extends NPCTalkUI {
 	}
 
 	@Override
-	public View createView() {
+	public View createContentView() {
 		// TODO Auto-generated method stub
 		return null;
 	}
