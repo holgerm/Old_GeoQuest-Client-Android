@@ -190,6 +190,10 @@ public class HotspotOld {
 
 	/** location of the hotspot */
 	private GeoPoint geoPoint;
+	public GeoPoint getGeoPoint() {
+		return geoPoint;
+	}
+
 	/** icon of the hotspot on the map */
 	private Bitmap bitmap;
 	/** should the interaction circle be drawn or not? */
