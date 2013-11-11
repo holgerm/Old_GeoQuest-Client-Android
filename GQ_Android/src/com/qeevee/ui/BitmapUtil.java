@@ -151,6 +151,7 @@ public class BitmapUtil {
 
 		// load scaled bitmap:
 		options.inJustDecodeBounds = false;
+		options.inPurgeable = true;
 		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
 		return bitmap;
 	}

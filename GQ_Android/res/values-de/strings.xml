@@ -7,6 +7,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
 
+    <!-- INVENTORIES -->
+    <string name="default_inventory_name">Inventar</string>
+
     <!-- Start Activities -->
     <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
     <string name="start_text_game_list_progress_process_text">Verarbeite Repository-Daten</string>
@@ -56,6 +59,7 @@
     <string name="historyMenu">Verlauf</string>
     <string name="reloadGamesMenu">Spiele neu laden</string>
     <string name="imprintMenu">Impressum</string>
+    <string name="inventoryMenu">Inventar</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>

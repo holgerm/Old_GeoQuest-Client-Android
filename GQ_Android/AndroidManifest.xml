@@ -50,6 +50,10 @@
             android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.qeevee.gq.inventory.InventoryActivity"
+            android:label="@string/quest_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.qeevee.ui.FullScreenImage"
             android:label="@string/quest_name"
             android:screenOrientation="sensor" />

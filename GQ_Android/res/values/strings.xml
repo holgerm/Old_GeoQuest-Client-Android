@@ -5,6 +5,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <!-- INVENTORIES -->
+    <string name="default_inventory_name">Inventory</string>
+
     <!-- Start Activities -->
     <string name="start_text_game_list_progress_download_text">Loading repositories</string>
     <string name="start_text_game_list_progress_process_text">Processing repository data</string>
@@ -54,6 +57,7 @@
     <string name="historyMenu">History</string>
     <string name="reloadGamesMenu">Reload quests</string>
     <string name="imprintMenu">Imprint</string>
+    <string name="inventoryMenu">Inventory</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
