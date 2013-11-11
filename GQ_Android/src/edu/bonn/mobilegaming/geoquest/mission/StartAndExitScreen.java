@@ -14,15 +14,6 @@ import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
-/**
- * Start and exit screen mission. The first mission to be started (gets the id
- * zero). Shows the start screen countdown and after the countdown starts the
- * next mission specified in the xml file. When all missions are over the start
- * and exit screen mission is active again and nice looking firework is shown.
- * 
- * @author Krischan Udelhoven
- * @author Folker Hoffmann
- */
 public class StartAndExitScreen extends MissionActivity {
 
 	private ImageView imageView;

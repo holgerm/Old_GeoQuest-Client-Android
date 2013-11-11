@@ -18,8 +18,8 @@
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="8" />
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10" />
 
     <application
         android:name="GeoQuestApp"
@@ -47,6 +47,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qeevee.gq.history.HistoryActivity"
+            android:label="@string/quest_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.inventory.InventoryActivity"
             android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity

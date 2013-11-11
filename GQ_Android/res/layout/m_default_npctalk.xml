@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@color/bg_color"
     android:keepScreenOn="true" >
 
@@ -23,7 +23,7 @@
         android:layout_margin="@dimen/margin"
         android:layout_marginTop="0dip"
         android:background="@drawable/button"
-        android:padding="10dp"
+        android:padding="@dimen/button_padding"
         android:textColor="#ffffff" />
 
     <ScrollView
