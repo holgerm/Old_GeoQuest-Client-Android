@@ -67,21 +67,24 @@
 			</rule>
 		</onEnd>
 
-		<questiontext>
-			Text of the question.
-		</questiontext>
+		<question>
 
-		<answer correct="0">
-			Answer One
-		</answer>
+			<questiontext>
+				Text of the question.
+			</questiontext>
 
-		<answer correct="1">
-			Answer Two
-		</answer>
+			<answer correct="0">
+				Answer One
+			</answer>
 
-		<answer correct="0">
-			Answer Three
-		</answer>
+			<answer correct="1">
+				Answer Two
+			</answer>
+
+			<answer correct="0">
+				Answer Three
+			</answer>
+		</question>
 	</mission>
 
 	<mission id="Loop_onChoose" loopUntilSuccess="true"
@@ -103,26 +106,28 @@
 			</rule>
 		</onFail>
 
+		<question>
 
-		<questiontext>
-			Text of the question.
-		</questiontext>
+			<questiontext>
+				Text of the question.
+			</questiontext>
 
-		<answer correct="0" onChoose="Answer one is wrong.">
-			Answer One
-		</answer>
+			<answer correct="0" onChoose="Answer one is wrong.">
+				Answer One
+			</answer>
 
-		<answer correct="1" onChoose="Right!">
-			Answer Two
-		</answer>
+			<answer correct="1" onChoose="Right!">
+				Answer Two
+			</answer>
 
-		<answer correct="0" onChoose="Answer three is wrong.">
-			Answer Three
-		</answer>
+			<answer correct="0" onChoose="Answer three is wrong.">
+				Answer Three
+			</answer>
 
-		<answer correct="1" onChoose="Also right!">
-			Answer Four
-		</answer>
+			<answer correct="1" onChoose="Also right!">
+				Answer Four
+			</answer>
+		</question>
 	</mission>
 
 </game>

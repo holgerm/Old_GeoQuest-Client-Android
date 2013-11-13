@@ -38,24 +38,24 @@ import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
 public class MultipleChoiceQuestionMissionTests {
 
 	private static final String GAME_NAME = "MultipleChoiceQuestion/FunctionTest";
-	private static final int MODE_QUESTION = (Integer) getStaticFieldValue(
+	protected static final int MODE_QUESTION = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_QUESTION");
-	private static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
+	protected static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_REPLY_TO_CORRECT_ANSWER");
-	private static final int MODE_REPLY_TO_WRONG_ANSWER = (Integer) getStaticFieldValue(
+	protected static final int MODE_REPLY_TO_WRONG_ANSWER = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_REPLY_TO_WRONG_ANSWER");
-	private static final int FIRST_WRONG_ANSWER = 0;
-	private static final int FIRST_RIGHT_ANSWER = 1;
-	private static final int SECOND_WRONG_ANSWER = 2;
+	protected static final int FIRST_WRONG_ANSWER = 0;
+	protected static final int FIRST_RIGHT_ANSWER = 1;
+	protected static final int SECOND_WRONG_ANSWER = 2;
 
-	private static String DEFAULT_RESPONSE_ON_CORRECT_ANSWER;
-	private static String DEFAULT_RESPONSE_ON_WRONG_ANSWER;
+	protected static String DEFAULT_RESPONSE_ON_CORRECT_ANSWER;
+	protected static String DEFAULT_RESPONSE_ON_WRONG_ANSWER;
 
-	private MissionActivity mcqM;
-	private String questionText;
-	private List<Button> answerButtons;
-	private int mode;
-	private Button bottomButton;
+	protected MissionActivity mcqM;
+	protected String questionText;
+	protected List<Button> answerButtons;
+	protected int mode;
+	protected Button bottomButton;
 
 	@After
 	public void cleanUp() {
@@ -78,7 +78,7 @@ public class MultipleChoiceQuestionMissionTests {
 		loadFieldsOfObjectUnderTest();
 	}
 
-	private void loadFieldsOfObjectUnderTest() {
+	protected void loadFieldsOfObjectUnderTest() {
 		questionText = (String) getFieldValue(mcqM, "questionText");
 		DEFAULT_RESPONSE_ON_CORRECT_ANSWER = getResString(R.string.questionandanswer_rightAnswer);
 		DEFAULT_RESPONSE_ON_WRONG_ANSWER = getResString(R.string.questionandanswer_wrongAnswer);
@@ -258,41 +258,41 @@ public class MultipleChoiceQuestionMissionTests {
 
 	// === HELPER METHODS FOLLOW =============================================
 
-	private void shouldShowRestartButton() {
+	protected void shouldShowRestartButton() {
 		assertEquals(getResString(R.string.question_repeat_button),
 				bottomButton.getText());
 	}
 
-	private void shouldShowProceedButton() {
+	protected void shouldShowProceedButton() {
 		assertEquals(getResString(R.string.question_proceed_button),
 				bottomButton.getText());
 	}
 
-	private void clearEventRecognition() {
+	protected void clearEventRecognition() {
 		Variables.clean();
 	}
 
-	private void shouldHaveFinishedActivity(boolean shouldHaveFinished) {
+	protected void shouldHaveFinishedActivity(boolean shouldHaveFinished) {
 		assertEquals(shouldHaveFinished, Robolectric.shadowOf(mcqM)
 				.isFinishing());
 	}
 
-	private void shouldShowText(String textExpectedToBeShown) {
+	protected void shouldShowText(String textExpectedToBeShown) {
 		assertEquals(textExpectedToBeShown,
 				((TextView) getFieldValue(mcqM, "mcTextView")).getText());
 	}
 
-	private void clickOnAnswerButton(int i) {
+	protected void clickOnAnswerButton(int i) {
 		answerButtons.get(i).performClick();
 	}
 
-	private void shouldHaveTriggeredEvents(String... eventName) {
+	protected void shouldHaveTriggeredEvents(String... eventName) {
 		for (int i = 0; i < eventName.length; i++) {
 			assertEquals(1.0, Variables.getValue(eventName[i]));
 		}
 	}
 
-	private void should_NOT_HaveTriggeredEvents(String... eventName) {
+	protected void should_NOT_HaveTriggeredEvents(String... eventName) {
 		for (int i = 0; i < eventName.length; i++) {
 			assertFalse(
 					"onFail Variable should NOT be initialized AFTER proceed button has been pressed",
@@ -300,16 +300,16 @@ public class MultipleChoiceQuestionMissionTests {
 		}
 	}
 
-	private void shouldBeInMode(int expectedMode) {
+	protected void shouldBeInMode(int expectedMode) {
 		mode = (Integer) getFieldValue(mcqM, "mode");
 		assertEquals(expectedMode, mode);
 	}
 
-	private void numberOfAnswersShouldBe(int nr) {
+	protected void numberOfAnswersShouldBe(int nr) {
 		assertEquals(nr, answerButtons.size());
 	}
 
-	private void shouldStoreQuestionText() {
+	protected void shouldStoreQuestionText() {
 		assertEquals("Text of the question.", questionText);
 	}
 }
