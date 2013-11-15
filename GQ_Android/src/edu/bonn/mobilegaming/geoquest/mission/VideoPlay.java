@@ -2,7 +2,6 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,9 +33,9 @@ public class VideoPlay extends InteractiveMission {
 		RelativeLayout outerView = (RelativeLayout) this
 				.findViewById(R.id.outerview);
 		long mm = Runtime.getRuntime().maxMemory();
-		Drawable d = this.getResources().getDrawable(
-				R.drawable.background_frame);
-		outerView.setBackgroundDrawable(d);
+		// Drawable d = this.getResources()
+		// .getDrawable(R.drawable.background_test);
+		// outerView.setBackgroundDrawable(d);
 		videoView = (VideoView) this.findViewById(R.id.videoplay_videoview);
 		videoView.setVideoURI(initVideoUri());
 		MediaController mc = new MediaController(this);

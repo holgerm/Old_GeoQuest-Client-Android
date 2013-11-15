@@ -295,8 +295,8 @@ public class TestUtils {
 	}
 
 	public static void historyListShouldHaveLength(int i) {
-		assertEquals(i, History.getInstance().numberOfItems());
-	}
+		assertEquals(i, History.getInstance().numberOfItems()); 
+	} 
 
 	public static GeoQuestActivity startMissionInGame(String game,
 			String missionType, String missionID,
