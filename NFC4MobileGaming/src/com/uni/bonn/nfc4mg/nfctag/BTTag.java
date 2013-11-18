@@ -2,6 +2,7 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -15,12 +16,13 @@ import com.uni.bonn.nfc4mg.tagmodels.BTTagModel;
 import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
 
 /**
- * Class to deal with Bluetooth Tag type. User has to create object of this class in
- * order to deal with any operation related to info tags.
+ * Class to deal with Bluetooth Tag type. User has to create object of this
+ * class in order to deal with any operation related to info tags.
  * 
  * @author shubham
  * 
  */
+@SuppressLint("NewApi")
 public class BTTag {
 
 	public boolean write2Tag(BTTagModel model, Tag tag)
@@ -41,7 +43,6 @@ public class BTTag {
 		if (!id.startsWith(TagConstants.TAG_TYPE_BT_PREFIX))
 			model.setId(TagConstants.TAG_TYPE_BT_PREFIX + model.getId());
 
-
 		NdefRecord records[] = new NdefRecord[3];
 		records[0] = TextRecord.createRecord(model.getId());
 		records[1] = TextRecord.createRecord(model.getMacAddr());
@@ -52,14 +53,13 @@ public class BTTag {
 		return true;
 	}
 
-	public BTTagModel readTagData(Tag tag) throws IOException,
-			FormatException {
+	public BTTagModel readTagData(Tag tag) throws IOException, FormatException {
 
 		BTTagModel model = new BTTagModel();
 		NdefMessage msg = NfcReadWrite.readNfcData(tag);
 		NdefRecord records[] = msg.getRecords();
-		
-		if(null != records && 3 == records.length){
+
+		if (null != records && 3 == records.length) {
 			model.setId(TextRecord.parseNdefRecord(records[0]).getData());
 			model.setMacAddr(TextRecord.parseNdefRecord(records[1]).getData());
 			model.setPassKey(TextRecord.parseNdefRecord(records[2]).getData());
