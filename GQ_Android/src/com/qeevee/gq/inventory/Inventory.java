@@ -1,7 +1,9 @@
 package com.qeevee.gq.inventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -23,6 +25,7 @@ public class Inventory {
 	private String name;
 
 	private Inventory(String name) {
+		items = new HashMap<String, Integer>();
 		this.name = name;
 	}
 
@@ -57,6 +60,13 @@ public class Inventory {
 		}
 	}
 
+	public List<String> getItemsAsList() {
+		if (items == null) {
+			return new ArrayList<String>();
+		} else
+			return new ArrayList<String>(items.keySet());
+	}
+
 	public String[] getItemsAsStringArray() {
 		if (items == null) {
 			return new String[] { "No Items available" };
@@ -70,6 +80,14 @@ public class Inventory {
 			itemStringList[i++] = entry.getKey() + ":" + entry.getValue();
 		}
 		return itemStringList;
+	}
+
+	public Integer numberOfItem(String itemType) {
+		return items.get(itemType);
+	}
+
+	public void deleteAll() {
+		items.clear();
 	}
 
 }
