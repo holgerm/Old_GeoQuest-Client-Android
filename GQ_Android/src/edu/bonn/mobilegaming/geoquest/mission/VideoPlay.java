@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +37,8 @@ public class VideoPlay extends InteractiveMission {
 		// Drawable d = this.getResources()
 		// .getDrawable(R.drawable.background_test);
 		// outerView.setBackgroundDrawable(d);
-		videoView = (VideoView) this.findViewById(R.id.videoplay_videoview);
+		videoView = (VideoView) this.findViewById(R.id.video);
+//		videoView.setPadding(10, 10, 10, 10);
 		videoView.setVideoURI(initVideoUri());
 		MediaController mc = new MediaController(this);
 		mc.setPrevNextListeners(finishButtonClickListener, null);
