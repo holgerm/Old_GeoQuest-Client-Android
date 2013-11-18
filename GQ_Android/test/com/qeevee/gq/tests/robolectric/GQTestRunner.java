@@ -24,7 +24,7 @@ public class GQTestRunner extends RobolectricTestRunner {
 	public static final File MANIFEST_FILE = new File(
 			"../GQ_Android/AndroidManifest.xml");
 	public static final File RESOURCE_DIR = new File("../GQ_Android/res/");
-	public static final File ASSETS_DIR = new File("../GQ_Android/assets/");
+	public static final File DEFAULT_ASSETS_DIR = new File("../GQ_Android/assets/");
 
 	public GQTestRunner(Class<?> testClass) throws InitializationError {
 		super(testClass, new RobolectricConfig(MANIFEST_FILE, RESOURCE_DIR,
@@ -34,7 +34,7 @@ public class GQTestRunner extends RobolectricTestRunner {
 	private static File getAssetsDir(Class<?> testClass) {
 		WithAssets wmd = testClass.getAnnotation(WithAssets.class);
 		if (wmd == null)
-			return ASSETS_DIR;
+			return DEFAULT_ASSETS_DIR;
 		else {
 			File assetsDir = new File(wmd.value());
 			if (assetsDir.exists() && assetsDir.canRead())

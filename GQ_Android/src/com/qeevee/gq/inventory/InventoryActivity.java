@@ -10,13 +10,13 @@ public class InventoryActivity extends GeoQuestActivity {
 
 	private ListView listView;
 
-	@Override 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.t_default_inventory);
 		listView = (ListView) findViewById(R.id.list);
-		String[] values = InventoryManager.getInventory(
-				InventoryManager.DEFAULT_INVENTORY).getItemsAsStringArray();
+		Inventory inventory = Inventory.getStandardInventory();
+		String[] values = inventory.getItemsAsStringArray();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1, values);
 		listView.setAdapter(adapter);

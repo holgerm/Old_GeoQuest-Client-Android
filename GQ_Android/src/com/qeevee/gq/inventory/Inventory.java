@@ -5,13 +5,25 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.R;
+
 public class Inventory {
+
+	private static Inventory STANDARD_INVENTORY = null;
+
+	public static Inventory getStandardInventory() {
+		if (STANDARD_INVENTORY == null) {
+			STANDARD_INVENTORY = new Inventory((String) GeoQuestApp
+					.getContext().getText(R.string.default_inventory_name));
+		}
+		return STANDARD_INVENTORY;
+	}
 
 	private String name;
 
-	Inventory(String name) {
+	private Inventory(String name) {
 		this.name = name;
-		InventoryManager.register(this);
 	}
 
 	public String getName() {
