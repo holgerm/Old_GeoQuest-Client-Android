@@ -3,16 +3,15 @@
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background_test"
+    android:clipToPadding="true"
     android:keepScreenOn="true" >
 
     <VideoView
-        android:id="@+id/videoplay_videoview"
+        android:id="@+id/video"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        android:layout_centerInParent="true" >
     </VideoView>
 
 </RelativeLayout>
