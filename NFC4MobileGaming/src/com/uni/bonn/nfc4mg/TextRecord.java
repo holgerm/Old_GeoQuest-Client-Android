@@ -2,6 +2,7 @@ package com.uni.bonn.nfc4mg;
 
 import java.io.UnsupportedEncodingException;
 
+import android.annotation.SuppressLint;
 import android.nfc.NdefRecord;
 
 import com.uni.bonn.nfc4mg.tagmodels.BaseTagModel;
@@ -13,11 +14,14 @@ import com.uni.bonn.nfc4mg.tagmodels.BaseTagModel;
  * @author shubham
  * 
  */
+@SuppressLint("NewApi")
 public final class TextRecord {
 
 	/**
 	 * This function create a NDEFRecord of type TEXT
-	 * @param val : data to write into tag
+	 * 
+	 * @param val
+	 *            : data to write into tag
 	 * @param args
 	 * @return NdefRecord
 	 * @throws UnsupportedEncodingException
@@ -45,7 +49,10 @@ public final class TextRecord {
 
 	/**
 	 * This function parse the NdefRecord of type TEXT
-	 * @param ndefRecord : record to be parsed. Caller of this function must check the NdefRecord type.
+	 * 
+	 * @param ndefRecord
+	 *            : record to be parsed. Caller of this function must check the
+	 *            NdefRecord type.
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */

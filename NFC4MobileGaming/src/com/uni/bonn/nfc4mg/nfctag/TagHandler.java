@@ -2,6 +2,7 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
@@ -29,6 +30,7 @@ import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
  * @author shubham
  * 
  */
+@SuppressLint("NewApi")
 public class TagHandler {
 
 	private static final String TAG = "TagHandler";
