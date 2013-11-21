@@ -1,0 +1,27 @@
+<rule>
+<action type="AddItemToInventory" itemType="Dose" numberOfItems="1"/>
+</rule>
+
+in rules.act
+
+neue Klasse -> AddItemToInventory extends Action
+...
+
+//Pflichtparameter
+protected boolean checkInitialization() {
+	return params.containsKey("itemType") && params.containsKe("numberOfItems");
+}
+
+public void execute(){
+	Inventory inventory = InventoryManager.getInventory(InventoryManager.DEFAULT_INVETORY);
+	inventory.addItems(params.get("itemType"), Integer.valueOf(params.get("numberOfItems")));
+
+}
+mit Initialisierung, addItem, removeItem..
+
+InventoryManager -> Klasse in gq.inventory
+mit Map <String, Inventory>
+Default Inventory
+Auf Android Ressourcen abbilden: (String)GeoQuest.getContext().getText(R.string.default_inventory_name);
+der Klasse R
+siehe strings.xml
