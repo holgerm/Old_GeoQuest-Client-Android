@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/photopuzzle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/photopuzzleimage"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/margin"
+        android:keepScreenOn="true"
+        android:scaleType="center" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+
+            <ImageView
+                android:id="@+id/blackbox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/blackbox2"
+                android:layout_width="10dp"
+                android:layout_height="10dp" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/blackbox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/blackbox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/blackbox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ImageView>
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>
