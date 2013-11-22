@@ -204,7 +204,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		super.onCreateOptionsMenu(menu);
 
 		menu.add(0, LOCATION_MOCKUP_SWITCH_ID, 0, R.string.map_menu_mockGPS);
-		menu.add(0, ZOOM_TO_BOUNDING_BOX, 0, R.string.map_menu_bounding_box);
+		if (getHotspots().size() > 0)
+			menu.add(0, ZOOM_TO_BOUNDING_BOX, 0, R.string.map_menu_bounding_box);
 		menu.add(0, CENTER_MAP_ON_CURRENT_LOCATION_ID, 0,
 				R.string.map_menu_centerMap);
 		return true;
