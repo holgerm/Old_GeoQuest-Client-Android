@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -57,7 +57,7 @@ public class MultipleChoiceQuestionMissionTests {
 	protected int mode;
 	protected Button bottomButton;
 
-	@After
+	@Before
 	public void cleanUp() {
 		// get rid of all variables that have been set, e.g. for checking
 		// actions.

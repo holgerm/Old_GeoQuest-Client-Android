@@ -539,17 +539,15 @@ public class GameLoader {
 
 			is.close();
 			fOutLocal.close();
+			GameLoader.unzipGameArchive(newGameZipFile);
 
 			Log.d(TAG, "completed extraction: '" + dirName + File.separator
 					+ fileName);
 			// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
-
-			GameLoader.unzipGameArchive(newGameZipFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

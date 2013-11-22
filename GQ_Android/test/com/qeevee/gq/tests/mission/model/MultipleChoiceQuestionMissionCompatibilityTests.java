@@ -18,6 +18,7 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 public class MultipleChoiceQuestionMissionCompatibilityTests extends
 		MultipleChoiceQuestionMissionTests {
 
+	@SuppressWarnings("unused")
 	private static final String GAME_NAME = "MultipleChoiceQuestion/FunctionCompatibilityTest";
 
 }

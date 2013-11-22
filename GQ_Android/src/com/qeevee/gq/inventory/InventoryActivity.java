@@ -1,7 +1,6 @@
 package com.qeevee.gq.inventory;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -10,16 +9,21 @@ public class InventoryActivity extends GeoQuestActivity {
 
 	private ListView listView;
 
-	@Override 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.t_default_inventory);
+		setContentView(R.layout.t_default_inventorytest);
 		listView = (ListView) findViewById(R.id.list);
-		String[] values = InventoryManager.getInventory(
-				InventoryManager.DEFAULT_INVENTORY).getItemsAsStringArray();
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1, values);
-		listView.setAdapter(adapter);
+		Inventory inventory = Inventory.getStandardInventory();
+
+		InventoryListAdapter listAdapter = new InventoryListAdapter(this,
+				R.layout.list_item_inventory, inventory.getItemsAsList());
+
+		// String[] values = inventory.getItemsAsStringArray();
+		// ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
+		// android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+		listView.setAdapter(listAdapter);
 	}
 
 }
