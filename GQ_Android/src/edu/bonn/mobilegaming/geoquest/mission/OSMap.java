@@ -33,7 +33,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 /**
  * OpenStreetMap-based Map Navigation.

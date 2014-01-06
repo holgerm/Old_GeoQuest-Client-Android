@@ -15,9 +15,9 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 /**
  * Just a talking NPC. The NPC has a Image and text is based on dialogItems. The

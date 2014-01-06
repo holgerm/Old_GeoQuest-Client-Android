@@ -1,4 +1,4 @@
-package edu.bonn.mobilegaming.geoquest.ui.standard;
+package edu.bonn.mobilegaming.geoquest.ui.web;
 
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
 import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
@@ -33,10 +33,24 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebPageUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebTechUI;
+import edu.bonn.mobilegaming.geoquest.ui.standard.AudioRecordUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.ExternalMissionUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.ImageCaptureUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.NFCMissionUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.NFCScanMissionUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.NFCTagReadingProductUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.OSMapUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.QRTagReadingProductUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.QRTagReadingTreasureUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.StartAndExitScreenUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.TextQuestionDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.VideoPlayUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.WebPageUIDefault;
+import edu.bonn.mobilegaming.geoquest.ui.standard.WebTechUIDefault;
 
-public class DefaultUIFactory extends UIFactory {
+public class WebUIFactory extends UIFactory {
 
-	public DefaultUIFactory() {
+	public WebUIFactory() {
 		super();
 	}
 
@@ -54,7 +68,7 @@ public class DefaultUIFactory extends UIFactory {
 	}
 
 	public NPCTalkUI createUI(NPCTalk activity) {
-		return new NPCTalkUIDefault(activity);
+		return new NPCTalkUIWeb(activity);
 	}
 
 	public ImageCaptureUI createUI(ImageCapture activity) {
