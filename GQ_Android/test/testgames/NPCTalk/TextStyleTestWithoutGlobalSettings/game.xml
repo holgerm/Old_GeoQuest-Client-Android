@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST GAME SPEC for TextQuestion Mission Type -->
+<game name="TextStyleTestWithoutGlobalSettings" xmlformat="5">
+	<mission id="WithDefaultStyle" type="NPCTalk">
+		<dialogitem>
+			This NPCTalk mission uses default style.
+		</dialogitem>
+		<dialogitem>I.e. default text size ...
+		</dialogitem>
+		<dialogitem>... and default text color.
+		</dialogitem>
+	</mission>
+	<mission id="WithLocalStyleWithUnitsAndWords" type="NPCTalk"
+		bg="drawable/background.png" textsize="30sp" textcolor="yellow">
+		<dialogitem>
+			This NPCTalk overrides the textsize to 30sp.
+		</dialogitem>
+		<dialogitem>And it uses a yellow text color.
+		</dialogitem>
+	</mission>
+	<mission id="WithLocalStyleWithoutUnitsAndHexColor" type="NPCTalk"
+		bg="drawable/background.png" textsize="10" textcolor="#ffd49f6a">
+		<dialogitem>
+			This NPCTalk overrides the textsize to 10sp.
+		</dialogitem>
+		<dialogitem>And it uses a text color of "#ffd49f6a"".
+		</dialogitem>
+	</mission>
+</game>

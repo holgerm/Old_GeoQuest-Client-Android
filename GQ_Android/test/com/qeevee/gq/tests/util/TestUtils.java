@@ -33,6 +33,8 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class TestUtils {
 
+	public static final float DELTA_4_FLOAT_COMPARISON = 0.0001f;
+
 	/**
 	 * @param gameName
 	 *            the name of the directory containing the game specification.
@@ -145,7 +147,7 @@ public class TestUtils {
 		GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
 				uiFactory);
 		return start;
-	} 
+	}
 
 	public static Start startApp() {
 		Start start = new Start();
@@ -295,8 +297,8 @@ public class TestUtils {
 	}
 
 	public static void historyListShouldHaveLength(int i) {
-		assertEquals(i, History.getInstance().numberOfItems()); 
-	} 
+		assertEquals(i, History.getInstance().numberOfItems());
+	}
 
 	public static GeoQuestActivity startMissionInGame(String game,
 			String missionType, String missionID,

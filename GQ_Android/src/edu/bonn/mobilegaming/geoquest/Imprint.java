@@ -37,10 +37,10 @@ public class Imprint {
 
 	public Imprint(Element imprintElement) {
 		for (int i = 0; i < FIELD_KEYS.length; i++) {
-			fieldNames.put(FIELD_KEYS[i], (String) XMLUtilities.getAttribute(
+			fieldNames.put(FIELD_KEYS[i], (String) XMLUtilities.getStringAttribute(
 					FIELD_KEYS[i], FIELD_LABEL_DEFAULT_RES_IDs[i],
 					imprintElement));
-			fieldValues.put(FIELD_KEYS[i], (String) XMLUtilities.getAttribute(
+			fieldValues.put(FIELD_KEYS[i], (String) XMLUtilities.getStringAttribute(
 					FIELD_KEYS[i], FIELD_VALUE_DEFAULT_RES_IDs[i],
 					imprintElement));
 		}

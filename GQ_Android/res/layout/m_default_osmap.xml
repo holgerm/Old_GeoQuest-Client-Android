@@ -3,7 +3,7 @@
     android:id="@+id/mainlayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_color"
+    android:background="@color/background"
     android:keepScreenOn="true"
     android:orientation="vertical" >
 

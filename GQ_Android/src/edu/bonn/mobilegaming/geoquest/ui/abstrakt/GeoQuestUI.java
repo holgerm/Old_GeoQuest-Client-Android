@@ -8,6 +8,15 @@ public abstract class GeoQuestUI {
 	protected Activity activity = null;
 	protected View contentView = null;
 
+	/**
+	 * Initializes the UI for this GeoQuest element.
+	 * 
+	 * All subclasses should call super(activity) and hence ensure that the
+	 * content view has been configured by calling their special implementation
+	 * of {@link GeoQuestUI#createContentView()}.
+	 * 
+	 * @param activity
+	 */
 	public GeoQuestUI(Activity activity) {
 		this.activity = activity;
 		contentView = createContentView();

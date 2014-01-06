@@ -118,7 +118,7 @@
             android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="Preferences"
+            android:name=".Preferences"
             android:label="@string/preferencesTitle"
             android:screenOrientation="portrait" >
         </activity>

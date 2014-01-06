@@ -62,7 +62,7 @@ public class MultipleChoiceQuestionItem extends Question {
 		// make answers:
 		LayoutInflater inflater = (LayoutInflater) containingActivity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		CharSequence length = XMLUtilities.getAttribute("answerLength",
+		CharSequence length = XMLUtilities.getStringAttribute("answerLength",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlNode);
 		View itemView = null;
 		if (length == null)
