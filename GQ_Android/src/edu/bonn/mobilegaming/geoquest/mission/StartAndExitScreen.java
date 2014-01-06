@@ -30,7 +30,7 @@ public class StartAndExitScreen extends MissionActivity {
 
 		imageView = (ImageView) findViewById(R.id.startimage);
 
-		String duration = (String) XMLUtilities.getAttribute("duration",
+		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
 		if (duration != null && duration.equals("interactive")) {
@@ -55,7 +55,7 @@ public class StartAndExitScreen extends MissionActivity {
 	}
 
 	private void setImage() {
-		String imgsrc = (String) XMLUtilities.getAttribute("image",
+		String imgsrc = (String) XMLUtilities.getStringAttribute("image",
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
 			imageView

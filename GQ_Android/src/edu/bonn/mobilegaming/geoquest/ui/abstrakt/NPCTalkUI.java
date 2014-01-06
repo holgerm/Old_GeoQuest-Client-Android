@@ -6,11 +6,6 @@ import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 
 public abstract class NPCTalkUI extends MissionUI {
 
-	/**
-	 * Initializes the UI for an NPCTalk mission.
-	 * 
-	 * @param activity
-	 */
 	public NPCTalkUI(NPCTalk activity) {
 		super(activity);
 	}
