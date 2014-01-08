@@ -1,23 +1,27 @@
 package edu.bonn.mobilegaming.geoquest.ui.web;
 
 import android.content.Context;
-import android.os.CountDownTimer;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.util.JSUtil;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
-import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.GeoQuestUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
@@ -27,7 +31,6 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	private TextView dialogText;
 	private ScrollView scrollView;
 	private DialogItem currentDialogItem = null;
-	private WordTicker ticker = null;
 	private static final long milliseconds_per_part = 100;
 
 	private int state = 0;
@@ -68,6 +71,31 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 		outerView = (View) contentView.findViewById(R.id.outerview);
 		mainView = (WebView) contentView.findViewById(R.id.webview);
 		WebUIFactory.optimizeWebView(mainView);
+		mainView.setWebViewClient(new WebViewClient() {
+
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				super.onPageStarted(view, url, favicon);
+				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT);
+				init();
+			}
+
+			@Override
+			public void onReceivedSslError(WebView view,
+					SslErrorHandler handler, SslError error) {
+				// TODO Auto-generated method stub
+				super.onReceivedSslError(view, handler, error);
+				// Toast.makeText(TableContentsWithDisplay.this, "error "+error,
+				// Toast.LENGTH_SHORT).show();
+
+			}
+		});
 		_jsHandler = new JsHandler(getNPCTalk(), mainView);
 		mainView.addJavascriptInterface(_jsHandler, "JsHandler");
 
@@ -86,14 +114,25 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 
 	@Override
 	public void showNextDialogItem() {
-		// if (getNPCTalk().hasMoreDialogItems()) {
-		// currentDialogItem = getNPCTalk().getNextDialogItem();
-		// displaySpeaker();
-		// if (currentDialogItem.getAudioFilePath() != null)
-		// GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
-		// currentDialogItem.blocking);
-		// }
+		if (getNPCTalk().hasMoreDialogItems()) {
+			currentDialogItem = getNPCTalk().getNextDialogItem();
+			displayButtonText();
+			// displaySpeaker();
+			// if (currentDialogItem.getAudioFilePath() != null)
+			// GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
+			// currentDialogItem.blocking);
+		}
 		// refreshButton();
+	}
+
+	private void displayButtonText() {
+		String buttonText = (String) currentDialogItem
+				.getNextDialogButtonText();
+		if (buttonText == null) {
+			buttonText = (String) getNPCTalk().getNextDialogButtonTextDefault();
+		}
+		JSUtil.callJSFuntion("setProceedButtonText", "'" + buttonText + "'",
+				getNPCTalk(), mainView);
 	}
 
 	private void displaySpeaker() {
@@ -135,56 +174,6 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 			else
 				button.setText(R.string.button_text_proceed);
 			break;
-		}
-
-	}
-
-	/**
-	 * Display the text of the given DialogItem word by word.
-	 */
-	public class WordTicker extends CountDownTimer implements
-			InteractionBlocker {
-
-		private WordTicker() {
-			super(milliseconds_per_part
-					* (currentDialogItem.getNumberOfTextTokens() + 1),
-					milliseconds_per_part);
-			// block interaction on the NPCTalk using this Timer as Blocker
-			// monitor:
-			blockInteraction(this);
-			refreshButton();
-		}
-
-		@Override
-		public void onTick(long millisUntilFinished) {
-			CharSequence next = currentDialogItem.getNextTextToken();
-			if (next != null)
-				dialogText.append(next);
-			if (currentDialogItem.hasNextPart())
-				dialogText.append(" ");
-			else
-				dialogText.append("\n");
-			scrollView.fullScroll(View.FOCUS_DOWN);
-		}
-
-		@Override
-		public void onFinish() {
-			// Zur Sicherheit, da manchmal Wörter verschluckt werden (nicht
-			// ausreichend genauer timer!)
-			CharSequence next = currentDialogItem.getNextTextToken();
-			while (next != null) {
-				dialogText.append(next);
-				next = currentDialogItem.getNextTextToken();
-				if (next != null)
-					dialogText.append(" ");
-				else
-					dialogText.append("\n");
-				scrollView.fullScroll(View.FOCUS_DOWN);
-			}
-			scrollView.fullScroll(View.FOCUS_DOWN);
-			getNPCTalk().hasShownDialogItem(currentDialogItem);
-			releaseInteraction(NPCTalkUIWeb.this.ticker);
-			NPCTalkUIWeb.this.ticker = null;
 		}
 
 	}

@@ -15,6 +15,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
+import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
@@ -37,9 +38,11 @@ public class NPCTalk extends MissionActivity {
 
 	private NPCTalkUI ui;
 
-	private int nrOfDialogItems; 
+	private int nrOfDialogItems;
 
 	private int indexOfCurrentDialogItem;
+
+	private CharSequence nextDialogButtonTextDefault;
 
 	/**
 	 * Called by the android framework when the mission is created. Setups the
@@ -55,8 +58,9 @@ public class NPCTalk extends MissionActivity {
 		dialogItemIterator = dialogItemList.iterator();
 		nrOfDialogItems = dialogItemList.size();
 		indexOfCurrentDialogItem = 0;
+		setNextDialogButtonText(getMissionAttribute("nextdialogbuttontext",
+				R.string.button_text_next));
 		ui = UIFactory.getInstance().createUI(this);
-		ui.init();
 	}
 
 	public void finishMission() {
@@ -152,9 +156,7 @@ public class NPCTalk extends MissionActivity {
 			// read nextdialogbuttontext:
 			Attribute a = (Attribute) xml
 					.selectSingleNode("@nextdialogbuttontext");
-			if (a != null) {
-				nextDialogButtonText = a.getText();
-			}
+			nextDialogButtonText = (a != null) ? a.getText() : null;
 
 			// read sound (might be an audiofile for listenig to the text):
 			a = (Attribute) xml.selectSingleNode("@sound");
@@ -221,4 +223,14 @@ public class NPCTalk extends MissionActivity {
 	public MissionOrToolUI getUI() {
 		return ui;
 	}
+
+	public CharSequence getNextDialogButtonTextDefault() {
+		return nextDialogButtonTextDefault;
+	}
+
+	private void setNextDialogButtonText(
+			CharSequence nextDialogButtonTextDefault) {
+		this.nextDialogButtonTextDefault = nextDialogButtonTextDefault;
+	}
+
 }

@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest.ui.web;
 
+import com.qeevee.util.JSUtil;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,18 +32,8 @@ public class JsHandler {
 	 * This function handles call from Android-Java
 	 */
 	public void javaFnCall(String jsString) {
-
-		final String webUrl = "javascript:diplayJavaMsg('" + jsString + "')";
-		// Add this to avoid android.view.windowmanager$badtokenexception unable
-		// to add window
-		if (!activity.isFinishing())
-			// loadurl on UI main thread
-			activity.runOnUiThread(new Runnable() {
-
-				public void run() {
-					webView.loadUrl(webUrl);
-				}
-			});
+		
+		JSUtil.callJSFuntion("diplayJavaMsg", "'" + jsString + "'", activity, webView);
 	}
 
 	/**
@@ -66,4 +58,5 @@ public class JsHandler {
 				});
 		alertDialog.show();
 	}
+
 }

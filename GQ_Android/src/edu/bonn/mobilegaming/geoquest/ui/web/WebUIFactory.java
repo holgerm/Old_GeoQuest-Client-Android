@@ -1,17 +1,13 @@
 package edu.bonn.mobilegaming.geoquest.ui.web;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.http.SslError;
 import android.view.View;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
 import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
 import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
@@ -154,41 +150,11 @@ public class WebUIFactory extends UIFactory {
 		webView.getSettings().setUseWideViewPort(false);
 		webView.setWebChromeClient(new WebChromeClient());
 
-		webView.setWebViewClient(new WebViewClient() {
-
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				// TODO Auto-generated method stub
-				super.onPageStarted(view, url, favicon);
-				// Toast.makeText(TableContentsWithDisplay.this, "url "+url,
-				// Toast.LENGTH_SHORT).show();
-
-			}
-
-			@Override
-			public void onPageFinished(WebView view, String url) {
-				super.onPageFinished(view, url);
-				// Toast.makeText(TableContentsWithDisplay.this, "Width " +
-				// view.getWidth() +" *** " + "Height " + view.getHeight(),
-				// Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onReceivedSslError(WebView view,
-					SslErrorHandler handler, SslError error) {
-				// TODO Auto-generated method stub
-				super.onReceivedSslError(view, handler, error);
-				// Toast.makeText(TableContentsWithDisplay.this, "error "+error,
-				// Toast.LENGTH_SHORT).show();
-
-			}
-		});
-
 		// these settings speed up page load into the webview
 		webView.getSettings().setRenderPriority(RenderPriority.HIGH);
 		webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		webView.requestFocus(View.FOCUS_DOWN);
-		
+
 		return webView;
 	}
 
