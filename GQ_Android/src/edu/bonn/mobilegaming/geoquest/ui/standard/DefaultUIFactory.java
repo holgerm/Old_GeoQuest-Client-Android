@@ -97,10 +97,8 @@ public class DefaultUIFactory extends UIFactory {
 		return new QRTagReadingProductUIDefault(activity);
 	}
 
-	@Override
 	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
-		// TODO Auto-generated method stub
-		return null;
+		return new MultipleChoiceQuestionUI(activity);
 	}
 
 

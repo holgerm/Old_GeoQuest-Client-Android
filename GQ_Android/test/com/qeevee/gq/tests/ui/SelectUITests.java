@@ -13,6 +13,7 @@ import edu.bonn.mobilegaming.geoquest.ui.web.WebUIFactory;
 @RunWith(GQTestRunner.class)
 public class SelectUITests {
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void selectWebUI() {
 		// GIVEN:

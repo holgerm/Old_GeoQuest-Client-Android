@@ -3,17 +3,17 @@ package edu.bonn.mobilegaming.geoquest.ui.web;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.ui.ZoomImageView;
+import com.qeevee.gq.res.ResourceManager;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
@@ -23,7 +23,6 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 public class NPCTalkUIWeb extends NPCTalkUI {
 
-	private ZoomImageView charImage;
 	private Button button;
 	private TextView dialogText;
 	private ScrollView scrollView;
@@ -34,6 +33,7 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	private int state = 0;
 	private static final int STATE_NEXT_DIALOG_ITEM = 1;
 	private static final int STATE_END = 2;
+	private static final String TAG = NPCTalkUIWeb.class.getCanonicalName();
 
 	private OnClickListener showNextDialogListener = new OnClickListener() {
 		public void onClick(View v) {
@@ -49,6 +49,8 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 
 	private CharSequence nextDialogButtonTextDefault;
 	private CharSequence mode;
+	private WebView mainView;
+	private JsHandler _jsHandler;
 
 	/**
 	 * @see GeoQuestUI#GeoQuestUI(android.app.Activity)
@@ -56,73 +58,42 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	 */
 	public NPCTalkUIWeb(NPCTalk activity) {
 		super(activity);
-		setImage(getNPCTalk().getMissionAttribute("image"));
-		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
-				"nextdialogbuttontext", R.string.button_text_next));
-		this.mode = XMLUtilities.getStringAttribute("mode",
-				R.string.npctalk_mode_default, getMissionXML());
-	}
-
-	private void setNextDialogButtonText(
-			CharSequence nextDialogButtonTextDefault) {
-		this.nextDialogButtonTextDefault = nextDialogButtonTextDefault;
 	}
 
 	@Override
 	public View createContentView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		contentView = inflater.inflate(R.layout.m_default_npctalk, null);
+		contentView = inflater.inflate(R.layout.m_web_npctalk, null);
 		outerView = (View) contentView.findViewById(R.id.outerview);
-		charImage = (ZoomImageView) contentView.findViewById(R.id.npcimage);
-		button = (Button) contentView.findViewById(R.id.proceedButton);
-		dialogText = (TextView) contentView.findViewById(R.id.npctext);
-		dialogText.setTextSize(getTextsize());
-		dialogText.setTextColor(getTextColor());
-		scrollView = (ScrollView) contentView
-				.findViewById(R.id.npc_scroll_view);
-		return contentView;
-	}
+		mainView = (WebView) contentView.findViewById(R.id.webview);
+		WebUIFactory.optimizeWebView(mainView);
+		_jsHandler = new JsHandler(getNPCTalk(), mainView);
+		mainView.addJavascriptInterface(_jsHandler, "JsHandler");
 
-	private boolean setImage(CharSequence pathToImageFile) {
-		if (pathToImageFile == null) {
-			charImage.setVisibility(View.GONE);
-			return false;
-		}
+		String htmlFilePath = "file:///"
+				+ ResourceManager.getResourcePath("ui/npctalk.html");
 		try {
-			charImage.setRelativePathToImageBitmap(pathToImageFile.toString());
-			return true;
+			mainView.loadUrl(htmlFilePath);
 		} catch (IllegalArgumentException iae) {
-			charImage.setVisibility(View.GONE);
-			return false;
+			Log.e(TAG, "UI for NPCTalk activity "
+					+ this.getNPCTalk().getMission().id
+					+ " does not find the basic html (" + htmlFilePath + ")");
 		}
+
+		return contentView;
 	}
 
 	@Override
 	public void showNextDialogItem() {
-		if (getNPCTalk().hasMoreDialogItems()) {
-			currentDialogItem = getNPCTalk().getNextDialogItem();
-			displaySpeaker();
-			if (currentDialogItem.getAudioFilePath() != null)
-				GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
-						currentDialogItem.blocking);
-			initDialogItemPresenter();
-		}
-		refreshButton();
-	}
-
-	private void initDialogItemPresenter() {
-		if (this.mode.equals("chunk")) {
-			// display formatted text as a complete chunk:
-			dialogText.append(Html.fromHtml(currentDialogItem.getText()));
-			dialogText.append("\n");
-			scrollView.fullScroll(View.FOCUS_DOWN);
-		}
-		if (this.mode.equals("wordticker")) {
-			// show dialog item text word by word via ticker
-			ticker = new WordTicker();
-			ticker.start();
-		}
+		// if (getNPCTalk().hasMoreDialogItems()) {
+		// currentDialogItem = getNPCTalk().getNextDialogItem();
+		// displaySpeaker();
+		// if (currentDialogItem.getAudioFilePath() != null)
+		// GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
+		// currentDialogItem.blocking);
+		// }
+		// refreshButton();
 	}
 
 	private void displaySpeaker() {
