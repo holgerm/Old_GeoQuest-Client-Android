@@ -457,8 +457,7 @@ public class GameLoader {
 	public static boolean existsGameOnClient(String repoName, String gameName) {
 		// TODO: extend to check whether the game is complete (all referred
 		// resources available).
-		File repoDir = new File(Environment.getExternalStorageDirectory(),
-				GameDataManager.getLocalRepoDir(null) + "/" + repoName);
+		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/" + repoName);
 		if (!repoDir.exists())
 			return false;
 		File gameDir = new File(repoDir, gameName);
