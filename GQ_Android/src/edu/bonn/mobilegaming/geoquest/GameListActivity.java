@@ -222,7 +222,8 @@ public class GameListActivity extends GeoQuestListActivity {
 			gameListAdapter = new ArrayAdapter<String>(this,
 					R.layout.game_item,
 					GeoQuestApp.getGameNamesForRepository(repoName.toString()));
-			setListAdapter(gameListAdapter);
+			if (gameListAdapter != null)
+				setListAdapter(gameListAdapter);
 		}
 	}
 }

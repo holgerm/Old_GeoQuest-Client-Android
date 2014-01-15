@@ -16,6 +16,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -23,147 +24,184 @@ import edu.bonn.mobilegaming.geoquest.R;
 
 public class BitmapUtil {
 
-    public static Bitmap scaleBitmapToScreenWidth(Bitmap origBitmap) {
-	WindowManager wm = (WindowManager) GeoQuestApp.getContext()
-		.getSystemService(Context.WINDOW_SERVICE);
-	int newWidth = wm.getDefaultDisplay().getWidth();
-	float scaleBy = ((float) newWidth) / origBitmap.getWidth();
-	Matrix matrix = new Matrix();
-	matrix.postScale(scaleBy,
-			 scaleBy);
-	return Bitmap.createBitmap(origBitmap,
-				   0,
-				   0,
-				   origBitmap.getWidth(),
-				   origBitmap.getHeight(),
-				   matrix,
-				   true);
-    }
-
-    /**
-     * @param filePath
-     * @param context
-     * @return the bitmap decoded from the given file or null, if no bitmap
-     *         could be decoded.
-     */
-    private static Bitmap readBitmapFromFile(String filePath,
-					     Context context) {
-	// WindowManager wm = (WindowManager)
-	// context.getSystemService(Context.WINDOW_SERVICE);
-	// DisplayMetrics displayMetrics = new DisplayMetrics();
-	// wm.getDefaultDisplay().getMetrics(displayMetrics);
-
-	BitmapFactory.Options options = new BitmapFactory.Options();
-	options.inPurgeable = true;
-	// options.inDensity = displayMetrics.densityDpi;
-	// options.inScreenDensity = displayMetrics.densityDpi;
-	// options.inTargetDensity = displayMetrics.densityDpi;
-	// options.inScaled = true;
-
-	String completedFilePath = completeImageFileSuffix(filePath);
-
-	Bitmap bitmap = BitmapFactory.decodeFile(completedFilePath,
-						 options);
-	if (bitmap == null) {
-	    Log.d(BitmapUtil.class.getCanonicalName(),
-		  "Could not decode bitmap from file " + filePath);
-	    bitmap = BitmapFactory.decodeResource(context.getResources(),
-						  R.drawable.missingbitmap);
+	public static Bitmap scaleBitmapToScreenWidth(Bitmap origBitmap) {
+		WindowManager wm = (WindowManager) GeoQuestApp.getContext()
+				.getSystemService(Context.WINDOW_SERVICE);
+		int newWidth = wm.getDefaultDisplay().getWidth();
+		float scaleBy = ((float) newWidth) / origBitmap.getWidth();
+		Matrix matrix = new Matrix();
+		matrix.postScale(scaleBy, scaleBy);
+		return Bitmap.createBitmap(origBitmap, 0, 0, origBitmap.getWidth(),
+				origBitmap.getHeight(), matrix, true);
 	}
-	return bitmap;
-    }
 
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,
-						int pixels) {
-	Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-					    bitmap.getHeight(),
-					    Config.ARGB_8888);
-	Canvas canvas = new Canvas(output);
+	/**
+	 * @param filePath
+	 * @param context
+	 * @return the bitmap decoded from the given file or null, if no bitmap
+	 *         could be decoded.
+	 */
+	private static Bitmap readBitmapFromFile(String filePath, Context context) {
+		// WindowManager wm = (WindowManager)
+		// context.getSystemService(Context.WINDOW_SERVICE);
+		// DisplayMetrics displayMetrics = new DisplayMetrics();
+		// wm.getDefaultDisplay().getMetrics(displayMetrics);
 
-	final int color = 0xff424242;
-	final Paint paint = new Paint();
-	final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-	final RectF rectF = new RectF(rect);
-	final float roundPx = pixels;
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPurgeable = true;
+		// options.inDensity = displayMetrics.densityDpi;
+		// options.inScreenDensity = displayMetrics.densityDpi;
+		// options.inTargetDensity = displayMetrics.densityDpi;
+		// options.inScaled = true;
 
-	paint.setAntiAlias(true);
-	canvas.drawARGB(0,
-			0,
-			0,
-			0);
-	paint.setColor(color);
-	canvas.drawRoundRect(rectF,
-			     roundPx,
-			     roundPx,
-			     paint);
+		String completedFilePath = completeImageFileSuffix(filePath);
 
-	paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-	canvas.drawBitmap(bitmap,
-			  rect,
-			  rect,
-			  paint);
-
-	return output;
-    }
-
-    /**
-     * Loads a Bitmap and optionally scales it to the actual screen width.
-     * 
-     * @param scale
-     *            if true the bitmap is scaled to the current screen width, else
-     *            it is loaded as it is.
-     * @param ressourcePath
-     *            as given in the game.xml to specify e.g. images
-     * @return
-     */
-    public static Bitmap loadBitmap(String relativeResourcePath,
-				    boolean scale) {
-	String bitmapFilePath = getGameBitmapFile(relativeResourcePath);
-	Bitmap bitmap = readBitmapFromFile(bitmapFilePath,
-					   GeoQuestApp.getContext());
-	if (scale)
-	    bitmap = scaleBitmapToScreenWidth(bitmap);
-	return bitmap;
-    }
-
-    private static String getGameBitmapFile(String ressourceFilePath) {
-	String resourcePath = GeoQuestApp.getRunningGameDir().getAbsolutePath()
-		+ "/" + ressourceFilePath;
-	resourcePath = completeImageFileSuffix(resourcePath);
-	File file = new File(resourcePath);
-	if (file.exists() && file.canRead())
-	    return resourcePath;
-	else
-	    throw new IllegalArgumentException(
-		    "No ressource file found at path \"" + resourcePath + "\".");
-    }
-
-    private static Set<String> KNOWN_BITMAP_SUFFIXES = new HashSet<String>();
-    static {
-	KNOWN_BITMAP_SUFFIXES.add("png");
-	KNOWN_BITMAP_SUFFIXES.add("jpg");
-    };
-
-    private static String completeImageFileSuffix(String absolutePath) {
-	if (hasKnownImageSuffix(absolutePath))
-	    return absolutePath;
-	else if (new File(absolutePath + ".png").canRead())
-	    return absolutePath + ".png";
-	else if (new File(absolutePath + ".jpg").canRead())
-	    return absolutePath + ".jpg";
-	else
-	    throw new IllegalArgumentException(
-		    "Invalid image path (not found): " + absolutePath);
-    }
-
-    private static boolean hasKnownImageSuffix(String path) {
-	int suffixStartingIndex = path.lastIndexOf('.');
-	if (suffixStartingIndex <= 0)
-	    return false;
-	else {
-	    String suffix = path.substring(suffixStartingIndex + 1)
-		    .toLowerCase(Locale.US);
-	    return KNOWN_BITMAP_SUFFIXES.contains(suffix);
+		Bitmap bitmap = BitmapFactory.decodeFile(completedFilePath, options);
+		if (bitmap == null) {
+			Log.d(BitmapUtil.class.getCanonicalName(),
+					"Could not decode bitmap from file " + filePath);
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.missingbitmap);
+		}
+		return bitmap;
 	}
-    }
+
+	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
+
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+		final float roundPx = pixels;
+
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		canvas.drawBitmap(bitmap, rect, rect, paint);
+
+		return output;
+	}
+
+	/**
+	 * Loads a Bitmap and optionally scales it to the actual screen width.
+	 * 
+	 * @param scale
+	 *            if true the bitmap is scaled to the current screen width, else
+	 *            it is loaded as it is.
+	 * @param ressourcePath
+	 *            as given in the game.xml to specify e.g. images
+	 * @return
+	 * @deprecated use {@link BitmapUtil#loadBitmap(String, int)} or
+	 *             {@link BitmapUtil#loadBitmap(String)}.
+	 */
+	public static Bitmap loadBitmap(String relativeResourcePath, boolean scale) {
+		String bitmapFilePath = getGameBitmapFile(relativeResourcePath);
+		Bitmap bitmap = readBitmapFromFile(bitmapFilePath,
+				GeoQuestApp.getContext());
+		if (scale)
+			bitmap = scaleBitmapToScreenWidth(bitmap);
+		return bitmap;
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath,
+			int requiredWidth) {
+		// set butmap file path:
+		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+
+		// get bitmap width:
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(bitmapFilePath, options);
+		int imageWidth = options.outWidth;
+
+		// calculate sample size and store it in options:
+		options.inSampleSize = Math.round((float) imageWidth
+				/ (float) requiredWidth);
+
+		// load scaled bitmap:
+		options.inJustDecodeBounds = false;
+		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
+		return Bitmap.createScaledBitmap(bitmap, requiredWidth,
+				Math.round((float) requiredWidth / 1.62f), false);
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath,
+			DisplayMetrics requiredMetrics) {
+		// set butmap file path:
+		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+
+		// get bitmap width:
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(bitmapFilePath, options);
+		int imageWidth = options.outWidth;
+
+		// calculate sample size and store it in options:
+		options.inSampleSize = Math.round((float) imageWidth
+				/ (float) requiredMetrics.widthPixels);
+		options.inScaled = true;
+		options.inDensity = requiredMetrics.densityDpi;
+		options.inTargetDensity = requiredMetrics.densityDpi;
+
+		// load scaled bitmap:
+		options.inJustDecodeBounds = false;
+		options.inPurgeable = true;
+		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
+		return bitmap;
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath) {
+		// get display metrics:
+		DisplayMetrics displayMetrics = GeoQuestApp.getInstance()
+				.getResources().getDisplayMetrics();
+		return loadBitmap(relativeResourcePath, displayMetrics);
+
+	}
+
+	private static String getGameBitmapFile(String ressourceFilePath) {
+		String resourcePath = GeoQuestApp.getRunningGameDir().getAbsolutePath()
+				+ "/" + ressourceFilePath;
+		resourcePath = completeImageFileSuffix(resourcePath);
+		File file = new File(resourcePath);
+		if (file.exists() && file.canRead())
+			return resourcePath;
+		else
+			throw new IllegalArgumentException(
+					"No ressource file found at path \"" + resourcePath + "\".");
+	}
+
+	private static Set<String> KNOWN_BITMAP_SUFFIXES = new HashSet<String>();
+	static {
+		KNOWN_BITMAP_SUFFIXES.add("png");
+		KNOWN_BITMAP_SUFFIXES.add("jpg");
+	};
+
+	private static String completeImageFileSuffix(String absolutePath) {
+		if (hasKnownImageSuffix(absolutePath))
+			return absolutePath;
+		else if (new File(absolutePath + ".png").canRead())
+			return absolutePath + ".png";
+		else if (new File(absolutePath + ".jpg").canRead())
+			return absolutePath + ".jpg";
+		else
+			throw new IllegalArgumentException(
+					"Invalid image path (not found): " + absolutePath);
+	}
+
+	private static boolean hasKnownImageSuffix(String path) {
+		int suffixStartingIndex = path.lastIndexOf('.');
+		if (suffixStartingIndex <= 0)
+			return false;
+		else {
+			String suffix = path.substring(suffixStartingIndex + 1)
+					.toLowerCase(Locale.US);
+			return KNOWN_BITMAP_SUFFIXES.contains(suffix);
+		}
+	}
 }

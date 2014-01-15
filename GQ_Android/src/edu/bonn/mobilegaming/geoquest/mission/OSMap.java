@@ -7,36 +7,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.osmdroid.api.IMapController;
-import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.MyLocationOverlay;
-import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.TilesOverlay;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
 
 import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
@@ -46,6 +33,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 /**
  * OpenStreetMap-based Map Navigation.
@@ -65,11 +53,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	static final private int ZOOM_TO_BOUNDING_BOX = FIRST_LOCAL_MENU_ID + 1;
 	static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
-	private MapView myMapView;
-	private MyLocationOverlay myLocationOverlay;
 	private TilesOverlay tilesOverlay;
-
-	private LinearLayout startMissionPanel;
 
 	/**
 	 * used by the android framework
@@ -92,14 +76,28 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.osmap);
 
-		// Setup OSM MapView
-		myMapView = (MapView) findViewById(R.id.osmapview);
-		myMapView.setBuiltInZoomControls(false);
-		myMapView.setMultiTouchControls(true);
+		// Setup Layout:
+		ui = UIFactory.getInstance().createUI(this);
+
+		initMapTileAccess();
+
+		mapHelper = new MapHelper(this);
+
+		initZoom();
+		initGPSMock();
+
+		mission.applyOnStartRules();
+	}
+
+	public MapHelper getMapHelper() {
+		return mapHelper;
+	}
+
+	private void initMapTileAccess() {
+		MapView mapView = (MapView) getMapView();
 		if (APIKey != null && CmStyleId != null) {
-			myMapView.setTileSource(new XYTileSource("cmMap", null, 0, 15, 256,
+			mapView.setTileSource(new XYTileSource("cmMap", null, 0, 15, 256,
 					".png", "http://tile.cloudmade.com/" + APIKey + "/"
 							+ CmStyleId + "/256/"));
 		}
@@ -107,8 +105,6 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		String localTilePath = GeoQuestApp.getRunningGameDir()
 				.getAbsolutePath() + "/customTiles/";
 		File tileFileSrc = new File(localTilePath + "customTiles.zip");
-		System.out.println(localTilePath);
-		System.out.println(tileFileSrc.getAbsolutePath());
 		if (tileFileSrc.exists()) {
 			File tileFileDest = new File(Environment
 					.getExternalStorageDirectory().getAbsolutePath()
@@ -132,35 +128,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
 			tilesOverlay = new TilesOverlay(tileProvider, this);
 			tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT);
 			tilesOverlay.setUseDataConnection(false);
-			myMapView.getOverlays().add(tilesOverlay);
+			mapView.getOverlays().add(tilesOverlay);
 		}
-		// myMapView.displayZoomControls(false);
-
-		mapHelper = new MapHelper(this);
-
-		initZoom();
-		initGPSMock();
-
-		// startMissionsList
-		startMissionPanel = (LinearLayout) findViewById(R.id.startMissionPanel);
-
-		
-		
-		// Players Location Overlay
-		myLocationOverlay = new MyLocationOverlay(this, myMapView);
-		myLocationOverlay.enableCompass(); // doesn't work in the emulator?
-		myLocationOverlay.enableMyLocation();
-		myLocationOverlay.setCompassCenter(60L,60L);
-		myMapView.getOverlays().add(myLocationOverlay);
-
-		GeoQuestApp.getInstance().setOSMap(myMapView);
-
-		// Show loading screen to Parse the Game XML File
-		// indirectly calls onCreateDialog() and initializes hotspots
-		showDialog(READXML_DIALOG);
-
-		mission.applyOnStartRules();
-
 	}
 
 	private void copyFile(File src, File dst) throws IOException {
@@ -184,8 +153,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		myLocationOverlay.disableCompass();
-		myLocationOverlay.disableMyLocation();
+		ui.disable();
 	}
 
 	/**
@@ -210,12 +178,12 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		myLocationOverlay.enableCompass();
-		myLocationOverlay.enableMyLocation();
-		mapHelper.setCenter();
+		ui.enable();
 	}
 
 	private void zoomToBoundingBox() {
+		MapView mapView = (MapView) getMapView();
+
 		// TODO check if good; evtl. filter inactive hotspots ...
 		ArrayList<GeoPoint> hotspotPoints = new ArrayList<GeoPoint>();
 		com.google.android.maps.GeoPoint curHotspotGP;
@@ -225,7 +193,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 					curHotspotGP.getLongitudeE6()));
 		}
 		BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
-		myMapView.zoomToBoundingBox(boundingBox);
+		mapView.zoomToBoundingBox(boundingBox);
 	}
 
 	/**
@@ -236,7 +204,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		super.onCreateOptionsMenu(menu);
 
 		menu.add(0, LOCATION_MOCKUP_SWITCH_ID, 0, R.string.map_menu_mockGPS);
-		menu.add(0, ZOOM_TO_BOUNDING_BOX, 0, R.string.map_menu_bounding_box);
+		if (getHotspots().size() > 0)
+			menu.add(0, ZOOM_TO_BOUNDING_BOX, 0, R.string.map_menu_bounding_box);
 		menu.add(0, CENTER_MAP_ON_CURRENT_LOCATION_ID, 0,
 				R.string.map_menu_centerMap);
 		return true;
@@ -248,7 +217,7 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.getItem(LOCATION_MOCKUP_SWITCH_ID - 1).setEnabled(
+		menu.getItem(LOCATION_MOCKUP_SWITCH_ID).setEnabled(
 				locationSource != null
 						&& LocationSource.canBeUsed(getApplicationContext()));
 		return true;
@@ -311,147 +280,9 @@ public class OSMap extends MapNavigation implements HotspotListener {
 	 */
 	public void onLeaveRange(HotspotOld h) {
 		Log.d(TAG, "Leave Hotspot with id: " + h.id);
-		// Find the Child, which equals the given hotspot:
-		int numButtons = startMissionPanel.getChildCount();
-		View childView = null;
-		for (int i = 0; i < numButtons; i++) {
-			if (startMissionPanel.getChildAt(i).getTag().equals(h)) {
-				childView = startMissionPanel.getChildAt(i);
-				break;
-			}
-		}
-		// Remove this child:
-		if (childView != null) {
-			startMissionPanel.removeView(childView);
-		}
-
-	}
-
-	static final int READXML_DIALOG = 0;
-	ProgressDialog readxmlDialog;
-	ReadxmlThread readxmlThread;
-	boolean readxml_completed = false;// true when xml is parsed completely.
-
-	// while false main thread may not
-	// access 'hotspots'
-
-	protected Dialog onCreateDialog(int id, Bundle b) {
-		switch (id) {
-		case READXML_DIALOG:
-			readxmlDialog = new ProgressDialog(this);
-			readxmlDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			readxmlDialog.setMessage(getString(R.string.map_loading));
-			readxmlThread = new ReadxmlThread(readxmlHandler);
-			readxmlThread.start();
-			return readxmlDialog;
-		default:
-			return null;
-		}
-	}
-
-	/**
-	 * Define the Handler that receives messages from the thread and update the
-	 * progressbar
-	 */
-	final Handler readxmlHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			int progress = msg.getData().getInt("progress");
-			int max = msg.getData().getInt("max");
-			boolean finish = msg.getData().getBoolean("finish");
-
-			if (progress != 0)
-				readxmlDialog.setProgress(progress);
-			if (max != 0)
-				readxmlDialog.setMax(max);
-
-			if (finish) {
-				// new hotspots were not added to myMapView.getOverlays();
-				// this would cause a crash in nonmain thread; so this is done
-				// here
-				List<Overlay> mapOverlays = myMapView.getOverlays();
-				for (Iterator<HotspotOld> iterator = getHotspots().iterator(); iterator
-						.hasNext();) {
-					HotspotOld hotspot = (HotspotOld) iterator.next();
-					mapOverlays.add(hotspot.getOSMOverlay());
-				}
-				// mapOverlays.addAll(hotspots);
-
-				dismissDialog(READXML_DIALOG);
-				readxml_completed = true;
-			}
-		}
-	};
-
-	/** Nested class that performs reading xml */
-	private class ReadxmlThread extends Thread {
-		Handler mHandler;
-
-		ReadxmlThread(Handler h) {
-			mHandler = h;
-		}
-
-		public void run() {
-
-			try {
-				readXML();
-			} catch (DocumentException e) {
-				e.printStackTrace();
-				Log.e("Error", "XML Error");
-			}
-
-			Message msg = mHandler.obtainMessage();
-			Bundle b = new Bundle();
-			b.putBoolean("finish", true);
-			msg.setData(b);
-			mHandler.sendMessage(msg);
-
-			if (locationSource != null)
-				locationSource.setMode(LocationSource.REAL_MODE);
-
-		}
-
-		/**
-		 * Gets the child Hotspots data from the XML file.
-		 */
-		@SuppressWarnings("unchecked")
-		private synchronized void readXML() throws DocumentException {
-			List<Element> list = mission.xmlMissionNode
-					.selectNodes("hotspots/hotspot");
-
-			int j = 0;
-			for (Iterator<Element> i = list.iterator(); i.hasNext();) {
-				Element hotspot = i.next();
-				try {
-					HotspotOld newHotspot = HotspotOld.create(mission, hotspot);
-					newHotspot.addHotspotListener(OSMap.this);
-					getHotspots().add(newHotspot);
-					// new hotspots are not added to myMapView.getOverlays();
-					// this would course a crash in nonmain thread;
-					// readxmlHandler will add them later
-				} catch (HotspotOld.IllegalHotspotNodeException exception) {
-					Log.e("MapOverview.readXML", exception.toString());
-				}
-
-				Message msg = mHandler.obtainMessage();
-				Bundle b = new Bundle();
-				b.putInt("progress", ++j);
-				b.putInt("max", list.size());
-				msg.setData(b);
-				mHandler.sendMessage(msg);
-			}
-		}
 	}
 
 	/** Intent used to return values to the parent mission */
 	protected Intent result;
 
-	@Override
-	public IMapView getMapView() {
-		return myMapView;
-	}
-
-	@Override
-	public IMapController getMapController() {
-		return myMapView.getController();
-	}
 }

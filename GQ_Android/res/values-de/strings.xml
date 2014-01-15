@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- DEUTSCH-SPRACHIGE STRING RESOURCEN -->
+
 <resources>
 
     <!-- Generic Values -->
-    <string name="xmlformat">5</string>
-    <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
+
+    <!-- INVENTORIES -->
+    <string name="default_inventory_name">Inventar</string>
 
     <!-- Start Activities -->
     <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
@@ -56,6 +59,7 @@
     <string name="historyMenu">Verlauf</string>
     <string name="reloadGamesMenu">Spiele neu laden</string>
     <string name="imprintMenu">Impressum</string>
+    <string name="inventoryMenu">Inventar</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
@@ -73,13 +77,13 @@
     <string name="external_mission_result_default">Von externer Mission zurück</string>
 
     <!-- ImageCapture MISSION -->
-    <string name="audiorecord_task_default">Eure Aufgabe: Nehmt ein Foto auf!</string>
+    <string name="imageCapture_task_default">Eure Aufgabe: Nehmt ein Foto auf!</string>
     <string name="imageCapture_UploadOK">OK, das Foto wird auf den Server geladen.</string>
     <string name="imageCapture_UploadERROR">Fehler beim Upload!.</string>
     <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Mache ein eindrucksvolles Foto ...</string>
     <string name="imageCapture_replyDone_default">OK, das Foto ist gespeichert.</string>
-    
+
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Karte wird geladen</string>
     <string name="map_menu_centerMap">Center Map</string>
@@ -111,7 +115,6 @@
     <string name="qrtagreading_taskdescription_default">Suche den QR Code und scanne ihn ein ...</string>
     <string name="qrtagreader_product_ifright">Toll, du hast den QR-Code gefunden!</string>
     <string name="qrtagreader_product_ifwrong">Das war leider der falsche QR-Code!</string>
-    <string name="qrtagreader_treasure_feedback">"@result@"</string>
 
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Antwort hier eingeben ...</string>
@@ -125,10 +128,10 @@
     <string name="videoplay_errordialog_message">Das Video kann nicht abgespielt werden.</string>
 
     <!-- HOTSPOTS -->
-    <string name="missing_hotspot_description">Für diesen Hotspot ist leider keine Beschriebung verfügbar.</string>
+    <string name="missing_hotspot_description">Für diesen Hotspot ist leider keine Beschreibung verfügbar.</string>
 
     <!-- PREFERENCES -->
-    <string name="preferencesTitle">Preferences</string>
+    <string name="preferencesTitle">Einstellungen</string>
 
     <!-- Password protected PREFERENCES -->
     <string name="pw_dialog_title">Passwort</string>
@@ -141,8 +144,6 @@
     <string name="pref_server_url_summary">Die URL des Spiele-Servers. Ändere diese nicht, außer du möchtest einen eigenen Server nutzen.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>
     <string name="pref_server_url_dialog_message">Ändere hier die URL des Spiele-Servers. Voreingestellt ist der Qeevee-Server. Ändere dies nur, wenn Du einen eigenen Server nutzen willst.</string>
-    <string name="geoquest_server_url">http://geoquest.qeevee.org</string>
-    <string name="geoquest_repolist_relpath">/repositories/repolist.php</string>
 
     <!-- Game startup PREFERENCES -->
     <string name="pref_cat_game_start">Spielstart</string>
@@ -204,6 +205,5 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
-    <string name="varDefaultUserID">0</string>
 
 </resources>
