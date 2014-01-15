@@ -1,6 +1,5 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osmdroid.api.IMapController;
@@ -29,9 +28,10 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 public abstract class MapNavigation extends GeoQuestMapActivity implements
 		HotspotListener {
 
+	protected MissionOrToolUI ui;
+
 	public MissionOrToolUI getUI() {
-		// TODO Auto-generated method stub
-		return null;
+		return ui;
 	}
 
 	public void onBlockingStateUpdated(boolean isBlocking) {
@@ -44,15 +44,29 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 		return false;
 	}
 
-	public abstract IMapView getMapView();
+	private IMapView mapView;
+	private IMapController mapController;
 
-	public abstract IMapController getMapController();
+	public IMapView getMapView() {
+		return mapView;
+	}
+
+	public void setMapView(IMapView mapView) {
+		this.mapView = mapView;
+	}
+
+	public IMapController getMapController() {
+		return this.mapController;
+	}
+
+	public void setMapController(IMapController mapController) {
+		this.mapController = mapController;
+	}
 
 	/**
 	 * list of hotspots, inited in readxml. main thread may not access this
 	 * until readxml_completed is true
 	 * */
-	private List<HotspotOld> hotspots = new ArrayList<HotspotOld>();
 	protected MapHelper mapHelper;
 	protected LocationManager myLocationManager;
 	protected Handler handler = new Handler();
@@ -75,14 +89,12 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 	}
 
 	private void initMission() {
-		Bundle extras = getIntent().getExtras();
-		String id = extras.getString("missionID");
 		mission = Mission.get(id);
 		mission.setStatus(Globals.STATUS_RUNNING);
 	}
 
 	public List<HotspotOld> getHotspots() {
-		return hotspots;
+		return HotspotOld.getListOfHotspots();
 	}
 
 	protected void initZoom() {

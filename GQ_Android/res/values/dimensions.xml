@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="button_padding">10dp</dimen>
+    <dimen name="button_stroke_width">5dp</dimen>
+    <dimen name="button_corner_radius">10dp</dimen>
+
+</resources>
