@@ -1,4 +1,6 @@
-package edu.bonn.mobilegaming.geoquest.ui.abstrakt;
+package edu.bonn.mobilegaming.geoquest.ui;
+
+import java.util.Locale;
 
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
@@ -17,6 +19,22 @@ import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
 import edu.bonn.mobilegaming.geoquest.mission.WebPage;
 import edu.bonn.mobilegaming.geoquest.mission.WebTech;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebPageUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebTechUI;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 public abstract class UIFactory {
@@ -43,7 +61,8 @@ public abstract class UIFactory {
 		Class<?> factoryClass = null;
 		try {
 			factoryClass = Class.forName(UIFactory.class.getPackage().getName()
-					+ "." + uistyle + UIFactory.class.getSimpleName());
+					+ "." + uistyle.toLowerCase(Locale.US) + "." + uistyle
+					+ UIFactory.class.getSimpleName());
 		} catch (ClassNotFoundException e) {
 			Log.e(TAG, "UIFactory class for style " + uistyle
 					+ " not found. Using Default instead.\n" + e.getMessage());
@@ -53,7 +72,7 @@ public abstract class UIFactory {
 	}
 
 	/**
-	 * This method is only used by test cases which override the uistyle with a
+	 * This method is only used by test cases which override the ui style with a
 	 * mocking test style.
 	 * 
 	 * @param factoryClass

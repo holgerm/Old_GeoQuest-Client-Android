@@ -9,6 +9,7 @@ public class NPCTalkUIMock extends NPCTalkUI {
 
 	public NPCTalkUIMock(NPCTalk activity) {
 		super(activity);
+		init();
 	}
 
 	@Override

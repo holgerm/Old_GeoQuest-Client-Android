@@ -47,7 +47,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		}
 	};
 
-	private CharSequence nextDialogButtonTextDefault;
 	private CharSequence mode;
 
 	/**
@@ -57,15 +56,9 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	public NPCTalkUIDefault(NPCTalk activity) {
 		super(activity);
 		setImage(getNPCTalk().getMissionAttribute("image"));
-		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
-				"nextdialogbuttontext", R.string.button_text_next));
 		this.mode = XMLUtilities.getStringAttribute("mode",
 				R.string.npctalk_mode_default, getMissionXML());
-	}
-
-	private void setNextDialogButtonText(
-			CharSequence nextDialogButtonTextDefault) {
-		this.nextDialogButtonTextDefault = nextDialogButtonTextDefault;
+		init();
 	}
 
 	@Override
@@ -130,10 +123,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			return;
 		dialogText.append(Html.fromHtml("<b>" + currentDialogItem.getSpeaker()
 				+ ": </b>"));
-	}
-
-	public CharSequence getNextDialogButtonTextDefault() {
-		return nextDialogButtonTextDefault;
 	}
 
 	private void refreshButton() {
