@@ -25,7 +25,6 @@ import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 import android.content.res.AssetManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -457,7 +456,8 @@ public class GameLoader {
 	public static boolean existsGameOnClient(String repoName, String gameName) {
 		// TODO: extend to check whether the game is complete (all referred
 		// resources available).
-		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/" + repoName);
+		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/"
+				+ repoName);
 		if (!repoDir.exists())
 			return false;
 		File gameDir = new File(repoDir, gameName);
