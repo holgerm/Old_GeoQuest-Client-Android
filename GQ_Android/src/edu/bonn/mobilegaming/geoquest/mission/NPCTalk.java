@@ -11,12 +11,14 @@ import android.os.Bundle;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TransitionItem;
+import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
+import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 /**
  * Just a talking NPC. The NPC has a Image and text is based on dialogItems. The
@@ -40,6 +42,8 @@ public class NPCTalk extends MissionActivity {
 
 	private int indexOfCurrentDialogItem;
 
+	private CharSequence nextDialogButtonTextDefault;
+
 	/**
 	 * Called by the android framework when the mission is created. Setups the
 	 * View and calls the readXML method to get the dialogItems. The dialog
@@ -54,8 +58,9 @@ public class NPCTalk extends MissionActivity {
 		dialogItemIterator = dialogItemList.iterator();
 		nrOfDialogItems = dialogItemList.size();
 		indexOfCurrentDialogItem = 0;
+		setNextDialogButtonText(getMissionAttribute("nextdialogbuttontext",
+				R.string.button_text_next));
 		ui = UIFactory.getInstance().createUI(this);
-		ui.init();
 	}
 
 	public void finishMission() {
@@ -151,9 +156,7 @@ public class NPCTalk extends MissionActivity {
 			// read nextdialogbuttontext:
 			Attribute a = (Attribute) xml
 					.selectSingleNode("@nextdialogbuttontext");
-			if (a != null) {
-				nextDialogButtonText = a.getText();
-			}
+			nextDialogButtonText = (a != null) ? a.getText() : null;
 
 			// read sound (might be an audiofile for listenig to the text):
 			a = (Attribute) xml.selectSingleNode("@sound");
@@ -168,7 +171,9 @@ public class NPCTalk extends MissionActivity {
 			else
 				blocking = true;
 
-			text = xml.getText().replaceAll("\\s+", " ").trim();
+			// text = xml.getText().replaceAll("\\s+", " ").trim();
+			text = XMLUtilities.getXMLContent(xml).replaceAll("\\s+", " ")
+					.trim();
 			text = StringTools.replaceVariables(text);
 			if (text.startsWith(" ")) {
 				text = text.substring(1);
@@ -195,7 +200,7 @@ public class NPCTalk extends MissionActivity {
 		/**
 		 * @return returns the number of words
 		 */
-		public int getNumParts() {
+		public int getNumberOfTextTokens() {
 			return textElements.length;
 		}
 
@@ -207,7 +212,7 @@ public class NPCTalk extends MissionActivity {
 		 * @return returns each word as a CharSquence or null of there is no
 		 *         word left.
 		 */
-		public CharSequence getNextPart() {
+		public CharSequence getNextTextToken() {
 			if (counter >= textElements.length)
 				return null;
 			else
@@ -218,4 +223,14 @@ public class NPCTalk extends MissionActivity {
 	public MissionOrToolUI getUI() {
 		return ui;
 	}
+
+	public CharSequence getNextDialogButtonTextDefault() {
+		return nextDialogButtonTextDefault;
+	}
+
+	private void setNextDialogButtonText(
+			CharSequence nextDialogButtonTextDefault) {
+		this.nextDialogButtonTextDefault = nextDialogButtonTextDefault;
+	}
+
 }

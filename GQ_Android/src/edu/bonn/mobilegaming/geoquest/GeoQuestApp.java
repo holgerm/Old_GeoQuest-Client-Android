@@ -55,6 +55,15 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	private MapView googleMap;
 	private boolean isInGame = false;
+	private boolean usingAutostart = false;
+
+	public boolean isUsingAutostart() {
+		return usingAutostart;
+	}
+
+	public void setUsingAutostart(boolean usesAutostart) {
+		this.usingAutostart = usesAutostart;
+	}
 
 	public void setGoogleMap(com.google.android.maps.MapView value) {
 		this.googleMap = value;
@@ -96,6 +105,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static GeoQuestApp getInstance() {
+		if (theApp == null)
+			Log.e(TAG, "GeoQuestApp instance accessed but not created yet!");
 		return theApp;
 	}
 
@@ -371,7 +382,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
 		// boolean result = loadStaticRepoDataFromClient(handler);
-		boolean result = GameLoader.loadGameFromAssets();
+		boolean result = GameLoader.loadIncludedQuests();
 		result |= loadRepoDataFromClient(handler);
 
 		if (handler != null)
@@ -655,6 +666,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		setInGame(false);
 		setRunningGameDir(null);
 		cleanMediaPlayer();
+
+		if (isUsingAutostart())
+			terminateApp();
 	}
 
 	/**

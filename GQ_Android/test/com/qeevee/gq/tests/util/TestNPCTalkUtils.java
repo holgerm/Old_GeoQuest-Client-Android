@@ -24,8 +24,8 @@ public class TestNPCTalkUtils {
 							   "currItem");
 	timer = (CountDownTimer) getFieldValue(npcTalk,
 					       "myCountDownTimer");
-	for (int i = 0; i < dialogItem.getNumParts(); i++) {
-	    timer.onTick(100l * (dialogItem.getNumParts() - (i + 1)));
+	for (int i = 0; i < dialogItem.getNumberOfTextTokens(); i++) {
+	    timer.onTick(100l * (dialogItem.getNumberOfTextTokens() - (i + 1)));
 	}
 	timer.onFinish();
     }

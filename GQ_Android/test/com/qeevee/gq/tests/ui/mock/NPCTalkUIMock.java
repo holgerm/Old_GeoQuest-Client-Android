@@ -9,6 +9,7 @@ public class NPCTalkUIMock extends NPCTalkUI {
 
 	public NPCTalkUIMock(NPCTalk activity) {
 		super(activity);
+		init();
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class NPCTalkUIMock extends NPCTalkUI {
 	}
 
 	@Override
-	public View createView() {
+	public View createContentView() {
 		// TODO Auto-generated method stub
 		return null;
 	}
