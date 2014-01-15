@@ -335,7 +335,7 @@ public class HotspotOld {
 			this.setVisible(false);
 		}
 
-		setActive("true".equals(XMLUtilities.getAttribute("initialActivity",
+		setActive("true".equals(XMLUtilities.getStringAttribute("initialActivity",
 				R.string.hotspot_default_activity, _hotspotNode)));
 
 		// Retrieve name attribute:

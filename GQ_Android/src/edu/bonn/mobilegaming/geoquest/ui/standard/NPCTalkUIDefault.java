@@ -1,7 +1,6 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.GeoQuestUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 public class NPCTalkUIDefault extends NPCTalkUI {
@@ -47,35 +47,33 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		}
 	};
 
-	private CharSequence nextDialogButtonTextDefault;
 	private CharSequence mode;
 
+	/**
+	 * @see GeoQuestUI#GeoQuestUI(android.app.Activity)
+	 * @param activity
+	 */
 	public NPCTalkUIDefault(NPCTalk activity) {
 		super(activity);
 		setImage(getNPCTalk().getMissionAttribute("image"));
-		setNextDialogButtonText(getNPCTalk().getMissionAttribute(
-				"nextdialogbuttontext", R.string.button_text_next));
-		this.mode = XMLUtilities.getAttribute("mode",
+		this.mode = XMLUtilities.getStringAttribute("mode",
 				R.string.npctalk_mode_default, getMissionXML());
-	}
-
-	private void setNextDialogButtonText(
-			CharSequence nextDialogButtonTextDefault) {
-		this.nextDialogButtonTextDefault = nextDialogButtonTextDefault;
+		init();
 	}
 
 	@Override
 	public View createContentView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 		contentView = inflater.inflate(R.layout.m_default_npctalk, null);
 		outerView = (View) contentView.findViewById(R.id.outerview);
 		charImage = (ZoomImageView) contentView.findViewById(R.id.npcimage);
 		button = (Button) contentView.findViewById(R.id.proceedButton);
 		dialogText = (TextView) contentView.findViewById(R.id.npctext);
-		dialogText.setTextColor(Color.WHITE);
-		scrollView = (ScrollView) contentView.findViewById(R.id.npc_scroll_view);
+		dialogText.setTextSize(getTextsize());
+		dialogText.setTextColor(getTextColor());
+		scrollView = (ScrollView) contentView
+				.findViewById(R.id.npc_scroll_view);
 		return contentView;
 	}
 
@@ -125,10 +123,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			return;
 		dialogText.append(Html.fromHtml("<b>" + currentDialogItem.getSpeaker()
 				+ ": </b>"));
-	}
-
-	public CharSequence getNextDialogButtonTextDefault() {
-		return nextDialogButtonTextDefault;
 	}
 
 	private void refreshButton() {

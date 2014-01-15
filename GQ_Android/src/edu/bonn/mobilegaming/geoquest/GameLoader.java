@@ -25,14 +25,13 @@ import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 import android.content.res.AssetManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class GameLoader {
 
@@ -457,7 +456,8 @@ public class GameLoader {
 	public static boolean existsGameOnClient(String repoName, String gameName) {
 		// TODO: extend to check whether the game is complete (all referred
 		// resources available).
-		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/" + repoName);
+		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/"
+				+ repoName);
 		if (!repoDir.exists())
 			return false;
 		File gameDir = new File(repoDir, gameName);

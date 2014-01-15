@@ -147,11 +147,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	public CharSequence getMissionAttribute(String attributeName,
 			int defaultAsResourceID, String... alternativeAttributeNames) {
 		CharSequence result = null;
-		result = XMLUtilities.getAttribute(attributeName, defaultAsResourceID,
+		result = XMLUtilities.getStringAttribute(attributeName, defaultAsResourceID,
 				mission.xmlMissionNode);
 		int i = 0;
 		while (result == null && alternativeAttributeNames.length > i) {
-			result = XMLUtilities.getAttribute(alternativeAttributeNames[i],
+			result = XMLUtilities.getStringAttribute(alternativeAttributeNames[i],
 					defaultAsResourceID, mission.xmlMissionNode);
 			i++;
 		}

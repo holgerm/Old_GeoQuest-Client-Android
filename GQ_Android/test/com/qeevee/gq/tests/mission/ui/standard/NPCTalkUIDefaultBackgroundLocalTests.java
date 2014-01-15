@@ -22,9 +22,9 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @RunWith(GQTestRunner.class)
-public class NPCTalkUIDefaultBackgroundTests {
+public class NPCTalkUIDefaultBackgroundLocalTests {
 
-	final private String GAME_NAME = "NPCTalk/BackgroundAttributeReadingTest";
+	final private String GAME_NAME = "NPCTalk/LocalBackgroundTest";
 	private NPCTalk npcTalk;
 	MissionUI ui;
 	private View ov;
@@ -34,9 +34,9 @@ public class NPCTalkUIDefaultBackgroundTests {
 		// GIVEN:
 
 		// WHEN:
-		initTestMission("WithDefaultBackground");
+		initTestMission("WithoutBackground");
 
-		// THEN:
+		// THEN: 
 		shouldNotShowBackground();
 	}
 
@@ -45,18 +45,18 @@ public class NPCTalkUIDefaultBackgroundTests {
 		// GIVEN:
 
 		// WHEN:
-		initTestMission("WithBackgroundImage");
+		initTestMission("WithLocalBackgroundImage");
 
 		// THEN:
 		shouldShowBackground("drawable/background.png");
 	}
 
-	@Test
+	@Test 
 	public void withBackgroundColor() {
 		// GIVEN:
 
 		// WHEN:
-		initTestMission("WithBackgroundColor");
+		initTestMission("WithLocalBackgroundColor");
 
 		// THEN:
 		shouldShowBackgroundColor("#FF07c95f");
