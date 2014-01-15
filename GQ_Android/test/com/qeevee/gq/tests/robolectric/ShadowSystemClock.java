@@ -11,16 +11,16 @@ import com.xtremelabs.robolectric.internal.Implements;
 
 @Implements(SystemClock.class)
 public class ShadowSystemClock {
-	private static long mockTime = 0;
+    private static long mockTime = 0;
 
-	@Implementation
-	public static void setCurrentTimeMillis(long milliseconds) {
-		mockTime = milliseconds;
-	}
+    @Implementation
+    public static void setCurrentTimeMillis(long milliseconds) {
+	mockTime = milliseconds;
+    }
 
-	@Implementation
-	public static long elapsedRealtime() {
-		return mockTime;
-	}
+    @Implementation
+    public static long elapsedRealtime() {
+	return mockTime;
+    }
 
 }

@@ -57,12 +57,10 @@ public class MapHelper {
 
 	public void setCenter() {
 		Location lastLoc = locationListener.getLastLocation();
-		if (lastLoc != null){
+		if (lastLoc != null)
 			mapController.setCenter(location2GP(locationListener
 					.getLastLocation()));
-			mapController.animateTo(location2GP(locationListener
-					.getLastLocation()));
-		} else {
+		else {
 			List<HotspotOld> hotspots = this.mapMission.getHotspots();
 			if (hotspots.size() > 0) {
 				com.google.android.maps.GeoPoint firstAGP = hotspots.get(0)

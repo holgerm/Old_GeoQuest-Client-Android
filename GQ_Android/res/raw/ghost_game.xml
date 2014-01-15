@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<game name="adventure now"> 
+  <mission type="StartScreen" id="0"> 
+    <mission type="MapOverview" id="1"> 
+      <hotspots> 
+        <hotspot id="ghost_hotspot" latitude="50.751662616037464" longitude="7.0961594581604" radius="500" invisible="false"> 
+          <img src="digitalgeisthotspot.png"/>  
+          <missionRef id="2"/> 
+        </hotspot>  
+        <hotspot latitude="50.75227352760935" longitude="7.097940444946289" invisible="false" radius="35"> 
+          <img src="portal.png"/>  
+          <missionRef id="3"/> 
+        </hotspot>  
+        <hotspot latitude="50.75163546422699" longitude="7.0961809158325195" invisible="false" radius="25">
+          <img src="qanda.png"/>
+          <missionRef id="8"/>
+        </hotspot>
+        <hotspot latitude="50.75194770909656" longitude="7.096052169799805" invisible="false" radius="10">
+          <img src="qanda.png"/>
+          <missionRef id="7"/>
+        </hotspot>
+      </hotspots>  
+      <mission type="NPCTalk" id="2" charimage="digitalgeist.png" name="Introduction"> 
+        <dialogitem speaker="100011">Hello, my name is 100011. I am a digital ghost and I need your help.</dialogitem>  
+        <dialogitem speaker="You">What's the matter?</dialogitem>  
+        <dialogitem speaker="100011">The evil computer scientists from the ROOTS research group have kidnapped me and now I have to solve the halting problem by running through endless loops all day long.</dialogitem>  
+        <dialogitem speaker="You">That's not half bad.</dialogitem>  
+        <dialogitem speaker="100011">I really need your help because it is driving me mad. Luckily in the last iteration I parsed something called reality which might help me to escape. You can help me in getting more information about this thing. I need to connect the digital dimension with this reality thing.</dialogitem>  
+        <dialogitem speaker="You">I'm at a loss what to do.</dialogitem>  
+        <dialogitem speaker="100011">There are Icons on your map, if you go to them you can get the information I need. Finally when you have collected all the information I can open an interdimensional portal to this reality thing and I will be free again. Will you help me?</dialogitem>  
+        <dialogitem speaker="You">Yes, I want to help you</dialogitem>  
+        <dialogitem speaker="100011">Thank you so much. Please keep in mind that the computer scientists are evil. If you enter the university buildings they will kidnap you too. Good luck!</dialogitem> 
+      </mission>  
+      <mission type="NPCTalk" id="5" charimage="digitalgeist.png" name="Talk with the ghost"> 
+        <dialogitem speaker="You">I have brought you all the needed information, can you now escape?</dialogitem>  
+        <dialogitem speaker="100011">Thank you for your help. But it is getting worse and worse. The evil computer scientists from the ROOTS research group threatened me with shutting me down, if i won't solve the problem today. I want out! You have brought me enough information about the so called 'reality' that i might find the way from this side. But you must open a portal from the other side too, please!</dialogitem>  
+        <dialogitem speaker="You">A portal? How can i open a portal?</dialogitem>  
+        <dialogitem speaker="100011">Find a wide open space on the grass. There you must connect parts from the computer science world with the reality.</dialogitem>  
+        <dialogitem speaker="You">ok, i do what i can.</dialogitem>  
+        <dialogitem speaker="100011">Thank you. I hope we will meet together soon.</dialogitem>  
+        <!-- Requires both QA-Missions -->  
+        <requires id="7"/>  
+        <requires id="8"/> 
+      </mission>  
+      <mission type="NPCTalk" id="6" charimage="digitalgeist.png" name="Talk with the ghost"> 
+        <dialogitem speaker="100011">Free at last! Free at last! Thank you, i am free at last!</dialogitem>  
+        <dialogitem speaker="You">It was a pleasure to help you</dialogitem>  
+        <dialogitem speaker="100011">Thank you again, i wish you a lot of fun with your ongoing studies. And have no fear not all computer scientists are evil.</dialogitem>  
+        <dialogitem speaker="Narrator">[The Ghost disappears]</dialogitem>  
+        <!-- Requires Memory Mission -->  
+        <requires id="3"/> 
+      </mission>  
+      <mission type="QuestionAndAnswer" name="Information acquisition" id="7" questions="1" correctAnswersNeeded="1"> 
+        <intro>There is a high building next to the building I am trappped in. You can see it from the location you stand right now.</intro>  
+        <question> 
+          <question>How many floors does the building have?</question>  
+          <answer correct="1">11</answer>  
+          <answer>7</answer>  
+          <answer>1</answer> 
+        </question>  
+        <exit>The information acquisition is over.</exit>  
+        <!-- Requires first talk with the ghost -->  
+        <requires id="2"/>  
+        <!-- Now the second talk with the ghost -->  
+        <replaceAfter hotspot="ghost_hotspot" mission="5"/> 
+      </mission>  
+      <mission type="QuestionAndAnswer" name="Information acquisition" id="8" questions="1" correctAnswersNeeded="1"> 
+        <intro>You are at a bus stop.</intro>  
+        <question> 
+          <question>Which bus lines depart at this station?</question>  
+          <answer>550, 610, 638</answer>  
+          <answer correct="1">551, 601, 600</answer>  
+          <answer>600, 602</answer> 
+        </question>  
+        <exit>The information acquisition is over.</exit>  
+        <!-- Requires first talk with the ghost -->  
+        <requires id="2"/>  
+        <!-- Now the second talk with the ghost -->  
+        <replaceAfter hotspot="ghost_hotspot" mission="5"/> 
+      </mission>  
+      <mission type="MemoryMission" id="3" name="Melt reality and computer science..."> 
+        <!-- Requires second talk with the ghost -->  
+        <requires id="5"/>  
+        <!-- Now the third talk with the ghost -->  
+        <replaceAfter hotspot="ghost_hotspot" mission="6"/>  
+        <pairs> 
+          <pair> 
+            <img src="baum_info.png"/>  
+            <img src="baum_real.png"/> 
+          </pair>  
+          <pair> 
+            <img src="graf.png"/>  
+            <img src="graph.png"/> 
+          </pair>  
+          <pair> 
+            <img src="knoten_real.png"/>  
+            <img src="knoten_info.png"/> 
+          </pair>  
+          <pair> 
+            <img src="baum_real.gif"/>  
+            <img src="baum_info.png"/> 
+          </pair> 
+        </pairs>  
+        <mission type="ShowCard" id="4"/>  
+        <hotspots> 
+          <hotspot latitude="50.75240928465367" longitude="7.098197937011719" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot> 
+          <hotspot latitude="50.75257219258715" longitude="7.097961902618408" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.75200201233951" longitude="7.09791898727417" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.75245001169021" longitude="7.097532749176025" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.75266722195318" longitude="7.097296714782715" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.752219224681376" longitude="7.09841251373291" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.75220564893955" longitude="7.097768783569336" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+          <hotspot latitude="50.75283012898896" longitude="7.0978546142578125" invisible="false" radius="8"> 
+            <img src="question_mark.gif"/>  
+            <missionRef id="4"/> 
+          </hotspot>  
+        </hotspots> 
+      </mission> 
+    </mission> 
+  </mission> 
+</game>

@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -22,7 +21,6 @@ import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class WiFiTag {
 
 	public boolean write2Tag(WiFiTagModel model, Tag tag)

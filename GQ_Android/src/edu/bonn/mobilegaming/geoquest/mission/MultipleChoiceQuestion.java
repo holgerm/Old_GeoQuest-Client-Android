@@ -20,6 +20,7 @@ import com.qeevee.gq.history.TextType;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.R.id;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
@@ -120,7 +121,7 @@ public class MultipleChoiceQuestion extends Question {
 
 	private void initContentView() {
 		setContentView(R.layout.multiplechoice);
-		outerView = findViewById(R.id.outerview);
+		outerView = findViewById(id.outerview);
 		mcTextView = (TextView) findViewById(R.id.mcTextView);
 		mcButtonPanel = (LinearLayout) findViewById(R.id.mcButtonPanel);
 		// prefab neccessary buttons:
@@ -156,11 +157,11 @@ public class MultipleChoiceQuestion extends Question {
 
 	@SuppressWarnings("unchecked")
 	private void initQuestion() {
-		questionText = mission.xmlMissionNode
-				.selectSingleNode(".//questiontext").getText()
+		Element xmlQuestion = (Element) mission.xmlMissionNode
+				.selectSingleNode("./question");
+		questionText = xmlQuestion.selectSingleNode("./questiontext").getText()
 				.replaceAll("\\s+", " ").trim();
-		List<Element> xmlAnswers = mission.xmlMissionNode
-				.selectNodes(".//answer");
+		List<Element> xmlAnswers = xmlQuestion.selectNodes("./answer");
 		for (Iterator<Element> j = xmlAnswers.iterator(); j.hasNext();) {
 			Element xmlAnswer = j.next();
 			Attribute correct = (Attribute) xmlAnswer

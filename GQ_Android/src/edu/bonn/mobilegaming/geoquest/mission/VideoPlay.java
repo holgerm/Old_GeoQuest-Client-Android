@@ -2,14 +2,12 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.qeevee.gq.xml.XMLUtilities;
@@ -30,15 +28,8 @@ public class VideoPlay extends InteractiveMission {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		this.setContentView(R.layout.m_default_videoplay);
-		RelativeLayout outerView = (RelativeLayout) this
-				.findViewById(R.id.outerview);
-		long mm = Runtime.getRuntime().maxMemory();
-		// Drawable d = this.getResources()
-		// .getDrawable(R.drawable.background_test);
-		// outerView.setBackgroundDrawable(d);
-		videoView = (VideoView) this.findViewById(R.id.video);
-//		videoView.setPadding(10, 10, 10, 10);
+		this.setContentView(R.layout.videoplay);
+		videoView = (VideoView) this.findViewById(R.id.videoplay_videoview);
 		videoView.setVideoURI(initVideoUri());
 		MediaController mc = new MediaController(this);
 		mc.setPrevNextListeners(finishButtonClickListener, null);
@@ -119,7 +110,7 @@ public class VideoPlay extends InteractiveMission {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								finishMission();
+								finish(Globals.STATUS_SUCCEEDED);
 							}
 						}).show();
 		exitDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -147,15 +138,7 @@ public class VideoPlay extends InteractiveMission {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (videoView != null)
-			videoView.pause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (videoView != null)
-			videoView.resume();
+		videoView.pause();
 	}
 
 	@Override
@@ -167,14 +150,5 @@ public class VideoPlay extends InteractiveMission {
 	public MissionOrToolUI getUI() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	private void finishMission() {
-		if (videoView != null) {
-			videoView.stopPlayback();
-			videoView.destroyDrawingCache();
-			videoView = null;
-		}
-		finish(Globals.STATUS_SUCCEEDED);
 	}
 }

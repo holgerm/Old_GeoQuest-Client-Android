@@ -12,7 +12,6 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.Toast;
 
 import com.qeevee.gq.history.HistoryActivity;
-import com.qeevee.gq.inventory.InventoryActivity;
 import com.uni.bonn.nfc4mg.NFCEventManager;
 
 import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
@@ -115,17 +114,6 @@ public abstract class GeoQuestActivity extends Activity {
 						Intent historyActivity = new Intent(getBaseContext(),
 								HistoryActivity.class);
 						startActivity(historyActivity);
-						return true;
-					}
-
-				});
-		menuMaker.addMenuItem(MenuMaker.INVENTORY_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent inventoryActivity = new Intent(getBaseContext(),
-								InventoryActivity.class);
-						startActivity(inventoryActivity);
 						return true;
 					}
 

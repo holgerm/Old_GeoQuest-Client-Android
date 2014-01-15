@@ -14,6 +14,15 @@ import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
+/**
+ * Start and exit screen mission. The first mission to be started (gets the id
+ * zero). Shows the start screen countdown and after the countdown starts the
+ * next mission specified in the xml file. When all missions are over the start
+ * and exit screen mission is active again and nice looking firework is shown.
+ * 
+ * @author Krischan Udelhoven
+ * @author Folker Hoffmann
+ */
 public class StartAndExitScreen extends MissionActivity {
 
 	private ImageView imageView;
@@ -26,11 +35,11 @@ public class StartAndExitScreen extends MissionActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.m_default_startscreen);
+		setContentView(R.layout.start);
 
 		imageView = (ImageView) findViewById(R.id.startimage);
 
-		String duration = (String) XMLUtilities.getStringAttribute("duration",
+		String duration = (String) XMLUtilities.getAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
 		if (duration != null && duration.equals("interactive")) {
@@ -49,19 +58,13 @@ public class StartAndExitScreen extends MissionActivity {
 				durationLong = Long.parseLong(duration);
 			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 		}
-		setImage();
-		if (!endByTouch)
-			myCountDownTimer.start();
-	}
-
-	private void setImage() {
-		String imgsrc = (String) XMLUtilities.getStringAttribute("image",
+		String imgsrc = (String) XMLUtilities.getAttribute("image",
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
-			imageView
-					.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-							.getRoundedCornerBitmap(
-									BitmapUtil.loadBitmap(imgsrc), 15)));
+			imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(imgsrc, true)));
+		if (!endByTouch)
+			myCountDownTimer.start();
 	}
 
 	/**
@@ -77,7 +80,10 @@ public class StartAndExitScreen extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-		setImage();
+
+		String imgsrc = mission.xmlMissionNode.attributeValue("image");
+		imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+				.loadBitmap(imgsrc, true)));
 		if (!endByTouch)
 			myCountDownTimer.start();
 	}

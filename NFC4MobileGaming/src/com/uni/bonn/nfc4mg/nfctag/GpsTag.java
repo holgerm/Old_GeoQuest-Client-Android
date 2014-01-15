@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -22,7 +21,6 @@ import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class GpsTag {
 
 	public boolean write2Tag(GPSTagModel model, Tag tag)
@@ -43,12 +41,13 @@ public class GpsTag {
 		if (!id.startsWith(TagConstants.TAG_TYPE_GPS_PREFIX))
 			model.setId(TagConstants.TAG_TYPE_GPS_PREFIX + model.getId());
 
+
 		NdefRecord records[] = new NdefRecord[4];
 		records[0] = TextRecord.createRecord(model.getId());
 		records[1] = TextRecord.createRecord(model.getLatitude());
 		records[2] = TextRecord.createRecord(model.getLongitude());
 		records[3] = TextRecord.createRecord(model.getData());
-
+		
 		NdefMessage info_msg = new NdefMessage(records);
 		NfcReadWrite.writeToNfc(info_msg, tag);
 		return true;
@@ -59,14 +58,14 @@ public class GpsTag {
 
 		GPSTagModel model = new GPSTagModel();
 		NdefMessage msg = NfcReadWrite.readNfcData(tag);
-
-		if (null == msg) {
+		
+		if(null == msg){
 			throw new NfcTagException("Unable to interact with tag");
 		}
-
+		
 		NdefRecord records[] = msg.getRecords();
-
-		if (null != records && 4 == records.length) {
+		
+		if(null != records && 4 == records.length){
 			model.setId(TextRecord.parseNdefRecord(records[0]).getData());
 			model.setLatitude(TextRecord.parseNdefRecord(records[1]).getData());
 			model.setLongitude(TextRecord.parseNdefRecord(records[2]).getData());
