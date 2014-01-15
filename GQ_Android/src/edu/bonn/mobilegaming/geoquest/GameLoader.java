@@ -554,7 +554,7 @@ public class GameLoader {
 	 */
 	@SuppressWarnings("unchecked")
 	static private void readXML(Element document) throws DocumentException {
-		List<Element> list = document.selectNodes("hotspot");
+		List<Element> list = document.selectNodes("//hotspot");
 
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
