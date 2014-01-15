@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 import android.app.Activity;
@@ -405,5 +406,12 @@ public class Mission implements Serializable {
 		for (Element xmlRule : xmlRuleNodes) {
 			ruleList.add(Rule.createFromXMLElement(xmlRule));
 		}
+	}
+
+	public static Attribute getGlobalAttribute(String attributeName) {
+		if (documentRoot.attribute(attributeName) != null)
+			return documentRoot.attribute(attributeName);
+		else
+			return null;
 	}
 }

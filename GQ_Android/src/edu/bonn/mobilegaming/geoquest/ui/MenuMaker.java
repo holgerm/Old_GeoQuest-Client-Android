@@ -38,6 +38,7 @@ public class MenuMaker {
 	public static final int HISTORY_MENU_ID = 4;
 	public static final int RELOAD_GAMES_MENU_ID = 5;
 	public static final int IMPRINT_MENU_ID = 6;
+	public static final int INVENTORY_MENU_ID = 7;
 
 	private static SparseIntArray menuItemTextResources = new SparseIntArray();
 	private static SparseIntArray menuItemDrawables = new SparseIntArray();
@@ -75,6 +76,30 @@ public class MenuMaker {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								(Context) GeoQuestApp.getCurrentActivity());
 						builder.setTitle(R.string.imprintTitle);
+						builder.setPositiveButton(R.string.ok,
+								new OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.dismiss();
+									}
+								});
+						builder.setIcon(R.drawable.geoquest_appicon);
+						builder.setMessage(GeoQuestApp.getImprint()
+								.getCompleteText());
+						builder.show();
+						return false;
+					}
+
+				});
+		menuItemTextResources.put(INVENTORY_MENU_ID, R.string.inventoryMenu);
+		menuItemDrawables.put(INVENTORY_MENU_ID, R.drawable.icon_imprint); // TODO change
+		standardMenuItemClickListeners.put(INVENTORY_MENU_ID,
+				new OnMenuItemClickListener() {
+
+					public boolean onMenuItemClick(MenuItem item) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								(Context) GeoQuestApp.getCurrentActivity());
+						builder.setTitle(R.string.inventoryMenu);
 						builder.setPositiveButton(R.string.ok,
 								new OnClickListener() {
 									public void onClick(DialogInterface dialog,

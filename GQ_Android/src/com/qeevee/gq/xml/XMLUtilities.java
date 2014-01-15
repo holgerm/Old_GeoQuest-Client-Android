@@ -118,7 +118,7 @@ public class XMLUtilities {
 	 * @throws IllegalArgumentException
 	 *             if the attribute is necessary but not given in the game.xml
 	 */
-	public static CharSequence getAttribute(String attributeName,
+	public static CharSequence getStringAttribute(String attributeName,
 			int defaultAsResourceID, Element xmlElement) {
 		if (xmlElement == null
 				|| xmlElement.attributeValue(attributeName) == null)

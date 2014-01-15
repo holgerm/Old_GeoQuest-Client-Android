@@ -35,7 +35,7 @@ import com.qeevee.ui.BitmapUtil;
  * @author Folker Hoffmann
  * 
  */
-public class HotspotOld /* extends Overlay */{
+public class HotspotOld {
 
 	/**
 	 * Hashtable mapping id to Hotspot
@@ -44,6 +44,12 @@ public class HotspotOld /* extends Overlay */{
 
 	public static Set<Entry<String, HotspotOld>> getAllHotspots() {
 		return allHotspots.entrySet();
+	}
+
+	public static List<HotspotOld> getListOfHotspots() {
+		List<HotspotOld> list = new ArrayList<HotspotOld>();
+		list.addAll(allHotspots.values());
+		return list;
 	}
 
 	/**
@@ -184,6 +190,10 @@ public class HotspotOld /* extends Overlay */{
 
 	/** location of the hotspot */
 	private GeoPoint geoPoint;
+	public GeoPoint getGeoPoint() {
+		return geoPoint;
+	}
+
 	/** icon of the hotspot on the map */
 	private Bitmap bitmap;
 	/** should the interaction circle be drawn or not? */
@@ -301,9 +311,9 @@ public class HotspotOld /* extends Overlay */{
 			longitude = Double.valueOf(longitudeA.getText()) * 1E6;
 
 		}
-		GeoPoint point = new GeoPoint((int) (latitude), (int) (longitude));
+		geoPoint = new GeoPoint((int) (latitude), (int) (longitude));
 		Variables.setValue(Variables.HOTSPOT_PREFIX + id
-				+ Variables.LOCATION_SUFFIX, point);
+				+ Variables.LOCATION_SUFFIX, geoPoint);
 
 		// image
 		String imgsrc = _hotspotNode.attributeValue("img");
@@ -325,7 +335,7 @@ public class HotspotOld /* extends Overlay */{
 			this.setVisible(false);
 		}
 
-		setActive("true".equals(XMLUtilities.getAttribute("initialActivity",
+		setActive("true".equals(XMLUtilities.getStringAttribute("initialActivity",
 				R.string.hotspot_default_activity, _hotspotNode)));
 
 		// Retrieve name attribute:
@@ -350,13 +360,6 @@ public class HotspotOld /* extends Overlay */{
 
 		createRules(_hotspotNode);
 
-		geoPoint = point;
-		new org.osmdroid.google.wrapper.GeoPoint(point);
-
-		// TODO: use an animation
-		// bitmapActive =
-		// BitmapFactory.decodeResource(parentMission.getResources(),
-		// R.drawable.icon_active);
 		drawCircle = false;
 		isInRange = false;
 		// TODO: add features like name, description, icon to use in Augmented

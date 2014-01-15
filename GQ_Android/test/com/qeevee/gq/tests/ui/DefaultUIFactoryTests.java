@@ -19,7 +19,7 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
 
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @Ignore
@@ -68,9 +68,8 @@ public class DefaultUIFactoryTests {
 
 	// === HELPER METHODS FOLLOW =============================================
 
-	private void shouldUseUI(Class<? extends UIFactory> expectedFactoryClass) {
+	public static void shouldUseUI(Class<? extends UIFactory> expectedFactoryClass) {
 		assertEquals(expectedFactoryClass, UIFactory.getInstance().getClass());
-
 	}
 
 	final static boolean CONCRETE = true;

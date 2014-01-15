@@ -23,6 +23,7 @@ import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
 public abstract class MissionActivity extends GeoQuestActivity implements
 		MissionOrToolActivity {
 	protected Mission mission;
+	protected String id;
 
 	public Mission getMission() {
 		return mission;
@@ -104,7 +105,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 
 		// get extras
 		Bundle extras = getIntent().getExtras();
-		String id = extras.getString("missionID");
+		id = extras.getString("missionID");
 		mission = Mission.get(id);
 
 		contextManager = GeoQuestActivity.contextManager;
@@ -146,11 +147,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	public CharSequence getMissionAttribute(String attributeName,
 			int defaultAsResourceID, String... alternativeAttributeNames) {
 		CharSequence result = null;
-		result = XMLUtilities.getAttribute(attributeName, defaultAsResourceID,
+		result = XMLUtilities.getStringAttribute(attributeName, defaultAsResourceID,
 				mission.xmlMissionNode);
 		int i = 0;
 		while (result == null && alternativeAttributeNames.length > i) {
-			result = XMLUtilities.getAttribute(alternativeAttributeNames[i],
+			result = XMLUtilities.getStringAttribute(alternativeAttributeNames[i],
 					defaultAsResourceID, mission.xmlMissionNode);
 			i++;
 		}
@@ -171,7 +172,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	}
 
 	public Element getXML() {
-		return mission.xmlMissionNode;
+		return Mission.get(id).xmlMissionNode;
 	}
 
 	// TODO Blocking stuff should be moved to UI class:
