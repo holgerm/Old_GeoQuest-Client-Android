@@ -190,17 +190,17 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 	}
 
 	@Override
-	public View createContentView() {
+	public View createView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		contentView = inflater.inflate(R.layout.nfctagmission, null);
+		view = inflater.inflate(R.layout.nfctagmission, null);
 
-		info = (TextView) contentView.findViewById(R.id.info);
-		nfcConnStatus = (TextView) contentView.findViewById(R.id.nfcConnStatus);
-		button = (Button) contentView.findViewById(R.id.write);
+		info = (TextView) view.findViewById(R.id.info);
+		nfcConnStatus = (TextView) view.findViewById(R.id.nfcConnStatus);
+		button = (Button) view.findViewById(R.id.write);
 		preTagWriteView("", "Touch NFC Tag to begin...", false);
-		return contentView;
+		return view;
 	}
 
 	/**

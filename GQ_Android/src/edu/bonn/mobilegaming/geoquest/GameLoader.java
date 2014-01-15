@@ -25,17 +25,18 @@ import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 import android.content.res.AssetManager;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class GameLoader {
 
-	private static final String ASSET_DIR_FOR_INCLUDED_QUESTS = "included";
+	private static final String ASSET_DIR_4_PREDEFINED_QUESTS = "included";
 
 	static final String TAG = "GameLoader";
 
@@ -230,7 +231,7 @@ public class GameLoader {
 		// TODO delete local zipfile
 	}
 
-	private static FileOutputStream createFileWriter(File newGameZipFile) {
+	public static FileOutputStream createFileWriter(File newGameZipFile) {
 		FileOutputStream fOutLocal = null;
 		try {
 			fOutLocal = new FileOutputStream(newGameZipFile);
@@ -293,9 +294,6 @@ public class GameLoader {
 						.attributeValue("name"));
 				firstMission.startMission();
 			}
-
-			readXML(Mission.documentRoot);
-
 		} catch (Exception e) {
 			Log.e(TAG, "DocumentException while parsing game: " + gameXMLFile);
 			if (handler != null) {
@@ -456,8 +454,8 @@ public class GameLoader {
 	public static boolean existsGameOnClient(String repoName, String gameName) {
 		// TODO: extend to check whether the game is complete (all referred
 		// resources available).
-		File repoDir = new File(GameDataManager.getLocalRepoDir(null) + "/"
-				+ repoName);
+		File repoDir = new File(Environment.getExternalStorageDirectory(),
+				GameDataManager.getLocalRepoDir(null) + "/" + repoName);
 		if (!repoDir.exists())
 			return false;
 		File gameDir = new File(repoDir, gameName);
@@ -467,19 +465,61 @@ public class GameLoader {
 		return true;
 	}
 
-	private static AssetManager assetManager;
-
-	public static boolean loadIncludedQuests() {
-		assetManager = GeoQuestApp.getContext().getAssets();
+	public static boolean loadGameFromAssets() {
+		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
 		String[] assetFiles = null;
+		InputStream is;
 		try {
-			assetFiles = assetManager.list(ASSET_DIR_FOR_INCLUDED_QUESTS);
+			assetFiles = assetManager.list(ASSET_DIR_4_PREDEFINED_QUESTS);
 			if (assetFiles == null || assetFiles.length < 1)
 				return false;
 			else {
 				for (int i = 0; i < assetFiles.length; i++) {
-					loadGameFromAssets(ASSET_DIR_FOR_INCLUDED_QUESTS,
-							assetFiles[i]);
+					// AssetFileDescriptor afd =
+					// assetManager.openFd(assetFiles[0]);
+					// TODO get length and show progress bar
+					is = new BufferedInputStream(
+							assetManager.open(ASSET_DIR_4_PREDEFINED_QUESTS
+									+ File.separator + assetFiles[i],
+									AssetManager.ACCESS_BUFFER), BYTE_SIZE);
+					File newRepoFile = GameDataManager
+							.getLocalRepoDir(GeoQuestApp.getContext().getText(
+									R.string.predefinedRepoName));
+					if (!newRepoFile.exists()) {
+						newRepoFile.mkdirs();
+					}
+					File newGameZipFile = new File(newRepoFile, assetFiles[i]);
+					FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
+
+					// TODO: care about lenght == -1, i.e. if info not
+					// available,
+					// send
+					// other msg to handler.
+					// Message msg = handler.obtainMessage();
+					// msg.what =
+					// GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
+					// msg.arg1 = lenght / BYTE_SIZE;
+					// msg.arg2 = R.string.start_downloadGame;
+					// handler.sendMessage(msg);
+
+					byte by[] = new byte[BYTE_SIZE];
+					int c;
+
+					while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
+						// TODO check access to SDCard!
+						fOutLocal.write(by, 0, c);
+						// trigger progress bar to proceed:
+						// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
+					}
+
+					is.close();
+					fOutLocal.close();
+
+					Log.d(TAG, "completed extraction: '" + assetFiles[0]);
+					// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
+
+					GameLoader.unzipGameArchive(newGameZipFile);
+
 				}
 			}
 		} catch (IOException e) {
@@ -487,83 +527,6 @@ public class GameLoader {
 			return false;
 		}
 		return true;
-	}
-
-	private static void loadGameFromAssets(String dirName, String fileName) {
-		InputStream is;
-		try {
-			// AssetFileDescriptor afd =
-			// assetManager.openFd(assetFiles[0]);
-			// TODO get length and show progress bar
-			is = new BufferedInputStream(assetManager.open(dirName
-					+ File.separator + fileName, AssetManager.ACCESS_BUFFER),
-					BYTE_SIZE);
-			File newRepoFile = GameDataManager.getLocalRepoDir(GeoQuestApp
-					.getContext().getText(R.string.predefinedRepoName));
-			if (!newRepoFile.exists()) {
-				newRepoFile.mkdirs();
-			}
-			File newGameZipFile = new File(newRepoFile, fileName);
-			FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
-
-			// TODO: care about lenght == -1, i.e. if info not
-			// available,
-			// send
-			// other msg to handler.
-			// Message msg = handler.obtainMessage();
-			// msg.what =
-			// GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
-			// msg.arg1 = lenght / BYTE_SIZE;
-			// msg.arg2 = R.string.start_downloadGame;
-			// handler.sendMessage(msg);
-
-			byte by[] = new byte[BYTE_SIZE];
-			int c;
-
-			try {
-				is.available();
-			} catch (IOException e) {
-				fOutLocal.close();
-				Log.w(TAG, "could not read from assets file)");
-				return;
-
-			}
-
-			while ((c = is.read(by, 0, BYTE_SIZE)) != -1) {
-				// TODO check access to SDCard!
-				fOutLocal.write(by, 0, c);
-				// trigger progress bar to proceed:
-				// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
-			}
-
-			is.close();
-			fOutLocal.close();
-			GameLoader.unzipGameArchive(newGameZipFile);
-
-			Log.d(TAG, "completed extraction: '" + dirName + File.separator
-					+ fileName);
-			// handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Gets the Hotspots data from the XML file.
-	 */
-	@SuppressWarnings("unchecked")
-	static private void readXML(Element document) throws DocumentException {
-		List<Element> list = document.selectNodes("hotspot");
-
-		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
-			Element hotspot = i.next();
-			try {
-				HotspotOld.create(null, hotspot);
-			} catch (HotspotOld.IllegalHotspotNodeException exception) {
-				Log.e(TAG, exception.toString());
-			}
-		}
 	}
 
 }

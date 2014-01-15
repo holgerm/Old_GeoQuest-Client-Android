@@ -34,13 +34,13 @@ public class NFCTagReadingProductUIDefault extends NFCTagReadingProductUI {
 	}
 
 	@Override
-	public View createContentView() {
+	public View createView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		contentView = inflater.inflate(R.layout.nfc, null);
-		taskDescription = (TextView) contentView.findViewById(R.id.taskDescription);
-		return contentView;
+		view = inflater.inflate(R.layout.nfc, null);
+		taskDescription = (TextView) view.findViewById(R.id.taskDescription);
+		return view;
 	}
 
 	@Override

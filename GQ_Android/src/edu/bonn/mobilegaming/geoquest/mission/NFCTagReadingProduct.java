@@ -22,9 +22,9 @@ import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class NFCTagReadingProduct extends InteractiveMission implements
 		ParseTagListener, NeedsNFCCapability {

@@ -8,7 +8,6 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
@@ -16,7 +15,6 @@ import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
 import edu.bonn.mobilegaming.geoquest.mission.WebPage;
 import edu.bonn.mobilegaming.geoquest.mission.WebTech;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
@@ -25,11 +23,11 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebPageUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebTechUI;
@@ -97,14 +95,10 @@ public class DefaultUIFactory extends UIFactory {
 		return new QRTagReadingProductUIDefault(activity);
 	}
 
-	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
-		return new MultipleChoiceQuestionUI(activity);
-	}
-
-
 	@Override
-	public OSMapUI createUI(OSMap activity) {
-		return new OSMapUIDefault(activity);
+	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

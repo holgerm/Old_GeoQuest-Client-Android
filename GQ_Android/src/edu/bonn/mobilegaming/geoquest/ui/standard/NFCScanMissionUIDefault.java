@@ -63,19 +63,19 @@ public class NFCScanMissionUIDefault extends NFCScanMissionUI {
 	}
 
 	@Override
-	public View createContentView() {
+	public View createView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		contentView = inflater.inflate(R.layout.nfcscanmission, null);
+		view = inflater.inflate(R.layout.nfcscanmission, null);
 
-		info = (TextView) contentView.findViewById(R.id.info);
-		imageView = (ImageView) contentView.findViewById(R.id.imageView);
-		button = (Button) contentView.findViewById(R.id.button);
-		userInput = (EditText) contentView.findViewById(R.id.userInput);
+		info = (TextView) view.findViewById(R.id.info);
+		imageView = (ImageView) view.findViewById(R.id.imageView);
+		button = (Button) view.findViewById(R.id.button);
+		userInput = (EditText) view.findViewById(R.id.userInput);
 
 		button.setText("Proceed");
-		return contentView;
+		return view;
 	}
 
 	/**

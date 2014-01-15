@@ -20,7 +20,6 @@ import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.HistoryItem;
 import com.qeevee.gq.history.HistoryItemModifier;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
-import com.qeevee.gq.tests.ui.mock.UseGameSpecUIFactory;
 import com.xtremelabs.robolectric.Robolectric;
 
 import edu.bonn.mobilegaming.geoquest.GameLoader;
@@ -30,11 +29,9 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class TestUtils {
-
-	public static final float DELTA_4_FLOAT_COMPARISON = 0.0001f;
 
 	/**
 	 * @param gameName
@@ -135,19 +132,6 @@ public class TestUtils {
 	 * 
 	 * @param gameFileName
 	 * @param uistyles
-	 *            offers three options:
-	 *            <ol>
-	 *            <li>Use the game specific ui style as given in the attribute
-	 *            "uistyle". If you want this, you must specify
-	 *            {@link UseGameSpecUIFactory} as class parameter here.</li>
-	 *            <li>Use a specific UI for your test independent from (and
-	 *            overwriting) the UI style specified in the game. If you want
-	 *            this, you must give the class object of you favorite
-	 *            {@link UIFactory}</li>
-	 *            <li>Use the standard UI factory for test which is the
-	 *            {@link MockUIFactory}. If you want this, you can simply omit
-	 *            this parameter. Thus this is the default behavior.</li>
-	 *            </ol>
 	 *            optional; if given this {@link UIFactory} is used instead of
 	 *            the {@link MockUIFactory}.
 	 * @return
@@ -156,16 +140,12 @@ public class TestUtils {
 	public static Start startGameForTest(String gameFileName,
 			Class<? extends UIFactory>... uistyles) {
 		Start start = startApp();
-		if (uistyles.length == 0)
-			GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
-					MockUIFactory.class);
-		else if (uistyles[0] == UseGameSpecUIFactory.class) {
-			GameLoader.startGame(null, TestUtils.getGameFile(gameFileName));
-		} else
-			GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
-					uistyles[0]);
+		Class<? extends UIFactory> uiFactory = (uistyles.length == 0) ? MockUIFactory.class
+				: uistyles[0];
+		GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
+				uiFactory);
 		return start;
-	}
+	} 
 
 	public static Start startApp() {
 		Start start = new Start();

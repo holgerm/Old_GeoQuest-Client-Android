@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import org.dom4j.Element;
 
-import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.uni.bonn.nfc4mg.tagmodels.GroupTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.WiFiTagModel;
 
-@SuppressLint("NewApi")
 public class TagIntializer {
 
 	private static final String TAG = "TagIntializer";
@@ -116,7 +114,7 @@ public class TagIntializer {
 			String latitude = xmlElement.attributeValue("latitude");
 			String longitude = xmlElement.attributeValue("longitude");
 			String data = xmlElement.attributeValue("data");
-			mGPSTagModel = new GPSTagModel(id, latitude, longitude, data);
+			mGPSTagModel = new GPSTagModel(id, latitude, longitude,data);
 		}
 
 		mParseListener.onParseComplete(tagType);
@@ -124,7 +122,6 @@ public class TagIntializer {
 
 	/**
 	 * APIs to check connection with NFC Tag is still live or not
-	 * 
 	 * @param tag
 	 * @return
 	 */

@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,26 +38,26 @@ import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
 public class MultipleChoiceQuestionMissionTests {
 
 	private static final String GAME_NAME = "MultipleChoiceQuestion/FunctionTest";
-	protected static final int MODE_QUESTION = (Integer) getStaticFieldValue(
+	private static final int MODE_QUESTION = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_QUESTION");
-	protected static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
+	private static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_REPLY_TO_CORRECT_ANSWER");
-	protected static final int MODE_REPLY_TO_WRONG_ANSWER = (Integer) getStaticFieldValue(
+	private static final int MODE_REPLY_TO_WRONG_ANSWER = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_REPLY_TO_WRONG_ANSWER");
-	protected static final int FIRST_WRONG_ANSWER = 0;
-	protected static final int FIRST_RIGHT_ANSWER = 1;
-	protected static final int SECOND_WRONG_ANSWER = 2;
+	private static final int FIRST_WRONG_ANSWER = 0;
+	private static final int FIRST_RIGHT_ANSWER = 1;
+	private static final int SECOND_WRONG_ANSWER = 2;
 
-	protected static String DEFAULT_RESPONSE_ON_CORRECT_ANSWER;
-	protected static String DEFAULT_RESPONSE_ON_WRONG_ANSWER;
+	private static String DEFAULT_RESPONSE_ON_CORRECT_ANSWER;
+	private static String DEFAULT_RESPONSE_ON_WRONG_ANSWER;
 
-	protected MissionActivity mcqM;
-	protected String questionText;
-	protected List<Button> answerButtons;
-	protected int mode;
-	protected Button bottomButton;
+	private MissionActivity mcqM;
+	private String questionText;
+	private List<Button> answerButtons;
+	private int mode;
+	private Button bottomButton;
 
-	@Before
+	@After
 	public void cleanUp() {
 		// get rid of all variables that have been set, e.g. for checking
 		// actions.
@@ -78,7 +78,7 @@ public class MultipleChoiceQuestionMissionTests {
 		loadFieldsOfObjectUnderTest();
 	}
 
-	protected void loadFieldsOfObjectUnderTest() {
+	private void loadFieldsOfObjectUnderTest() {
 		questionText = (String) getFieldValue(mcqM, "questionText");
 		DEFAULT_RESPONSE_ON_CORRECT_ANSWER = getResString(R.string.questionandanswer_rightAnswer);
 		DEFAULT_RESPONSE_ON_WRONG_ANSWER = getResString(R.string.questionandanswer_wrongAnswer);
@@ -258,41 +258,41 @@ public class MultipleChoiceQuestionMissionTests {
 
 	// === HELPER METHODS FOLLOW =============================================
 
-	protected void shouldShowRestartButton() {
+	private void shouldShowRestartButton() {
 		assertEquals(getResString(R.string.question_repeat_button),
 				bottomButton.getText());
 	}
 
-	protected void shouldShowProceedButton() {
+	private void shouldShowProceedButton() {
 		assertEquals(getResString(R.string.question_proceed_button),
 				bottomButton.getText());
 	}
 
-	protected void clearEventRecognition() {
+	private void clearEventRecognition() {
 		Variables.clean();
 	}
 
-	protected void shouldHaveFinishedActivity(boolean shouldHaveFinished) {
+	private void shouldHaveFinishedActivity(boolean shouldHaveFinished) {
 		assertEquals(shouldHaveFinished, Robolectric.shadowOf(mcqM)
 				.isFinishing());
 	}
 
-	protected void shouldShowText(String textExpectedToBeShown) {
+	private void shouldShowText(String textExpectedToBeShown) {
 		assertEquals(textExpectedToBeShown,
 				((TextView) getFieldValue(mcqM, "mcTextView")).getText());
 	}
 
-	protected void clickOnAnswerButton(int i) {
+	private void clickOnAnswerButton(int i) {
 		answerButtons.get(i).performClick();
 	}
 
-	protected void shouldHaveTriggeredEvents(String... eventName) {
+	private void shouldHaveTriggeredEvents(String... eventName) {
 		for (int i = 0; i < eventName.length; i++) {
 			assertEquals(1.0, Variables.getValue(eventName[i]));
 		}
 	}
 
-	protected void should_NOT_HaveTriggeredEvents(String... eventName) {
+	private void should_NOT_HaveTriggeredEvents(String... eventName) {
 		for (int i = 0; i < eventName.length; i++) {
 			assertFalse(
 					"onFail Variable should NOT be initialized AFTER proceed button has been pressed",
@@ -300,16 +300,16 @@ public class MultipleChoiceQuestionMissionTests {
 		}
 	}
 
-	protected void shouldBeInMode(int expectedMode) {
+	private void shouldBeInMode(int expectedMode) {
 		mode = (Integer) getFieldValue(mcqM, "mode");
 		assertEquals(expectedMode, mode);
 	}
 
-	protected void numberOfAnswersShouldBe(int nr) {
+	private void numberOfAnswersShouldBe(int nr) {
 		assertEquals(nr, answerButtons.size());
 	}
 
-	protected void shouldStoreQuestionText() {
+	private void shouldStoreQuestionText() {
 		assertEquals("Text of the question.", questionText);
 	}
 }

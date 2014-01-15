@@ -1,7 +1,5 @@
 package edu.bonn.mobilegaming.geoquest;
 
-import org.dom4j.Element;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,17 +21,11 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 	static final private int PREFS_MENU_ID = Menu.FIRST + 2;
 	protected static final int MENU_ID_OFFSET = Menu.FIRST + 3;
 
-	protected String id;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ibm = new InteractionBlockingManager(this);
 		((GeoQuestApp) getApplication()).addActivity(this);
-
-		// get extras
-		Bundle extras = getIntent().getExtras();
-		id = extras.getString("missionID");
 	}
 
 	protected MenuMaker menuMaker = new MenuMaker();
@@ -51,10 +43,6 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		return super.onPrepareOptionsMenu(menu);
-	}
-
-	public Element getXML() {
-		return Mission.get(id).xmlMissionNode;
 	}
 
 	@Override

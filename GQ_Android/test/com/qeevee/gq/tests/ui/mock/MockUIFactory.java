@@ -6,9 +6,10 @@ import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 public class MockUIFactory extends DefaultUIFactory {
 
-	@Override
-	public NPCTalkUI createUI(NPCTalk activity) {
-		return new NPCTalkUIMock(activity);
-	}
+    @Override
+    public NPCTalkUI createUI(NPCTalk activity) {
+	return new NPCTalkUIMock(activity);
+    }
+    
 
 }
