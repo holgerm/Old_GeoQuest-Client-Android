@@ -2,11 +2,10 @@
 <resources>
 
     <!-- Generic Values -->
+    <string name="xmlformat">5</string>
+    <string name="local_default_repository">default</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-
-    <!-- INVENTORIES -->
-    <string name="default_inventory_name">Inventory</string>
 
     <!-- Start Activities -->
     <string name="start_text_game_list_progress_download_text">Loading repositories</string>
@@ -57,7 +56,6 @@
     <string name="historyMenu">History</string>
     <string name="reloadGamesMenu">Reload quests</string>
     <string name="imprintMenu">Imprint</string>
-    <string name="inventoryMenu">Inventory</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
@@ -75,13 +73,13 @@
     <string name="external_mission_result_default">Back from external mission</string>
 
     <!-- ImageCapture MISSION -->
-    <string name="imageCapture_task_default">Your task: take a picture!</string>
+    <string name="audiorecord_task_default">Your task: take a picture!</string>
     <string name="imageCapture_UploadOK">OK, your photo has been uploaded.</string>
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
     <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Take an impressive image ...</string>
     <string name="imageCapture_replyDone_default">OK, your photo has been stored.</string>
-
+    
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
     <string name="map_menu_centerMap">Center Map</string>
@@ -113,6 +111,10 @@
     <string name="qrtagreading_taskdescription_default">Search for the QR code and scan it ...</string>
     <string name="qrtagreader_product_ifright">You found it.\nCongratulations!</string>
     <string name="qrtagreader_product_ifwrong">Sorry, but this is not what you are looking for.\nGo on to find it!</string>
+    <string name="qrtagreader_treasure_feedback">"@result@"</string>
+
+    <!-- StartAndExitScreen MISSION -->
+    <string name="startAndExitScreen_duration_default">interactive</string>
 
     <!-- TextQuestion MISSION -->
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
@@ -127,6 +129,7 @@
 
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
+    <string name="hotspot_default_activity">true</string>
 
     <!-- PREFERENCES -->
     <string name="preferencesTitle">Preferences</string>
@@ -141,6 +144,8 @@
     <string name="pref_server_url_summary">Defines the game server URL. Don\'t change this unless you want to use your own server.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>
     <string name="pref_server_url_dialog_message">Set the URL of the game server. By default, this is the Qeevee server. Only change this, if you want to use your own server.</string>
+    <string name="geoquest_server_url">http://geoquest.qeevee.org</string>
+    <string name="geoquest_repolist_relpath">/repositories/repolist.php</string>
 
     <!-- Game startup preferences -->
     <string name="pref_cat_game_start">Game start</string>
@@ -202,5 +207,6 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
+    <string name="varDefaultUserID">0</string>
 
 </resources>

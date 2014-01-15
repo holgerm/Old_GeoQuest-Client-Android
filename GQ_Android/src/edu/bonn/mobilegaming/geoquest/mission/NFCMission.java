@@ -16,9 +16,9 @@ import com.qeevee.gq.history.TransitionItem;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.UIFactory;
 
 public class NFCMission extends InteractiveMission implements
 		NeedsNFCCapability {

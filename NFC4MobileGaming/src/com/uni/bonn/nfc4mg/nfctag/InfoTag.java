@@ -3,7 +3,6 @@ package com.uni.bonn.nfc4mg.nfctag;
 import java.io.IOException;
 import java.util.HashMap;
 
-import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -25,7 +24,6 @@ import com.uni.bonn.nfc4mg.utility.NfcTagUtility;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class InfoTag {
 
 	// Supported MIME types by Info Nfc Tag
@@ -82,14 +80,14 @@ public class InfoTag {
 
 		InfoTagModel model = new InfoTagModel();
 		NdefMessage msg = NfcReadWrite.readNfcData(tag);
-
-		if (null == msg) {
+		
+		if(null == msg){
 			throw new NfcTagException("Unable to interact with tag");
 		}
-
+		
 		NdefRecord records[] = msg.getRecords();
-
-		if (null != records && 3 == records.length) {
+		
+		if(null != records && 3 == records.length){
 			model.setId(TextRecord.parseNdefRecord(records[0]).getData());
 			model.setMime(TextRecord.parseNdefRecord(records[1]).getData());
 
@@ -101,7 +99,7 @@ public class InfoTag {
 
 			return model;
 		}
-
+		
 		return null;
 	}
 }

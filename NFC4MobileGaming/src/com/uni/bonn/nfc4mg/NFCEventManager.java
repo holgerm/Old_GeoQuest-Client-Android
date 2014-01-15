@@ -1,6 +1,5 @@
 package com.uni.bonn.nfc4mg;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.nfc.NfcAdapter;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class NFCEventManager {
 
 	// NFC adapter instance
