@@ -912,6 +912,15 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		return getInstance().missionActivities.containsKey(id);
 	}
 
+	public static boolean stopMission(String id, Double status) {
+		if (!isMissionRunning(id))
+			return false;
+		else {
+			getInstance().missionActivities.get(id).finish(status);
+			return true;
+		}
+	}
+
 	public static void setImprint(Imprint imprint) {
 		GeoQuestApp.imprint = imprint;
 	}
