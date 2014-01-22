@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Sieben Plus</string>
-    <string name="quest_name">Sieben Plus</string>
-    <string name="imprint_authorName">Familien Pastoral Köln</string>
-    <string name="imprint_city">Köln</string>
+    <string name="app_name">Radioranzen</string>
+    <string name="quest_name">Rettet den Radioranzen</string>
+    <string name="imprint_authorName">Danilo Dietsch</string>
+    <string name="imprint_city">Übersee</string>
     <string name="imprint_email">TODO</string>
     <string name="imprint_fax">TODO</string>
     <string name="imprint_legalForm">TODO</string>
@@ -14,5 +14,5 @@
     <string name="imprint_registrationNumber">TODO</string>
     <string name="imprint_streetAndNr">TODO</string>
     <string name="imprint_vatIdNr">TODO</string>
-
+    
 </resources>
