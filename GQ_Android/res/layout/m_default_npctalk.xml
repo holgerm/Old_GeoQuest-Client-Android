@@ -24,7 +24,7 @@
         android:layout_marginTop="0dip"
         android:background="@drawable/button"
         android:padding="@dimen/button_padding"
-        android:textColor="#ffffff" />
+        android:textColor="@color/foreground" />
 
     <ScrollView
         android:id="@+id/npc_scroll_view"
