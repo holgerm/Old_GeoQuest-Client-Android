@@ -78,10 +78,7 @@ public class MultipleChoiceQuestion extends Question {
 		case MODE_REPLY_TO_WRONG_ANSWER:
 			setBackgroundWrongReply();
 			setMCTextViewToReply();
-			if (loopUntilSuccess)
-				setMCButtonPanel(loopUntilSuccess);
-			else
-				setMCButtonPanel(loopUntilSuccess);
+			setMCButtonPanel(loopUntilSuccess);
 			invokeOnFailEvents();
 			break;
 		}
