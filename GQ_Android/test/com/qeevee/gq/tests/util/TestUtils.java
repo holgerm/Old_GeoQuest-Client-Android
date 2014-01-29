@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Scanner;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -66,6 +68,48 @@ public class TestUtils {
 		if (xmlFileURL == null)
 			fail("Resource file not found for game: " + gameName);
 		return new File(xmlFileURL.getFile());
+	}
+
+	/**
+	 * @param fileName
+	 *            the relative path to the file containing the text.
+	 * @return the text as String.
+	 */
+	public static String getRessourceFileContent(String fileName) {
+		URL fileURL = TestUtils.class.getResource(fileName);
+		if (fileURL == null)
+			fail("Resource file not found: " + fileName);
+		File f = new File(fileURL.getFile());
+		if (!f.exists())
+			fail("File " + fileName + " not found.");
+		if (!f.canRead())
+			fail("File " + fileName + " cann not be read.");
+		try {
+			return readFile(fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("Problems reading fomr file " + fileName);
+		}
+		return null;
+	}
+
+	public static String readFile(String pathname) throws IOException {
+		URL fileURL = TestUtils.class.getResource(pathname);
+		if (fileURL == null)
+			fail("Resource file not found: " + pathname);
+		File file = new File(fileURL.getFile());
+		StringBuilder fileContents = new StringBuilder((int) file.length());
+		Scanner scanner = new Scanner(file);
+		String lineSeparator = System.getProperty("line.separator");
+
+		try {
+			while (scanner.hasNextLine()) {
+				fileContents.append(scanner.nextLine() + lineSeparator);
+			}
+			return fileContents.toString();
+		} finally {
+			scanner.close();
+		}
 	}
 
 	/**
