@@ -202,5 +202,6 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
+    <string name="startGameListHeadline">Games found:</string>
 
 </resources>

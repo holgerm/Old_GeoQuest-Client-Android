@@ -98,8 +98,8 @@ public class OSMap extends MapNavigation implements HotspotListener {
 		MapView mapView = (MapView) getMapView();
 		if (APIKey != null && CmStyleId != null) {
 			mapView.setTileSource(new XYTileSource("cmMap", null, 0, 15, 256,
-					".png", "http://tile.cloudmade.com/" + APIKey + "/"
-							+ CmStyleId + "/256/"));
+					".png", new String[] { "http://tile.cloudmade.com/"
+							+ APIKey + "/" + CmStyleId + "/256/" }));
 		}
 		// handling local custom maptiles here
 		String localTilePath = GeoQuestApp.getRunningGameDir()
@@ -120,8 +120,14 @@ public class OSMap extends MapNavigation implements HotspotListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			XYTileSource myTileSource = new XYTileSource("customTiles", null,
-					1, 18, 256, ".png");
+			XYTileSource myTileSource = new XYTileSource(
+					"customTiles",
+					null,
+					1,
+					18,
+					256,
+					".png",
+					new String[] { "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png" });
 			final MapTileProviderBasic tileProvider = new MapTileProviderBasic(
 					getApplicationContext());
 			tileProvider.setTileSource(myTileSource);
