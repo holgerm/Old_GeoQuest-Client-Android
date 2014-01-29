@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="lib/robolectric-2.2-jar-with-dependencies.jar" sourcepath="lib/robolectric-2.2-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/GQ_Android_Tests_Robolectric/lib/robolectric-2.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/robolectric-2.1.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/robolectric-1.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/json/java-json.jar"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GQ_Android"/>
@@ -18,12 +26,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/reflections/xml-apis-1.0.b2.jar"/>
-	<classpathentry kind="lib" path="lib/robolectric-2.2-jar-with-dependencies.jar" sourcepath="lib/robolectric-2.2-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/GQ_Android_Tests_Robolectric/lib/robolectric-2.2-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/robolectric-2.1.1-jar-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="lib/robolectric-1.1-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
