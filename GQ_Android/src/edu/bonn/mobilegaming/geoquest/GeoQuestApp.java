@@ -37,6 +37,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
+import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
 
 import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
@@ -52,6 +53,15 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
 	public static AdaptionEngineInterface adaptionEngine;
+
+	private static HostConnector hostConnector;
+
+	public static HostConnector getHostConnector() {
+		if (GeoQuestApp.hostConnector == null) {
+			GeoQuestApp.hostConnector = new HostConnector();
+		}
+		return GeoQuestApp.hostConnector;
+	}
 
 	private MapView googleMap;
 	private boolean isInGame = false;
@@ -381,7 +391,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean loadRepoData(GeoQuestProgressHandler handler) {
 		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
-		// boolean result = loadStaticRepoDataFromClient(handler);
 		boolean result = GameLoader.loadIncludedQuests();
 		result |= loadRepoDataFromClient(handler);
 

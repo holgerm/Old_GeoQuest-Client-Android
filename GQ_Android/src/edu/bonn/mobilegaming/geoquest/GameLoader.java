@@ -505,6 +505,8 @@ public class GameLoader {
 			}
 			File newGameZipFile = new File(newRepoFile, fileName);
 			FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
+			if (fOutLocal == null)
+				return;
 
 			// TODO: care about lenght == -1, i.e. if info not
 			// available,
