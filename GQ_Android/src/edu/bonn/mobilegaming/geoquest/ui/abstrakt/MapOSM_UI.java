@@ -3,9 +3,9 @@ package edu.bonn.mobilegaming.geoquest.ui.abstrakt;
 import org.dom4j.Element;
 import org.osmdroid.views.MapView;
 
-import edu.bonn.mobilegaming.geoquest.mission.OSMap;
+import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 
-public abstract class OSMapUI extends MissionUI {
+public abstract class MapOSM_UI extends MissionUI {
 
 	protected MapView mapView;
 
@@ -14,15 +14,15 @@ public abstract class OSMapUI extends MissionUI {
 	 * 
 	 * @param activity
 	 */
-	public OSMapUI(OSMap activity) {
+	public MapOSM_UI(MapOSM activity) {
 		super(activity);
 		// TODO assert that mapView is not null
 		getOSMap().setMapView(mapView);
 		getOSMap().setMapController(mapView.getController());
 	}
 
-	protected OSMap getOSMap() {
-		return (OSMap) activity;
+	protected MapOSM getOSMap() {
+		return (MapOSM) activity;
 	}
 
 	/**

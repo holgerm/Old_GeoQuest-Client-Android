@@ -13,14 +13,14 @@ import android.view.View;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.OSMap;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
+import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 
-public class OSMapUIDefault extends OSMapUI {
+public class MapOSM_UIDefault extends MapOSM_UI {
 
 	private static final int LAYOUT_RESOURCE = R.layout.m_default_osmap;
 
-	public OSMapUIDefault(OSMap activity) {
+	public MapOSM_UIDefault(MapOSM activity) {
 		super(activity);
 		initMap();
 	}

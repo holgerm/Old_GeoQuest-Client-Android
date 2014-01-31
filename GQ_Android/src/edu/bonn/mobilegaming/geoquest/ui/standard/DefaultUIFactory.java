@@ -8,7 +8,7 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.mission.OSMap;
+import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
@@ -24,7 +24,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
@@ -95,8 +95,8 @@ public class DefaultUIFactory extends UIFactory {
 	}
 
 	@Override
-	public OSMapUI createUI(OSMap activity) {
-		return new OSMapUIDefault(activity);
+	public MapOSM_UI createUI(MapOSM activity) {
+		return new MapOSM_UIDefault(activity);
 	}
 
 }

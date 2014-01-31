@@ -38,9 +38,9 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 /**
  * OpenStreetMap-based Map Navigation.
  */
-public class OSMap extends MapNavigation implements HotspotListener {
+public class MapOSM extends MapNavigation implements HotspotListener {
 
-	private static String TAG = "OSMap";
+	private static String TAG = MapOSM.class.getCanonicalName();
 
 	// set these two parameters to use Cloudmade Style
 	private static String APIKey = null; // eg
