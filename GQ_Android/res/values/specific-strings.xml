@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Radioranzen</string>
-    <string name="quest_name">Rettet den Radioranzen</string>
+    <string name="app_name">Carl Benz in Karlsruhe</string>
+    <string name="quest_name">Carl Benz Tour</string>
     <string name="imprint_authorName">Danilo Dietsch</string>
     <string name="imprint_city">Übersee</string>
     <string name="imprint_email">TODO</string>
