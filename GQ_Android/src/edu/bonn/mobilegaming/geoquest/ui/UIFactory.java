@@ -13,7 +13,6 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
-import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
@@ -29,7 +28,6 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
@@ -127,9 +125,6 @@ public abstract class UIFactory {
 	public abstract WebPageUI createUI(WebPage activity);
 
 	public abstract StartAndExitScreenUI createUI(StartAndExitScreen activity);
-
-	public abstract QRTagReadingTreasureUI createUI(
-			QRTagReadingTreasure activity);
 
 	public abstract QRTagReadingProductUI createUI(QRTagReadingProduct activity);
 

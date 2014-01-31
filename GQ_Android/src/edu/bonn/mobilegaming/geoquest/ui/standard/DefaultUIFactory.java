@@ -10,7 +10,6 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.OSMap;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
-import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingTreasure;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
@@ -27,7 +26,6 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.OSMapUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingTreasureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
@@ -40,11 +38,10 @@ public class DefaultUIFactory extends UIFactory {
 		super();
 	}
 
-	
 	public NFCTagReadingProductUI createUI(NFCTagReadingProduct activity) {
 		return new NFCTagReadingProductUIDefault(activity);
 	}
-	
+
 	public NFCScanMissionUI createUI(NFCScanMission activity) {
 		return new NFCScanMissionUIDefault(activity);
 	}
@@ -89,10 +86,6 @@ public class DefaultUIFactory extends UIFactory {
 		return new StartAndExitScreenUIDefault(activity);
 	}
 
-	public QRTagReadingTreasureUI createUI(QRTagReadingTreasure activity) {
-		return new QRTagReadingTreasureUIDefault(activity);
-	}
-
 	public QRTagReadingProductUI createUI(QRTagReadingProduct activity) {
 		return new QRTagReadingProductUIDefault(activity);
 	}
@@ -100,7 +93,6 @@ public class DefaultUIFactory extends UIFactory {
 	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {
 		return new MultipleChoiceQuestionUI(activity);
 	}
-
 
 	@Override
 	public OSMapUI createUI(OSMap activity) {
