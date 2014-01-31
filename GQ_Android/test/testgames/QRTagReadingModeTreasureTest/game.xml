@@ -4,7 +4,7 @@
 	xmlformat="5"
 >
 	<mission
-		type="QRTagReadingTreasure"
+		type="QRTagReading"
 		id="With_Explicit_Attribute_Values"
 		buttontext="Start demo scan ..."
 		taskdescription="This is a demo task description."

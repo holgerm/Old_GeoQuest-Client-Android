@@ -9,7 +9,7 @@ import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
-import edu.bonn.mobilegaming.geoquest.mission.QRTagReadingProduct;
+import edu.bonn.mobilegaming.geoquest.mission.QRTagReading;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
@@ -25,7 +25,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingProductUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
@@ -86,8 +86,8 @@ public class DefaultUIFactory extends UIFactory {
 		return new StartAndExitScreenUIDefault(activity);
 	}
 
-	public QRTagReadingProductUI createUI(QRTagReadingProduct activity) {
-		return new QRTagReadingProductUIDefault(activity);
+	public QRTagReadingUI createUI(QRTagReading activity) {
+		return new QRTagReadingUIDefault(activity);
 	}
 
 	public MultipleChoiceQuestionUI createUI(MultipleChoiceQuestion activity) {

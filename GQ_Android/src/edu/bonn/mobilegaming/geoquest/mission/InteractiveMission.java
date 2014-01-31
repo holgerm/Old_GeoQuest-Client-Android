@@ -21,7 +21,7 @@ import edu.bonn.mobilegaming.geoquest.Variables;
  * {@link Variables#RESULT_SUFFIX} and then call any specified rules for the
  * onInteractionPerformed event.
  * 
- * Examples are {@link QRTagReadingProduct} where the Scan is the event
+ * Examples are {@link QRTagReading} where the Scan is the event
  * triggering interaction, and {@link QuestionAndAnswer} where it is the choice
  * of one answer.
  * 
