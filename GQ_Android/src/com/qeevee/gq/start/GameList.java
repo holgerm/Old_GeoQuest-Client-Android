@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -40,8 +39,9 @@ public class GameList extends Activity {
 					int position, long id) {
 				Toast.makeText(
 						GameList.this,
-						(CharSequence) parent.getItemAtPosition(position)
-								+ " is selected.", Toast.LENGTH_LONG).show();
+						((GameDescription) parent.getItemAtPosition(position))
+								.getName() + " is selected.", Toast.LENGTH_LONG)
+						.show();
 			}
 
 		});

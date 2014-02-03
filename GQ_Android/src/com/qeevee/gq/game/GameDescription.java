@@ -27,4 +27,8 @@ public class GameDescription {
 		return ID;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 }

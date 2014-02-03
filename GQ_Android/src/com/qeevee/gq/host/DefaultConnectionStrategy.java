@@ -28,8 +28,9 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 
 	public String getGamesJSONString() {
 		try {
-			return new RetrieveGameListAsJSONTask().execute((Void[]) null)
-					.get();
+			String result = new RetrieveGameListAsJSONTask().execute(
+					(Void[]) null).get();
+			return result;
 		} catch (InterruptedException e) {
 			Log.e(TAG, e.getMessage());
 		} catch (ExecutionException e) {

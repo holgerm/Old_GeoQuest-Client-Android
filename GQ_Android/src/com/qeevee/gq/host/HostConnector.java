@@ -13,7 +13,7 @@ public class HostConnector {
 
 	private static final String TAG = HostConnector.class.getCanonicalName();
 
-	final static String GQ_HOST_BASE_URL = "http://www.qeevee.org:9010";
+	final static String GQ_HOST_BASE_URL = "http://www.qeevee.org:9091";
 
 	private ConnectionStrategy connectionStrategy;
 
@@ -32,6 +32,8 @@ public class HostConnector {
 
 	private ArrayList<GameDescription> createList(String gamesJSONString) {
 		ArrayList<GameDescription> gameList = new ArrayList<GameDescription>();
+		if (gamesJSONString == null)
+			return gameList;
 		try {
 			JSONArray jsonArray = new JSONArray(gamesJSONString);
 			for (int i = 0; i < jsonArray.length(); i++) {
