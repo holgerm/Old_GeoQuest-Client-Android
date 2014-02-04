@@ -3,7 +3,6 @@
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background_test"
     android:clipToPadding="true"
     android:keepScreenOn="true" >
 
