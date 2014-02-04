@@ -121,10 +121,15 @@ public class LocationSource {
 		try {
 			if (!locationManager
 					.isProviderEnabled(MockLocationReceiver.MOCK_PROVIDER)) {
-				locationManager.addTestProvider(
-						MockLocationReceiver.MOCK_PROVIDER, true, false, false,
-						false, false, false, false, Criteria.POWER_LOW,
-						Criteria.ACCURACY_FINE);
+				if (locationManager.getAllProviders().contains(
+						MockLocationReceiver.MOCK_PROVIDER)) {
+					locationManager.setTestProviderEnabled(
+							MockLocationReceiver.MOCK_PROVIDER, true);
+				} else
+					locationManager.addTestProvider(
+							MockLocationReceiver.MOCK_PROVIDER, true, false,
+							false, false, false, false, false,
+							Criteria.POWER_LOW, Criteria.ACCURACY_FINE);
 			}
 		} catch (SecurityException e) {
 			Log.i(TAG,
