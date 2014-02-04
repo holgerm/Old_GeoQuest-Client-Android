@@ -391,7 +391,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean loadRepoData(GeoQuestProgressHandler handler) {
 		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
-		boolean result = GameLoader.loadIncludedQuests();
+		boolean result = false;
+		// result |= GameLoader.loadIncludedQuests();
 		result |= loadRepoDataFromClient(handler);
 
 		if (handler != null)
