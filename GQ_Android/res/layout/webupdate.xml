@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_gq" >
 
     <LinearLayout
         android:id="@+id/start_layout_main"
@@ -13,39 +14,12 @@
             android:id="@+id/start_image_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_marginTop="10dip"
-            android:scaleType="fitCenter"
+            android:layout_gravity="top"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/geoquestlogo" />
 
-        <TextView
-            android:id="@+id/start_text_welcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/start_welcome" />
-
-        <!--
-             <TextView android:layout_width="wrap_content"
-			android:layout_centerHorizontal="true" android:layout_below="@+id/npcimage"
-			android:layout_height="wrap_content" android:id="@+id/webUpdateText"
-			android:text="@string/webupdate_downloadGamelist" />
-        -->
-
-
-        <!--
-        <ScrollView android:id="@+id/ScrollView01"
-			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:layout_below="@+id/webUpdateText">
-	
-			<LinearLayout android:orientation="vertical"
-				android:id="@+id/chooseGameButtonLayout" android:layout_height="fill_parent"
-				android:layout_width="fill_parent">
-			</LinearLayout>
-		</ScrollView>
-        -->
 
         <LinearLayout
             android:id="@+id/start_game_list_progress_layout"
