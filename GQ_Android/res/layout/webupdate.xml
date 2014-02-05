@@ -20,7 +20,6 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/geoquestlogo" />
 
-
         <LinearLayout
             android:id="@+id/start_game_list_progress_layout"
             android:layout_width="fill_parent"
