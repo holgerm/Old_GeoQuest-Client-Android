@@ -10,8 +10,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
-import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;
 
 public class Start extends GeoQuestActivity {
@@ -229,18 +228,26 @@ public class Start extends GeoQuestActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menuMaker.removeMenuItems(MenuMaker.END_GAME_MENU_ID,
-				MenuMaker.HISTORY_MENU_ID);
-		menuMaker.addMenuItem(MenuMaker.RELOAD_GAMES_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						loadRepoData(true);
-						return true;
-					}
-				});
-		menuMaker.setupMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_start, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_quit:
+			GeoQuestApp.getInstance().terminateApp();
+			return true;
+		case R.id.menu_reload:
+			loadRepoData(true);
+			return true;
+		case R.id.menu_cloudsearch:
+			// TODO
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/**

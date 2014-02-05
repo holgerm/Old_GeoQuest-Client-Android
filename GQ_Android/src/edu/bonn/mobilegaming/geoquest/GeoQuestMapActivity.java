@@ -5,23 +5,17 @@ import org.dom4j.Element;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
+import com.qeevee.gq.history.HistoryActivity;
 
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
-import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public abstract class GeoQuestMapActivity extends MapActivity implements
 		MissionOrToolActivity {
-	/**
-	 * Declare Menu ID Constants
-	 */
-	static final private int QUIT_MENU_ID = Menu.FIRST;
-	static final private int END_GAME_MENU_ID = Menu.FIRST + 1;
-	static final private int PREFS_MENU_ID = Menu.FIRST + 2;
-	protected static final int MENU_ID_OFFSET = Menu.FIRST + 3;
 
 	protected String id;
 
@@ -36,43 +30,41 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		id = extras.getString("missionID");
 	}
 
-	protected MenuMaker menuMaker = new MenuMaker();
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		menuMaker.addMenuItems(MenuMaker.END_GAME_MENU_ID,
-				MenuMaker.QUIT_MENU_ID, MenuMaker.IMPRINT_MENU_ID);
-		menuMaker.setupMenu(menu);
-		menu.add(0, PREFS_MENU_ID, 0, R.string.prefsMenu);
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	public Element getXML() {
 		return Mission.get(id).xmlMissionNode;
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_basic, menu);
+		inflater.inflate(R.menu.menu_gqactivity, menu);
+		return true;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case QUIT_MENU_ID:
-			GeoQuestApp.getInstance().terminateApp();
-			break;
-		case END_GAME_MENU_ID:
-			GeoQuestApp.getInstance().endGame();
-			break;
-		case PREFS_MENU_ID:
+		case R.id.menu_imprint:
+			GeoQuestApp.getInstance().showImprint();
+			return true;
+		case R.id.menu_preferences:
 			Intent settingsActivity = new Intent(getBaseContext(),
 					Preferences.class);
 			startActivity(settingsActivity);
-			break;
+			return true;
+		case R.id.menu_endGame:
+			GeoQuestApp.getInstance().endGame();
+			return true;
+		case R.id.menu_history:
+			Intent historyActivity = new Intent(getBaseContext(),
+					HistoryActivity.class);
+			startActivity(historyActivity);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

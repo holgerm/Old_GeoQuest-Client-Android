@@ -21,15 +21,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.qeevee.util.location.MapHelper;
-import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -46,12 +45,6 @@ public class MapOSM extends MapNavigation implements HotspotListener {
 	private static String APIKey = null; // eg
 	// "6f218baf0ee44fdc9a9563c37e55851e"
 	private static String CmStyleId = null; // eg "63694"
-
-	// Menu IDs:
-	static final private int FIRST_LOCAL_MENU_ID = GeoQuestMapActivity.MENU_ID_OFFSET;
-	static final private int LOCATION_MOCKUP_SWITCH_ID = FIRST_LOCAL_MENU_ID;
-	static final private int ZOOM_TO_BOUNDING_BOX = FIRST_LOCAL_MENU_ID + 1;
-	static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
 	private TilesOverlay tilesOverlay;
 
@@ -187,7 +180,7 @@ public class MapOSM extends MapNavigation implements HotspotListener {
 		ui.enable();
 	}
 
-	private void zoomToBoundingBox() {
+	private void zoomToQuestArea() {
 		MapView mapView = (MapView) getMapView();
 
 		// TODO check if good; evtl. filter inactive hotspots ...
@@ -208,24 +201,8 @@ public class MapOSM extends MapNavigation implements HotspotListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-
-		menu.add(0, LOCATION_MOCKUP_SWITCH_ID, 0, R.string.map_menu_mockGPS);
-		if (getHotspots().size() > 0)
-			menu.add(0, ZOOM_TO_BOUNDING_BOX, 0, R.string.map_menu_bounding_box);
-		menu.add(0, CENTER_MAP_ON_CURRENT_LOCATION_ID, 0,
-				R.string.map_menu_centerMap);
-		return true;
-	}
-
-	/**
-	 * Called right before your activity's option menu is displayed.
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		menu.getItem(LOCATION_MOCKUP_SWITCH_ID).setEnabled(
-				locationSource != null
-						&& LocationSource.canBeUsed(getApplicationContext()));
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_map_osm, menu);
 		return true;
 	}
 
@@ -235,22 +212,8 @@ public class MapOSM extends MapNavigation implements HotspotListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case LOCATION_MOCKUP_SWITCH_ID:
-			if (locationSource.getMode() == LocationSource.REAL_MODE) {
-				// From REAL mode to MOCK mode:
-				locationSource.setMode(LocationSource.MOCK_MODE);
-				item.setTitle(R.string.map_menu_realGPS);
-			} else {
-				// From MOCK mode to REAL mode:
-				locationSource.setMode(LocationSource.REAL_MODE);
-				item.setTitle(R.string.map_menu_mockGPS);
-			}
-			break;
-		case CENTER_MAP_ON_CURRENT_LOCATION_ID:
-			mapHelper.centerMap();
-			break;
-		case ZOOM_TO_BOUNDING_BOX:
-			zoomToBoundingBox();
+		case R.id.menu_ZoomToQuestArea:
+			zoomToQuestArea();
 			break;
 		}
 

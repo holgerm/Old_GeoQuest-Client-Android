@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_quit"
+        android:checkable="false"
+        android:icon="@drawable/icon_quit"
+        android:title="@string/menu_quit">
+    </item>
+    <item
+        android:id="@+id/menu_reload"
+        android:checkable="false"
+        android:icon="@drawable/icon_reload"
+        android:title="@string/menu_refreshGames">
+    </item>
+    <item
+        android:id="@+id/menu_cloudsearch"
+        android:checkable="false"
+        android:icon="@drawable/icon_reload"
+        android:title="@string/menu_cloudsearch">
+    </item>
+
+</menu>

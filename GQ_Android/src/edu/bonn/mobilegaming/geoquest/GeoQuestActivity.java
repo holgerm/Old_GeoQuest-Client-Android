@@ -7,18 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.Toast;
 
-import com.qeevee.gq.history.HistoryActivity;
-import com.qeevee.gq.inventory.InventoryActivity;
 import com.uni.bonn.nfc4mg.NFCEventManager;
 
 import edu.bonn.mobilegaming.geoquest.capability.NeedsNFCCapability;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
-import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public abstract class GeoQuestActivity extends Activity {
 
@@ -57,8 +54,6 @@ public abstract class GeoQuestActivity extends Activity {
 	private ProgressDialog downloadAndStartGameDialog;
 	private ProgressDialog startLocalGameDialog;
 
-	protected MenuMaker menuMaker = new MenuMaker();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,8 +71,6 @@ public abstract class GeoQuestActivity extends Activity {
 		startLocalGameDialog = new ProgressDialog(this);
 		startLocalGameDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		startLocalGameDialog.setCancelable(false);
-
-		// startContextManager();
 	}
 
 	private void checkAndInitializeNFCEventManager() {
@@ -95,43 +88,25 @@ public abstract class GeoQuestActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menuMaker.addMenuItems(MenuMaker.END_GAME_MENU_ID,
-				MenuMaker.QUIT_MENU_ID, MenuMaker.IMPRINT_MENU_ID);
-		menuMaker.addMenuItem(MenuMaker.PREFS_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent settingsActivity = new Intent(getBaseContext(),
-								Preferences.class);
-						startActivity(settingsActivity);
-						return true;
-					}
-
-				});
-		menuMaker.addMenuItem(MenuMaker.HISTORY_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent historyActivity = new Intent(getBaseContext(),
-								HistoryActivity.class);
-						startActivity(historyActivity);
-						return true;
-					}
-
-				});
-		menuMaker.addMenuItem(MenuMaker.INVENTORY_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent inventoryActivity = new Intent(getBaseContext(),
-								InventoryActivity.class);
-						startActivity(inventoryActivity);
-						return true;
-					}
-
-				});
-		menuMaker.setupMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_basic, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_imprint:
+			GeoQuestApp.getInstance().showImprint();
+			return true;
+		case R.id.menu_preferences:
+			Intent settingsActivity = new Intent(getBaseContext(),
+					Preferences.class);
+			startActivity(settingsActivity);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	public void startContextManager() {

@@ -7,17 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
-import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public abstract class GeoQuestListActivity extends ListActivity {
 
 	private ProgressDialog downloadAndStartGameDialog;
 	private ProgressDialog startLocalGameDialog;
-
-	protected MenuMaker menuMaker = new MenuMaker();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +35,25 @@ public abstract class GeoQuestListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menuMaker.addMenuItems(MenuMaker.QUIT_MENU_ID,
-				MenuMaker.IMPRINT_MENU_ID);
-		menuMaker.addMenuItem(MenuMaker.PREFS_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent settingsActivity = new Intent(getBaseContext(),
-								Preferences.class);
-						startActivity(settingsActivity);
-						return true;
-					}
-				});
-		menuMaker.setupMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_basic, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_imprint:
+			GeoQuestApp.getInstance().showImprint();
+			return true;
+		case R.id.menu_preferences:
+			Intent settingsActivity = new Intent(getBaseContext(),
+					Preferences.class);
+			startActivity(settingsActivity);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	protected void onDestroy() {

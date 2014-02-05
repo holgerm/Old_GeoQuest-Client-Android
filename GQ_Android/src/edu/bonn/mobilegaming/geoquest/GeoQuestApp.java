@@ -23,9 +23,12 @@ import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -206,6 +209,20 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		}
 		GameDataManager.cleanMediaPlayer();
 		System.exit(0);
+	}
+
+	public void showImprint() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				(Context) GeoQuestApp.getCurrentActivity());
+		builder.setTitle(R.string.imprintTitle);
+		builder.setPositiveButton(R.string.ok, new OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.setIcon(R.drawable.geoquest_appicon);
+		builder.setMessage(GeoQuestApp.getImprint().getCompleteText());
+		builder.show();
 	}
 
 	public static void setRecentGame(String recentRepo, String recentGame,

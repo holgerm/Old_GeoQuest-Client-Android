@@ -2,15 +2,11 @@ package edu.bonn.mobilegaming.geoquest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import edu.bonn.mobilegaming.geoquest.ui.MenuMaker;
 
 public class RepoListActivity extends GeoQuestListActivity {
 
@@ -42,25 +38,4 @@ public class RepoListActivity extends GeoQuestListActivity {
 				nameOfSelectedRepo);
 		startActivity(intent);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		menuMaker.addMenuItem(MenuMaker.RELOAD_GAMES_MENU_ID,
-				new OnMenuItemClickListener() {
-
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent i = new Intent(GeoQuestApp.getContext(),
-								edu.bonn.mobilegaming.geoquest.Start.class);
-						i.putExtra(Start.RELOAD_REPO_DATA, true);
-						i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-						setResult(RESULT_OK, i);
-						finish();
-						return false;
-					}
-				});
-		menuMaker.setupMenu(menu);
-		return true;
-	}
-
 }

@@ -51,13 +51,14 @@
     <string name="default_endButtonText">Continue with next mission</string>
 
     <!-- Generic MENU Entries -->
-    <string name="quitMenu">Quit</string>
-    <string name="endGameMenu">End game</string>
-    <string name="prefsMenu">Prefs</string>
-    <string name="historyMenu">History</string>
-    <string name="reloadGamesMenu">Reload quests</string>
-    <string name="imprintMenu">Imprint</string>
-    <string name="inventoryMenu">Inventory</string>
+    <string name="menu_quit">Quit app</string>
+    <string name="menu_endGame">End game</string>
+    <string name="menu_preferences">Prefs</string>
+    <string name="menu_history">History</string>
+    <string name="menu_refreshGames">Refresh</string>
+    <string name="menu_cloudsearch">Load quests</string>
+    <string name="menu_imprint">Imprint</string>
+    <string name="menu_inventory">Inventory</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
@@ -84,11 +85,11 @@
 
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
-    <string name="map_menu_centerMap">Center Map</string>
-    <string name="map_menu_mockGPS">Switch to mocked location</string>
-    <string name="map_menu_realGPS">Switch to real location</string>
+    <string name="menu_center">Center Map</string>
+    <string name="menu_mockGPS">Switch to mocked location</string>
+    <string name="menu_unmockGPS">Switch to real location</string>
     <string name="map_mockGPSTimeInterval">2000</string>
-    <string name="map_menu_bounding_box">Zoom in Game Area</string>
+    <string name="menu_zoomToQuestArea">Zoom in Game Area</string>
 
     <!-- MultipleChoiceQuestion MISSION -->
     <string name="multipleChoiceQuestion_default_shuffle_mode">false</string>

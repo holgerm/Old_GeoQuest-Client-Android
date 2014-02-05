@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -171,4 +174,52 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_navigation, menu);
+		// TODO add mocking menu only when attribute set in prefs
+		inflater.inflate(R.menu.menu_navigation_mocking, menu);
+		return true;
+	}
+
+	/**
+	 * Called when a menu item is selected.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_mockGPS:
+			if (locationSource.getMode() == LocationSource.REAL_MODE) {
+				// From REAL mode to MOCK mode:
+				locationSource.setMode(LocationSource.MOCK_MODE);
+				item.setTitle(R.string.menu_unmockGPS);
+			} else {
+				// From MOCK mode to REAL mode:
+				locationSource.setMode(LocationSource.REAL_MODE);
+				item.setTitle(R.string.menu_mockGPS);
+			}
+			break;
+		case R.id.menu_center:
+			mapHelper.centerMap();
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Called right before your activity's option menu is displayed.
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		menu.findItem(R.id.menu_mockGPS).setEnabled(
+				locationSource != null
+						&& LocationSource.canBeUsed(getApplicationContext()));
+		return true;
+	}
+
 }

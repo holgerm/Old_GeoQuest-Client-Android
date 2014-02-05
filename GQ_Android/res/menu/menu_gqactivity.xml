@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_history"
+        android:checkable="false"
+        android:icon="@drawable/icon_history"
+        android:title="@string/menu_history">
+    </item>
+    <item
+        android:id="@+id/menu_endGame"
+        android:checkable="false"
+        android:icon="@drawable/icon_leave"
+        android:title="@string/menu_endGame">
+    </item>
+
+</menu>

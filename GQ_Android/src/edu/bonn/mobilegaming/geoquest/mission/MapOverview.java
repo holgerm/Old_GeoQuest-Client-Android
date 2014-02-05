@@ -1,33 +1,24 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.openintents.intents.AbstractWikitudeARIntent;
-import org.openintents.intents.WikitudeARIntent;
-import org.openintents.intents.WikitudePOI;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
@@ -35,7 +26,6 @@ import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -52,12 +42,6 @@ import edu.bonn.mobilegaming.geoquest.R;
 public class MapOverview extends MapNavigation implements HotspotListener {
 
 	private static String TAG = "MapOverview";
-
-	// Menu IDs:
-	static final private int FIRST_LOCAL_MENU_ID = GeoQuestMapActivity.MENU_ID_OFFSET;
-	static final private int LOCATION_MOCKUP_SWITCH_ID = FIRST_LOCAL_MENU_ID;
-	static final private int START_AR_VIEW_ID = FIRST_LOCAL_MENU_ID + 1;
-	static final private int CENTER_MAP_ON_CURRENT_LOCATION_ID = FIRST_LOCAL_MENU_ID + 2;
 
 	private MapView myMapView;
 	private MyLocationOverlay myLocationOverlay;
@@ -142,122 +126,6 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 		super.onResume();
 		myLocationOverlay.enableCompass();
 		myLocationOverlay.enableMyLocation();
-	}
-
-	/**
-	 * Called when the activity's options menu needs to be created.
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-
-		menu.add(0, LOCATION_MOCKUP_SWITCH_ID, 0, R.string.map_menu_mockGPS);
-		menu.add(0, START_AR_VIEW_ID, 0, R.string.map_menu_bounding_box);
-		menu.add(0, CENTER_MAP_ON_CURRENT_LOCATION_ID, 0,
-				R.string.map_menu_centerMap);
-		return true;
-	}
-
-	/**
-	 * Called right before your activity's option menu is displayed.
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		menu.getItem(LOCATION_MOCKUP_SWITCH_ID - 1).setEnabled(
-				locationSource != null
-						&& LocationSource.canBeUsed(getApplicationContext()));
-		return true;
-	}
-
-	/**
-	 * Called when a menu item is selected.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case LOCATION_MOCKUP_SWITCH_ID:
-			if (locationSource.getMode() == LocationSource.REAL_MODE) {
-				// From REAL mode to MOCK mode:
-				locationSource.setMode(LocationSource.MOCK_MODE);
-				item.setTitle(R.string.map_menu_realGPS);
-			} else {
-				// From MOCK mode to REAL mode:
-				locationSource.setMode(LocationSource.REAL_MODE);
-				item.setTitle(R.string.map_menu_mockGPS);
-			}
-			break;
-		case START_AR_VIEW_ID:
-			startARViewBasic();
-			break;
-		case CENTER_MAP_ON_CURRENT_LOCATION_ID:
-			mapHelper.centerMap();
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	private WikitudeARIntent wikitudeIntent = null;
-
-	/**
-	 * starts the basic AR view
-	 */
-	private void startARViewBasic() {
-
-		// Create the basic intent
-		if (wikitudeIntent == null)
-			wikitudeIntent = prepareIntent();
-
-		// And launch the intent
-		try {
-			GeoQuestApp.showMessage(getText(R.string.startingARView));
-			wikitudeIntent.startIntent(this);
-		} catch (ActivityNotFoundException e) {
-			AbstractWikitudeARIntent.handleWikitudeNotFound(this);
-		}
-	}
-
-	/**
-	 * prepares a Wikitude AR Intent (e.g. adds the POIs to the view)
-	 * 
-	 * @return the prepared intent
-	 */
-	private WikitudeARIntent prepareIntent() {
-		// create the intent
-		WikitudeARIntent intent = new WikitudeARIntent(this.getApplication(),
-				null, null);
-		// add the POIs
-		this.addPois(intent);
-		// reset to old status message:
-		return intent;
-	}
-
-	/**
-	 * adds hard-coded POIs to the intent
-	 * 
-	 * @param intent
-	 *            the intent
-	 */
-	private void addPois(WikitudeARIntent intent) {
-		List<WikitudePOI> pois = new ArrayList<WikitudePOI>();
-		WikitudePOI poi;
-
-		for (Entry<String, HotspotOld> hotspotEntry : HotspotOld
-				.getAllHotspots()) {
-			HotspotOld curHotspot = hotspotEntry.getValue();
-			GeoPoint gp = curHotspot.getPosition();
-			double latitude = (double) (gp.getLatitudeE6()) / 1E6;
-			double longitude = (double) (gp.getLongitudeE6()) / 1E6;
-
-			String name = curHotspot.getName();
-			String description = curHotspot.getDescription();
-			// String iconRessource = curHotspot.getIconRessource();
-
-			poi = new WikitudePOI(latitude, longitude, 0.0d, name, description);
-			pois.add(poi);
-		}
-		intent.addPOIs(pois);
 	}
 
 	/**

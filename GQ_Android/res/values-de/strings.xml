@@ -53,13 +53,14 @@
     <string name="default_endButtonText">Spiel fortsetzen</string>
 
     <!-- Generic MENU Entries -->
-    <string name="quitMenu">App beenden</string>
-    <string name="endGameMenu">Quest beenden</string>
-    <string name="prefsMenu">Einstellungen</string>
-    <string name="historyMenu">Verlauf</string>
-    <string name="reloadGamesMenu">Spiele neu laden</string>
-    <string name="imprintMenu">Impressum</string>
-    <string name="inventoryMenu">Inventar</string>
+    <string name="menu_quit">App beenden</string>
+    <string name="menu_endGame">Quest beenden</string>
+    <string name="menu_preferences">Einstellungen</string>
+    <string name="menu_history">Verlauf</string>
+    <string name="menu_refreshGames">Aktualisieren</string>
+    <string name="menu_cloudsearch">Spiele finden</string>
+    <string name="menu_imprint">Impressum</string>
+    <string name="menu_inventory">Inventar</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
@@ -86,11 +87,11 @@
 
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Karte wird geladen</string>
-    <string name="map_menu_centerMap">Center Map</string>
-    <string name="map_menu_mockGPS">GPS simulieren</string>
-    <string name="map_menu_realGPS">Reales GPS nutzen</string>
+    <string name="menu_center">Center Map</string>
+    <string name="menu_mockGPS">GPS simulieren</string>
+    <string name="menu_unmockGPS">Reales GPS nutzen</string>
     <string name="map_mockGPSTimeInterval">2000</string>
-    <string name="map_menu_bounding_box">Zoom auf Quest</string>
+    <string name="menu_zoomToQuestArea">Zoom auf Quest</string>
 
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Spiel fortsetzen</string>
