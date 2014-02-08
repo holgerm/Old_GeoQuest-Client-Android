@@ -1,60 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/photopuzzle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <FrameLayout>
-    	<ImageView
-        android:id="@+id/photopuzzleimage"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="@dimen/margin"
-        android:keepScreenOn="true"
-        android:scaleType="center" />
-	</FrameLayout>
-    
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <FrameLayout
+        android:id="@+id/framelayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <TableRow
-            android:id="@+id/tableRow"
+        <ImageView
+            android:id="@+id/photopuzzleimage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:keepScreenOn="true"
+            android:scaleType="center" />
+
+        <LinearLayout
+            android:id="@+id/tableLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dip" >
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/blackbox1"
+            <LinearLayout
+                android:id="@+id/tableRow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </ImageView>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/blackbox2"
-                android:layout_width="10dp"
-                android:layout_height="10dp" >
-            </ImageView>
+                <ImageView
+                    android:id="@+id/blackbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" />
 
-            <ImageView
-                android:id="@+id/blackbox3"
+                <ImageView
+                    android:id="@+id/blackbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" />
+
+                <ImageView
+                    android:id="@+id/blackbox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" />
+
+                <ImageView
+                    android:id="@+id/blackbox4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tableRow2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </ImageView>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/blackbox4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </ImageView>
+                <ImageView
+                    android:id="@+id/blackbox6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
 
-            <ImageView
-                android:id="@+id/blackbox5"
+                <ImageView
+                    android:id="@+id/blackbox7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tableRow3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </ImageView>
-        </TableRow>
-    </TableLayout>
-    
-</LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/blackbox11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/blackbox15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000" >
+                </ImageView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="50sp" />
+
+            <Button
+                android:id="@+id/acceptBT"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/acceptBT"
+                android:ems="10"
+                android:inputType="text" >
+            </EditText>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="50sp" >
+        </TextView>
+    </FrameLayout>
+
+</RelativeLayout>

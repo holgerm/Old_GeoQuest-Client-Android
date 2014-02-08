@@ -22,7 +22,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.util.DisplayMetrics;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,14 +35,15 @@ import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
-public class PhotoPuzzle extends MissionActivity {
+public class PhotoPuzzle extends Question {
 
 	/** Hintergrundbild und Views der Zellen**/
 	private ImageView photopuzzleImage;
 	private ImageView[] imageViewArray = new ImageView[15];
 
-	private ImageView imageView, blackboxView1, blackboxView2;
-	private boolean endByTouch = true;
+	/** Eingabefenster **/
+	private TextView textView, textView_message;
+	private EditText answerText;
 	private Button button;
 	private CharSequence replyTextOnCorrect;
 	private CharSequence replyTextOnWrong;
@@ -55,22 +56,22 @@ public class PhotoPuzzle extends MissionActivity {
 	/** unsichtbare Zellen **/
 	private ArrayList<Integer> viewableSquares = new ArrayList<Integer>();
 
-	/** countdowntimer for the start countdown */
+	/** Countdowntimer */
 	private MyCountDownTimer myCountDownTimer;
 	private long duration, countdownInterval;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.m_default_photopuzzle);
 
-		imageView = (ImageView) findViewById(R.id.photopuzzle);
-		blackboxView1 = (ImageView) findViewById(R.id.blackbox1);
-		blackboxView2 = (ImageView) findViewById(R.id.blackbox2);
-		
-		long durationLong = 5000;
-		myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+		/** Hintergrundbild **/
+		photopuzzleImage = (ImageView) findViewById(R.id.photopuzzleimage);
+
+		/** Eingabe **/
+		textView = (TextView) findViewById(R.id.textView);
+		textView_message = (TextView) findViewById(R.id.textView_message);
+		initInput();
 		setImage();
 
 		/** Views der Zellen speichern **/
@@ -83,7 +84,7 @@ public class PhotoPuzzle extends MissionActivity {
 				showQuestion();
 			}
 
-		if (!endByTouch)
+		});
 
 		
 		/** Countdowntimer starten **/
@@ -204,7 +205,7 @@ public class PhotoPuzzle extends MissionActivity {
 		photopuzzleImage.setVisibility(View.VISIBLE);
 		
 		duration = 51000 - (viewableSquares.size() * countdownInterval);
-			myCountDownTimer.start();
+		myCountDownTimer.start();
 
 	}
 
@@ -220,12 +221,12 @@ public class PhotoPuzzle extends MissionActivity {
 	}
 
 	private void setImage() {
-		String imgsrc = (String) XMLUtilities.getAttribute("puzzleImage",
+		String imgsrc = (String) XMLUtilities.getStringAttribute("puzzleImage",
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
-					.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-							.getRoundedCornerBitmap(
-									BitmapUtil.loadBitmap(imgsrc), 15)));
+			photopuzzleImage.setBackgroundDrawable(new BitmapDrawable(
+					BitmapUtil.getRoundedCornerBitmap(
+							BitmapUtil.loadBitmap(imgsrc), 15)));
 	}
 
 	@Override
@@ -235,20 +236,11 @@ public class PhotoPuzzle extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-		setImage();
-		if (!endByTouch)
-			myCountDownTimer.start();
+
 	}
 
-	/**
-	 * count down timer for the start screen
-	 * 
-	 * @author Krischan Udelhoven
-	 * @author Folker Hoffmann
-	 */
-
 	public class MyCountDownTimer extends CountDownTimer {
-		long counter = 0;
+		int counter = 0;
 		boolean firstCall = true;
 
 		public MyCountDownTimer(long millisInFuture, long countDownInterval) {
@@ -258,42 +250,57 @@ public class PhotoPuzzle extends MissionActivity {
 		}
 
 		private void hidePicture() {
-			
+			int height = Math.round((getWindowManager().getDefaultDisplay()
+					.getHeight()) / 3);
+			int width = Math.round(getWindowManager().getDefaultDisplay()
+					.getWidth() / 5);
 
-			int height = getWindowManager().getDefaultDisplay().getHeight() / 5;
-			int width = getWindowManager().getDefaultDisplay().getWidth() / 3;
-
-			Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height,
+			Bitmap blackbox2 = Bitmap.createBitmap((int) width, (int) height,
 					Bitmap.Config.ARGB_8888);
 
-			Canvas canvas = new Canvas(bitmap);
-			Paint paint = new Paint();
+			Canvas canvas2 = new Canvas(blackbox2);
+			Paint paintTransparent = new Paint();
 
-			paint.setColor(Color.BLACK);
+			paintTransparent.setColor(Color.TRANSPARENT);
 
-			blackboxView1.setImageBitmap(bitmap);
-			blackboxView2.setImageBitmap(bitmap);
+			for (int i = 0; i < imageViewArray.length; i++) {
+				imageViewArray[i].setImageBitmap(blackbox2);
+			}
 
-			canvas.drawRect(0, 0, (float) width, (float) height, paint);
+			canvas2.drawRect(0, 0, (int) 1, (int) 1, paintTransparent);
 
 		}
 
 		@Override
 		public void onFinish() {
-			finish(Globals.STATUS_SUCCEEDED);
+			finish(Globals.STATUS_FAIL);
+			invokeOnFailEvents();
 		}
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			counter += 1;
-			if (counter % 300 == 0) {
-				revealPicture();
+
+			Random rand = new Random();
+			int randomInt = 0;
+			ImageView view;
+
+			if (viewableSquares.size() == imageViewArray.length) {
+				onFinish();
+				return;
 			}
+
+			if (!firstCall) {
+				do {
+					randomInt = rand.nextInt(imageViewArray.length);
+					view = getImageView(randomInt);
+				} while (viewableSquares.contains(randomInt));
+
+				view.setBackgroundColor(Color.TRANSPARENT);
+				viewableSquares.add(randomInt);
+			}
+			firstCall = false;
 		}
 
-		private void revealPicture() {
-
-		}
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
@@ -305,4 +312,44 @@ public class PhotoPuzzle extends MissionActivity {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	private ImageView getImageView(int i) {
+//		System.out.println("Hole View " + i);
+		switch (i) {
+		case 0:
+			return (ImageView) findViewById(R.id.blackbox1);
+		case 1:
+			return (ImageView) findViewById(R.id.blackbox2);
+		case 2:
+			return (ImageView) findViewById(R.id.blackbox3);
+		case 3:
+			return (ImageView) findViewById(R.id.blackbox4);
+		case 4:
+			return (ImageView) findViewById(R.id.blackbox5);
+		case 5:
+			return (ImageView) findViewById(R.id.blackbox6);
+		case 6:
+			return (ImageView) findViewById(R.id.blackbox7);
+		case 7:
+			return (ImageView) findViewById(R.id.blackbox8);
+		case 8:
+			return (ImageView) findViewById(R.id.blackbox9);
+		case 9:
+			return (ImageView) findViewById(R.id.blackbox10);
+		case 10:
+			return (ImageView) findViewById(R.id.blackbox11);
+		case 11:
+			return (ImageView) findViewById(R.id.blackbox12);
+		case 12:
+			return (ImageView) findViewById(R.id.blackbox13);
+		case 13:
+			return (ImageView) findViewById(R.id.blackbox14);
+		case 14:
+			return (ImageView) findViewById(R.id.blackbox15);
+		default:
+			return null;
+		}
+
+	}
+
 }

@@ -99,6 +99,14 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".mission.VideoRecord"
+            android:label="@string/quest_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mission.PhotoPuzzle"
+            android:label="@string/quest_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".mission.VideoPlay"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />

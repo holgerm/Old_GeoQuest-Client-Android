@@ -35,18 +35,18 @@ public class Score extends Action {
 
 		int resultingScore = addToScore(deltaScore);
 		if (showToast) {
-		if (resultingScore == 0) {
-			GeoQuestApp.showMessage(ctx.getText(R.string.scoreZero));
-		} else if (deltaScore > 0) {
-			// GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
-			GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedBy)
-					+ " " + deltaScore);
-		} else if (deltaScore < 0) {
-			// GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
-			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
-					+ " " + (-deltaScore));
+			if (resultingScore == 0) {
+				GeoQuestApp.showMessage(ctx.getText(R.string.scoreZero));
+			} else if (deltaScore > 0) {
+				// GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
+				GeoQuestApp.showMessage(ctx.getText(R.string.scoreIncreasedBy)
+						+ " " + deltaScore);
+			} else if (deltaScore < 0) {
+				// GeoQuestApp.playAudio(ResourceManager.NEGATIVE_SOUND, false);
+				GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
+						+ " " + (-deltaScore));
+			}
 		}
-	}
 	}
 
 	private int addToScore(int score) {
