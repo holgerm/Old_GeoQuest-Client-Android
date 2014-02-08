@@ -1,5 +1,7 @@
 package com.qeevee.gq.rules.act;
 
+import org.dom4j.Attribute;
+
 import android.content.Context;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -10,6 +12,7 @@ public class Score extends Action {
 	static final String SCORE_VARIABLE = "score";
 
 	private Context ctx = GeoQuestApp.getContext();
+	private boolean showToast = true;
 
 	@Override
 	protected boolean checkInitialization() {
@@ -24,7 +27,14 @@ public class Score extends Action {
 			Variables.setValue(SCORE_VARIABLE, 0);
 		}
 		int deltaScore = Integer.parseInt(params.get("value"));
+
+		String a = params.get("showMessage");
+		if (a != null) {
+			showToast = Boolean.parseBoolean(a);
+		}
+
 		int resultingScore = addToScore(deltaScore);
+		if (showToast) {
 		if (resultingScore == 0) {
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreZero));
 		} else if (deltaScore > 0) {
@@ -36,6 +46,7 @@ public class Score extends Action {
 			GeoQuestApp.showMessage(ctx.getText(R.string.scoreDecreasedBy)
 					+ " " + (-deltaScore));
 		}
+	}
 	}
 
 	private int addToScore(int score) {

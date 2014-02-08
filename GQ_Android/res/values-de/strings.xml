@@ -70,6 +70,22 @@
     <string name="audiorecord_activityIndicator_playing">Aufnahme wird vorgespielt ...</string>
     <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
+    <!-- AudioRecord MISSION -->
+    <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
+    <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
+    <string name="audiorecord_activityIndicator_recording">Aufnahme läuft ...</string>
+    <string name="audiorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Hören?</string>
+    <string name="audiorecord_activityIndicator_playing">Aufnahme wird vorgespielt ...</string>
+    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
+
+    <!-- VideoRecord MISSION -->
+    <string name="videorecord_task_default">Eure Aufgabe: Nehmt ein Video auf!</string>
+    <string name="videorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
+    <string name="videorecord_activityIndicator_recording">Aufnahme läuft ...</string>
+    <string name="videorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Ansehen?</string>
+    <string name="videorecord_activityIndicator_playing">Aufnahme wird abgespielt ...</string>
+    <string name="videorecord_file_default">gqVideorecord.3gp</string>
+
     <!-- AugmentedRealityView TOOL -->
     <string name="startingARView">Starte AR View</string>
 
