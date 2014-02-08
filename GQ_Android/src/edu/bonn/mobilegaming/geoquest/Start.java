@@ -2,9 +2,12 @@ package edu.bonn.mobilegaming.geoquest;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -18,6 +21,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.qeevee.gq.start.GameList;
+
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;
 
@@ -243,7 +249,8 @@ public class Start extends GeoQuestActivity {
 			loadRepoData(true);
 			return true;
 		case R.id.menu_cloudsearch:
-			// TODO
+			Intent searchActivity = new Intent(getBaseContext(), GameList.class);
+			startActivity(searchActivity);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -256,7 +263,18 @@ public class Start extends GeoQuestActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
+		updateCloudSearchMenuItem(menu);
 		return true;
+	}
+
+	private void updateCloudSearchMenuItem(Menu menu) {
+		menu.findItem(R.id.menu_cloudsearch).setVisible(areWeOnline());
+	}
+
+	private boolean areWeOnline() {
+		final ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		final NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+		return (netInfo != null && netInfo.isConnected());
 	}
 
 	@Override
