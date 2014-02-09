@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game name="Tour in Köln-Mülheim" xmlformat="5">
+
+	<mission id="startscreen" image="drawable/willkommen.png"
+		duration="interactive" type="StartAndExitScreen">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="willkommen" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="willkommen" type="NPCTalk" bgcolor="#f02335"
+		image="drawable/muelheim.jpg" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="Vibrate" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<!-- hier springen nach ... ursprünglich 2 -->
+				<action type="StartMission" id="screen18" />
+			</rule>
+		</onEnd>
+		<dialogitem>Lasst uns spielen!
+		</dialogitem>
+	</mission>
+
+	<mission id="screen2" image="drawable/topimage_ear.png" type="NPCTalk"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen3" />
+			</rule>
+		</onEnd>
+		<dialogitem>Gleich wird ein Video abgespielt. Erkennt ihr die Straße,
+			die im Interview beschrieben wird?
+		</dialogitem>
+	</mission>
+
+	<mission id="screen3" file="videos/interview.mp4" type="VideoPlay"
+		bgcolor="#f02335">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen4" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen4" image="drawable/topimage_question.png"
+		prompt="Straße angeben..." type="TextQuestion" bgcolor="#f02335"
+		textsize="25" textcolor="#ffffff" question="Was meint ihr, welche Straße ist gemeint?">
+
+		<onSuccess>
+			<rule>
+				<action type="Vibrate" />
+				<action type="StartMission" id="screen4-15muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen4_hinweis1" />
+			</rule>
+		</onFail>
+
+		<answers>
+			<answer>Keupstraße</answer>
+			<answer>Keupstrasse</answer>
+			<answer>keupstraße</answer>
+			<answer>keupstrasse</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen4_hinweis1" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen4a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Hinweis: </dialogitem>
+		 <dialogitem> _ _ u _ _ t _ _ _ e </dialogitem>
+	</mission>
+
+
+
+	<mission id="screen4-15muenzen" type="NPCTalk"
+		image="drawable/topimage_coins15.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="15" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen5" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 15 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen4a" image="drawable/topimage_question.png"
+		prompt="Straße angeben..." type="TextQuestion" textsize="25"
+		textcolor="#ffffff" question="Was meint ihr, welche Straße ist gemeint?"
+		replyOnCorrect="Richtig!">
+		<onSuccess>
+			<rule>
+				<action type="PlayAudio" file="sound/success.wav" />
+				<action type="Vibrate" />
+				<action type="StartMission" id="screen4-11muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen4_hinweis2" />
+			</rule>
+		</onFail>
+		<answers>
+			<answer>Keupstraße</answer>
+			<answer>Keupstrasse</answer>
+			<answer>keupstraße</answer>
+			<answer>keupstrasse</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen4_hinweis2" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen4b" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Hinweis: </dialogitem>
+		 <dialogitem> K _ u _ straße</dialogitem>
+	</mission>
+
+
+
+	<mission id="screen4-11muenzen" type="NPCTalk"
+		image="drawable/topimage_coins11.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen5" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 11 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen4b" image="drawable/topimage_question.png"
+		prompt="Straße angeben..." type="TextQuestion" bgcolor="#f02335"
+		textsize="25" textcolor="#ffffff" question="Was meint ihr, welche Straße ist gemeint?"
+		replyOnCorrect="Richtig!">
+		<onSuccess>
+			<rule>
+				<action type="PlayAudio" file="sound/success.wav" />
+				<action type="Vibrate" />
+				<action type="StartMission" id="screen4-7muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen4_hinweis3" />
+			</rule>
+		</onFail>
+		<answers>
+			<answer>Keupstraße</answer>
+			<answer>Keupstrasse</answer>
+			<answer>keupstraße</answer>
+			<answer>keupstrasse</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen4_hinweis3" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen5" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Die Lösung ist: Keupstraße</dialogitem>
+	</mission>
+
+	<mission id="screen4-7muenzen" type="NPCTalk"
+		image="drawable/topimage_coins7.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="7" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen5" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 7 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen5" image="drawable/lokalkeupstrasse.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<dialogitem>
+			Findet das Geschäft/Lokal/Imbussbude in der Keupstraße auf
+			diesem Bild und
+			scannt den QR Code
+			am Schaufenster.
+		</dialogitem>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen6" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen6" image="drawable/topimage_walk.png" type="NPCTalk"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<dialogitem>
+			Bitte sucht jetzt folgende Koordinaten auf: 50.966106,
+			7.00678
+		</dialogitem>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen7" />
+			</rule>
+		</onEnd>
+	</mission>
+
+
+
+	<!-- <mission id="screen6" type="OSMap" zoomlevel="18" mapkind="map" cancel="yes"> 
+		<hotspots> <hotspot id="keupstrasse" latlong="50.966106,7.00678" radius="30" 
+		initialVisibility="true" initialActivity="true" img="icons/geoIcon.png" bgcolor="#503a28" 
+		> <onEnter> <rule> <action type="StartMission" id="screen7" /> </rule> </onEnter> 
+		</hotspot> </hotspots> </mission> -->
+
+
+	<mission id="screen7" type="NPCTalk" image="drawable/topimage_coins3.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen8" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission type="QRTagReadingProduct" expected_content="TEST" id="screen8"
+		if_right="Sehr gut!" if_wrong="Falsch!" mode="product"
+		taskdescription="Scannt den QR-Code am Schaufenster" initial_image="drawable/lokalkeupstrasse.png"
+		bgcolor="#f02335">
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen8a" />
+			</rule>
+		</onEnd>
+		<onSuccess>
+			<rule>
+				<action type="PlayAudio" file="sound/success.wav" />
+			</rule>
+		</onSuccess>
+	</mission>
+
+	<mission id="screen8a" type="NPCTalk" image="drawable/topimage_coins3.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen9a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen9a" image="drawable/topimage_camera.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<dialogitem>
+			Nehmt einen Werbespot für dieses Lokal/Geschäft auf! Ihr
+			habt 1 Minute Zeit.
+		</dialogitem>
+		<dialogitem>
+			Der Jüngste von euch sollte filmen, die Anderen sind die
+			Schauspieler
+			des Spots.
+		</dialogitem>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen9" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission type="VideoRecord" id="screen9" task=""
+		file="test_recording.3gp" bgcolor="#f02335">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen9b" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen9b" type="NPCTalk" image="drawable/topimage_coins7.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="7" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen10" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 7 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen10" type="NPCTalk" textsize="25" textcolor="#ffffff"
+		image="drawable/topimage_ear.png" bgcolor="#f02335">
+
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen10a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr hört gleich Geräusche von einem ganz bestimmten Ort in
+			Mühlheim.
+		</dialogitem>
+		<dialogitem>Wenn ihr die Geräusche erkennt, werden sie euch zum
+			nächsten Ziel führen.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen10a" file="videos/kirche.mp4" type="VideoPlay">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen11" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen11" image="drawable/topimage_question.png"
+		bgcolor="#f02335" prompt="..." type="TextQuestion" question="Was war das?"
+		textsize="25" textcolor="#ffffff" replyOnCorrect="Richtig!">
+
+		<onSuccess>
+			<rule>
+				<action type="Vibrate" duration="1000" />
+				<action type="StartMission" id="screen11-3muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen11_hinweis" />
+			</rule>
+		</onFail>
+
+		<answers>
+			<answer>Kirche</answer>
+			<answer>kirche</answer>
+			<answer>Kirchenglocken</answer>
+			<answer>kirchenglocken</answer>
+			<answer>Glocken</answer>
+			<answer>glocken</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen11_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen12" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Das waren Kirchenglocken.</dialogitem>
+	</mission>
+
+
+
+	<mission id="screen11-3muenzen" type="NPCTalk"
+		image="drawable/topimage_coins3.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen12" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen12" file="videos/schiff.mp4" type="VideoPlay">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen12a" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen12a" prompt="..." type="TextQuestion"
+		image="drawable/topimage_question.png" bgcolor="#f02335" question="Was war das?"
+		replyOnCorrect="Richtig!">
+
+		<onSuccess>
+			<rule>
+				<action type="Vibrate" duration="1000" />
+				<action type="StartMission" id="screen12-7muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen12_hinweis" />
+			</rule>
+		</onFail>
+
+		<answers>
+			<answer>Schiff</answer>
+			<answer>schiff</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen12_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen13" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Das war ein Schiff.</dialogitem>
+	</mission>
+
+	<mission id="screen12-7muenzen" type="NPCTalk"
+		image="drawable/topimage_coins7.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="7" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen13" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 7 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen13" file="videos/strassenbahn.mp4" type="VideoPlay">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen13a" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen13a" image="drawable/willkommen" prompt="..."
+		type="TextQuestion" bgcolor="#f02335" question="Was war das?"
+		replyOnCorrect="Richtig!">
+
+		<onSuccess>
+			<rule>
+				<action type="Vibrate" duration="1000" />
+				<action type="StartMission" id="screen13-11muenzen" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen13_hinweis" />
+			</rule>
+		</onFail>
+
+		<answers>
+			<answer>Strassenbahn</answer>
+			<answer>strassenbahn</answer>
+			<answer>straßenbahn</answer>
+			<answer>Straßenbahn</answer>
+		</answers>
+	</mission>
+
+
+	<mission id="screen13_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen14" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Das war eine Strassenbahn.</dialogitem>
+	</mission>
+
+	<mission id="screen13-11muenzen" type="NPCTalk"
+		image="drawable/topimage_coins11.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen14" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 11 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen14" type="NPCTalk" image="drawable/topimage_question.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen14a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Kirche</dialogitem>
+		<dialogitem>Schiff</dialogitem>
+		<dialogitem>Straßenbahn</dialogitem>
+		<dialogitem>
+			Wo in Mühlheim findet ihr das alles an einem Ort?
+		</dialogitem>
+		<dialogitem>Versucht, diesen Ort zu finden, dort wartet die nächste
+			Aufgabe auf euch.
+		</dialogitem>
+
+	</mission>
+
+	<mission id="screen14a" image="drawable/topimage_walk.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<dialogitem>
+			Sucht jetzt folgenden Ort: 50.96399, 6.9980
+		</dialogitem>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen14b" />
+			</rule>
+		</onEnd>
+	</mission>
+
+
+	<!-- <mission id="screen14a" type="OSMap" zoomlevel="18"> <hotspots> <hotspot 
+		id="keupstrasse" latlong="50.96399,6.9980" radius="30" initialVisibility="true" 
+		initialActivity="true" img="icons/geoIcon.png" bgcolor="#503a28" > <onEnter> 
+		<rule> <action type="StartMission" id="screen14b" /> </rule> </onEnter> </hotspot> 
+		</hotspots> </mission> -->
+
+
+	<mission id="screen14b" type="NPCTalk"
+		image="drawable/topimage_churchboatst.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen15a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Nehmt ein Foto auf. Auf dem Foto sollen Straßenbahn,
+			Schiff und Kirche gleichzeitig zu sehen sein.
+		</dialogitem>
+	</mission>
+
+	<mission type="ImageCapture" id="screen15a" buttontext="Kamera starten"
+		task="" bgcolor="#f02335">
+		<onEnd>
+			<rule>
+				<action id="screen15" type="StartMission" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen15" type="NPCTalk" image="drawable/topimage_coins11.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Vibrate" duration="1000" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen16" />
+			</rule>
+		</onEnd>
+		<dialogitem>
+			11 Münzen erhalten!
+		</dialogitem>
+	</mission>
+
+	<mission id="screen16" type="NPCTalk" image="drawable/topimage_question.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Um weiter zu kommen, müsst ihr die folgenden Fragen
+			beantworten.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen17a" type="MultipleChoiceQuestion"
+		loopUntilSucess="false" image="drawable/topimage_question.png"
+		bgcolor="#f02335">
+		<onEnd>
+			<rule>
+			</rule>
+		</onEnd>
+		<onSuccess>
+			<rule>
+				<action type="StartMission" id="screen17a-3muenzen" />
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen17a_hinweis" />
+			</rule>
+		</onFail>
+		<question>
+			<questiontext> Wie heißt die Kirche?
+			</questiontext>
+			<answer correct="1" onChoose="Richtig."> St. Clemens
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> St. Martin
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> St. Nikolai
+			</answer>
+		</question>
+	</mission>
+
+	<mission id="screen17a_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17b" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Die Kirche heißt St. Clemens.</dialogitem>
+	</mission>
+
+	<mission id="screen17a-3muenzen" type="NPCTalk"
+		image="drawable/topimage_coins3.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17b" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen17b" type="MultipleChoiceQuestion"
+		loopUntilSucess="false" image="drawable/topimage_question.png"
+		bgcolor="#f02335">
+		<onEnd>
+			<rule>
+			</rule>
+		</onEnd>
+		<onSuccess>
+			<rule>
+				<action type="StartMission" id="screen17b-3muenzen" />
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen17b_hinweis" />
+			</rule>
+		</onFail>
+		<question>
+			<questiontext> Wann wurde sie erbaut?
+			</questiontext>
+			<answer correct="0" onChoose="Falsch!"> 8./9. Jh.
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> 10./11. Jh.
+			</answer>
+			<answer correct="1" onChoose="Richtig."> 12./13. Jh.
+			</answer>
+		</question>
+	</mission>
+
+	<mission id="screen17b_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17c" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Die Kirche wurde im 12./13. Jahrhundert gebaut.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen17b-3muenzen" type="NPCTalk"
+		image="drawable/topimage_coins3.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17c" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen17c" type="MultipleChoiceQuestion"
+		loopUntilSucess="false" image="drawable/topimage_question.png"
+		bgcolor="#f02335">
+		<onEnd>
+			<rule>
+			</rule>
+		</onEnd>
+		<onSuccess>
+			<rule>
+				<action type="StartMission" id="screen17c-3muenzen" />
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+				<action type="StartMission" id="screen17c_hinweis" />
+			</rule>
+		</onFail>
+		<question>
+			<questiontext> Wen zeigt die Statue vor der Kirche?
+			</questiontext>
+			<answer correct="1" onChoose="Richtig."> Den heiligen Nepomuk
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> Den heiligen Jakob
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> Den heiligen Christoph
+			</answer>
+		</question>
+	</mission>
+
+	<mission id="screen17c_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Die Statue zeigt den heiligen Nepomuk.
+		</dialogitem>
+	</mission>
+
+
+	<mission id="screen17c-3muenzen" type="NPCTalk"
+		image="drawable/topimage_coins3.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen17" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen17" type="NPCTalk" image="drawable/topimage_riddle.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen18" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr seht gleich ein verdecktes Bild, dass sich nach und
+			nach aufdecken wird.
+		</dialogitem>
+		<dialogitem>Je schneller ihr den Ort erkennt, umso mehr Münzen gibt
+			es!
+		</dialogitem>
+	</mission>
+
+
+	<mission id="screen18" type="PhotoPuzzle" puzzleImage="drawable/stolperstein.png"
+		textQuestion="Habt ihr den Ort erkannt?" replyOnWrong="Falsch!"
+		replyOnCorrect="Richtig!">
+		<onSuccess>
+			<rule>
+				<action type="StartMission" id="screen19" />
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="StartMission" id="screen18_hinweis" />
+			</rule>
+		</onFail>
+		<answers>
+			<answer>Wiener Platz</answer>
+			<answer>wiener platz</answer>
+			<answer>Wiener platz</answer>
+			<answer>wiener Platz</answer>
+		</answers>
+	</mission>
+	
+		<mission id="screen18_hinweis" image="drawable/muelheim.jpg"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen20" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch! Das Foto zeigt den Wiener Platz.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen19" type="NPCTalk" image="drawable/topimage_coins11.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Vibrate" duration="1000" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen20" />
+			</rule>
+		</onEnd>
+		<dialogitem>
+			11 Münzen erhalten!
+		</dialogitem>
+	</mission>
+
+	<mission id="screen20" type="NPCTalk" image="drawable/topimage_riddle.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen21" />
+			</rule>
+		</onEnd>
+		<dialogitem>Auf dem Bild seht ihr im Vordergrund einen Stolperstein.
+		</dialogitem>
+		<dialogitem>Der Älteste von euch soll im Internet mit einem anderen
+			Handy recherchieren, was Stolpersteine sind.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen21" type="MultipleChoiceQuestion"
+		loopUntilSucess="false" image="drawable/topimage_question.png"
+		bgcolor="#f02335">
+		<onEnd>
+			<rule>
+			</rule>
+		</onEnd>
+		<onSuccess>
+			<rule>
+				<action type="StartMission" id="screen21a" />
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="StartMission" id="screen21b" />
+			</rule>
+		</onFail>
+		<question>
+			<questiontext> Ein Stolperstein ist...
+			</questiontext>
+			<answer correct="0" onChoose="Falsch!"> Ein Stein, über den
+				man immer
+				stolpert
+			</answer>
+			<answer correct="1" onChoose="Richtig."> Eine Gedenktafel, die
+				an Opfer
+				des Nationalsozialismus erinnert
+			</answer>
+			<answer correct="0" onChoose="Falsch!"> Ein Andenken an den
+				Erfinder des
+				Pflastersteins, Edmund Stolper
+			</answer>
+		</question>
+	</mission>
+
+	<mission id="screen21a" image="drawable/topimage_coins3.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="3" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen22" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 3 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen21b" image="drawable/muelheim.jpg" type="NPCTalk"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.mp3" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen22" />
+			</rule>
+		</onEnd>
+		<dialogitem>Falsch!</dialogitem>
+		<dialogitem>Die richtige Antwort ist: 'Eine Gedenktafel, die
+			an Opfer
+			des Nationalsozialismus erinnert'
+		</dialogitem>
+	</mission>
+
+
+
+	<mission id="screen22" type="NPCTalk" image="drawable/topimage_wienerplatz.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen23" />
+			</rule>
+		</onEnd>
+		<dialogitem>Geht jetzt zum Wiener Platz und findet genau die Stelle,
+			auf der das Foto aufgenommen wurde.
+		</dialogitem>
+	</mission>
+
+	<mission id="screen23" type="NPCTalk" image="drawable/topimage_walk.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen24" />
+			</rule>
+		</onEnd>
+		<dialogitem>Sucht jetzt folgenden Ort: 50.9620, 7.0041</dialogitem>
+	</mission>
+
+
+	<!-- <mission id="screen23" type="OSMap" zoomlevel="18"> <hotspots> <hotspot 
+		id="keupstrasse" latlong="50.9620,7.0041" radius="30" initialVisibility="true" 
+		initialActivity="true" img="icons/geoIcon.png" bgcolor="#503a28" > <onEnter> 
+		<rule> <action type="StartMission" id="screen23a" /> </rule> </onEnter> </hotspot> 
+		</hotspots> </mission> -->
+
+
+
+
+	<mission id="screen24" prompt="Vorname" type="TextQuestion"
+		image="drawable/topimage_question.jpg" bgcolor="#f02335"
+		question="Gebt den Vornamen ein, den ihr auf dem Stein seht:"
+		replyOnCorrect="Richtig!" loopUntilSuccess="true" textsize="25"
+		textcolor="#ffffff">
+		<onSuccess>
+			<rule>
+				<action type="PlayAudio" file="sound/success.wav" />
+				<action type="Vibrate" />
+				<action type="StartMission" id="screen24-7muenzen" />
+			</rule>
+		</onSuccess>
+
+		<onFail>
+			<rule>
+				<action type="PlayAudio" file="sound/fail.wav" />
+			</rule>
+		</onFail>
+
+		<answers>
+			<answer>Max</answer>
+			<answer>max</answer>
+		</answers>
+	</mission>
+
+	<mission id="screen24-7muenzen" image="drawable/topimage_coins7.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="7" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen25" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 7 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="screen25" type="NPCTalk"
+		image="drawable/topimage_stolperstein.png" bgcolor="#f02335" textsize="25"
+		textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen26" />
+			</rule>
+		</onEnd>
+		<dialogitem>Lest euch zuerst die Geschichte von Max Charmand durch.
+		</dialogitem>
+		<dialogitem>...</dialogitem>
+	</mission>
+
+	<mission id="screen26" type="NPCTalk" image="drawable/topimage_camera.png"
+		bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="screen26a" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr sollt jetzt den Beruf von Max Chamand pantomimisch
+			darstellen und fotografieren.
+		</dialogitem>
+		<dialogitem>Der Betreuer macht das Foto, alle von euch sollen auf dem
+			Foto zu sehen sein.
+		</dialogitem>
+	</mission>
+
+	<mission type="ImageCapture" id="screen26a" buttontext="Kamera starten"
+		task="" bgcolor="#f02335">
+		<onEnd>
+			<rule>
+				<action id="screen26-11muenzen" type="StartMission" />
+			</rule>
+		</onEnd>
+	</mission>
+
+	<mission id="screen26-11muenzen" image="drawable/topimage_coins11.png"
+		type="NPCTalk" bgcolor="#f02335" textsize="25" textcolor="#ffffff">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="sound/coins.mp3" />
+				<action type="Score" value="11" showMessage="false" />
+			</rule>
+		</onStart>
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="exit" />
+			</rule>
+		</onEnd>
+		<dialogitem>Ihr habt 11 Münzen erhalten!</dialogitem>
+	</mission>
+
+	<mission id="exit" type="NPCTalk" textsize="25" textcolor="#ffffff"
+		image="drawable/topimage_finish.png" bgcolor="#f02335">
+		<onEnd>
+			<rule>
+				<action type="EndGame" />
+			</rule>
+		</onEnd>
+		<dialogitem>Glückwunsch! Ihr seid am Ende eurer Reise durch Mühlheim!
+		</dialogitem>
+		<dialogitem>Ihr habt:</dialogitem>
+		<dialogitem>@score@ Münzen
+			gesammelt.
+		</dialogitem>
+		<dialogitem>Danke fürs Mitspielen!</dialogitem>
+	</mission>
+
+
+
+</game>
