@@ -37,7 +37,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class PhotoPuzzle extends Question {
 
-	/** Hintergrundbild und Views der Zellen**/
+	/** Hintergrundbild und Views der Zellen **/
 	private ImageView photopuzzleImage;
 	private ImageView[] imageViewArray = new ImageView[15];
 
@@ -86,7 +86,6 @@ public class PhotoPuzzle extends Question {
 
 		});
 
-		
 		/** Countdowntimer starten **/
 		duration = 51000;
 		countdownInterval = 3000;
@@ -99,7 +98,7 @@ public class PhotoPuzzle extends Question {
 		myCountDownTimer.cancel();
 
 		photopuzzleImage.setVisibility(View.INVISIBLE);
-		
+
 		textView.setVisibility(View.VISIBLE);
 		textView.setText(questionText);
 		answerText.setText("");
@@ -191,7 +190,7 @@ public class PhotoPuzzle extends Question {
 			else {
 				GeoQuestApp.showMessage(replyTextOnWrong);
 				hideQuestion();
-				
+
 			}
 		}
 
@@ -203,7 +202,7 @@ public class PhotoPuzzle extends Question {
 		answerText.setVisibility(View.INVISIBLE);
 		button.setVisibility(View.INVISIBLE);
 		photopuzzleImage.setVisibility(View.VISIBLE);
-		
+
 		duration = 51000 - (viewableSquares.size() * countdownInterval);
 		myCountDownTimer.start();
 
@@ -314,7 +313,7 @@ public class PhotoPuzzle extends Question {
 	}
 
 	private ImageView getImageView(int i) {
-//		System.out.println("Hole View " + i);
+		// System.out.println("Hole View " + i);
 		switch (i) {
 		case 0:
 			return (ImageView) findViewById(R.id.blackbox1);
