@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
@@ -18,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -124,7 +126,10 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (endButtonMode) {
 		case TAKE_PICTURE:
+			File file = new File(mFileName);
+			Uri outputFileUri = Uri.fromFile(file);
 			Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			intentTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 			startActivityForResult(intentTakePhoto, TAKE_PICTURE);
 			break;
 		case AFTER_UPLOAD:
