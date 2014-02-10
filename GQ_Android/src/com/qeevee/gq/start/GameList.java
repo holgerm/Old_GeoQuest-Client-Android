@@ -26,7 +26,7 @@ public class GameList extends Activity {
 
 		listView = (ListView) findViewById(R.id.listview);
 
-		HostConnector connector = GeoQuestApp.getHostConnector();
+		final HostConnector connector = GeoQuestApp.getHostConnector();
 		List<GameDescription> games = connector.getGameList();
 		GameListAdapter listAdapter = new GameListAdapter(this,
 				android.R.layout.simple_list_item_1, games);
@@ -39,9 +39,10 @@ public class GameList extends Activity {
 					int position, long id) {
 				Toast.makeText(
 						GameList.this,
-						((GameDescription) parent.getItemAtPosition(position))
-								.getName() + " is selected.", Toast.LENGTH_LONG)
-						.show();
+						(CharSequence) connector
+								.getDownloadURL(((GameDescription) parent
+										.getItemAtPosition(position)).getID()),
+						Toast.LENGTH_LONG).show();
 			}
 
 		});

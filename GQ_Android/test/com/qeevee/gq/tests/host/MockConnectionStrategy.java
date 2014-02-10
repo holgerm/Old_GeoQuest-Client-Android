@@ -24,4 +24,8 @@ public class MockConnectionStrategy implements ConnectionStrategy {
 		return mockresponse;
 	}
 
+	public String getDownloadURL(int id) {
+		return null;
+	}
+
 }

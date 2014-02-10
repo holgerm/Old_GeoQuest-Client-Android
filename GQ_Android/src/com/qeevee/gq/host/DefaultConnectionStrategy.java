@@ -23,6 +23,10 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 	private static final String TAG = DefaultConnectionStrategy.class
 			.getCanonicalName();
 
+	private final static String GQ_HOST_BASE_URL = "http://www.qeevee.org:9091";
+
+	private static final String GQ_HOST_GAMEPATH = "/game/download/";
+
 	public DefaultConnectionStrategy() {
 	}
 
@@ -39,13 +43,17 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 		return null;
 	}
 
+	public String getDownloadURL(int id) {
+		return GQ_HOST_BASE_URL + GQ_HOST_GAMEPATH + id;
+	}
+
 	private class RetrieveGameListAsJSONTask extends
 			AsyncTask<Void, Void, String> {
 
 		protected String doInBackground(Void... unused) {
 			try {
-				return connect(HostConnector.GQ_HOST_BASE_URL + "/json/"
-						+ GEOQUEST_PORTAL_ID + "/publicgames");
+				return connect(DefaultConnectionStrategy.GQ_HOST_BASE_URL
+						+ "/json/" + GEOQUEST_PORTAL_ID + "/publicgames");
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
 				return null;

@@ -13,8 +13,6 @@ public class HostConnector {
 
 	private static final String TAG = HostConnector.class.getCanonicalName();
 
-	final static String GQ_HOST_BASE_URL = "http://www.qeevee.org:9091";
-
 	private ConnectionStrategy connectionStrategy;
 
 	public void setConnectionStrategy(ConnectionStrategy connectionStrategy) {
@@ -43,5 +41,9 @@ public class HostConnector {
 			Log.e(TAG, e.getMessage());
 		}
 		return gameList;
+	}
+
+	public String getDownloadURL(int id) {
+		return connectionStrategy.getDownloadURL(id);
 	}
 }
