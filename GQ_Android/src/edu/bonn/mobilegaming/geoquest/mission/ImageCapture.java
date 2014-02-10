@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,6 +57,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 	private CharSequence uploadURL;
 
+	private String mFileName;
+
 	// private File localImageFile = null;
 
 	@Override
@@ -77,13 +80,11 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		// init upload url etc.:
 		uploadURL = getMissionAttribute("uploadURL",
 				XMLUtilities.OPTIONAL_ATTRIBUTE);
-		// if (uploadURL == null) {
-		// File localImageDir = Environment
-		// .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-		// CharSequence imageFileName = getMissionAttribute("file",
-		// XMLUtilities.NECESSARY_ATTRIBUTE);
-		// localImageFile = new File(localImageDir, imageFileName.toString());
-		// }
+
+		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
+				+ "/"
+				+ getMissionAttribute("file",
+						R.string.imageCapture_file_default);
 
 		// initial image:
 		imageView = (ZoomImageView) findViewById(R.id.imageCaptureImageView);
@@ -111,12 +112,6 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 	private static final int TAKE_PICTURE = 1;
 	private static final int AFTER_UPLOAD = 2;
-
-	/**
-	 * File where the taken picture is stored intermediary before upload. (uses
-	 * openFileOutput())
-	 */
-	private static final String PICTURE_FILE_NAME = "picture.jpg";
 
 	@Override
 	public void onDestroy() {
@@ -153,7 +148,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 					HttpMultipartMode.BROWSER_COMPATIBLE);
 			requestEntity.addPart("uploaded_file", new InputStreamBody(
 					new ByteArrayInputStream(bao.toByteArray()), "image/jpeg",
-					PICTURE_FILE_NAME));
+					mFileName));
 			requestEntity.addPart("secret", new StringBody(TAG));
 			httppost.setEntity(requestEntity);
 
