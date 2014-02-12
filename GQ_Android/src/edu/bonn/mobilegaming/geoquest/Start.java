@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qeevee.gq.game.GameDataManager;
 import com.qeevee.gq.start.GameList;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
@@ -52,6 +53,8 @@ public class Start extends GeoQuestActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webupdate);
 		Mission.setMainActivity(this);
+
+		GameDataManager.getQuestsDir();
 
 		initProgressDialogs();
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 
@@ -35,7 +36,10 @@ public class HostConnector {
 		try {
 			JSONArray jsonArray = new JSONArray(gamesJSONString);
 			for (int i = 0; i < jsonArray.length(); i++) {
-				gameList.add(new GameDescription(jsonArray.getJSONObject(i)));
+				JSONObject jsonObj = jsonArray.getJSONObject(i);
+				if (!jsonObj.isNull("zip")
+						&& !jsonObj.get("zip").equals("none"))
+					gameList.add(new GameDescription(jsonObj));
 			}
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());

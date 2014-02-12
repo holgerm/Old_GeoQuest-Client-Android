@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.qeevee.gq.game.DownloadGame;
 import com.qeevee.gq.game.GameDescription;
 import com.qeevee.gq.host.HostConnector;
 
@@ -37,6 +38,8 @@ public class GameList extends Activity {
 
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
+				new DownloadGame().execute((GameDescription) parent
+						.getItemAtPosition(position));
 				Toast.makeText(
 						GameList.this,
 						(CharSequence) connector
