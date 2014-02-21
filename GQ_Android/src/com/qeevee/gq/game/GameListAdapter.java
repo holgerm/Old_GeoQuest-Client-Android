@@ -1,11 +1,10 @@
-package com.qeevee.gq.start;
+package com.qeevee.gq.game;
 
 import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-import com.qeevee.gq.game.GameDescription;
 
 public class GameListAdapter extends ArrayAdapter<GameDescription> {
 
