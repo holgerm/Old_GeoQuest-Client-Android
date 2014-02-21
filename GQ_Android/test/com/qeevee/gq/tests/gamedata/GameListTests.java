@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 
 import android.widget.ListView;
 
+import com.qeevee.gq.game.GamesInCloud;
 import com.qeevee.gq.host.ConnectionStrategy;
-import com.qeevee.gq.start.GameList;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
@@ -19,7 +19,7 @@ import edu.bonn.mobilegaming.geoquest.Start;
 @RunWith(GQTestRunner.class)
 public class GameListTests {
 
-	GameList gl;
+	GamesInCloud gl;
 	ListView lv;
 
 	@Test
@@ -52,7 +52,7 @@ public class GameListTests {
 		// gl =
 		// org.robolectric.Robolectric.buildActivity(GameList.class).create()
 		// .get();
-		gl = new GameList();
+		gl = new GamesInCloud();
 		gl.onCreate(null);
 	}
 
