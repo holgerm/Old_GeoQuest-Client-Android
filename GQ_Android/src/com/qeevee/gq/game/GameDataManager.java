@@ -1,19 +1,32 @@
 package com.qeevee.gq.game;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
+/**
+ * This class gives access to the locally stored games.
+ * 
+ * @author muegge
+ * 
+ */
 public class GameDataManager {
 
-	private static final String QUEST_DIR_NAME = "quests";
+	public static final String QUEST_DIR_NAME = "quests";
+	public static final String GAME_XML_FILENAME = "game.xml";
 	static private Context ctx = GeoQuestApp.getContext();
 	static private File questsDir = null;
 
+	/**
+	 * @param questName
+	 * @return directory that contains the game.xml and game media.
+	 */
 	public static File getQuestDir(String questName) {
 		return getOrCreateSubDir(getQuestsDir(), questName);
-
 	}
 
 	/**
@@ -22,13 +35,9 @@ public class GameDataManager {
 	 *         created during the quest are played.
 	 */
 	public static File getQuestsDir() {
-		if (questsDir == null) {
-			questsDir = getQDir();
+		if (questsDir != null) {
+			return questsDir;
 		}
-		return questsDir;
-	}
-
-	private static File getQDir() {
 		File dir = ctx.getExternalFilesDir(null);
 		if (dir == null) {
 			return ctx.getDir(QUEST_DIR_NAME, Context.MODE_PRIVATE);
@@ -47,6 +56,29 @@ public class GameDataManager {
 				return null;
 			else
 				return qDir;
+		}
+	}
+
+	public static List<GameDescription> getGameDescriptions() {
+		List<GameDescription> games = new ArrayList<GameDescription>();
+		GameDirFilter gameDirFilter = new GameDirFilter();
+		File questsDir = getQuestsDir();
+		File[] gameDirs = questsDir.listFiles(gameDirFilter);
+		for (int i = 0; i < gameDirs.length; i++) {
+			games.add(new GameDescription(gameDirs[i]));
+		}
+		return games;
+	}
+
+	public static class GameDirFilter implements FileFilter {
+
+		public boolean accept(File dir) {
+			if (!dir.isDirectory())
+				return false;
+			File gameSpec = new File(dir, GAME_XML_FILENAME);
+			if (gameSpec.exists() && gameSpec.isFile() && gameSpec.canRead())
+				return true;
+			return false;
 		}
 	}
 

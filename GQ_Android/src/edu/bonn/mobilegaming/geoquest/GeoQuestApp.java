@@ -27,8 +27,8 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -43,7 +43,6 @@ import com.google.android.maps.MapView;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
 
-import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
@@ -55,7 +54,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
-	public static AdaptionEngineInterface adaptionEngine;
 
 	private static HostConnector hostConnector;
 
@@ -138,7 +136,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 					.putString(Preferences.PREF_KEY_SERVER_URL,
 							getString(R.string.geoquest_server_url)).commit();
 		}
-		includeAdaptionEngine();
 		currentSortMode = getRecentSortingMode();
 		setImprint(new Imprint(null));
 	}
@@ -870,26 +867,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public void setRepoDataAvailable(boolean repoDataAvailable) {
 		this.repoDataAvailable = repoDataAvailable;
-	}
-
-	private static void includeAdaptionEngine() {
-		try {
-			Class<?> adaptionEngineClass = Class
-					.forName("edu.bonn.mobilegaming.geoquest.adaptionengine.AdaptionEngine");
-			Object obj = adaptionEngineClass.newInstance();
-			if (obj instanceof AdaptionEngineInterface) {
-				adaptionEngine = (AdaptionEngineInterface) obj;
-				useAdaptionEngine = true;
-				adaptionEngineLibAvailable = true;
-				Log.d(TAG, "AdaptionEngine was successfully integrated.");
-			} else {
-				throw new Exception(
-						"Couldn't create instance of AdaptionEngine");
-			}
-		} catch (Exception e) {
-			Log.d(TAG, "AdaptionEngine wasn't integrated.");
-
-		}
 	}
 
 	/**

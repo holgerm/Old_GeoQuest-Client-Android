@@ -23,7 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qeevee.gq.game.GameDataManager;
-import com.qeevee.gq.start.GameList;
+import com.qeevee.gq.game.GamesInCloud;
+import com.qeevee.gq.game.LocalGames;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;
@@ -249,10 +250,13 @@ public class Start extends GeoQuestActivity {
 			GeoQuestApp.getInstance().terminateApp();
 			return true;
 		case R.id.menu_reload:
-			loadRepoData(true);
+			// loadRepoData(true);
+			Intent loadActivity = new Intent(getBaseContext(), LocalGames.class);
+			startActivity(loadActivity);
 			return true;
 		case R.id.menu_cloudsearch:
-			Intent searchActivity = new Intent(getBaseContext(), GameList.class);
+			Intent searchActivity = new Intent(getBaseContext(),
+					GamesInCloud.class);
 			startActivity(searchActivity);
 			return true;
 		default:

@@ -39,7 +39,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.qeevee.gq.start.GameList"
+            android:name="com.qeevee.gq.game.GamesInCloud"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.qeevee.gq.game.LocalGames"
             android:label="@string/app_name" >
         </activity>
         <activity

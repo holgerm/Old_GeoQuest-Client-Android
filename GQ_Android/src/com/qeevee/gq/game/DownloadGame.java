@@ -13,18 +13,19 @@ import java.util.zip.ZipFile;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-
+import android.widget.Toast;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
-public class DownloadGame extends AsyncTask<GameDescription, Integer, Void> {
+public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	private static final String TAG = DownloadGame.class.getCanonicalName();
 	private final static int BYTE_SIZE = 1024;
+	private GameDescription game;
 
-	protected Void doInBackground(GameDescription... games) {
+	protected Boolean doInBackground(GameDescription... games) {
+		this.game = games[0];
 		// create game directory - if needed:
-		String gameName = games[0].getName();
+		String gameName = Integer.valueOf(game.getID()).toString();
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
 			deleteDir(gameDir);
@@ -32,17 +33,17 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Void> {
 
 		File gameZipFile;
 		try {
-			gameZipFile = downloadZipFile(gameDir, games[0]);
+			gameZipFile = downloadZipFile(gameDir, game);
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());
-			return null;
+			return false;
 		}
 
 		unzipGameArchive(gameZipFile);
 
 		// TODO delete local zipfile
 
-		return null;
+		return true;
 	}
 
 	private File downloadZipFile(File gameDir, GameDescription game)
@@ -84,19 +85,9 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Void> {
 	 * @return the directory where the game files have been stored
 	 */
 	void unzipGameArchive(File gameZipFile) {
-		String newGameDirName = gameZipFile.getAbsolutePath().replace(".zip",
-				"");
-		File newGameDir = new File(newGameDirName);
-		if (!newGameDir.exists() || newGameDir.isFile()) {
-			if (newGameDir.isFile())
-				// just in the awkward case that there is a file with the same
-				// name ...
-				newGameDir.delete();
-			newGameDir.mkdir();
-		} else {
-			// clean directory:
-			deleteDir(newGameDir);
-		}
+
+		// TODO Publish progress
+		String newGameDirName = gameZipFile.getParent();
 
 		try {
 			ZipFile zipFile = new ZipFile(gameZipFile);
@@ -166,4 +157,17 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Void> {
 		}
 		dir.delete();
 	}
+
+	@Override
+	protected void onPostExecute(Boolean success) {
+		CharSequence toastText = null;
+		if (success)
+			toastText = "Game " + game.getName() + " downloaded.";
+		else
+			toastText = "Error while downloading game " + game.getName();
+		Toast.makeText(GeoQuestApp.getContext(), toastText, Toast.LENGTH_LONG)
+				.show();
+
+	}
+
 }

@@ -14,7 +14,6 @@ import org.dom4j.Element;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import com.qeevee.gq.rules.Rule;
@@ -87,8 +86,7 @@ public class Mission implements Serializable {
 	 * @param loadHandler
 	 *            is used to update the process dialog
 	 */
-	public static Mission create(String id, Mission parent,
-			Element missionNode, Handler loadHandler) {
+	public static Mission create(String id, Mission parent, Element missionNode) {
 		Mission mission;
 		if (missionStore.contains(id)) {
 			mission = missionStore.get(id);
@@ -96,7 +94,7 @@ public class Mission implements Serializable {
 			mission = new Mission(id);
 			missionStore.put(id, mission);
 		}
-		initMission(mission, parent, missionNode, loadHandler);
+		initMission(mission, parent, missionNode);
 		return mission;
 	}
 
@@ -117,12 +115,11 @@ public class Mission implements Serializable {
 		missionStore.put(newMission.id, newMission);
 	}
 
-	static void initMission(Mission mission, Mission parent,
-			Element missionNode, Handler loadHandler) {
+	static void initMission(Mission mission, Mission parent, Element missionNode) {
 		Log.d(mission.getClass().getName(), "initing mission. id=" + mission.id);
 		mission.xmlMissionNode = missionNode;
 		mission.setParent(parent);
-		mission.loadXML(loadHandler);
+		mission.loadXML();
 	}
 
 	public void setStatus(Double status) {
@@ -187,24 +184,18 @@ public class Mission implements Serializable {
 		return MissionActivity.class;
 	}
 
-	private void loadXML(Handler loadHandler) {
+	private void loadXML() {
 		missionType = missionType();
 		chooseMissionLayout();
 		startingIntent = new Intent(getMainActivity(), missionType);
 		startingIntent.putExtra(MISSION_ID, id);
 		setCancelStatus();
 		createRules();
-		storeDirectSubmissions(loadHandler);
+		storeDirectSubmissions();
 		// Read parameters which can be used as extras to start another activity
 		// from within this Missions Activity. This has been introduced for
 		// ExternalMissions.
 		createBundleForExternalMission();
-		sendProgressToHandler(loadHandler);
-	}
-
-	private void sendProgressToHandler(Handler loadHandler) {
-		if (loadHandler != null)
-			loadHandler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
 	}
 
 	private void chooseMissionLayout() {
@@ -241,12 +232,12 @@ public class Mission implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void storeDirectSubmissions(Handler loadHandler) {
+	private void storeDirectSubmissions() {
 		List<Element> directSubMissionElements = xmlMissionNode
 				.selectNodes("./mission");
 		for (Element e : directSubMissionElements) {
 			directSubMissions.add(Mission.create(e.attributeValue("id"), this,
-					e, loadHandler));
+					e));
 		}
 	}
 
@@ -280,23 +271,6 @@ public class Mission implements Serializable {
 	 */
 	public void startMission() {
 		Intent startingIntent = this.startingIntent;
-		if (GeoQuestApp.useAdaptionEngine) {
-			String alternMissionId = GeoQuestApp.adaptionEngine
-					.getAlternativeMission(id);
-			if (!alternMissionId.equals(id)) {
-				if (Mission.existsMission(alternMissionId)) {
-					AlternativeMission alternativeM = (AlternativeMission) Mission
-							.get(alternMissionId);
-					alternativeM.setPlaceholderId(id);
-					startingIntent = ((Mission) alternativeM).startingIntent;
-				} else {
-					AlternativeMission alternativeM = AlternativeMission
-							.create(alternMissionId, id);
-					startingIntent = ((Mission) alternativeM).startingIntent;
-				}
-			}
-		}
-
 		if (startingIntent != null) {
 			String id = startingIntent.getStringExtra(MISSION_ID);
 			// do not keep the new mission on stack
