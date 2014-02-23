@@ -39,7 +39,7 @@ import edu.bonn.mobilegaming.geoquest.R;
  * @author Krischan Udelhoven
  * @author Folker Hoffmann
  */
-public class MapOverview extends MapNavigation implements HotspotListener {
+public class MapGoogle extends MapNavigation implements HotspotListener {
 
 	private static String TAG = "MapOverview";
 
@@ -282,7 +282,7 @@ public class MapOverview extends MapNavigation implements HotspotListener {
 				Element hotspot = i.next();
 				try {
 					HotspotOld newHotspot = HotspotOld.create(mission, hotspot);
-					newHotspot.addHotspotListener(MapOverview.this);
+					newHotspot.addHotspotListener(MapGoogle.this);
 					getHotspots().add(newHotspot);
 					// new hotspots are not added to myMapView.getOverlays();
 					// this would course a crash in nonmain thread;

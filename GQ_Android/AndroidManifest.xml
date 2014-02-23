@@ -67,7 +67,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mission.MapOverview"
+            android:name=".mission.MapGoogle"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
