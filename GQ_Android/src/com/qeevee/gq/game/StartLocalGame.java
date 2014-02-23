@@ -49,10 +49,10 @@ public class StartLocalGame extends
 			Document document = reader.read(gameXMLFile);
 			Mission.documentRoot = document.getRootElement();
 			setGlobalMissionLayout();
+			GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
 
 			Mission firstMission = createMissions();
 			createHotspots(Mission.documentRoot);
-			GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
 
 			// Only from now on we can access game ressources.
 
@@ -118,13 +118,11 @@ public class StartLocalGame extends
 	@Override
 	protected void onPostExecute(Boolean success) {
 		CharSequence toastText = null;
-		if (success)
-			toastText = "Game " + game.getName() + " downloaded.";
-		else
-			toastText = "Error while downloading game " + game.getName();
-		Toast.makeText(GeoQuestApp.getContext(), toastText, Toast.LENGTH_LONG)
-				.show();
-
+		if (!success) {
+			toastText = "Error startimng game " + game.getName();
+			Toast.makeText(GeoQuestApp.getContext(), toastText,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }
