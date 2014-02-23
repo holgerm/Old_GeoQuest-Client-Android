@@ -28,7 +28,6 @@ import android.content.res.AssetManager;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.adaptioninterfaces.AdaptionEngineInterface;
 import edu.bonn.mobilegaming.geoquest.contextmanager.xmlTagsContext;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
@@ -270,12 +269,10 @@ public class GameLoader {
 			Mission.documentRoot = getDocument(gameXMLFile).getRootElement();
 			setGlobalMissionLayout(predefinedUIFactories);
 			makeImprint(getDocument(gameXMLFile).getRootElement());
-			setAdaptionType();
 			setGameDuration();
 
 			sendMsgExpandingGame(handler);
 
-			initAdaptionEngine(getGameDirectory(gameXMLFile));
 			Mission firstMission = createMissions(handler);
 			// TODO initHotspots(document.getRootElement());
 			GeoQuestApp.setRunningGameDir(getGameDirectory(gameXMLFile));
@@ -366,8 +363,7 @@ public class GameLoader {
 		Iterator iterator = missionNodes.iterator(); iterator.hasNext();) {
 			Element missionNode = (Element) iterator.next();
 			String idOfMission = missionNode.attributeValue("id");
-			Mission curMission = Mission.create(idOfMission, null, missionNode,
-					handler);
+			Mission curMission = Mission.create(idOfMission, null, missionNode);
 			if (first) {
 				firstMission = curMission;
 				first = false;
@@ -416,40 +412,6 @@ public class GameLoader {
 		String layoutAttr = Mission.documentRoot.attributeValue("layout");
 		if (layoutAttr != null && layoutAttr.equals("html")) {
 			Mission.setUseWebLayoutGlobally(true);
-		}
-	}
-
-	private static void setAdaptionType() {
-		String adaptionType = null;
-		if (GeoQuestApp.useAdaptionEngine) {
-			adaptionType = Mission.documentRoot
-					.attributeValue(AdaptionEngineInterface.xmlTagAdaptionType);
-			if (adaptionType == null || (adaptionType.trim()).length() <= 0) {
-				GeoQuestApp.useAdaptionEngine = false;
-			} else {
-				GeoQuestApp.adaptionEngine.setType(adaptionType);
-			}
-		}
-	}
-
-	private static void initAdaptionEngine(File gameDirectory) {
-		if (GeoQuestApp.useAdaptionEngine) {
-			File cFile = new File(gameDirectory.getAbsolutePath()
-					+ "/contextpool.xml");
-			File mFile = new File(gameDirectory.getAbsolutePath()
-					+ "/missionpool.xml");
-			try {
-				// TODO -- Sabine -- runtimeTest löschen
-				// XmlToolsContextPool creator = new XmlToolsContextPool();
-				// creator.runtimeTest();
-				GeoQuestApp.adaptionEngine.createPools(getDocument(cFile));
-				AlternativeMission.setMissionPoolDocument(getDocument(mFile));
-			} catch (Exception e) {
-				GeoQuestApp.useAdaptionEngine = false;
-				Log.d(TAG,
-						"AdaptionEngine was stoped. The file contextpool.xml or missionpool.xml "
-								+ "weren't found or couldn't be parsed.");
-			}
 		}
 	}
 
