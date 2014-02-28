@@ -203,6 +203,10 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
-    <string name="startGameListHeadline">Games found:</string>
+    <string name="titleGamesInCloud">Games found in cloud:</string>
+    <string name="titleLocalGames">Games on this device:</string>
+    
+    <!-- DESCRIPTIONS for Accessibility -->
+    <string name="description_questIcon">Icon for a quest</string>
 
 </resources>

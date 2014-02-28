@@ -2,6 +2,7 @@
 <resources>
 
     <color name="background">#6c6c6c</color>
+    <color name="semitransparent">#99000000</color>
     <color name="foreground">#d4e9ff</color>
 
 </resources>

@@ -222,5 +222,10 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
-
+    <string name="titleGamesInCloud">Spiele auf dem Server:</string>
+    <string name="titleLocalGames">Spiele auf diesem Gerät:</string>
+    
+    <!-- DESCRIPTIONS for Accessibility -->
+    <string name="description_questIcon">Bild für ein Quest</string>
+    
 </resources>

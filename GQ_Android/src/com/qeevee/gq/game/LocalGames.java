@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import edu.bonn.mobilegaming.geoquest.R;
 
 public class LocalGames extends Activity {
 
-	ListView listView;
+	private ListView listView;
+	private TextView titleView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,8 @@ public class LocalGames extends Activity {
 		setContentView(R.layout.activity_game_list);
 
 		listView = (ListView) findViewById(R.id.listview);
+		titleView = (TextView) findViewById(R.id.titleGamesList);
+		titleView.setText(R.string.titleLocalGames);
 
 		List<GameDescription> games = GameDataManager.getGameDescriptions();
 		GameListAdapter listAdapter = new GameListAdapter(this,

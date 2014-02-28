@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qeevee.gq.host.HostConnector;
 
@@ -15,7 +16,8 @@ import edu.bonn.mobilegaming.geoquest.R;
 
 public class GamesInCloud extends Activity {
 
-	ListView listView;
+	private ListView listView;
+	private TextView titleView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,11 +25,13 @@ public class GamesInCloud extends Activity {
 		setContentView(R.layout.activity_game_list);
 
 		listView = (ListView) findViewById(R.id.listview);
+		titleView = (TextView) findViewById(R.id.titleGamesList);
+		titleView.setText(R.string.titleGamesInCloud);
 
 		final HostConnector connector = GeoQuestApp.getHostConnector();
 		List<GameDescription> games = connector.getGameList();
 		GameListAdapter listAdapter = new GameListAdapter(this,
-				android.R.layout.simple_list_item_1, games);
+				R.layout.list_item, games);
 
 		listView.setAdapter(listAdapter);
 

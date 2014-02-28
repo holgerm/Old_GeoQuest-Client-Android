@@ -2,21 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GamesInCloud" >
+    android:background="@drawable/background_gq" >
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1" />
+        android:layout_below="@+id/titleGamesList"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@drawable/background_text"
+        android:cacheColorHint="@color/semitransparent" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/titleGamesList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/listview"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/listview"
-        android:text="@string/startGameListHeadline" />
+        android:textSize="@dimen/title_size" />
 
 </RelativeLayout>
