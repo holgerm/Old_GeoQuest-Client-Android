@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Carl Benz in Karlsruhe</string>
-    <string name="quest_name">Carl Benz Tour</string>
-    <string name="imprint_authorName">Ulf Kerber</string>
-    <string name="imprint_city">Karlsruhe</string>
+    <string name="app_name">Entdecke Mülheim</string>
+    <string name="quest_name">Entdecke Mülheim</string>
+    <string name="imprint_authorName">V.I., M.K.</string>
+    <string name="imprint_city">-</string>
     <string name="imprint_email">TODO</string>
     <string name="imprint_fax">TODO</string>
     <string name="imprint_legalForm">TODO</string>
