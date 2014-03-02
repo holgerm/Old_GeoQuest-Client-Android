@@ -27,56 +27,74 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qeevee.gq.rules.act.Score;
+import com.qeevee.gq.rules.expr.Expressions;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
-public class PhotoPuzzle extends Question {
+/**
+ * This class implements a photo behind 15 black boxes one of which will be
+ * uncovered every 3 seconds until the user touches the screen or the time is
+ * out. If the user touches the screen, he gets the possibility to give an
+ * answer. He can try three times. If he guesses correctly the next mission will
+ * start, if the guess was wrong after three times the mission fails. 
+ * The level of visible boxes can be checked with the photopuzzlecounter variable,
+ * possible levels are 0,1 and 2.
+ * 
+ * @author Valeriya Ilyina
+ * @author Marieke Kunze
+ */
 
-	/** Hintergrundbild und Views der Zellen **/
+public class PhotoPuzzle extends InteractiveMission {
+
 	private ImageView photopuzzleImage;
-	private ImageView[] imageViewArray = new ImageView[15];
+	private TextView[] textViewArray = new TextView[15];
 
-	/** Eingabefenster **/
 	private TextView textView, textView_message;
 	private EditText answerText;
 	private Button button;
-	private CharSequence replyTextOnCorrect;
 	private CharSequence replyTextOnWrong;
+	boolean showReplyOnWrong = true;
 	private CharSequence questionText;
 	public List<String> answers = new ArrayList<String>();
 	private OnClickListener buttonOnClickListener;
 	private String storeVariable;
 	private int numberOfAnswers = 0;
-
-	/** unsichtbare Zellen **/
+	static final String PHOTOPUZZLECOUNTER = "photopuzzlecounter";
+	
 	private ArrayList<Integer> viewableSquares = new ArrayList<Integer>();
 
-	/** Countdowntimer */
 	private MyCountDownTimer myCountDownTimer;
 	private long duration, countdownInterval;
+
+	/**
+	 * This method initializes the layout of the photo puzzle.
+	 * 
+	 * @param savedInstanceState
+	 */
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.m_default_photopuzzle);
 
-		/** Hintergrundbild **/
 		photopuzzleImage = (ImageView) findViewById(R.id.photopuzzleimage);
 
-		/** Eingabe **/
 		textView = (TextView) findViewById(R.id.textView);
 		textView_message = (TextView) findViewById(R.id.textView_message);
 		initInput();
 		setImage();
 
-		/** Views der Zellen speichern **/
 		for (int i = 0; i < 15; i++) {
-			imageViewArray[i] = getImageView(i);
+			textViewArray[i] = getTextView(i);
+			textViewArray[i].setText("");
+			
 		}
 
 		photopuzzleImage.setOnClickListener(new OnClickListener() {
@@ -86,19 +104,23 @@ public class PhotoPuzzle extends Question {
 
 		});
 
-		/** Countdowntimer starten **/
 		duration = 51000;
 		countdownInterval = 3000;
 		myCountDownTimer = new MyCountDownTimer(duration, countdownInterval);
 		myCountDownTimer.start();
+		
+		Variables.setValue(PHOTOPUZZLECOUNTER, 0);
 
 	}
 
+	/**
+	 * Shows the question if the user has touched the screen
+	 * 
+	 */
+
 	private void showQuestion() {
 		myCountDownTimer.cancel();
-
 		photopuzzleImage.setVisibility(View.INVISIBLE);
-
 		textView.setVisibility(View.VISIBLE);
 		textView.setText(questionText);
 		answerText.setText("");
@@ -108,15 +130,18 @@ public class PhotoPuzzle extends Question {
 		button.setVisibility(View.VISIBLE);
 	}
 
+	/**
+	 * Initializes the input button and input box
+	 * 
+	 */
+
 	private void initInput() {
 		button = (Button) findViewById(R.id.acceptBT);
 		button.setEnabled(false);
 		buttonOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 				handleAnswer(evaluateAnswer());
-
 			}
-
 		};
 		button.setVisibility(View.INVISIBLE);
 
@@ -152,14 +177,21 @@ public class PhotoPuzzle extends Question {
 
 		questionText = getMissionAttribute("textQuestion",
 				XMLUtilities.NECESSARY_ATTRIBUTE);
-		replyTextOnCorrect = getMissionAttribute("replyOnCorrect",
-				R.string.question_reply_correct_default);
-		replyTextOnWrong = getMissionAttribute("replyOnWrong",
-				R.string.question_reply_wrong_default);
+		
 		storeVariable = (String) getMissionAttribute(
 				"storeAcceptedAnswerInVariable",
 				XMLUtilities.OPTIONAL_ATTRIBUTE);
-
+		
+		if((String) getMissionAttribute(
+				"replyOnWrong",
+				XMLUtilities.OPTIONAL_ATTRIBUTE) != null){
+				replyTextOnWrong = (String) getMissionAttribute(
+				"replyOnWrong",
+				XMLUtilities.OPTIONAL_ATTRIBUTE);
+		} else {
+			showReplyOnWrong = false;
+		}
+		
 		@SuppressWarnings("unchecked")
 		List<Element> xmlAnswers = ((Element) mission.xmlMissionNode)
 				.selectNodes("answers/answer");
@@ -174,10 +206,16 @@ public class PhotoPuzzle extends Question {
 
 	}
 
+	/**
+	 * Evaluates the answer given by the user and finishes the mission if he has
+	 * guessed correct
+	 * 
+	 * @param evaluateAnswer
+	 */
 	private void handleAnswer(boolean evaluateAnswer) {
 		numberOfAnswers++;
 		if (evaluateAnswer) {
-			GeoQuestApp.showMessage(replyTextOnCorrect);
+			setPhotopuzzleCounter();
 			finish(Globals.STATUS_SUCCEEDED);
 			invokeOnSuccessEvents();
 
@@ -188,7 +226,8 @@ public class PhotoPuzzle extends Question {
 			}
 
 			else {
-				GeoQuestApp.showMessage(replyTextOnWrong);
+				if(showReplyOnWrong)
+					GeoQuestApp.showMessage(replyTextOnWrong);
 				hideQuestion();
 
 			}
@@ -196,6 +235,22 @@ public class PhotoPuzzle extends Question {
 
 	}
 
+	private void setPhotopuzzleCounter() {
+		int counter;
+		if(viewableSquares.size()<=5)
+			counter = 0;
+		else if(viewableSquares.size()<=10)
+			counter = 1;
+		else 
+			counter = 2;
+		Variables.setValue(PHOTOPUZZLECOUNTER,
+				counter);		
+	}
+
+	/**
+	 * Hides the question button and text
+	 * 
+	 */
 	private void hideQuestion() {
 
 		textView.setVisibility(View.INVISIBLE);
@@ -208,6 +263,10 @@ public class PhotoPuzzle extends Question {
 
 	}
 
+	/**
+	 * Evaluates the answer given by user and returns true if correct
+	 */
+
 	private boolean evaluateAnswer() {
 		String givenAnswer = answerText.getText().toString();
 		boolean found = false;
@@ -219,6 +278,9 @@ public class PhotoPuzzle extends Question {
 
 	}
 
+	/**
+	 * Sets the puzzle Image
+	 */
 	private void setImage() {
 		String imgsrc = (String) XMLUtilities.getStringAttribute("puzzleImage",
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
@@ -238,35 +300,16 @@ public class PhotoPuzzle extends Question {
 
 	}
 
+	/**
+	 * Initializes a countdowntimer that reveals a box every 3 seconds If the
+	 * time runs out, the mission fails
+	 */
 	public class MyCountDownTimer extends CountDownTimer {
 		int counter = 0;
 		boolean firstCall = true;
 
 		public MyCountDownTimer(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
-			hidePicture();
-
-		}
-
-		private void hidePicture() {
-			int height = Math.round((getWindowManager().getDefaultDisplay()
-					.getHeight()) / 3);
-			int width = Math.round(getWindowManager().getDefaultDisplay()
-					.getWidth() / 5);
-
-			Bitmap blackbox2 = Bitmap.createBitmap((int) width, (int) height,
-					Bitmap.Config.ARGB_8888);
-
-			Canvas canvas2 = new Canvas(blackbox2);
-			Paint paintTransparent = new Paint();
-
-			paintTransparent.setColor(Color.TRANSPARENT);
-
-			for (int i = 0; i < imageViewArray.length; i++) {
-				imageViewArray[i].setImageBitmap(blackbox2);
-			}
-
-			canvas2.drawRect(0, 0, (int) 1, (int) 1, paintTransparent);
 
 		}
 
@@ -281,17 +324,17 @@ public class PhotoPuzzle extends Question {
 
 			Random rand = new Random();
 			int randomInt = 0;
-			ImageView view;
+			TextView view;
 
-			if (viewableSquares.size() == imageViewArray.length) {
+			if (viewableSquares.size() == textViewArray.length) {
 				onFinish();
 				return;
 			}
 
 			if (!firstCall) {
 				do {
-					randomInt = rand.nextInt(imageViewArray.length);
-					view = getImageView(randomInt);
+					randomInt = rand.nextInt(textViewArray.length);
+					view = getTextView(randomInt);
 				} while (viewableSquares.contains(randomInt));
 
 				view.setBackgroundColor(Color.TRANSPARENT);
@@ -303,48 +346,45 @@ public class PhotoPuzzle extends Question {
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public MissionOrToolUI getUI() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private ImageView getImageView(int i) {
-		// System.out.println("Hole View " + i);
+	private TextView getTextView(int i) {
 		switch (i) {
 		case 0:
-			return (ImageView) findViewById(R.id.blackbox1);
+			return (TextView) findViewById(R.id.blackbox1);
 		case 1:
-			return (ImageView) findViewById(R.id.blackbox2);
+			return (TextView) findViewById(R.id.blackbox2);
 		case 2:
-			return (ImageView) findViewById(R.id.blackbox3);
+			return (TextView) findViewById(R.id.blackbox3);
 		case 3:
-			return (ImageView) findViewById(R.id.blackbox4);
+			return (TextView) findViewById(R.id.blackbox4);
 		case 4:
-			return (ImageView) findViewById(R.id.blackbox5);
+			return (TextView) findViewById(R.id.blackbox5);
 		case 5:
-			return (ImageView) findViewById(R.id.blackbox6);
+			return (TextView) findViewById(R.id.blackbox6);
 		case 6:
-			return (ImageView) findViewById(R.id.blackbox7);
+			return (TextView) findViewById(R.id.blackbox7);
 		case 7:
-			return (ImageView) findViewById(R.id.blackbox8);
+			return (TextView) findViewById(R.id.blackbox8);
 		case 8:
-			return (ImageView) findViewById(R.id.blackbox9);
+			return (TextView) findViewById(R.id.blackbox9);
 		case 9:
-			return (ImageView) findViewById(R.id.blackbox10);
+			return (TextView) findViewById(R.id.blackbox10);
 		case 10:
-			return (ImageView) findViewById(R.id.blackbox11);
+			return (TextView) findViewById(R.id.blackbox11);
 		case 11:
-			return (ImageView) findViewById(R.id.blackbox12);
+			return (TextView) findViewById(R.id.blackbox12);
 		case 12:
-			return (ImageView) findViewById(R.id.blackbox13);
+			return (TextView) findViewById(R.id.blackbox13);
 		case 13:
-			return (ImageView) findViewById(R.id.blackbox14);
+			return (TextView) findViewById(R.id.blackbox14);
 		case 14:
-			return (ImageView) findViewById(R.id.blackbox15);
+			return (TextView) findViewById(R.id.blackbox15);
 		default:
 			return null;
 		}
