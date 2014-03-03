@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -26,6 +27,14 @@ import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import android.hardware.Camera.Size;
 
+/**
+ * This class records a video. The user can play it after the recording, discard it 
+ * or record it one more time.
+ * 
+ * @author Valeriya Ilyina
+ * @author Marieke Kunze
+ *
+ */
 public class VideoRecord extends InteractiveMission implements SurfaceHolder.Callback{
 
 	private static final String TAG = "VideoRecord";
@@ -57,7 +66,6 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 
 	private String mFileName = null;
 
-	// private CharSequence mURL;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -69,15 +77,15 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 				+ "/"
 				+ getMissionAttribute("file", R.string.videorecord_file_default);
 
-		// mURL = getMissionAttribute("url",
-		// XMLUtilities.OPTIONAL_ATTRIBUTE);
-
 		initTaskViewAndActivityIndicator();
 		initButtons();
 
 		setMode(MODE_INITIAL);
 	}
 
+	/**
+	 * Plays the recorded video
+	 */
 	private void startPlaying() {
 		mPlayer = new MediaPlayer();
 		mPlayer.setDisplay(holder);
@@ -98,19 +106,25 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		}
 	}
 
+	
+	/**
+	 * Stops the playing of the recorded video
+	 */
 	private void stopPlaying() {
 		mPlayer.release();
 		mPlayer = null;
 	}
 
+	/**
+	 * Starts recording the video
+	 */
+	@SuppressLint("NewApi")
 	private void startRecording() {
-		mCamera = open();
+		mCamera = Camera.open();
 
 		mCamera.stopPreview();
 		mCamera.setDisplayOrientation(90);
 		mCamera.unlock();
-		
-
 		
 		mRecorder = new MediaRecorder();
 		
@@ -140,6 +154,9 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		mRecorder.start();
 	}
 
+	/**
+	 * Stops recording the video.
+	 */
 	private void stopRecording() {
 		mRecorder.stop();
 		mRecorder.release();
@@ -158,6 +175,12 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		}
 	}
 
+	/**
+	 * Enables or disables the buttons if the user has made a recording 
+	 * or not.
+	 * 
+	 * @param newMode
+	 */
 	private void setMode(int newMode) {
 		switch (newMode) {
 		case MODE_INITIAL:
@@ -243,6 +266,9 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		}
 	}
 
+	/**
+	 * Initializes the buttons
+	 */
 	private void initButtons() {
 		recBT = (Button) findViewById(R.id.videoRecordRecordButton);
 		recBT.setOnClickListener(new OnClickListener() {
@@ -299,6 +325,9 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		});
 	}
 
+	/**
+	 * Initializes the camera preview on the surface view and the text view
+	 */
 	private void initTaskViewAndActivityIndicator() {
 		taskView = (TextView) findViewById(R.id.videoRecordTextView);
 		taskView.setText(getMissionAttribute("task",
@@ -335,12 +364,10 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public MissionOrToolUI getUI() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -357,38 +384,9 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		
 	}
 	
-	 private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
-		    Camera.Size result=null;
-
-		    for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
-		        if (size.width<=width && size.height<=height) {
-		            if (result==null) {
-		                result=size;
-		            } else {
-		                int resultArea=result.width*result.height;
-		                int newArea=size.width*size.height;
-
-		                if (newArea>resultArea) {
-		                    result=size;
-		                }
-		            }
-		        }
-		    }
-		    return(result);
-		}  
+	   
 	 
 
 
-   public Camera open() {
-       int numberOfCameras = Camera.getNumberOfCameras();
-       CameraInfo cameraInfo = new CameraInfo();
-       for (int i = 0; i < numberOfCameras; i++) {
-           Camera.getCameraInfo(i, cameraInfo);
-           if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-               return Camera.open(i);
-           }
-       }
-       return null;
-   }     
 
 }

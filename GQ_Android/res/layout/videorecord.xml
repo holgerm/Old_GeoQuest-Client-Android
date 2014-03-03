@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="30sp"
-        android:typeface="sans" />
+        android:typeface="sans" 
+        android:textColor="@color/foreground"/>
 
     <TextView
         android:id="@+id/videoRecordActivityIndicator"
@@ -23,7 +24,8 @@
         android:gravity="center"
         android:text="@string/videorecord_activityIndicator_initial"
         android:textSize="30sp"
-        android:typeface="sans" />
+        android:typeface="sans" 
+        android:textColor="@color/foreground"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
