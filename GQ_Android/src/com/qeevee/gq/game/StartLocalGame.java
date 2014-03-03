@@ -38,10 +38,7 @@ public class StartLocalGame extends
 
 	protected Boolean doInBackground(GameDescription... games) {
 		this.game = games[0];
-		String gameName = Integer.valueOf(game.getID()).toString();
-		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
-		gameDir = GameDataManager.getQuestDir(gameName);
-
+		File gameDir = GameDataManager.getQuestDir(game.getID());
 		File gameXMLFile = new File(gameDir, GameDataManager.GAME_XML_FILENAME);
 
 		SAXReader reader = new SAXReader();

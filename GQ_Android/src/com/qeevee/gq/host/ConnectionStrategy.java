@@ -4,6 +4,6 @@ public interface ConnectionStrategy {
 
 	String getGamesJSONString();
 
-	public abstract String getDownloadURL(int id);
+	public abstract String getDownloadURL(String id);
 
 }

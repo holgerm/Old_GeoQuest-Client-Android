@@ -47,7 +47,7 @@ public class HostConnector {
 		return gameList;
 	}
 
-	public String getDownloadURL(int id) {
+	public String getDownloadURL(String id) {
 		return connectionStrategy.getDownloadURL(id);
 	}
 }

@@ -28,7 +28,7 @@ public class GameListTests {
 		startWithServerMock("/testresponse/gamelist.json");
 
 		// WHEN:
-		startGameList();
+		startGameList(); 
 
 		// THEN:
 		shouldShowGames(1);

@@ -25,7 +25,7 @@ public class GameListAdapter extends ArrayAdapter<GameDescription> {
 
 	@Override
 	public long getItemId(int position) {
-		return getItem(position).getID();
+		return position;
 	}
 
 	@Override

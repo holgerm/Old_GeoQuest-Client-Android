@@ -43,7 +43,7 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 		return null;
 	}
 
-	public String getDownloadURL(int id) {
+	public String getDownloadURL(String id) {
 		return GQ_HOST_BASE_URL + GQ_HOST_GAMEPATH + id;
 	}
 
