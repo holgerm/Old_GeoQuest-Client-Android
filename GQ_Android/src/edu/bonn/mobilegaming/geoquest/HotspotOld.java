@@ -379,7 +379,7 @@ public class HotspotOld {
 	private List<Rule> onTapRules = new ArrayList<Rule>();
 	private float halfBitmapHeight;
 	private float halfBitmapWidth;
-	private boolean active;
+	private boolean active = true;
 
 	public boolean isActive() {
 		return active;
