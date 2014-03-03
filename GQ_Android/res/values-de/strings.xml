@@ -57,8 +57,8 @@
     <string name="menu_endGame">Quest beenden</string>
     <string name="menu_preferences">Einstellungen</string>
     <string name="menu_history">Verlauf</string>
-    <string name="menu_refreshGames">Aktualisieren</string>
-    <string name="menu_cloudsearch">Spiele finden</string>
+    <string name="menu_localGames">Spiele starten</string>
+    <string name="menu_gamesInCloud">Spiele finden</string>
     <string name="menu_imprint">Impressum</string>
     <string name="menu_inventory">Inventar</string>
 

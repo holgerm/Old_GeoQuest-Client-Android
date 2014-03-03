@@ -11,13 +11,13 @@
         android:id="@+id/menu_reload"
         android:checkable="false"
         android:icon="@drawable/icon_reload"
-        android:title="@string/menu_refreshGames">
+        android:title="@string/menu_localGames">
     </item>
     <item
         android:id="@+id/menu_cloudsearch"
         android:checkable="false"
         android:icon="@drawable/icon_reload"
-        android:title="@string/menu_cloudsearch">
+        android:title="@string/menu_gamesInCloud">
     </item>
 
 </menu>

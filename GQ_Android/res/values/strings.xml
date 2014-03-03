@@ -55,8 +55,8 @@
     <string name="menu_endGame">End game</string>
     <string name="menu_preferences">Prefs</string>
     <string name="menu_history">History</string>
-    <string name="menu_refreshGames">Refresh</string>
-    <string name="menu_cloudsearch">Load quests</string>
+    <string name="menu_localGames">Start quests</string>
+    <string name="menu_gamesInCloud">Load quests</string>
     <string name="menu_imprint">Imprint</string>
     <string name="menu_inventory">Inventory</string>
 
