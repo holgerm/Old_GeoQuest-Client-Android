@@ -180,6 +180,7 @@ public class BitmapUtil {
 	static {
 		KNOWN_BITMAP_SUFFIXES.add("png");
 		KNOWN_BITMAP_SUFFIXES.add("jpg");
+		KNOWN_BITMAP_SUFFIXES.add("gif");
 	};
 
 	private static String completeImageFileSuffix(String absolutePath) {
@@ -189,6 +190,8 @@ public class BitmapUtil {
 			return absolutePath + ".png";
 		else if (new File(absolutePath + ".jpg").canRead())
 			return absolutePath + ".jpg";
+		else if (new File(absolutePath + ".gif").canRead())
+			return absolutePath + ".gif";
 		else
 			throw new IllegalArgumentException(
 					"Invalid image path (not found): " + absolutePath);
