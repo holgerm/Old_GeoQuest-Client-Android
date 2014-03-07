@@ -3,6 +3,7 @@ package com.qeevee.gq.game;
 import java.util.List;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,28 +23,46 @@ public class GamesInCloud extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game_list);
+		setContentView(R.layout.gamesincloud);
 
 		listView = (ListView) findViewById(R.id.listview);
 		titleView = (TextView) findViewById(R.id.titleGamesList);
 		titleView.setText(R.string.titleGamesInCloud);
 
 		final HostConnector connector = GeoQuestApp.getHostConnector();
-		List<GameDescription> games = connector.getGameList();
-		GameListAdapter listAdapter = new GameListAdapter(this,
-				R.layout.list_item, games);
+		new GetGameList().execute(connector);
+	}
 
-		listView.setAdapter(listAdapter);
+	private class GetGameList extends
+			AsyncTask<HostConnector, Integer, List<GameDescription>> {
 
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		@Override
+		protected List<GameDescription> doInBackground(HostConnector... params) {
+			HostConnector connector = params[0];
+			List<GameDescription> games = connector.getGameList();
+			return games;
+		}
 
-			public void onItemClick(AdapterView<?> parent, final View view,
-					int position, long id) {
-				new DownloadGame().execute((GameDescription) parent
-						.getItemAtPosition(position));
-			}
+		@Override
+		protected void onPostExecute(List<GameDescription> games) {
+			GameListAdapter listAdapter = new GameListAdapter(
+					GamesInCloud.this, R.layout.list_item, games);
 
-		});
+			listView.setAdapter(listAdapter);
+
+			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+				public void onItemClick(AdapterView<?> parent, final View view,
+						int position, long id) {
+					new DownloadGame().execute((GameDescription) parent
+							.getItemAtPosition(position));
+				}
+
+			});
+
+			listView.invalidate();
+		}
+
 	}
 
 }

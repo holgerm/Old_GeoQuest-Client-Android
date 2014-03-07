@@ -25,6 +25,7 @@ public class StartLocalGame extends
 	private static final String TAG = StartLocalGame.class.getCanonicalName();
 	private GameDescription game;
 	private Class<? extends UIFactory> predefinedUIFactory = null;
+	private Mission firstMission;
 
 	/**
 	 * Used for test in order to set a test ui factory.
@@ -40,6 +41,7 @@ public class StartLocalGame extends
 		this.game = games[0];
 		File gameDir = GameDataManager.getQuestDir(game.getID());
 		File gameXMLFile = new File(gameDir, GameDataManager.GAME_XML_FILENAME);
+		GeoQuestApp.getInstance().clean();
 
 		SAXReader reader = new SAXReader();
 		try {
@@ -48,26 +50,19 @@ public class StartLocalGame extends
 			setGlobalMissionLayout();
 			GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
 
-			Mission firstMission = createMissions();
+			firstMission = createMissions();
 			createHotspots(Mission.documentRoot);
 
 			// Only from now on we can access game ressources.
 
 			GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
 					.element("imprint")));
-
-			if (firstMission != null) {
-				// TODO ReportingService muss jetzt schon gestartet sein!
-				GameSessionManager.setSessionID(Mission.documentRoot
-						.attributeValue("name"));
-				firstMission.startMission();
-			}
+			return true;
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-
-		return true;
 	}
 
 	private void setGlobalMissionLayout() {
@@ -116,9 +111,17 @@ public class StartLocalGame extends
 	protected void onPostExecute(Boolean success) {
 		CharSequence toastText = null;
 		if (!success) {
-			toastText = "Error startimng game " + game.getName();
+			toastText = "Error starting game " + game.getName();
 			Toast.makeText(GeoQuestApp.getContext(), toastText,
 					Toast.LENGTH_SHORT).show();
+		} else {
+			if (firstMission != null) {
+				// TODO ReportingService muss jetzt schon gestartet sein!
+				GameSessionManager.setSessionID(Mission.documentRoot
+						.attributeValue("name"));
+				firstMission.startMission();
+			}
+
 		}
 	}
 

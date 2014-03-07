@@ -57,10 +57,6 @@ public class Start extends GeoQuestActivity {
 
 		GameDataManager.getQuestsDir();
 
-		initProgressDialogs();
-
-		downloadRepoDataProgress = (ProgressBar) findViewById(R.id.start_progress_game_list);
-		gameListProgressDescr = (TextView) findViewById(R.id.start_game_list_progress_descr);
 		gameListButton = (GeoquestButton) findViewById(R.id.start_button_game_list);
 
 		gameListButton.setOnClickListener(new OnClickListener() {
@@ -73,16 +69,6 @@ public class Start extends GeoQuestActivity {
 		});
 
 		lastGameButton = (GeoquestButton) findViewById(R.id.start_button_last_game);
-	}
-
-	private void initProgressDialogs() {
-		downloadRepoDataDialog = new ProgressDialog(this);
-		downloadRepoDataDialog
-				.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		downloadRepoDataDialog.setCancelable(false);
-		startLocalGameDialog = new ProgressDialog(this);
-		startLocalGameDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		startLocalGameDialog.setCancelable(false);
 	}
 
 	/**
@@ -115,8 +101,6 @@ public class Start extends GeoQuestActivity {
 		}
 
 		GeoQuestApp.getInstance().setUsingAutostart(checkAndPerformAutostart());
-		if (!GeoQuestApp.getInstance().isUsingAutostart())
-			loadRepoData(false);
 
 		super.onResume();
 	}
