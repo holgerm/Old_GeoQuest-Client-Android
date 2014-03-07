@@ -16,12 +16,19 @@ public class HostConnector {
 
 	private ConnectionStrategy connectionStrategy;
 
+	public static final int GEOQUEST_PUBLIC_PORTAL_ID = 61;
+
 	public void setConnectionStrategy(ConnectionStrategy connectionStrategy) {
 		this.connectionStrategy = connectionStrategy;
 	}
 
 	public HostConnector() {
-		setConnectionStrategy(new DefaultConnectionStrategy());
+		setConnectionStrategy(new DefaultConnectionStrategy(
+				GEOQUEST_PUBLIC_PORTAL_ID));
+	}
+
+	public HostConnector(int portalID) {
+		setConnectionStrategy(new DefaultConnectionStrategy(portalID));
 	}
 
 	public ArrayList<GameDescription> getGameList() {

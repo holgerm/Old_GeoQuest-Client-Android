@@ -115,6 +115,13 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		currentActivity = activity;
 	}
 
+	public Activity getRunningActivityByID(String id) {
+		if (!missionActivities.containsKey(id))
+			return null;
+		else
+			return missionActivities.get(id);
+	}
+
 	public static GeoQuestApp getInstance() {
 		if (theApp == null)
 			Log.e(TAG, "GeoQuestApp instance accessed but not created yet!");
@@ -927,6 +934,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public static void setImprint(Imprint imprint) {
 		GeoQuestApp.imprint = imprint;
+	}
+
+	public void clean() {
+		missionActivities.clear();
 	}
 
 }

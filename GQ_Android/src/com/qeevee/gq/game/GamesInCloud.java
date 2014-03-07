@@ -1,5 +1,6 @@
 package com.qeevee.gq.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -29,8 +30,11 @@ public class GamesInCloud extends Activity {
 		titleView = (TextView) findViewById(R.id.titleGamesList);
 		titleView.setText(R.string.titleGamesInCloud);
 
-		final HostConnector connector = GeoQuestApp.getHostConnector();
-		new GetGameList().execute(connector);
+		final HostConnector publicHostConnector = GeoQuestApp
+				.getHostConnector();
+		final HostConnector gq_internalHostConnector = new HostConnector(1);
+		new GetGameList()
+				.execute(publicHostConnector, gq_internalHostConnector);
 	}
 
 	private class GetGameList extends
@@ -38,8 +42,10 @@ public class GamesInCloud extends Activity {
 
 		@Override
 		protected List<GameDescription> doInBackground(HostConnector... params) {
-			HostConnector connector = params[0];
-			List<GameDescription> games = connector.getGameList();
+			List<GameDescription> games = new ArrayList<GameDescription>();
+			for (HostConnector connector : params) {
+				games.addAll(connector.getGameList());
+			}
 			return games;
 		}
 
