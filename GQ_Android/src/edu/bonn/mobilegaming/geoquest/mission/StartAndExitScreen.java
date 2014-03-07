@@ -56,12 +56,14 @@ public class StartAndExitScreen extends MissionActivity {
 
 	private void setImage() {
 		String imgsrc = (String) XMLUtilities.getStringAttribute("image",
-				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
+				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
 			imageView
 					.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
 							.getRoundedCornerBitmap(
 									BitmapUtil.loadBitmap(imgsrc), 15)));
+		else
+			imageView.setBackgroundResource(R.drawable.bg);
 	}
 
 	/**
