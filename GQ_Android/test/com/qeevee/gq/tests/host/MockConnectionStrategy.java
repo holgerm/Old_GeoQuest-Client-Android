@@ -28,4 +28,10 @@ public class MockConnectionStrategy implements ConnectionStrategy {
 		return null;
 	}
 
+	@Override
+	public String getPortalID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
