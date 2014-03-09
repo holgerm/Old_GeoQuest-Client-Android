@@ -278,8 +278,10 @@ public class Mission implements Serializable {
 					| Intent.FLAG_ACTIVITY_NO_HISTORY);
 			if (GeoQuestApp.isMissionRunning(id)) {
 				Log.e(this.getClass().getName(), "Mission " + id
-						+ " is already running and not started again.");
-				return;
+						+ " is already running and restarted.");
+				startingIntent = GeoQuestApp.getInstance()
+						.getRunningActivityByID(id).getIntent();
+				startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
 			GameDataManager.stopAudio();
 			getMainActivity().startActivityForResult(startingIntent, 1);
@@ -341,6 +343,7 @@ public class Mission implements Serializable {
 
 	public static void clean() {
 		Mission.missionStore = new Hashtable<String, Mission>();
+		GeoQuestApp.getInstance().clean();
 	}
 
 	void setParent(Mission parent) {
