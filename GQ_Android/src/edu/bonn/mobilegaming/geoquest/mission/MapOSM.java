@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +28,6 @@ import android.view.View.OnClickListener;
 import com.qeevee.util.location.MapHelper;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
@@ -37,7 +35,7 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 /**
  * OpenStreetMap-based Map Navigation.
  */
-public class MapOSM extends MapNavigation implements HotspotListener {
+public class MapOSM extends MapNavigation {
 
 	private static String TAG = MapOSM.class.getCanonicalName();
 
@@ -231,24 +229,6 @@ public class MapOSM extends MapNavigation implements HotspotListener {
 			h.runOnTapEvent();
 		}
 
-	}
-
-	/**
-	 * Hotspot listener method. Is called when the player enters a hotspots
-	 * interaction circle. A button to start the mission from the hotspot is
-	 * shown.
-	 */
-	public void onEnterRange(HotspotOld h) {
-		Log.d(TAG, "Enter Hotspot with id: " + h.id);
-	}
-
-	/**
-	 * Hotspot listener method. Is called when the player leaves a hotspots
-	 * interaction circle. The button to start the mission of the hotspot
-	 * dislodged from the view.
-	 */
-	public void onLeaveRange(HotspotOld h) {
-		Log.d(TAG, "Leave Hotspot with id: " + h.id);
 	}
 
 	/** Intent used to return values to the parent mission */

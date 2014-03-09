@@ -50,9 +50,8 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 			currentItem.setMarker(hotspot.getDrawable());
 			itemList.add(currentItem);
 		}
-		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(getOSMap(),
-				itemList, gestureListener, new DefaultResourceProxyImpl(
-						getOSMap()));
+		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(itemList,
+				gestureListener, new DefaultResourceProxyImpl(getOSMap()));
 		itemizedOverlay.setUseSafeCanvas(false);
 		mapView.getOverlays().add(itemizedOverlay);
 

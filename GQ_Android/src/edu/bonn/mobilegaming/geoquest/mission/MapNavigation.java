@@ -22,14 +22,12 @@ import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
-public abstract class MapNavigation extends GeoQuestMapActivity implements
-		HotspotListener {
+public abstract class MapNavigation extends GeoQuestMapActivity {
 
 	protected MissionOrToolUI ui;
 
@@ -75,14 +73,6 @@ public abstract class MapNavigation extends GeoQuestMapActivity implements
 	protected Handler handler = new Handler();
 	protected LocationSource locationSource;
 	protected Mission mission;
-
-	public void onEnterRange(HotspotOld h) {
-		// TODO obsolete?
-	}
-
-	public void onLeaveRange(HotspotOld h) {
-		// TODO obsolete?
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

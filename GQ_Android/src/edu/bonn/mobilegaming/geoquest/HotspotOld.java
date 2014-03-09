@@ -165,7 +165,7 @@ public class HotspotOld {
 		}
 	}
 
-	private String name;
+	public String name;
 	private String description;
 
 	private String markerPath;
