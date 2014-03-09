@@ -22,13 +22,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs/osmdroid/osmdroid-android-4.1.jar" sourcepath="libs/osmdroid/osmdroid-android-4.1-sources.jar">
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="libs/osmdroid-android-4.1.jar" sourcepath="libs/osmdroid/osmdroid-android-4.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/GQ_Android/libsrc/osmdroid-android-4.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/osmdroid/osmdroid-third-party-4.1.jar" sourcepath="libs/osmdroid/osmdroid-third-party-4.1-sources.jar">
+	<classpathentry kind="lib" path="libs/osmdroid-third-party-4.1.jar" sourcepath="libs/osmdroid/osmdroid-third-party-4.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/GQ_Android/libs/osmdroid/osmdroid-third-party-4.1-javadoc.jar!/"/>
 		</attributes>
