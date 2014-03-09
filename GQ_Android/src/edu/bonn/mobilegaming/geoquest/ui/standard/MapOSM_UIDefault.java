@@ -1,15 +1,21 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
 import org.osmdroid.views.overlay.MyLocationOverlay;
-import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.qeevee.gq.map.OSMItemizedOverlay;
+
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -32,14 +38,27 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		myLocationOverlay.enableMyLocation();
 		myLocationOverlay.setCompassCenter(60L, 60L);
 		mapView.getOverlays().add(myLocationOverlay);
-		List<Overlay> mapOverlays = mapView.getOverlays();
+		// List<Overlay> mapOverlays = mapView.getOverlays();
+
+		OverlayItem currentItem;
+		List<OverlayItem> itemList = new ArrayList<OverlayItem>();
 		for (Iterator<HotspotOld> iterator = HotspotOld.getListOfHotspots()
 				.iterator(); iterator.hasNext();) {
 			HotspotOld hotspot = (HotspotOld) iterator.next();
-			mapOverlays.add(hotspot.getOSMOverlay());
+			currentItem = new OverlayItem(hotspot.getId(), hotspot.getName(),
+					hotspot.getDescription(), hotspot.getOSMGeoPoint());
+			currentItem.setMarker(hotspot.getDrawable());
+			itemList.add(currentItem);
 		}
+		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(getOSMap(),
+				itemList, gestureListener, new DefaultResourceProxyImpl(
+						getOSMap()));
+		itemizedOverlay.setUseSafeCanvas(false);
+		mapView.getOverlays().add(itemizedOverlay);
 
 		GeoQuestApp.getInstance().setOSMap(mapView);
+		// mapView.invalidate();
+
 	}
 
 	private MyLocationOverlay myLocationOverlay;
@@ -78,5 +97,18 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		myLocationOverlay.enableMyLocation();
 		getOSMap().getMapHelper().setCenter();
 	}
+
+	private OnItemGestureListener<OverlayItem> gestureListener = new OnItemGestureListener<OverlayItem>() {
+
+		public boolean onItemLongPress(int index, OverlayItem item) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		public boolean onItemSingleTapUp(int index, OverlayItem item) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	};
 
 }

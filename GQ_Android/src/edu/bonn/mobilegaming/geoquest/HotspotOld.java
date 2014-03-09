@@ -11,18 +11,15 @@ import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.Projection;
+import com.qeevee.gq.map.GoogleHotspotOverlay;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
@@ -89,115 +86,30 @@ public class HotspotOld {
 	private HotspotOld(String _id) {
 		Log.d(getClass().getName(), "constructing hotspot. id=" + _id);
 		id = _id;
-		googleOverlay = new Overlay() {
+		googleOverlay = new GoogleHotspotOverlay(this);
 
-			@Override
-			public void draw(Canvas canvas, MapView view, boolean shadow) {
-				if (!HotspotOld.this.isVisible())
-					return; // If it is invisible there is not really much to
-				// draw...
-				Projection projection = view.getProjection();
-				Point screenPoint = new Point();
-				projection.toPixels(geoPoint, screenPoint);
-
-				// draw Bitmap
-				canvas.drawBitmap(bitmap, screenPoint.x
-						- HotspotOld.this.halfBitmapWidth, screenPoint.y
-						- HotspotOld.this.halfBitmapHeight, null);
-
-				// draw interaction circle
-				if (drawCircle) {
-					// TODO verify that this works
-					float mPixRadius = (float) (view.getProjection()
-							.metersToEquatorPixels(radius) * (1 / Math.cos(Math
-							.toRadians(geoPoint.getLatitudeE6() / 1E6))));
-					canvas.drawCircle(screenPoint.x, screenPoint.y, mPixRadius,
-							paint);
-				}
-			}
-
-			/**
-			 * tap handler. Tests if the current hotspots is tapped and if so
-			 * starts the a new mission.
-			 */
-			@Override
-			public boolean onTap(GeoPoint point, MapView mapView) {
-
-				// hit test
-				Projection projection = mapView.getProjection();
-				Point screenPoint = new Point();
-				projection.toPixels(geoPoint, screenPoint);
-
-				RectF hitTestRect = new RectF();
-				hitTestRect.set(-bitmap.getWidth() / 2,
-						-bitmap.getHeight() / 2, bitmap.getWidth() / 2,
-						bitmap.getHeight() / 2);
-
-				hitTestRect.offset(screenPoint.x, screenPoint.y);
-
-				projection.toPixels(point, screenPoint);
-				if (hitTestRect.contains(screenPoint.x, screenPoint.y)) {
-
-					if (!isInRange)
-						drawCircle = !drawCircle;
-					else {
-					}
-
-					// start the event
-					Log.d("", "a");
-					runOnTapEvent();
-
-					return true;
-				}
-				return false;
-			}
-
-		};
-		osmOverlay = new org.osmdroid.views.overlay.Overlay(
-				GeoQuestApp.getContext()) {
-
-			@Override
-			protected void draw(Canvas canvas, org.osmdroid.views.MapView view,
-					boolean arg2) {
-				if (!HotspotOld.this.isVisible())
-					return; // If it is invisible there is not really much to
-				// draw...
-				org.osmdroid.views.MapView.Projection projection = view
-						.getProjection();
-				Point screenPoint = new Point(); // TODO can we reuse a field?
-				projection.toPixels(new org.osmdroid.google.wrapper.GeoPoint(
-						HotspotOld.this.geoPoint), screenPoint);
-
-				// draw Bitmap
-				canvas.drawBitmap(bitmap, screenPoint.x
-						- HotspotOld.this.halfBitmapWidth, screenPoint.y
-						- HotspotOld.this.halfBitmapHeight, null);
-
-				// draw interaction circle
-				if (drawCircle) {
-					// TODO verify that this works
-					float mPixRadius = (float) (view.getProjection()
-							.metersToEquatorPixels(radius) * (1 / Math.cos(Math
-							.toRadians(geoPoint.getLatitudeE6() / 1E6))));
-					canvas.drawCircle(screenPoint.x, screenPoint.y, mPixRadius,
-							paint);
-				}
-			}
-
-		};
 		allHotspots.put(id, this);
 	}
 
 	/** location of the hotspot */
-	private GeoPoint geoPoint;
+	public GeoPoint geoPoint;
+
 	public GeoPoint getGeoPoint() {
 		return geoPoint;
 	}
 
+	public org.osmdroid.util.GeoPoint getOSMGeoPoint() {
+		return new org.osmdroid.util.GeoPoint(geoPoint.getLatitudeE6(),
+				geoPoint.getLongitudeE6());
+	}
+
 	/** icon of the hotspot on the map */
-	private Bitmap bitmap;
-	/** should the interaction circle be drawn or not? */
-	private boolean drawCircle;
+	public Bitmap bitmap;
+
+	public Drawable getDrawable() {
+		return new BitmapDrawable(bitmap);
+	}
+
 	/** true if the user is in range of the hotspot */
 	public boolean isInRange;
 
@@ -206,7 +118,6 @@ public class HotspotOld {
 	 * Default is <code>true</code>.
 	 */
 	private boolean visible = true;
-	private org.osmdroid.views.overlay.Overlay osmOverlay;
 	private Overlay googleOverlay;
 
 	public boolean isVisible() {
@@ -221,14 +132,10 @@ public class HotspotOld {
 		return googleOverlay;
 	}
 
-	public org.osmdroid.views.overlay.Overlay getOSMOverlay() {
-		return osmOverlay;
-	}
-
 	/** radius of the interaction circle */
-	private int radius;
+	public int radius;
 	/** needed for painting the interaction circle */
-	private Paint paint;
+	public Paint paint;
 	/** id of the hotspot */
 	public String id;
 
@@ -259,14 +166,15 @@ public class HotspotOld {
 		}
 	}
 
-	/** the mapmission the hotspot belongs to */
-	// private Mission parentMission;
-
 	private List<HotspotListener> listener = new LinkedList<HotspotListener>();
 	private String name;
 	private String description;
 
-	// private String iconRessource;
+	private String markerPath;
+
+	public String getMarkerPath() {
+		return markerPath;
+	}
 
 	public static class IllegalHotspotNodeException extends RuntimeException {
 
@@ -316,9 +224,9 @@ public class HotspotOld {
 				+ Variables.LOCATION_SUFFIX, geoPoint);
 
 		// image
-		String imgsrc = _hotspotNode.attributeValue("img");
-		if (imgsrc != null) {
-			setBitmap(BitmapUtil.loadBitmap(imgsrc, false));
+		markerPath = _hotspotNode.attributeValue("img");
+		if (markerPath != null) {
+			setBitmap(BitmapUtil.loadBitmap(markerPath, false));
 		} else {
 			setBitmap(((BitmapDrawable) GeoQuestApp.getInstance()
 					.getResources()
@@ -335,8 +243,9 @@ public class HotspotOld {
 			this.setVisible(false);
 		}
 
-		setActive("true".equals(XMLUtilities.getStringAttribute("initialActivity",
-				R.string.hotspot_default_activity, _hotspotNode)));
+		setActive("true".equals(XMLUtilities.getStringAttribute(
+				"initialActivity", R.string.hotspot_default_activity,
+				_hotspotNode)));
 
 		// Retrieve name attribute:
 		if (_hotspotNode.attributeValue("name") != null)
@@ -360,7 +269,6 @@ public class HotspotOld {
 
 		createRules(_hotspotNode);
 
-		drawCircle = false;
 		isInRange = false;
 		// TODO: add features like name, description, icon to use in Augmented
 		// Reality Browser
@@ -377,8 +285,8 @@ public class HotspotOld {
 	private List<Rule> onEnterRules = new ArrayList<Rule>();
 	private List<Rule> onLeaveRules = new ArrayList<Rule>();
 	private List<Rule> onTapRules = new ArrayList<Rule>();
-	private float halfBitmapHeight;
-	private float halfBitmapWidth;
+	public float halfBitmapHeight;
+	public float halfBitmapWidth;
 	private boolean active = true;
 
 	public boolean isActive() {
