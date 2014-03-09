@@ -17,7 +17,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -26,7 +25,6 @@ import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotListener;
 import edu.bonn.mobilegaming.geoquest.HotspotOld;
 import edu.bonn.mobilegaming.geoquest.R;
 
@@ -39,14 +37,10 @@ import edu.bonn.mobilegaming.geoquest.R;
  * @author Krischan Udelhoven
  * @author Folker Hoffmann
  */
-public class MapGoogle extends MapNavigation implements HotspotListener {
-
-	private static String TAG = "MapOverview";
+public class MapGoogle extends MapNavigation {
 
 	private MapView myMapView;
 	private MyLocationOverlay myLocationOverlay;
-
-	private LinearLayout startMissionPanel;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -78,9 +72,6 @@ public class MapGoogle extends MapNavigation implements HotspotListener {
 
 		initZoom();
 		initGPSMock();
-
-		// startMissionsList
-		startMissionPanel = (LinearLayout) findViewById(R.id.startMissionPanel);
 
 		// Players Location Overlay
 		myLocationOverlay = new MyLocationOverlay(this, myMapView);
@@ -137,51 +128,6 @@ public class MapGoogle extends MapNavigation implements HotspotListener {
 		public void onClick(View v) {
 			HotspotOld h = (HotspotOld) v.getTag();
 			h.runOnTapEvent();
-		}
-
-	}
-
-	/**
-	 * Hotspot listener method. Is called when the player enters a hotspots
-	 * interaction circle. A button to start the mission from the hotspot is
-	 * shown.
-	 */
-	public void onEnterRange(HotspotOld h) {
-		Log.d(TAG, "Enter Hotspot with id: " + h.id);
-
-		/*
-		 * TODO: remove buttons ? //TODO: also add button when visible conditons
-		 * are fulfilled and player was already in range
-		 * if(h.visibleConditionsFulfilled()){ Button b = new Button(this);
-		 * 
-		 * b.setText(h.id);// TODO: text on button should not be the id //
-		 * b.setBackgroundColor(Color.argb(180, 0, 0, 0)); //Teiltransparentes
-		 * Schwarz b.setTextColor(Color.BLACK); b.setTextSize(18);
-		 * b.setGravity(Gravity.CENTER); b.setTag(h); // Hotspot speichern
-		 * b.setOnClickListener(myMissionOnClickListener);
-		 * b.setVisibility(View.VISIBLE); startMissionPanel.addView(b); }
-		 */
-	}
-
-	/**
-	 * Hotspot listener method. Is called when the player leaves a hotspots
-	 * interaction circle. The button to start the mission of the hotspot
-	 * dislodged from the view.
-	 */
-	public void onLeaveRange(HotspotOld h) {
-		Log.d(TAG, "Leave Hotspot with id: " + h.id);
-		// Find the Child, which equals the given hotspot:
-		int numButtons = startMissionPanel.getChildCount();
-		View childView = null;
-		for (int i = 0; i < numButtons; i++) {
-			if (startMissionPanel.getChildAt(i).getTag().equals(h)) {
-				childView = startMissionPanel.getChildAt(i);
-				break;
-			}
-		}
-		// Remove this child:
-		if (childView != null) {
-			startMissionPanel.removeView(childView);
 		}
 
 	}
@@ -282,7 +228,6 @@ public class MapGoogle extends MapNavigation implements HotspotListener {
 				Element hotspot = i.next();
 				try {
 					HotspotOld newHotspot = HotspotOld.create(mission, hotspot);
-					newHotspot.addHotspotListener(MapGoogle.this);
 					getHotspots().add(newHotspot);
 					// new hotspots are not added to myMapView.getOverlays();
 					// this would course a crash in nonmain thread;

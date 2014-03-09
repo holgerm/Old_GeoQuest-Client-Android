@@ -2,7 +2,6 @@ package edu.bonn.mobilegaming.geoquest;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -166,7 +165,6 @@ public class HotspotOld {
 		}
 	}
 
-	private List<HotspotListener> listener = new LinkedList<HotspotListener>();
 	private String name;
 	private String description;
 
@@ -337,66 +335,24 @@ public class HotspotOld {
 				GeoQuestApp.GQ_MANUAL_LOCATION_PROVIDER);
 		hotspotLocation.setLatitude(geoPoint.getLatitudeE6() / 1E6);
 		hotspotLocation.setLongitude(geoPoint.getLongitudeE6() / 1E6);
-		boolean preActive = isInRange;
+		boolean wasInRangeBefore = isInRange;
 
 		if (loc.distanceTo(hotspotLocation) <= radius) {
 			isInRange = true;
 			paint.setARGB(80, 255, 0, 0);
 			// rest of the game
-			if (!preActive) {
-				fireChanges(Triggers.ON_ENTER); // Der Hotspot wurde aktiv
+			if (!wasInRangeBefore) {
 				runOnEnterEvent();
 			}
 			return true;
 		} else {
 			paint.setARGB(80, 0, 0, 255);
 			isInRange = false;
-			if (preActive) {
-				fireChanges(Triggers.ON_LEAVE); // Der Hotspot wurde inaktiv
+			if (wasInRangeBefore) {
 				runOnLeaveEvent();
 			}
 			return false;
 		}
-	}
-
-	/**
-	 * informs the registrated hotspotlisteners
-	 * 
-	 * @param t
-	 */
-	private void fireChanges(Triggers t) {
-		Log.d(TAG, "fireChanges");
-		for (HotspotListener hl : listener) {
-			if (t.equals(Triggers.ON_ENTER)) {
-				isInRange = true;
-				hl.onEnterRange(this);
-			} else if (t.equals(Triggers.ON_LEAVE)) {
-				isInRange = false;
-				hl.onLeaveRange(this);
-			}
-		}
-
-	}
-
-	/**
-	 * adds a new hotspot listener. The listener is informed when the player
-	 * enters or leaves the interaction circle of the hotspot.
-	 * 
-	 * @param h
-	 *            listener to be added
-	 */
-	public void addHotspotListener(HotspotListener h) {
-		listener.add(h);
-	}
-
-	/**
-	 * removed a listener
-	 * 
-	 * @param h
-	 *            listener to be removed
-	 */
-	public void removeHotspotListener(HotspotListener h) {
-		listener.remove(h);
 	}
 
 	public void setBitmap(Bitmap bitmap) {
