@@ -42,11 +42,24 @@ public class GamesInCloud extends Activity {
 
 		@Override
 		protected List<GameDescription> doInBackground(HostConnector... params) {
-			List<GameDescription> games = new ArrayList<GameDescription>();
+			List<GameDescription> collectedGames = new ArrayList<GameDescription>();
+			List<GameDescription> curHostGames;
 			for (HostConnector connector : params) {
-				games.addAll(connector.getGameList());
+				curHostGames = connector.getGameList();
+				for (GameDescription curOtherGameDescription : curHostGames) {
+					boolean alreadyInList = false;
+					for (GameDescription existingGameDescription : collectedGames) {
+						if (existingGameDescription.getID().equals(
+								curOtherGameDescription.getID())) {
+							alreadyInList = true;
+							break;
+						}
+					}
+					if (!alreadyInList)
+						collectedGames.add(curOtherGameDescription);
+				}
 			}
-			return games;
+			return collectedGames;
 		}
 
 		@Override
