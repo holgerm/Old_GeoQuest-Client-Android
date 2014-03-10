@@ -28,7 +28,7 @@ import android.view.View.OnClickListener;
 import com.qeevee.util.location.MapHelper;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
@@ -225,7 +225,7 @@ public class MapOSM extends MapNavigation {
 	public class StartMissionOnClickListener implements OnClickListener {
 
 		public void onClick(View v) {
-			HotspotOld h = (HotspotOld) v.getTag();
+			Hotspot h = (Hotspot) v.getTag();
 			h.runOnTapEvent();
 		}
 

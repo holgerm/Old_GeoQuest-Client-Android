@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import edu.bonn.mobilegaming.geoquest.GameSessionManager;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.Imprint;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -138,8 +138,8 @@ public class LocalGames extends Activity {
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
 			try {
-				HotspotOld.create(null, hotspot);
-			} catch (HotspotOld.IllegalHotspotNodeException exception) {
+				Hotspot.create(null, hotspot);
+			} catch (Hotspot.IllegalHotspotNodeException exception) {
 				Log.e(TAG, exception.toString());
 			}
 		}

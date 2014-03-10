@@ -2,18 +2,18 @@ package com.qeevee.gq.map;
 
 import org.osmdroid.views.overlay.OverlayItem;
 
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 
 public class OSMOverlayItem extends OverlayItem {
 
-	private HotspotOld hotspot;
+	private Hotspot hotspot;
 
-	public OSMOverlayItem(HotspotOld hotspot) {
+	public OSMOverlayItem(Hotspot hotspot) {
 		super(hotspot.id, hotspot.name, hotspot.getOSMGeoPoint());
 		this.hotspot = hotspot;
 	}
 
-	public HotspotOld getHotspot() {
+	public Hotspot getHotspot() {
 		return hotspot;
 	}
 

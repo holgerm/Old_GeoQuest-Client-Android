@@ -8,7 +8,7 @@ import org.osmdroid.util.GeoPoint;
 
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
 
 public class MapHelper {
@@ -35,9 +35,9 @@ public class MapHelper {
 				mapController.animateTo(point);
 
 				// calculate distance to hotspots
-				for (Iterator<HotspotOld> i = mapMission.getHotspots()
+				for (Iterator<Hotspot> i = mapMission.getHotspots()
 						.listIterator(); i.hasNext();) {
-					HotspotOld hotspot = i.next();
+					Hotspot hotspot = i.next();
 					// TODO: throws a
 					// ConcurrentModificationException
 					// sometimes (hm)
@@ -63,7 +63,7 @@ public class MapHelper {
 			mapController.animateTo(location2GP(locationListener
 					.getLastLocation()));
 		} else {
-			List<HotspotOld> hotspots = this.mapMission.getHotspots();
+			List<Hotspot> hotspots = this.mapMission.getHotspots();
 			if (hotspots.size() > 0) {
 				com.google.android.maps.GeoPoint firstAGP = hotspots.get(0)
 						.getPosition();

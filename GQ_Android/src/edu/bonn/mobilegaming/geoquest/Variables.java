@@ -82,7 +82,7 @@ public class Variables {
 				&& varName.endsWith(VISIBLE_SUFFIX)) {
 			String hotspotID = varName.substring(HOTSPOT_PREFIX.length(),
 					varName.length() - VISIBLE_SUFFIX.length());
-			Boolean.toString(HotspotOld.getExisting(hotspotID).isVisible());
+			Boolean.toString(Hotspot.getExisting(hotspotID).isVisible());
 		}
 		if (varName.startsWith("$")) {
 			if (varName.equals(LOCATION_LAT)) {

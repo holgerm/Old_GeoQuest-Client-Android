@@ -679,7 +679,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public void endGame() {
 		stopAudio();
 		Mission.clean();
-		HotspotOld.clean();
+		Hotspot.clean();
 		Variables.clean();
 		Activity[] allActivities = new Activity[activities.size()];
 		activities.toArray(allActivities);

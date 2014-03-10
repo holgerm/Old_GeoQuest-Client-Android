@@ -10,14 +10,14 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
 
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 
 public class GoogleHotspotOverlay extends Overlay {
 
-	private HotspotOld hotspot;
+	private Hotspot hotspot;
 	private boolean drawCircle = false;
 
-	public GoogleHotspotOverlay(HotspotOld hotspot) {
+	public GoogleHotspotOverlay(Hotspot hotspot) {
 		this.hotspot = hotspot;
 	}
 

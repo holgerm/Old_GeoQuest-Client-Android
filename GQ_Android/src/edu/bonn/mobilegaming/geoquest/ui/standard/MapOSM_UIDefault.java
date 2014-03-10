@@ -17,7 +17,7 @@ import android.view.View;
 import com.qeevee.gq.map.OSMItemizedOverlay;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
@@ -42,9 +42,9 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 
 		OverlayItem currentItem;
 		List<OverlayItem> itemList = new ArrayList<OverlayItem>();
-		for (Iterator<HotspotOld> iterator = HotspotOld.getListOfHotspots()
+		for (Iterator<Hotspot> iterator = Hotspot.getListOfHotspots()
 				.iterator(); iterator.hasNext();) {
-			HotspotOld hotspot = (HotspotOld) iterator.next();
+			Hotspot hotspot = (Hotspot) iterator.next();
 			currentItem = new OverlayItem(hotspot.getId(), hotspot.getName(),
 					hotspot.getDescription(), hotspot.getOSMGeoPoint());
 			currentItem.setMarker(hotspot.getDrawable());

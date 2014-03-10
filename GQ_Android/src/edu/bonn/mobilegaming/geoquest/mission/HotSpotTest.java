@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
@@ -28,7 +28,7 @@ public class HotSpotTest extends MissionActivity {
 		setContentView(R.layout.hotspottest);
 
 		String hotspotID = mission.xmlMissionNode.attributeValue("targetID");
-		HotspotOld hotspot = HotspotOld.get(hotspotID);
+		Hotspot hotspot = Hotspot.get(hotspotID);
 		GeoPoint gp = hotspot.getGeoPoint();
 		int longitude = gp.getLongitudeE6();
 		int latitude = gp.getLatitudeE6();

@@ -25,7 +25,7 @@ import com.qeevee.util.location.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 
 /**
@@ -126,7 +126,7 @@ public class MapGoogle extends MapNavigation {
 	public class StartMissionOnClickListener implements OnClickListener {
 
 		public void onClick(View v) {
-			HotspotOld h = (HotspotOld) v.getTag();
+			Hotspot h = (Hotspot) v.getTag();
 			h.runOnTapEvent();
 		}
 
@@ -174,9 +174,9 @@ public class MapGoogle extends MapNavigation {
 				// this would cause a crash in nonmain thread; so this is done
 				// here
 				List<Overlay> mapOverlays = myMapView.getOverlays();
-				for (Iterator<HotspotOld> iterator = getHotspots().iterator(); iterator
+				for (Iterator<Hotspot> iterator = getHotspots().iterator(); iterator
 						.hasNext();) {
-					HotspotOld hotspot = (HotspotOld) iterator.next();
+					Hotspot hotspot = (Hotspot) iterator.next();
 					mapOverlays.add(hotspot.getGoogleOverlay());
 				}
 				// mapOverlays.addAll(hotspots);
@@ -227,12 +227,12 @@ public class MapGoogle extends MapNavigation {
 			for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 				Element hotspot = i.next();
 				try {
-					HotspotOld newHotspot = HotspotOld.create(mission, hotspot);
+					Hotspot newHotspot = Hotspot.create(mission, hotspot);
 					getHotspots().add(newHotspot);
 					// new hotspots are not added to myMapView.getOverlays();
 					// this would course a crash in nonmain thread;
 					// readxmlHandler will add them later
-				} catch (HotspotOld.IllegalHotspotNodeException exception) {
+				} catch (Hotspot.IllegalHotspotNodeException exception) {
 					Log.e("MapOverview.readXML", exception.toString());
 				}
 

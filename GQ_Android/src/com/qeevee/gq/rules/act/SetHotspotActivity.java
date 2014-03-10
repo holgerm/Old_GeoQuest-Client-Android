@@ -1,7 +1,7 @@
 package com.qeevee.gq.rules.act;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 
 public class SetHotspotActivity extends Action {
 
@@ -12,7 +12,7 @@ public class SetHotspotActivity extends Action {
 
 	@Override
 	public void execute() {
-		HotspotOld hotspot = HotspotOld.getExisting(params.get("id"));
+		Hotspot hotspot = Hotspot.getExisting(params.get("id"));
 		if (hotspot == null)
 			return;
 		if (params.get("mode").equals("true")) {

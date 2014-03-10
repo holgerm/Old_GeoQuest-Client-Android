@@ -22,7 +22,7 @@ import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
@@ -86,8 +86,8 @@ public abstract class MapNavigation extends GeoQuestMapActivity {
 		mission.setStatus(Globals.STATUS_RUNNING);
 	}
 
-	public List<HotspotOld> getHotspots() {
-		return HotspotOld.getListOfHotspots();
+	public List<Hotspot> getHotspots() {
+		return Hotspot.getListOfHotspots();
 	}
 
 	protected void initZoom() {

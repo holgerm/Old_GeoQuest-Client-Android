@@ -7,23 +7,23 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
-import edu.bonn.mobilegaming.geoquest.HotspotOld;
+import edu.bonn.mobilegaming.geoquest.Hotspot;
 
 public class OSMItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
 
-	private List<HotspotOld> hotspots;
+	private List<Hotspot> hotspots;
 
 	public OSMItemizedOverlay(List<OverlayItem> itemlist,
 			OnItemGestureListener<OverlayItem> itemGestureListener,
 			ResourceProxy resourceProxy) {
 		super(itemlist, itemGestureListener, resourceProxy);
-		hotspots = HotspotOld.getListOfHotspots();
+		hotspots = Hotspot.getListOfHotspots();
 	}
 
 	public void updateHotspots() {
-		hotspots = HotspotOld.getListOfHotspots();
+		hotspots = Hotspot.getListOfHotspots();
 		OSMOverlayItem item;
-		for (HotspotOld curHotspot : hotspots) {
+		for (Hotspot curHotspot : hotspots) {
 			item = new OSMOverlayItem(curHotspot);
 			item.setMarker(curHotspot.getDrawable());
 			this.addItem(item);
@@ -34,7 +34,7 @@ public class OSMItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
 	protected boolean onSingleTapUpHelper(int index, OverlayItem item,
 			MapView mapView) {
 		if (item instanceof OSMOverlayItem) {
-			HotspotOld hotspot = ((OSMOverlayItem) item).getHotspot();
+			Hotspot hotspot = ((OSMOverlayItem) item).getHotspot();
 			hotspot.runOnTapEvent();
 		}
 		return true;

@@ -523,8 +523,8 @@ public class GameLoader {
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
 			try {
-				HotspotOld.create(null, hotspot);
-			} catch (HotspotOld.IllegalHotspotNodeException exception) {
+				Hotspot.create(null, hotspot);
+			} catch (Hotspot.IllegalHotspotNodeException exception) {
 				Log.e(TAG, exception.toString());
 			}
 		}
