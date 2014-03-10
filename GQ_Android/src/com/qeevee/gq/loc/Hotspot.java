@@ -1,10 +1,7 @@
-package edu.bonn.mobilegaming.geoquest;
+package com.qeevee.gq.loc;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -18,10 +15,15 @@ import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Overlay;
-import com.qeevee.gq.map.GoogleHotspotOverlay;
+import com.qeevee.gq.loc.map.GoogleHotspotOverlay;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.Mission;
+import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.Variables;
 
 /**
  * Hotspots are interaction points on a mapmission map. They have a image and a
@@ -34,61 +36,13 @@ import com.qeevee.ui.BitmapUtil;
  */
 public class Hotspot {
 
-	/**
-	 * Hashtable mapping id to Hotspot
-	 */
-	private static Hashtable<String, Hotspot> allHotspots = new Hashtable<String, Hotspot>();
+	public Hotspot(Mission mission, Element hotspotXML) {
+		String id = hotspotXML.selectSingleNode("@id").getText();
+		HotspotManager.getInstance().add(id, this);
 
-	public static Set<Entry<String, Hotspot>> getAllHotspots() {
-		return allHotspots.entrySet();
-	}
+		Log.d(getClass().getName(), "initiating hotspot. id=" + id);
 
-	public static List<Hotspot> getListOfHotspots() {
-		List<Hotspot> list = new ArrayList<Hotspot>();
-		list.addAll(allHotspots.values());
-		return list;
-	}
-
-	/**
-	 * @param id
-	 *            the identifier of the hotspot as specified in game.xml.
-	 * @return the Hotspot object or null if no hotspot with ID id exists.
-	 */
-	public static Hotspot getExisting(String id) {
-		return (allHotspots.get(id));
-	}
-
-	/**
-	 * @param id
-	 * @return the Hotspot object for the given id. If no hotspot with ID id
-	 *         existed, a new is created.
-	 */
-	public static Hotspot get(String id) {
-		if (allHotspots.containsKey(id))
-			return (allHotspots.get(id));
-		return (new Hotspot(id));
-	}
-
-	public static Hotspot create(Mission _parent, Element _hotspotNode) {
-		String _id = _hotspotNode.selectSingleNode("@id").getText();
-		if (!allHotspots.containsKey(_id)) {
-			new Hotspot(_id);
-		}
-		Hotspot h = allHotspots.get(_id);
-
-		Log.d(h.getClass().getName(), "initiating hotspot. id=" + _id);
-
-		h.init(_parent, _hotspotNode);
-
-		return (h);
-	}
-
-	private Hotspot(String _id) {
-		Log.d(getClass().getName(), "constructing hotspot. id=" + _id);
-		id = _id;
-		googleOverlay = new GoogleHotspotOverlay(this);
-
-		allHotspots.put(id, this);
+		init(mission, hotspotXML);
 	}
 
 	/** location of the hotspot */
@@ -278,7 +232,7 @@ public class Hotspot {
 		paint.setARGB(80, 0, 0, 255);
 		paint.setStyle(Paint.Style.FILL);
 
-		// parentMission = _parent;
+		googleOverlay = new GoogleHotspotOverlay(this);
 	}
 
 	private List<Rule> onEnterRules = new ArrayList<Rule>();
@@ -309,7 +263,7 @@ public class Hotspot {
 	}
 
 	public static void clean() {
-		allHotspots.clear();
+		HotspotManager.getInstance().clear();
 	}
 
 	/**

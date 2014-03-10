@@ -15,7 +15,7 @@ import android.location.Location;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.qeevee.util.location.SmartLocationListener;
+import com.qeevee.gq.loc.SmartLocationListener;
 
 /**
  * The ContextManager gathers context data during a game.

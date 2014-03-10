@@ -1,4 +1,5 @@
-package com.qeevee.util.location;
+package com.qeevee.gq.loc;
+
 
 import android.content.Context;
 import android.location.Location;

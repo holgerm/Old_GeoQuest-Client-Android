@@ -1,4 +1,4 @@
-package com.qeevee.util.location;
+package com.qeevee.gq.loc;
 
 
 public class Distance {

@@ -16,7 +16,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.qeevee.util.location.SmartLocationListener;
+import com.qeevee.gq.loc.SmartLocationListener;
 
 /**
  * @author hm

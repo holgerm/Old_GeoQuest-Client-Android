@@ -18,10 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
+import com.qeevee.gq.loc.Distance;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.FileUtilities;
 import com.qeevee.gq.tests.util.TestUtils;
-import com.qeevee.util.location.Distance;
 
 import edu.bonn.mobilegaming.geoquest.GameListActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;

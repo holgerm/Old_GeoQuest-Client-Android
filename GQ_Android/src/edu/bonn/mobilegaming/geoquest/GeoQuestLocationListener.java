@@ -3,7 +3,7 @@ package edu.bonn.mobilegaming.geoquest;
 import android.content.Context;
 import android.location.Location;
 
-import com.qeevee.util.location.SmartLocationListener;
+import com.qeevee.gq.loc.SmartLocationListener;
 
 public class GeoQuestLocationListener extends SmartLocationListener {
 

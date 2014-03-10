@@ -1,4 +1,4 @@
-package com.qeevee.util.location;
+package com.qeevee.gq.loc;
 
 import java.util.Iterator;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 
+
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
-import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
 
 public class MapHelper {

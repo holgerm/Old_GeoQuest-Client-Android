@@ -5,7 +5,8 @@ import java.util.Map;
 
 import android.location.Location;
 
-import com.qeevee.util.location.LocationUtilities;
+import com.qeevee.gq.loc.HotspotManager;
+import com.qeevee.gq.loc.LocationUtilities;
 
 public class Variables {
 
@@ -82,7 +83,8 @@ public class Variables {
 				&& varName.endsWith(VISIBLE_SUFFIX)) {
 			String hotspotID = varName.substring(HOTSPOT_PREFIX.length(),
 					varName.length() - VISIBLE_SUFFIX.length());
-			Boolean.toString(Hotspot.getExisting(hotspotID).isVisible());
+			Boolean.toString(HotspotManager.getInstance()
+					.getExisting(hotspotID).isVisible());
 		}
 		if (varName.startsWith("$")) {
 			if (varName.equals(LOCATION_LAT)) {

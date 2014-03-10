@@ -8,7 +8,7 @@ import org.dom4j.Element;
 import android.location.Location;
 import android.util.Log;
 
-import com.qeevee.util.location.Distance;
+import com.qeevee.gq.loc.Distance;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;

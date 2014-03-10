@@ -9,6 +9,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.qeevee.gq.loc.Hotspot;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 
 import edu.bonn.mobilegaming.geoquest.GameSessionManager;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.Imprint;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -138,7 +139,7 @@ public class LocalGames extends Activity {
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
 			try {
-				Hotspot.create(null, hotspot);
+				new Hotspot(null, hotspot);
 			} catch (Hotspot.IllegalHotspotNodeException exception) {
 				Log.e(TAG, exception.toString());
 			}

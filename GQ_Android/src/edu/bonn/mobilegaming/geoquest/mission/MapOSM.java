@@ -25,10 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.qeevee.util.location.MapHelper;
+import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.MapHelper;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 

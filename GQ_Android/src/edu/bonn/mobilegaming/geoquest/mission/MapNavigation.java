@@ -17,12 +17,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.qeevee.util.location.MapHelper;
+import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.HotspotManager;
+import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
@@ -87,7 +88,7 @@ public abstract class MapNavigation extends GeoQuestMapActivity {
 	}
 
 	public List<Hotspot> getHotspots() {
-		return Hotspot.getListOfHotspots();
+		return HotspotManager.getInstance().getListOfHotspots();
 	}
 
 	protected void initZoom() {

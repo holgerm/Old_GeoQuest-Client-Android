@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 import com.qeevee.gq.host.HostConnector;
+import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.res.ResourceManager;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;

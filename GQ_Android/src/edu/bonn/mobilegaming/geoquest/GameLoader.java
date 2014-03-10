@@ -24,6 +24,8 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
+import com.qeevee.gq.loc.Hotspot;
+
 import android.content.res.AssetManager;
 import android.os.Handler;
 import android.os.Message;
@@ -523,7 +525,7 @@ public class GameLoader {
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
 			try {
-				Hotspot.create(null, hotspot);
+				new Hotspot(null, hotspot);
 			} catch (Hotspot.IllegalHotspotNodeException exception) {
 				Log.e(TAG, exception.toString());
 			}

@@ -21,11 +21,11 @@ import android.view.View.OnClickListener;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
-import com.qeevee.util.location.MapHelper;
+import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Hotspot;
 import edu.bonn.mobilegaming.geoquest.R;
 
 /**
@@ -227,7 +227,7 @@ public class MapGoogle extends MapNavigation {
 			for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 				Element hotspot = i.next();
 				try {
-					Hotspot newHotspot = Hotspot.create(mission, hotspot);
+					Hotspot newHotspot = new Hotspot(mission, hotspot);
 					getHotspots().add(newHotspot);
 					// new hotspots are not added to myMapView.getOverlays();
 					// this would course a crash in nonmain thread;
