@@ -3,18 +3,11 @@ package edu.bonn.mobilegaming.geoquest.mission;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -23,7 +16,6 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.MapHelper;
-import com.qeevee.util.locationmocker.LocationSource;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -36,6 +28,7 @@ import edu.bonn.mobilegaming.geoquest.R;
  * 
  * @author Krischan Udelhoven
  * @author Folker Hoffmann
+ * @author Holger Mügge
  */
 public class MapGoogle extends MapNavigation {
 
@@ -74,17 +67,19 @@ public class MapGoogle extends MapNavigation {
 		initGPSMock();
 
 		// Players Location Overlay
+		List<Overlay> mapOverlays = myMapView.getOverlays();
 		myLocationOverlay = new MyLocationOverlay(this, myMapView);
 		myLocationOverlay.enableCompass(); // doesn't work in the emulator?
 		myLocationOverlay.enableMyLocation();
-		myMapView.getOverlays().add(myLocationOverlay);
+		mapOverlays.add(myLocationOverlay);
+
+		for (Iterator<Hotspot> iterator = getHotspots().iterator(); iterator
+				.hasNext();) {
+			Hotspot hotspot = (Hotspot) iterator.next();
+			mapOverlays.add(hotspot.getGoogleOverlay());
+		}
 
 		GeoQuestApp.getInstance().setGoogleMap(myMapView);
-
-		// Show loading screen to Parse the Game XML File
-		// indirectly calls onCreateDialog() and initializes hotspots
-		showDialog(READXML_DIALOG);
-
 		mission.applyOnStartRules();
 
 	}
@@ -130,120 +125,6 @@ public class MapGoogle extends MapNavigation {
 			h.runOnTapEvent();
 		}
 
-	}
-
-	static final int READXML_DIALOG = 0;
-	ProgressDialog readxmlDialog;
-	ReadxmlThread readxmlThread;
-	boolean readxml_completed = false;// true when xml is parsed completely.
-
-	// while false main thread may not
-	// access 'hotspots'
-
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case READXML_DIALOG:
-			readxmlDialog = new ProgressDialog(this);
-			readxmlDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			readxmlDialog.setMessage(getString(R.string.map_loading));
-			readxmlThread = new ReadxmlThread(readxmlHandler);
-			readxmlThread.start();
-			return readxmlDialog;
-		default:
-			return null;
-		}
-	}
-
-	/**
-	 * Define the Handler that receives messages from the thread and update the
-	 * progressbar
-	 */
-	final Handler readxmlHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			int progress = msg.getData().getInt("progress");
-			int max = msg.getData().getInt("max");
-			boolean finish = msg.getData().getBoolean("finish");
-
-			if (progress != 0)
-				readxmlDialog.setProgress(progress);
-			if (max != 0)
-				readxmlDialog.setMax(max);
-
-			if (finish) {
-				// new hotspots were not added to myMapView.getOverlays();
-				// this would cause a crash in nonmain thread; so this is done
-				// here
-				List<Overlay> mapOverlays = myMapView.getOverlays();
-				for (Iterator<Hotspot> iterator = getHotspots().iterator(); iterator
-						.hasNext();) {
-					Hotspot hotspot = (Hotspot) iterator.next();
-					mapOverlays.add(hotspot.getGoogleOverlay());
-				}
-				// mapOverlays.addAll(hotspots);
-
-				dismissDialog(READXML_DIALOG);
-				readxml_completed = true;
-			}
-		}
-	};
-
-	/** Nested class that performs reading xml */
-	private class ReadxmlThread extends Thread {
-		Handler mHandler;
-
-		ReadxmlThread(Handler h) {
-			mHandler = h;
-		}
-
-		public void run() {
-
-			try {
-				readXML();
-			} catch (DocumentException e) {
-				e.printStackTrace();
-				Log.e("Error", "XML Error");
-			}
-
-			Message msg = mHandler.obtainMessage();
-			Bundle b = new Bundle();
-			b.putBoolean("finish", true);
-			msg.setData(b);
-			mHandler.sendMessage(msg);
-
-			if (locationSource != null)
-				locationSource.setMode(LocationSource.REAL_MODE);
-
-		}
-
-		/**
-		 * Gets the child Hotspots data from the XML file.
-		 */
-		@SuppressWarnings("unchecked")
-		private synchronized void readXML() throws DocumentException {
-			List<Element> list = mission.xmlMissionNode
-					.selectNodes("hotspots/hotspot");
-
-			int j = 0;
-			for (Iterator<Element> i = list.iterator(); i.hasNext();) {
-				Element hotspot = i.next();
-				try {
-					Hotspot newHotspot = new Hotspot(hotspot);
-					getHotspots().add(newHotspot);
-					// new hotspots are not added to myMapView.getOverlays();
-					// this would course a crash in nonmain thread;
-					// readxmlHandler will add them later
-				} catch (Hotspot.IllegalHotspotNodeException exception) {
-					Log.e("MapOverview.readXML", exception.toString());
-				}
-
-				Message msg = mHandler.obtainMessage();
-				Bundle b = new Bundle();
-				b.putInt("progress", ++j);
-				b.putInt("max", list.size());
-				msg.setData(b);
-				mHandler.sendMessage(msg);
-			}
-		}
 	}
 
 	/** Intent used to return values to the parent mission */
