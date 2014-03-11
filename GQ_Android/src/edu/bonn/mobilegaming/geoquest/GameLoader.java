@@ -293,7 +293,7 @@ public class GameLoader {
 				firstMission.startMission();
 			}
 
-			readXML(Mission.documentRoot);
+//			readXML(Mission.documentRoot);
 
 		} catch (Exception e) {
 			Log.e(TAG, "DocumentException while parsing game: " + gameXMLFile);
