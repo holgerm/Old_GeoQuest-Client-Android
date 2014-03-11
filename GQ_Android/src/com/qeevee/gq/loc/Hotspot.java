@@ -37,11 +37,9 @@ public class Hotspot {
 
 	public Hotspot(Element hotspotXML) {
 		String id = hotspotXML.selectSingleNode("@id").getText();
-		HotspotManager.getInstance().add(id, this);
-
 		Log.d(getClass().getName(), "initiating hotspot. id=" + id);
-
-		init(hotspotXML);
+		readXML(hotspotXML);
+		HotspotManager.getInstance().add(id, this);
 	}
 
 	/** location of the hotspot */
@@ -149,7 +147,8 @@ public class Hotspot {
 	 * @param id
 	 * @throws IllegalHotspotNodeException
 	 */
-	private void init(Element _hotspotNode) throws IllegalHotspotNodeException {
+	private void readXML(Element _hotspotNode)
+			throws IllegalHotspotNodeException {
 		double latitude, longitude;
 		// first look for 'latlong' abbreviating attribute:
 		String latLongString = _hotspotNode.attributeValue("latlong");
