@@ -227,7 +227,7 @@ public class MapGoogle extends MapNavigation {
 			for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 				Element hotspot = i.next();
 				try {
-					Hotspot newHotspot = new Hotspot(mission, hotspot);
+					Hotspot newHotspot = new Hotspot(hotspot);
 					getHotspots().add(newHotspot);
 					// new hotspots are not added to myMapView.getOverlays();
 					// this would course a crash in nonmain thread;

@@ -21,7 +21,6 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
@@ -36,13 +35,13 @@ import edu.bonn.mobilegaming.geoquest.Variables;
  */
 public class Hotspot {
 
-	public Hotspot(Mission mission, Element hotspotXML) {
+	public Hotspot(Element hotspotXML) {
 		String id = hotspotXML.selectSingleNode("@id").getText();
 		HotspotManager.getInstance().add(id, this);
 
 		Log.d(getClass().getName(), "initiating hotspot. id=" + id);
 
-		init(mission, hotspotXML);
+		init(hotspotXML);
 	}
 
 	/** location of the hotspot */
@@ -150,8 +149,7 @@ public class Hotspot {
 	 * @param id
 	 * @throws IllegalHotspotNodeException
 	 */
-	private void init(Mission _parent, Element _hotspotNode)
-			throws IllegalHotspotNodeException {
+	private void init(Element _hotspotNode) throws IllegalHotspotNodeException {
 		double latitude, longitude;
 		// first look for 'latlong' abbreviating attribute:
 		String latLongString = _hotspotNode.attributeValue("latlong");

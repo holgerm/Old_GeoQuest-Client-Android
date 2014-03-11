@@ -525,7 +525,7 @@ public class GameLoader {
 		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
 			Element hotspot = i.next();
 			try {
-				new Hotspot(null, hotspot);
+				new Hotspot(hotspot);
 			} catch (Hotspot.IllegalHotspotNodeException exception) {
 				Log.e(TAG, exception.toString());
 			}
