@@ -37,6 +37,7 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
  */
 public class MapOSM extends MapNavigation {
 
+	@SuppressWarnings("unused")
 	private static String TAG = MapOSM.class.getCanonicalName();
 
 	// set these two parameters to use Cloudmade Style
@@ -185,7 +186,7 @@ public class MapOSM extends MapNavigation {
 		ArrayList<GeoPoint> hotspotPoints = new ArrayList<GeoPoint>();
 		com.google.android.maps.GeoPoint curHotspotGP;
 		for (int i = 0; i < getHotspots().size(); i++) {
-			curHotspotGP = getHotspots().get(i).getPosition();
+			curHotspotGP = getHotspots().get(i).getGeoPoint();
 			hotspotPoints.add(new GeoPoint(curHotspotGP.getLatitudeE6(),
 					curHotspotGP.getLongitudeE6()));
 		}

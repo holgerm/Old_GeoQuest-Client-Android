@@ -6,7 +6,6 @@ import java.util.List;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 
-
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
 import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
@@ -57,7 +56,7 @@ public class MapHelper {
 
 	public void setCenter() {
 		Location lastLoc = locationListener.getLastLocation();
-		if (lastLoc != null){
+		if (lastLoc != null) {
 			mapController.setCenter(location2GP(locationListener
 					.getLastLocation()));
 			mapController.animateTo(location2GP(locationListener
@@ -66,7 +65,7 @@ public class MapHelper {
 			List<Hotspot> hotspots = this.mapMission.getHotspots();
 			if (hotspots.size() > 0) {
 				com.google.android.maps.GeoPoint firstAGP = hotspots.get(0)
-						.getPosition();
+						.getGeoPoint();
 				GeoPoint centerGP = new GeoPoint(firstAGP.getLatitudeE6(),
 						firstAGP.getLongitudeE6());
 				mapController.setCenter(centerGP);

@@ -10,20 +10,6 @@ public class IncrementVariable extends Action {
 		boolean initOK = true;
 		initOK &= params.containsKey("var");
 		initOK &= (Variables.getValue(params.get("var")) instanceof Double);
-		// TODO:
-		// Problematic
-		// since
-		// this
-		// is
-		// a
-		// static
-		// check
-		// at
-		// loadtime
-		// of
-		// mission
-		// xml
-		// element.
 		return initOK;
 	}
 

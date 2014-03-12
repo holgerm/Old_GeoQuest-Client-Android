@@ -272,10 +272,6 @@ public class Hotspot {
 		return id;
 	}
 
-	public GeoPoint getPosition() {
-		return geoPoint;
-	}
-
 	/**
 	 * tests if the given location is in range of the hotspots location
 	 * 

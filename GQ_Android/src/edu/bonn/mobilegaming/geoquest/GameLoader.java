@@ -24,8 +24,6 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
-import com.qeevee.gq.loc.Hotspot;
-
 import android.content.res.AssetManager;
 import android.os.Handler;
 import android.os.Message;
@@ -293,7 +291,7 @@ public class GameLoader {
 				firstMission.startMission();
 			}
 
-//			readXML(Mission.documentRoot);
+			// readXML(Mission.documentRoot);
 
 		} catch (Exception e) {
 			Log.e(TAG, "DocumentException while parsing game: " + gameXMLFile);
@@ -514,22 +512,4 @@ public class GameLoader {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Gets the Hotspots data from the XML file.
-	 */
-	@SuppressWarnings("unchecked")
-	static private void readXML(Element document) throws DocumentException {
-		List<Element> list = document.selectNodes("//hotspot");
-
-		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
-			Element hotspot = i.next();
-			try {
-				new Hotspot(hotspot);
-			} catch (Hotspot.IllegalHotspotNodeException exception) {
-				Log.e(TAG, exception.toString());
-			}
-		}
-	}
-
 }
