@@ -1,8 +1,13 @@
 package com.qeevee.gq.loc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
+
+import org.osmdroid.util.GeoPoint;
+
+import android.location.Location;
 
 public class HotspotManager {
 
@@ -47,4 +52,21 @@ public class HotspotManager {
 
 	}
 
+	public Collection<GeoPoint> getGeoPointsOfActiveHotspots() {
+		ArrayList<GeoPoint> activePoints = new ArrayList<GeoPoint>();
+		for (Hotspot curHotspot : allHotspots.values()) {
+			if (curHotspot.isActive())
+				activePoints.add(curHotspot.getOSMGeoPoint());
+		}
+		return activePoints;
+	}
+
+	public Collection<GeoPoint> getGeoPointsOfVisibleHotspots() {
+		ArrayList<GeoPoint> activePoints = new ArrayList<GeoPoint>();
+		for (Hotspot curHotspot : allHotspots.values()) {
+			if (curHotspot.isVisible())
+				activePoints.add(curHotspot.getOSMGeoPoint());
+		}
+		return activePoints;
+	}
 }

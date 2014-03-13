@@ -10,7 +10,8 @@ import com.qeevee.gq.loc.LocationUtilities;
 
 public class Variables {
 
-	private static Map<String, Object> variables = new HashMap<String, Object>();
+	private static Map<String, Object> variables;
+
 	/**
 	 * use this constant for defining the key of the mission status variable,
 	 * e.g.
@@ -51,6 +52,20 @@ public class Variables {
 	public static final String SYSTEM_PREFIX = "$_";
 	public static final String LOCATION_LAT = SYSTEM_PREFIX + "location.lat";
 	public static final String LOCATION_LONG = SYSTEM_PREFIX + "location.long";
+
+	public static final String CENTER_MAP_POSITION = SYSTEM_PREFIX
+			+ "centerToPosition";
+	public static final String CENTER_MAP_ACTIVE_HOTSPOTS = SYSTEM_PREFIX
+			+ "centerToActiveHotspots";
+	public static final String CENTER_MAP_VISIBLE_HOTSPOTS = SYSTEM_PREFIX
+			+ "centerToVisibleHotspots";
+
+	static {
+		variables = new HashMap<String, Object>();
+		variables.put(CENTER_MAP_POSITION, "false");
+		variables.put(CENTER_MAP_ACTIVE_HOTSPOTS, "false");
+		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "false");
+	}
 
 	/**
 	 * Checks if the given key exists in the variables hashmap.

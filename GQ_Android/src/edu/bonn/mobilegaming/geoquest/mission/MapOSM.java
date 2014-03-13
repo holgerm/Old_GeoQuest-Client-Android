@@ -15,8 +15,11 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.TilesOverlay;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -26,10 +29,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 /**
@@ -177,12 +182,32 @@ public class MapOSM extends MapNavigation {
 	protected void onResume() {
 		super.onResume();
 		ui.enable();
+		updateZoom();
+	}
+
+	public void updateZoom() {
+		ArrayList<GeoPoint> points = new ArrayList<GeoPoint>();
+		if (Variables.getValue(Variables.CENTER_MAP_POSITION).equals("true")) {
+			LocationManager mLocationManager = (LocationManager) GeoQuestApp
+					.getContext().getSystemService(Context.LOCATION_SERVICE);
+			Location location = mLocationManager
+					.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			points.add(new GeoPoint(location));
+		}
+		if (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals(
+				"true")) {
+			points.addAll(HotspotManager.getInstance()
+					.getGeoPointsOfActiveHotspots());
+		}
+		if (Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS).equals(
+				"true")) {
+			points.addAll(HotspotManager.getInstance()
+					.getGeoPointsOfVisibleHotspots());
+		}
+		zoomToQuestArea(points);
 	}
 
 	private void zoomToQuestArea() {
-		MapView mapView = (MapView) getMapView();
-
-		// TODO check if good; evtl. filter inactive hotspots ...
 		ArrayList<GeoPoint> hotspotPoints = new ArrayList<GeoPoint>();
 		com.google.android.maps.GeoPoint curHotspotGP;
 		for (int i = 0; i < getHotspots().size(); i++) {
@@ -190,8 +215,14 @@ public class MapOSM extends MapNavigation {
 			hotspotPoints.add(new GeoPoint(curHotspotGP.getLatitudeE6(),
 					curHotspotGP.getLongitudeE6()));
 		}
+		zoomToQuestArea(hotspotPoints);
+	}
+
+	private void zoomToQuestArea(ArrayList<GeoPoint> hotspotPoints) {
 		BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
+		MapView mapView = (MapView) getMapView();
 		mapView.zoomToBoundingBox(boundingBox);
+
 	}
 
 	/**
