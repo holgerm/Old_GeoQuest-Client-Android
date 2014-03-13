@@ -7,7 +7,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
-public class Score extends Action {
+public class AddToScore extends Action {
 
 	static final String SCORE_VARIABLE = "score";
 
