@@ -50,7 +50,8 @@ public class AddToScore extends Action {
 	}
 
 	private int addToScore(int score) {
-		int resultScore = (Integer) Variables.getValue(SCORE_VARIABLE) + score;
+		double lastScoreD = (Double) Variables.getValue(SCORE_VARIABLE);
+		int resultScore = (int)lastScoreD + score;
 		if (resultScore < 0)
 			resultScore = 0;
 		Variables.setValue(SCORE_VARIABLE, resultScore);
