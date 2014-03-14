@@ -214,6 +214,14 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 				});
 		return downloadDialog.show();
 	}
+	
+	public void onPause() {
+		super.onPause();
+	}
+	
+	public void onStop() {
+		super.onStop();
+	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanResult = IntentIntegrator.parseActivityResult(
