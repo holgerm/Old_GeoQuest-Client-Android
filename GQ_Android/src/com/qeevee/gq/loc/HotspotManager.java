@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
 
-import android.location.Location;
-
 public class HotspotManager {
 
 	private static HotspotManager instance;
@@ -62,11 +60,20 @@ public class HotspotManager {
 	}
 
 	public Collection<GeoPoint> getGeoPointsOfVisibleHotspots() {
-		ArrayList<GeoPoint> activePoints = new ArrayList<GeoPoint>();
+		ArrayList<GeoPoint> visiblePoints = new ArrayList<GeoPoint>();
 		for (Hotspot curHotspot : allHotspots.values()) {
 			if (curHotspot.isVisible())
-				activePoints.add(curHotspot.getOSMGeoPoint());
+				visiblePoints.add(curHotspot.getOSMGeoPoint());
 		}
-		return activePoints;
+		return visiblePoints;
+	}
+
+	public List<Hotspot> getListOfVisibleHotspots() {
+		List<Hotspot> visibleHotspots = new ArrayList<Hotspot>();
+		for (Hotspot hotspot : allHotspots.values()) {
+			if (hotspot.isVisible())
+				visibleHotspots.add(hotspot);
+		}
+		return visibleHotspots;
 	}
 }

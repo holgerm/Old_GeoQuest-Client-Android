@@ -22,7 +22,7 @@ public class OSMItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
 	}
 
 	public void updateHotspots() {
-		hotspots = HotspotManager.getInstance().getListOfHotspots();
+		hotspots = HotspotManager.getInstance().getListOfVisibleHotspots();
 		OSMOverlayItem item;
 		for (Hotspot curHotspot : hotspots) {
 			item = new OSMOverlayItem(curHotspot);
@@ -36,7 +36,8 @@ public class OSMItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
 			MapView mapView) {
 		if (item instanceof OSMOverlayItem) {
 			Hotspot hotspot = ((OSMOverlayItem) item).getHotspot();
-			hotspot.runOnTapEvent();
+			if (hotspot.isActive())
+				hotspot.runOnTapEvent();
 		}
 		return true;
 	}
