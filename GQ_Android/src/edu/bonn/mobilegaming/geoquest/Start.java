@@ -1,5 +1,7 @@
 package edu.bonn.mobilegaming.geoquest;
 
+import java.io.File;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,8 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qeevee.gq.game.GameDataManager;
+import com.qeevee.gq.game.GameDescription;
 import com.qeevee.gq.game.GamesInCloud;
 import com.qeevee.gq.game.LocalGames;
+import com.qeevee.gq.game.StartLocalGame;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;
@@ -71,6 +75,29 @@ public class Start extends GeoQuestActivity {
 		lastGameButton = (GeoquestButton) findViewById(R.id.start_button_last_game);
 	}
 
+	private void startQuestFromQRCodeScan() {
+		Intent startingIntent = getIntent();
+		String startString = null;
+		if (startingIntent == null)
+			return;
+
+		startString = startingIntent.getDataString();
+		if (startString == null)
+			return;
+
+		Log.d(TAG, "started with intent. Received: " + startString);
+		int indexOfGameID = startString.lastIndexOf('/');
+		if (indexOfGameID == -1)
+			return;
+
+		String gameID = startString.substring(indexOfGameID);
+		if (GameDataManager.existsLocalQuest(gameID)) {
+			File gameDir = GameDataManager.getQuestDir(gameID);
+			GameDescription gameDescr = new GameDescription(gameDir);
+			new StartLocalGame().execute(gameDescr);
+		}
+	}
+
 	/**
 	 * This method calls {@link GeoQuestActivity#startGame(GameItem, String)} in
 	 * case you are in AutoStart mode.
@@ -103,6 +130,9 @@ public class Start extends GeoQuestActivity {
 		GeoQuestApp.getInstance().setUsingAutostart(checkAndPerformAutostart());
 
 		super.onResume();
+
+		startQuestFromQRCodeScan();
+
 	}
 
 	/**

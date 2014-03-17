@@ -21,6 +21,11 @@ public class GameDataManager {
 	static private Context ctx = GeoQuestApp.getContext();
 	static private File questsDir = null;
 
+	public static boolean existsLocalQuest(String questName) {
+		File gameDir = new File(getQuestsDir(), questName);
+		return (new GameDirFilter().accept(gameDir));
+	}
+
 	/**
 	 * @param questName
 	 * @return directory that contains the game.xml and game media.
