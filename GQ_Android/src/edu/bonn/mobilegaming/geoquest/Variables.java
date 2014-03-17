@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.LocationUtilities;
@@ -59,6 +60,22 @@ public class Variables {
 			+ "centerToActiveHotspots";
 	public static final String CENTER_MAP_VISIBLE_HOTSPOTS = SYSTEM_PREFIX
 			+ "centerToVisibleHotspots";
+
+	private static final String TAG = Variables.class.getCanonicalName();
+
+	private static Object UNDEFINED_VARIABLE = new Object() {
+
+		@Override
+		public boolean equals(Object o) {
+			return false;
+		}
+
+		@Override
+		public String toString() {
+			return "UNDEFINED";
+		}
+
+	};
 
 	static {
 		variables = new HashMap<String, Object>();
@@ -129,8 +146,8 @@ public class Variables {
 			} else if (variables.containsKey(varName)) {
 				return variables.get(varName);
 			} else {
-				throw new IllegalArgumentException("dynamic system variable "
-						+ varName + " undefined");
+				Log.e(TAG, "dynamic system variable " + varName + " undefined");
+				return UNDEFINED_VARIABLE;
 			}
 		} else if (!variables.containsKey(varName)) {
 			setValue(varName, 0.0d);
