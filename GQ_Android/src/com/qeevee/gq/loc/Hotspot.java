@@ -58,7 +58,8 @@ public class Hotspot {
 	public Bitmap bitmap;
 
 	public Drawable getDrawable() {
-		return new BitmapDrawable(bitmap);
+		return new BitmapDrawable(GeoQuestApp.getInstance().getResources(),
+				bitmap);
 	}
 
 	/** true if the user is in range of the hotspot */
