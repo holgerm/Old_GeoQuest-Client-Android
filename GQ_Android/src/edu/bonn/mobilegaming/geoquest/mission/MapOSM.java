@@ -182,7 +182,6 @@ public class MapOSM extends MapNavigation {
 	protected void onResume() {
 		super.onResume();
 		ui.enable();
-		updateZoom();
 	}
 
 	public void updateZoom() {
@@ -219,6 +218,8 @@ public class MapOSM extends MapNavigation {
 	}
 
 	private void zoomToQuestArea(ArrayList<GeoPoint> hotspotPoints) {
+		if (hotspotPoints == null || hotspotPoints.size() == 0)
+			return;
 		BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
 		MapView mapView = (MapView) getMapView();
 		mapView.zoomToBoundingBox(boundingBox);
