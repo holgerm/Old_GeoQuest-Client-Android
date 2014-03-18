@@ -138,6 +138,7 @@ public class NPCTalkUIDefaultTests {
 
 		// THEN:
 		buttonShouldBeDisabled();
+		shouldStillHaveMoreDialogItemsToShow();
 
 		// WHEN:
 		ticker.onFinish();
@@ -145,6 +146,7 @@ public class NPCTalkUIDefaultTests {
 		// THEN:
 		npcTextShouldShowAtEnd("Just two\n");
 		buttonShouldBeEnabled();
+		shouldStillHaveMoreDialogItemsToShow();
 
 		// WHEN:
 		proceedBT.performClick();
@@ -153,17 +155,21 @@ public class NPCTalkUIDefaultTests {
 		// THEN:
 		npcTextShouldShowAtEnd("Emptyfollows\n");
 		buttonShouldBeEnabled();
-
-		// WHEN:
-		proceedBT.performClick();
-		ticker.onFinish();
-
-		// THEN:
-		npcTextShouldShowAtEnd("Emptyfollows\n\n");
-		buttonShouldBeEnabled();
+		shouldHaveShownAllDialogItems();
 	}
 
 	// === HELPER METHODS FOLLOW =============================================
+
+	private void shouldStillHaveMoreDialogItemsToShow() {
+		assertTrue(npcTalk.getNumberOfDialogItems() > npcTalk
+				.getIndexOfCurrentDialogItem());
+
+	}
+
+	private void shouldHaveShownAllDialogItems() {
+		assertEquals(npcTalk.getNumberOfDialogItems(),
+				npcTalk.getIndexOfCurrentDialogItem());
+	}
 
 	private void startMission(MissionActivity mission) {
 		mission.onCreate(null);

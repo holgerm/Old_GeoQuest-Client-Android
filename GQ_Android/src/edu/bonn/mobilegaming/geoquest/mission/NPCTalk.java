@@ -52,9 +52,10 @@ public class NPCTalk extends MissionActivity {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState); 
+		// take only non-epty dialogItems:
 		List<Element> dialogItemList = mission.xmlMissionNode
-				.selectNodes("./dialogitem");
+				.selectNodes("./dialogitem[text()!=\"\"]");
 		dialogItemIterator = dialogItemList.iterator();
 		nrOfDialogItems = dialogItemList.size();
 		indexOfCurrentDialogItem = 0;

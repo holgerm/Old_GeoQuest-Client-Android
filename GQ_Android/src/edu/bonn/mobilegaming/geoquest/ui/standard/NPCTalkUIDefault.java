@@ -187,8 +187,6 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 		@Override
 		public void onFinish() {
-			// Zur Sicherheit, da manchmal Wörter verschluckt werden (nicht
-			// ausreichend genauer timer!)
 			CharSequence next = currentDialogItem.getNextTextToken();
 			while (next != null) {
 				dialogText.append(next);
