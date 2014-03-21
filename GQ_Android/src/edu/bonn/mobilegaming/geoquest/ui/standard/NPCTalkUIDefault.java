@@ -1,17 +1,22 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.ZoomImageView;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -23,7 +28,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 public class NPCTalkUIDefault extends NPCTalkUI {
 
-	private ZoomImageView charImage;
+	private ImageView charImage;
 	private Button button;
 	private TextView dialogText;
 	private ScrollView scrollView;
@@ -34,6 +39,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	private int state = 0;
 	private static final int STATE_NEXT_DIALOG_ITEM = 1;
 	private static final int STATE_END = 2;
+	private static final String TAG = NPCTalkUIDefault.class.getCanonicalName();
 
 	private OnClickListener showNextDialogListener = new OnClickListener() {
 		public void onClick(View v) {
@@ -83,8 +89,15 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			return false;
 		}
 		try {
-			charImage
-					.setImageByRelativePathToBitmap(pathToImageFile.toString());
+			int margin = GeoQuestApp.getContext().getResources()
+					.getDimensionPixelSize(R.dimen.margin);
+			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImageFile.toString(),
+					Util.getDisplayWidth() - (2 * margin), 0, true);
+			if (bitmap != null) {
+				charImage.setImageBitmap(bitmap);
+			} else {
+				Log.e(TAG, "Bitmap file invalid: " + pathToImageFile.toString());
+			}
 			return true;
 		} catch (IllegalArgumentException iae) {
 			charImage.setVisibility(View.GONE);

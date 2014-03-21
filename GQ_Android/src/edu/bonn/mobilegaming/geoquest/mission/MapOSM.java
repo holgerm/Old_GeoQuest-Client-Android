@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
@@ -22,6 +23,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -167,13 +169,20 @@ public class MapOSM extends MapNavigation {
 	protected void onDestroy() {
 		if (myLocationManager != null)
 			myLocationManager.removeUpdates(mapHelper.getLocationListener());
-		GeoQuestApp.getInstance().setGoogleMap(null);
+		GeoQuestApp.getInstance().setOSMap(null);
 
 		// delete customTile.zip in osmdroid folder
 		File tileFileDest = new File(Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + "/osmdroid/customTiles.zip");
 		if (tileFileDest.exists())
 			tileFileDest.delete();
+
+		IMapView iMapView = getMapView();
+		if (iMapView instanceof MapView) {
+			((MapView) getMapView()).getTileProvider().clearTileCache();
+			Log.d(TAG, "tile cache cleared");
+		}
+		System.gc();
 
 		super.onDestroy();
 	}

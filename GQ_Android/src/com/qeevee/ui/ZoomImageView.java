@@ -1,5 +1,7 @@
 package com.qeevee.ui;
 
+import com.qeevee.util.Util;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,10 +28,10 @@ public class ZoomImageView extends ImageView {
 		setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent fullScreenIntent = new Intent(v.getContext(),
-						FullScreenImage.class);
-				fullScreenIntent.putExtra("bitmapPath", bitmapRelPath);
-				context.startActivity(fullScreenIntent);
+				// Intent fullScreenIntent = new Intent(v.getContext(),
+				// FullScreenImage.class);
+				// fullScreenIntent.putExtra("bitmapPath", bitmapRelPath);
+				// context.startActivity(fullScreenIntent);
 			}
 		});
 	}
@@ -52,8 +54,8 @@ public class ZoomImageView extends ImageView {
 		Display display = wm.getDefaultDisplay();
 		int margin = GeoQuestApp.getContext().getResources()
 				.getDimensionPixelSize(R.dimen.margin);
-		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath, display.getWidth()
-				- (2 * margin), 0, true);
+		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath,
+				Util.getDisplayWidth() - (2 * margin), 0, true);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {

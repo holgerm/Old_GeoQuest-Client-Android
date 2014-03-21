@@ -37,6 +37,7 @@ public class BitmapUtil {
 
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, paint);
+		bitmap.recycle();
 
 		return output;
 	}
