@@ -126,6 +126,10 @@ public class MultipleChoiceQuestion extends Question {
 
 	private void prepareBottomButton() {
 		bottomButton = new Button(this);
+		bottomButton.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.button));
+		bottomButton.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		bottomButton.setWidth(LayoutParams.FILL_PARENT);
 		proceed = new OnClickListener() {
 
