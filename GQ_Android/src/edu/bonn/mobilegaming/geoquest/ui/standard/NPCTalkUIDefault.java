@@ -73,7 +73,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		contentView = inflater.inflate(R.layout.m_default_npctalk, null);
 		outerView = (View) contentView.findViewById(R.id.outerview);
-		charImage = (ZoomImageView) contentView.findViewById(R.id.npcimage);
+		charImage = (ImageView) contentView.findViewById(R.id.npcimage);
 		button = (Button) contentView.findViewById(R.id.proceedButton);
 		dialogText = (TextView) contentView.findViewById(R.id.npctext);
 		dialogText.setTextSize(getTextsize());

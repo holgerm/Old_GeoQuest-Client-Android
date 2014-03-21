@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:keepScreenOn="true" >
 
-    <com.qeevee.ui.ZoomImageView
+    <ImageView
         android:id="@+id/npcimage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -1,8 +1,9 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -11,12 +12,15 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Util;
 
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class StartAndExitScreen extends MissionActivity {
 
+	private static final String TAG = StartAndExitScreen.class
+			.getCanonicalName();
 	private ImageView imageView;
 	private boolean endByTouch = false;
 
@@ -56,13 +60,21 @@ public class StartAndExitScreen extends MissionActivity {
 	}
 
 	private void setImage() {
-		String imgsrc = (String) XMLUtilities.getStringAttribute("image",
+		String pathToImage = (String) XMLUtilities.getStringAttribute("image",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
-		if (imgsrc != null)
-			imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(imgsrc, Util.getDisplayWidth(), 0, true)));
-		// else
-		// imageView.setBackgroundResource(R.drawable.bg);
+		try {
+			int margin = GeoQuestApp.getContext().getResources()
+					.getDimensionPixelSize(R.dimen.margin);
+			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImage,
+					Util.getDisplayWidth() - (2 * margin), 0, true);
+			if (bitmap != null) {
+				imageView.setImageBitmap(bitmap);
+			} else {
+				Log.e(TAG, "Bitmap file invalid: " + pathToImage);
+			}
+		} catch (IllegalArgumentException iae) {
+			imageView.setVisibility(View.GONE);
+		}
 	}
 
 	/**
