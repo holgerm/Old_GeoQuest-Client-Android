@@ -274,8 +274,8 @@ public class Mission implements Serializable {
 		if (startingIntent != null) {
 			String id = startingIntent.getStringExtra(MISSION_ID);
 			// do not keep the new mission on stack
-			startingIntent.setFlags(startingIntent.getFlags()
-					| Intent.FLAG_ACTIVITY_NO_HISTORY);
+//			startingIntent.setFlags(startingIntent.getFlags()
+//					| Intent.FLAG_ACTIVITY_NO_HISTORY);
 			if (GeoQuestApp.isMissionRunning(id)) {
 				Log.e(this.getClass().getName(), "Mission " + id
 						+ " is already running and restarted.");
