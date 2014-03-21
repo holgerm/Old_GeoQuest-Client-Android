@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.ui.ZoomImageView;
 import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;

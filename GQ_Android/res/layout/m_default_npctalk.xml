@@ -12,8 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/margin"
-        android:scaleType="fitXY" />
+        android:layout_marginBottom="0dip"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:scaleType="fitXY"
+        android:src="@drawable/missingbitmap" />
 
     <Button
         android:id="@+id/proceedButton"
@@ -35,14 +39,14 @@
         android:layout_marginBottom="0dip"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
-        android:layout_marginTop="0dip"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@drawable/background_text"
         android:fillViewport="true" >
 
         <TextView
             android:id="@+id/npctext"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_text"
             android:minHeight="@dimen/textView_minHeight"
             android:textSize="@dimen/text_size" >
         </TextView>
