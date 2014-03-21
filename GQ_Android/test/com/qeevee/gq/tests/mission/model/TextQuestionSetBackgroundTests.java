@@ -8,13 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.graphics.drawable.BitmapDrawable;
-import android.view.View; 
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
@@ -167,8 +168,9 @@ public class TextQuestionSetBackgroundTests {
 	}
 
 	private void shouldShowBackground(String relPath) {
-		assertEquals(new BitmapDrawable(BitmapUtil.loadBitmap(relPath, false)),
-				ov.getBackground());
+		assertEquals(
+				new BitmapDrawable(BitmapUtil.loadBitmap(relPath,
+						Util.getDisplayWidth(), 0, false)), ov.getBackground());
 	}
 
 	private void giveCorrectAnswer() {

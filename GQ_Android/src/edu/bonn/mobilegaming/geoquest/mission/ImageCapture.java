@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.ZoomImageView;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
@@ -99,8 +100,9 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		if (imagePath != null) {
 			this.imageView.setVisibility(View.VISIBLE);
 			this.imageView.setImageBitmap(BitmapUtil.loadBitmap(
-					imagePath.toString(), true));
-			this.imageView.setRelativePathToImageBitmap(imagePath.toString());
+					imagePath.toString(),
+					Math.round(Util.getDisplayWidth() * 0.8f), 0, true));
+			this.imageView.setImageByRelativePathToBitmap(imagePath.toString());
 		} else {
 			// unset imageview:
 			this.imageView.setVisibility(View.GONE);

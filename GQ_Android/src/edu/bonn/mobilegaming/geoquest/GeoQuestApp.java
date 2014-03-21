@@ -225,7 +225,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 				dialog.dismiss();
 			}
 		});
-		builder.setIcon(R.drawable.geoquest_appicon);
+		builder.setIcon(R.drawable.ic_launcher);
 		builder.setMessage(GeoQuestApp.getImprint().getCompleteText());
 		builder.show();
 	}

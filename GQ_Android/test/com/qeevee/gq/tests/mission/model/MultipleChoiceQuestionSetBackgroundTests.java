@@ -172,7 +172,8 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 	}
 
 	private void shouldShowBackground(String relPath) {
-		assertEquals(new BitmapDrawable(BitmapUtil.loadBitmap(relPath, false)),
+		assertEquals(
+				new BitmapDrawable(BitmapUtil.loadBitmap(relPath, 0, 0, false)),
 				ov.getBackground());
 	}
 

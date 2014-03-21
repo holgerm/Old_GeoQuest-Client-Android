@@ -82,10 +82,6 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	 */
 	public void finish(Double status) {
 		mission.setStatus(status);
-
-		// TODO -- Sabine -- Result anpassen., bzw. in jeder Mission einzel
-		// aufrufen. mission.getResult()....
-		// contextManager.setEndValues(mission.id, missionResultInPercent);
 		mission.applyOnEndRules();
 		GeoQuestApp.getInstance().removeMissionActivity(mission.id);
 		finish();

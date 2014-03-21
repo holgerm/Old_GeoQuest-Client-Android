@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
@@ -224,8 +225,8 @@ public class PhotoPuzzle extends Question {
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
 			photopuzzleImage.setBackgroundDrawable(new BitmapDrawable(
-					BitmapUtil.getRoundedCornerBitmap(
-							BitmapUtil.loadBitmap(imgsrc), 15)));
+					BitmapUtil.loadBitmap(imgsrc, Util.getDisplayWidth(), 0,
+							true)));
 	}
 
 	@Override

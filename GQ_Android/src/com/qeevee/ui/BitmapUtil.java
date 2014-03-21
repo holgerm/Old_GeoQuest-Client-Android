@@ -5,66 +5,19 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.WindowManager;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 
 public class BitmapUtil {
-
-	public static Bitmap scaleBitmapToScreenWidth(Bitmap origBitmap) {
-		WindowManager wm = (WindowManager) GeoQuestApp.getContext()
-				.getSystemService(Context.WINDOW_SERVICE);
-		int newWidth = wm.getDefaultDisplay().getWidth();
-		float scaleBy = ((float) newWidth) / origBitmap.getWidth();
-		Matrix matrix = new Matrix();
-		matrix.postScale(scaleBy, scaleBy);
-		return Bitmap.createBitmap(origBitmap, 0, 0, origBitmap.getWidth(),
-				origBitmap.getHeight(), matrix, true);
-	}
-
-	/**
-	 * @param filePath
-	 * @param context
-	 * @return the bitmap decoded from the given file or null, if no bitmap
-	 *         could be decoded.
-	 */
-	private static Bitmap readBitmapFromFile(String filePath, Context context) {
-		// WindowManager wm = (WindowManager)
-		// context.getSystemService(Context.WINDOW_SERVICE);
-		// DisplayMetrics displayMetrics = new DisplayMetrics();
-		// wm.getDefaultDisplay().getMetrics(displayMetrics);
-
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inPurgeable = true;
-		// options.inDensity = displayMetrics.densityDpi;
-		// options.inScreenDensity = displayMetrics.densityDpi;
-		// options.inTargetDensity = displayMetrics.densityDpi;
-		// options.inScaled = true;
-
-		String completedFilePath = completeImageFileSuffix(filePath);
-
-		Bitmap bitmap = BitmapFactory.decodeFile(completedFilePath, options);
-		if (bitmap == null) {
-			Log.d(BitmapUtil.class.getCanonicalName(),
-					"Could not decode bitmap from file " + filePath);
-			bitmap = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.missingbitmap);
-		}
-		return bitmap;
-	}
 
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -88,80 +41,85 @@ public class BitmapUtil {
 		return output;
 	}
 
-	/**
-	 * Loads a Bitmap and optionally scales it to the actual screen width.
-	 * 
-	 * @param scale
-	 *            if true the bitmap is scaled to the current screen width, else
-	 *            it is loaded as it is.
-	 * @param ressourcePath
-	 *            as given in the game.xml to specify e.g. images
-	 * @return
-	 * @deprecated use {@link BitmapUtil#loadBitmap(String, int)} or
-	 *             {@link BitmapUtil#loadBitmap(String)}.
-	 */
-	public static Bitmap loadBitmap(String relativeResourcePath, boolean scale) {
-		String bitmapFilePath = getGameBitmapFile(relativeResourcePath);
-		Bitmap bitmap = readBitmapFromFile(bitmapFilePath,
-				GeoQuestApp.getContext());
-		if (scale)
-			bitmap = scaleBitmapToScreenWidth(bitmap);
-		return bitmap;
+	public static Bitmap loadBitmap(String relativeResourcePath, int reqWidth,
+			int reqHeight, boolean rounded) {
+		Bitmap bmp;
+		String path = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+
+		if (path == null) {
+			bmp = loadBitmapFromResource(R.drawable.missingbitmap, reqWidth,
+					reqHeight, rounded);
+			return bmp;
+		} else {
+			final BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(path, options);
+
+			options.inSampleSize = calculateInSampleSize(options, reqWidth,
+					reqHeight);
+
+			// Decode bitmap with inSampleSize set
+			options.inJustDecodeBounds = false;
+			bmp = BitmapFactory.decodeFile(path, options);
+		}
+		if (rounded) {
+			int radius = GeoQuestApp.getContext().getResources()
+					.getDimensionPixelSize(R.dimen.button_corner_radius);
+			bmp = getRoundedCornerBitmap(bmp, radius);
+		}
+		return bmp;
 	}
 
-	public static Bitmap loadBitmap(String relativeResourcePath,
-			int requiredWidth) {
-		// set butmap file path:
-		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+	public static Bitmap loadBitmapFromResource(int resourceID, int reqWidth,
+			int reqHeight, boolean rounded) {
 
-		// get bitmap width:
-		BitmapFactory.Options options = new BitmapFactory.Options();
+		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(bitmapFilePath, options);
-		int imageWidth = options.outWidth;
+		BitmapFactory.decodeResource(GeoQuestApp.getContext().getResources(),
+				resourceID, options);
 
-		// calculate sample size and store it in options:
-		options.inSampleSize = Math.round((float) imageWidth
-				/ (float) requiredWidth);
+		options.inSampleSize = calculateInSampleSize(options, reqWidth,
+				reqHeight);
 
-		// load scaled bitmap:
+		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
-		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
-		return Bitmap.createScaledBitmap(bitmap, requiredWidth,
-				Math.round((float) requiredWidth / 1.62f), false);
+		Bitmap bmp = BitmapFactory.decodeResource(GeoQuestApp.getContext()
+				.getResources(), resourceID, options);
+		bmp = BitmapFactory.decodeResource(GeoQuestApp.getContext()
+				.getResources(), resourceID);
+		if (rounded) {
+			int radius = GeoQuestApp.getContext().getResources()
+					.getDimensionPixelSize(R.dimen.button_corner_radius);
+			bmp = getRoundedCornerBitmap(bmp, radius);
+		}
+		return bmp;
 	}
 
-	public static Bitmap loadBitmap(String relativeResourcePath,
-			DisplayMetrics requiredMetrics) {
-		// set butmap file path:
-		String bitmapFilePath = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+	private static int calculateInSampleSize(BitmapFactory.Options options,
+			int reqWidth, int reqHeight) {
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
 
-		// get bitmap width:
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(bitmapFilePath, options);
-		int imageWidth = options.outWidth;
+		if (reqWidth == 0 && reqHeight > 0) {
+			if (height > reqHeight) {
+				inSampleSize = Math.round((float) height / (float) reqHeight);
+			}
+		}
+		if (reqHeight == 0 && reqWidth > 0) {
+			if (width > reqWidth) {
+				inSampleSize = Math.round((float) width / (float) reqWidth);
+			}
+		}
+		if (reqHeight > 0 && reqWidth > 0) {
+			int widthProportion = Math.round((float) width / (float) reqWidth);
+			int heightProportion = Math.round((float) height
+					/ (float) reqHeight);
+			inSampleSize = widthProportion > heightProportion ? heightProportion
+					: widthProportion;
+		}
 
-		// calculate sample size and store it in options:
-		options.inSampleSize = Math.round((float) imageWidth
-				/ (float) requiredMetrics.widthPixels);
-		options.inScaled = true;
-		options.inDensity = requiredMetrics.densityDpi;
-		options.inTargetDensity = requiredMetrics.densityDpi;
-
-		// load scaled bitmap:
-		options.inJustDecodeBounds = false;
-		options.inPurgeable = true;
-		Bitmap bitmap = BitmapFactory.decodeFile(bitmapFilePath, options);
-		return bitmap;
-	}
-
-	public static Bitmap loadBitmap(String relativeResourcePath) {
-		// get display metrics:
-		DisplayMetrics displayMetrics = GeoQuestApp.getInstance()
-				.getResources().getDisplayMetrics();
-		return loadBitmap(relativeResourcePath, displayMetrics);
-
+		return inSampleSize;
 	}
 
 	private static String getGameBitmapFile(String ressourceFilePath) {

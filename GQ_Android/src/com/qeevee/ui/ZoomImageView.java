@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.R;
 
 public class ZoomImageView extends ImageView {
 
+	private static final String TAG = ZoomImageView.class.getCanonicalName();
 	private String bitmapRelPath;
 
 	public ZoomImageView(Context context) {
@@ -40,17 +45,19 @@ public class ZoomImageView extends ImageView {
 		addZoomListener(context);
 	}
 
-	public void setRelativePathToImageBitmap(String relativePath) {
-
+	public void setImageByRelativePathToBitmap(String relativePath) {
 		bitmapRelPath = relativePath;
-		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(
-				BitmapUtil.loadBitmap(bitmapRelPath), 15);
+		WindowManager wm = (WindowManager) GeoQuestApp.getContext()
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		int margin = GeoQuestApp.getContext().getResources()
+				.getDimensionPixelSize(R.dimen.margin);
+		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath, display.getWidth()
+				- (2 * margin), 0, true);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {
-			throw new IllegalArgumentException("Bitmap file invalid: "
-					+ bitmapRelPath);
+			Log.e(TAG, "Bitmap file invalid: " + bitmapRelPath);
 		}
 	}
-
 }

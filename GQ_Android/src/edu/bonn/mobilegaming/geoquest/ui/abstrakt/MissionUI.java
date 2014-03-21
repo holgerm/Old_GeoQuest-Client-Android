@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.BlockableAndReleasable;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -85,7 +86,7 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
 		if (bg != null) {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg)));
+					.loadBitmap(bg, Util.getDisplayWidth(), 0, true)));
 			return true;
 		}
 		// IF NO BACKGROUND PICTURE IS GIVEN, TRY COLOR:

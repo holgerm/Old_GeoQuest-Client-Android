@@ -177,7 +177,7 @@ public class Hotspot {
 		// image
 		markerPath = _hotspotNode.attributeValue("img");
 		if (markerPath != null) {
-			setBitmap(BitmapUtil.loadBitmap(markerPath, false));
+			setBitmap(BitmapUtil.loadBitmap(markerPath, 0, 0, false));
 		} else {
 			setBitmap(((BitmapDrawable) GeoQuestApp.getInstance()
 					.getResources()

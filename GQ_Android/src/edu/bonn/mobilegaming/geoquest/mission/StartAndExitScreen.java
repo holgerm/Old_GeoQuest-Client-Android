@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -58,12 +59,10 @@ public class StartAndExitScreen extends MissionActivity {
 		String imgsrc = (String) XMLUtilities.getStringAttribute("image",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
-			imageView
-					.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-							.getRoundedCornerBitmap(
-									BitmapUtil.loadBitmap(imgsrc), 15)));
-		else
-			imageView.setBackgroundResource(R.drawable.bg);
+			imageView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
+					.loadBitmap(imgsrc, Util.getDisplayWidth(), 0, true)));
+		// else
+		// imageView.setBackgroundResource(R.drawable.bg);
 	}
 
 	/**

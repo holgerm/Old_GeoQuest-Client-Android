@@ -18,6 +18,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -148,7 +149,8 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 		if (imagePath != null) {
 			this.imageView.setVisibility(View.VISIBLE);
 			this.imageView.setImageBitmap(BitmapUtil.loadBitmap(
-					imagePath.toString(), true));
+					imagePath.toString(),
+					Math.round(Util.getDisplayWidth() * 0.8f), 0, true));
 		} else {
 			// unset imageview:
 			this.imageView.setVisibility(View.GONE);
@@ -214,11 +216,11 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 				});
 		return downloadDialog.show();
 	}
-	
+
 	public void onPause() {
 		super.onPause();
 	}
-	
+
 	public void onStop() {
 		super.onStop();
 	}

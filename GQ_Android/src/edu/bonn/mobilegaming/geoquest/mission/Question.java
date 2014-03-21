@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
@@ -22,7 +23,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.background_question);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
+					.loadBitmap(bg, Util.getDisplayWidth(),
+							Util.getDisplayHeight(), false)));
 		}
 	}
 
@@ -33,7 +35,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.background_wrong);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
+					.loadBitmap(bg, Util.getDisplayWidth(),
+							Util.getDisplayHeight(), false)));
 		}
 	}
 
@@ -44,7 +47,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.background_correct);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, true)));
+					.loadBitmap(bg, Util.getDisplayWidth(),
+							Util.getDisplayHeight(), false)));
 		}
 	}
 

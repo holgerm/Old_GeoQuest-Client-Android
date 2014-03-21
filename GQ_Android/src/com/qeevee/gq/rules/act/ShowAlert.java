@@ -1,6 +1,7 @@
 package com.qeevee.gq.rules.act;
 
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,7 +30,8 @@ public class ShowAlert extends Action {
 					}
 				});
 		if (params.containsKey("image")) {
-			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("image"), false);
+			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("image"),
+					Math.round(Util.getDisplayWidth() * 0.7f), 0, true);
 			builder.setIcon(new BitmapDrawable(bitmap));
 		}
 		builder.show();

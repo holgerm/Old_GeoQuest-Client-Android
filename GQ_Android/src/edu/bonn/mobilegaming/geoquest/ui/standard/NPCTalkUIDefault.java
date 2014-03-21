@@ -83,7 +83,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			return false;
 		}
 		try {
-			charImage.setRelativePathToImageBitmap(pathToImageFile.toString());
+			charImage
+					.setImageByRelativePathToBitmap(pathToImageFile.toString());
 			return true;
 		} catch (IllegalArgumentException iae) {
 			charImage.setVisibility(View.GONE);

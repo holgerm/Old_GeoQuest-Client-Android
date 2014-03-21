@@ -1,14 +1,20 @@
-package com.qeevee.ui;
+package com.qeevee.util;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.qeevee.ui.BitmapUtil;
+import com.qeevee.ui.FullScreenImage;
+
 public class ZoomImageView extends ImageView {
+
+	private static final String TAG = ZoomImageView.class.getCanonicalName();
+	private String bitmapRelPath;
 
 	public ZoomImageView(Context context) {
 		super(context);
@@ -21,9 +27,7 @@ public class ZoomImageView extends ImageView {
 			public void onClick(View v) {
 				Intent fullScreenIntent = new Intent(v.getContext(),
 						FullScreenImage.class);
-				Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-				bitmap = BitmapUtil.scaleBitmapToScreenWidth(bitmap, context);
-				fullScreenIntent.putExtra("bitmap", bitmap);
+				fullScreenIntent.putExtra("bitmapPath", bitmapRelPath);
 				context.startActivity(fullScreenIntent);
 			}
 		});

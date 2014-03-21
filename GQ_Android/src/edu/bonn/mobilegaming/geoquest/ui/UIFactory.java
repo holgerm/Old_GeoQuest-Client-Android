@@ -6,33 +6,31 @@ import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
 import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
 import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
+import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.NFCMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCScanMission;
 import edu.bonn.mobilegaming.geoquest.mission.NFCTagReadingProduct;
 import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.mission.QRTagReading;
 import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
 import edu.bonn.mobilegaming.geoquest.mission.WebPage;
-import edu.bonn.mobilegaming.geoquest.mission.WebTech;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
+import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCScanMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NFCTagReadingProductUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.QRTagReadingUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.StartAndExitScreenUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebPageUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebTechUI;
 import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 public abstract class UIFactory {
@@ -115,8 +113,6 @@ public abstract class UIFactory {
 			MultipleChoiceQuestion activity);
 
 	public abstract TextQuestionUI createUI(TextQuestion activity);
-
-	public abstract WebTechUI createUI(WebTech activity);
 
 	public abstract AudioRecordUI createUI(AudioRecord activity);
 

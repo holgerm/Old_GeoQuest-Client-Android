@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,8 +34,12 @@ public class GamesInCloud extends Activity {
 		final HostConnector publicHostConnector = GeoQuestApp
 				.getHostConnector();
 		final HostConnector gq_internalHostConnector = new HostConnector(1);
-		new GetGameList()
-				.execute(publicHostConnector, gq_internalHostConnector);
+		AsyncTask<HostConnector, Integer, List<GameDescription>> loadGameList = new GetGameList();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			loadGameList.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+					publicHostConnector, gq_internalHostConnector);
+		else
+			loadGameList.execute(publicHostConnector, gq_internalHostConnector);
 	}
 
 	private class GetGameList extends
