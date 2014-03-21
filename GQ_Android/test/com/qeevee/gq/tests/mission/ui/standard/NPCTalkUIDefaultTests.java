@@ -12,12 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-import com.qeevee.ui.ZoomImageView;
 
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Start;
@@ -31,7 +31,7 @@ import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault.WordTicker;
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultTests {
 	MissionUI ui;
-	ZoomImageView imageView;
+	ImageView imageView;
 	TextView textView;
 	Button proceedBT;
 	private Start start;
@@ -40,7 +40,7 @@ public class NPCTalkUIDefaultTests {
 
 	public void initUIFields() {
 		ui = (MissionUI) getFieldValue(npcTalk, "ui");
-		imageView = (ZoomImageView) getFieldValue(ui, "charImage");
+		imageView = (ImageView) getFieldValue(ui, "charImage");
 		textView = (TextView) getFieldValue(ui, "dialogText");
 		proceedBT = (Button) getFieldValue(ui, "button");
 		ticker = (WordTicker) getFieldValue(ui, "ticker");
