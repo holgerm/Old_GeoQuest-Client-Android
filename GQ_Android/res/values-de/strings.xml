@@ -6,6 +6,7 @@
     <!-- Generic Values -->
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
+    <string name="npcimage_description">Ein Bild passend zur aktuellen Aktivität.</string>
 
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventar</string>
@@ -61,14 +62,6 @@
     <string name="menu_gamesInCloud">Spiele finden</string>
     <string name="menu_imprint">Impressum</string>
     <string name="menu_inventory">Inventar</string>
-
-    <!-- AudioRecord MISSION -->
-    <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
-    <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
-    <string name="audiorecord_activityIndicator_recording">Aufnahme läuft ...</string>
-    <string name="audiorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Hören?</string>
-    <string name="audiorecord_activityIndicator_playing">Aufnahme wird vorgespielt ...</string>
-    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
@@ -224,8 +217,8 @@
     <string name="varDefaultUserName">Unbenannter Spieler</string>
     <string name="titleGamesInCloud">Spiele auf dem Server:</string>
     <string name="titleLocalGames">Spiele auf diesem Gerät:</string>
-    
+
     <!-- DESCRIPTIONS for Accessibility -->
     <string name="description_questIcon">Bild für ein Quest</string>
-    
+
 </resources>
