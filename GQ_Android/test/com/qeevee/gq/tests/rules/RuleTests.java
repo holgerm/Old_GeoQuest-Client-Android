@@ -1,5 +1,6 @@
 package com.qeevee.gq.tests.rules;
 
+import static com.qeevee.gq.tests.util.TestUtils.startApp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -74,6 +75,26 @@ public class RuleTests {
 		 */
 		applyRule(3);
 		assertEquals(20.0d, Variables.getValue("v1"));
+	}
+
+	@Test
+	public void testRandomExpression() {
+		startApp();
+		loadXMLFile("testRandomExpression.xml");
+		assertFalse(Variables.isDefined("r1"));
+		/*
+		 * Take rule 0 where r1 and r2 will be set:
+		 */
+		applyRule(0);
+		assertTrue(Variables.isDefined("r1"));
+		assertTrue(1.0d <= (Double) Variables.getValue("r1"));
+		assertTrue((Double) Variables.getValue("r1") <= 10.0d);
+
+		assertFalse(Variables.isDefined("r2"));
+		applyRule(1);
+		assertTrue(Variables.isDefined("r2"));
+		assertTrue(10.0d <= (Double) Variables.getValue("r2"));
+		assertTrue((Double) Variables.getValue("r2") <= 20.0d);
 	}
 
 	@Test
