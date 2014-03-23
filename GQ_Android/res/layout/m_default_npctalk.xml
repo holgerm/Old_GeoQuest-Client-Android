@@ -22,11 +22,13 @@
     <ScrollView
         android:id="@+id/npc_scroll_view"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
         android:layout_marginBottom="0dip"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
+        android:layout_weight="1"
         android:background="@drawable/background_text"
         android:fillViewport="true" >
 
@@ -41,9 +43,9 @@
 
     <Button
         android:id="@+id/proceedButton"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="right"
         android:layout_margin="@dimen/margin"
         android:layout_marginTop="0dip"
         android:background="@drawable/button"

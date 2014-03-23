@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent" android:background="@drawable/bg" >
 
     <LinearLayout
         android:id="@+id/start_layout_main"
@@ -47,15 +47,7 @@
                 android:layout_marginBottom="25dp"
                 android:orientation="horizontal" >
 
-                <!--
-                     <TextView android:id="@+id/start_text_last_game_name"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_gravity="left|center_vertical" android:layout_weight="1"
-					android:ellipsize="end"
-					android:maxLines="2" android:gravity="right"/>
-                -->
-
-                <edu.bonn.mobilegaming.geoquest.views.GeoquestButton
+               <edu.bonn.mobilegaming.geoquest.views.GeoquestButton
                     android:id="@+id/start_button_last_game"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
@@ -64,26 +56,6 @@
                     android:enabled="false"
                     android:scaleType="fitCenter" />
             </LinearLayout>
-
-            <!--
-            <TextView
-                android:id="@+id/start_game_list_progress_descr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:text="@string/start_text_game_list_progress_download_text" >
-            </TextView>
-
-      <ProgressBar
-                android:id="@+id/start_progress_game_list"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="20dp"
-                android:progress="0"
-                android:saveEnabled="true" >
-            </ProgressBar>
-            -->
 
             <edu.bonn.mobilegaming.geoquest.views.GeoquestButton
                 android:id="@+id/start_button_game_list"
