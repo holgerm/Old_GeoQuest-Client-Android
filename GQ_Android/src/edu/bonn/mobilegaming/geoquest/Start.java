@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qeevee.gq.start.ExtractGamesFromAssets;
 import com.qeevee.gq.start.GameDataManager;
 import com.qeevee.gq.start.GameDescription;
 import com.qeevee.gq.start.GamesInCloud;
@@ -58,6 +59,9 @@ public class Start extends GeoQuestActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webupdate);
 		Mission.setMainActivity(this);
+
+		// extract included games asynchronously:
+		new ExtractGamesFromAssets().execute();
 
 		GameDataManager.getQuestsDir();
 

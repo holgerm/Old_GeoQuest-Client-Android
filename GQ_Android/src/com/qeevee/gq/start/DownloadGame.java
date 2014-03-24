@@ -6,10 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,7 +14,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
-	private static final String TAG = DownloadGame.class.getCanonicalName();
+	static final String TAG = DownloadGame.class.getCanonicalName();
 	private final static int BYTE_SIZE = 1024;
 	private GameDescription game;
 
@@ -39,7 +35,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 			return false;
 		}
 
-		unzipGameArchive(gameZipFile);
+		GameDataManager.unzipGameArchive(gameZipFile);
 
 		// TODO delete local zipfile
 
@@ -74,74 +70,6 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		fOutLocal.close();
 		Log.d(TAG, "completed download: " + url);
 		return gameZipFile;
-	}
-
-	/**
-	 * Unzips all files from the locally stored archive ({@code newGameZipFile}
-	 * and stores it in a new directory named after the zip archive name at the
-	 * same place.
-	 * 
-	 * @param gameZipFile
-	 * @return the directory where the game files have been stored
-	 */
-	void unzipGameArchive(File gameZipFile) {
-
-		// TODO Publish progress
-		String newGameDirName = gameZipFile.getParent();
-
-		try {
-			ZipFile zipFile = new ZipFile(gameZipFile);
-			ZipEntry zipEntry;
-			File entryFile;
-			FileOutputStream fos;
-			InputStream entryStream;
-
-			for (Enumeration<? extends ZipEntry> enumeration = zipFile
-					.entries(); enumeration.hasMoreElements();) {
-				zipEntry = enumeration.nextElement();
-
-				// skip files starting with ".":
-				String zipEntryName = zipEntry.getName();
-				String[] zipEntryNameParts = zipEntryName.split("/");
-				if (zipEntryNameParts[zipEntryNameParts.length - 1]
-						.startsWith("."))
-					continue;
-
-				entryFile = new File(newGameDirName + "/" + zipEntry.getName());
-
-				// in case the entry is a directory:
-				if (zipEntryName.endsWith("/")) {
-					if (!entryFile.exists() || !entryFile.isDirectory())
-						entryFile.mkdir();
-					continue; // now it exists that's enough for directories ...
-				}
-
-				File parentDir = entryFile.getParentFile();
-				if (!parentDir.exists()) {
-					parentDir.mkdir();
-				}
-
-				fos = new FileOutputStream(entryFile);
-				entryStream = zipFile.getInputStream(zipEntry);
-				byte content[] = new byte[1024];
-				int bytesRead;
-
-				do {
-					bytesRead = entryStream.read(content);
-					if (bytesRead > 0)
-						fos.write(content, 0, bytesRead);
-				} while (bytesRead > 0);
-
-				fos.flush();
-				fos.close();
-			}
-		} catch (ZipException e) {
-			Log.d(TAG, "ZipException creating zipfile from " + gameZipFile);
-			e.printStackTrace();
-		} catch (IOException e) {
-			Log.d(TAG, "IOException creating zipfile from " + gameZipFile);
-			e.printStackTrace();
-		}
 	}
 
 	private void deleteDir(File dir) {
