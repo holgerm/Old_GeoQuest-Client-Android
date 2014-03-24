@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.qeevee.gq.game.GameDescription;
+import com.qeevee.gq.start.GameDescription;
 
 public class HostConnector {
 

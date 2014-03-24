@@ -1,4 +1,4 @@
-package com.qeevee.gq.game;
+package com.qeevee.gq.start;
 
 import java.io.BufferedInputStream;
 import java.io.File;

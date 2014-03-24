@@ -24,11 +24,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.qeevee.gq.game.GameDataManager;
-import com.qeevee.gq.game.GameDescription;
-import com.qeevee.gq.game.GamesInCloud;
-import com.qeevee.gq.game.LocalGames;
-import com.qeevee.gq.game.StartLocalGame;
+import com.qeevee.gq.start.GameDataManager;
+import com.qeevee.gq.start.GameDescription;
+import com.qeevee.gq.start.GamesInCloud;
+import com.qeevee.gq.start.LocalGames;
+import com.qeevee.gq.start.StartLocalGame;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;

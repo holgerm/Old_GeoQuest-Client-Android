@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 
 import android.widget.ListView;
 
-import com.qeevee.gq.game.GamesInCloud;
 import com.qeevee.gq.host.ConnectionStrategy;
+import com.qeevee.gq.start.GamesInCloud;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
