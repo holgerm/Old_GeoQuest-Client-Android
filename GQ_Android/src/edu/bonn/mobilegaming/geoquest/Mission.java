@@ -186,7 +186,6 @@ public class Mission implements Serializable {
 
 	private void loadXML() {
 		missionType = missionType();
-		chooseMissionLayout();
 		startingIntent = new Intent(getMainActivity(), missionType);
 		startingIntent.putExtra(MISSION_ID, id);
 		setCancelStatus();
@@ -196,22 +195,6 @@ public class Mission implements Serializable {
 		// from within this Missions Activity. This has been introduced for
 		// ExternalMissions.
 		createBundleForExternalMission();
-	}
-
-	private void chooseMissionLayout() {
-		String layoutAttr = xmlMissionNode.attributeValue("layout");
-		if (layoutAttr != null) {
-			// no attribute => no action, use default or global settings instead
-
-			if (layoutAttr.equals("html")) {
-				// layout attribute set to html => activate HTML Missions:
-				useWebLayout = true;
-			} else {
-				// layout attribute set to other than html (only "native"
-				// allowed cf. Schema) => deactivate HTML Missions:
-				useWebLayout = false;
-			}
-		}
 	}
 
 	private void setCancelStatus() {
@@ -274,8 +257,8 @@ public class Mission implements Serializable {
 		if (startingIntent != null) {
 			String id = startingIntent.getStringExtra(MISSION_ID);
 			// do not keep the new mission on stack
-//			startingIntent.setFlags(startingIntent.getFlags()
-//					| Intent.FLAG_ACTIVITY_NO_HISTORY);
+			// startingIntent.setFlags(startingIntent.getFlags()
+			// | Intent.FLAG_ACTIVITY_NO_HISTORY);
 			if (GeoQuestApp.isMissionRunning(id)) {
 				Log.e(this.getClass().getName(), "Mission " + id
 						+ " is already running and restarted.");
