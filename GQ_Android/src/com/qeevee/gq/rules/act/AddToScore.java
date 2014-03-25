@@ -1,7 +1,5 @@
 package com.qeevee.gq.rules.act;
 
-import org.dom4j.Attribute;
-
 import android.content.Context;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -33,9 +31,9 @@ public class AddToScore extends Action {
 			showToast = Boolean.parseBoolean(a);
 		}
 
-		int resultingScore = addToScore(deltaScore);
+		double resultingScore = addToScore(deltaScore);
 		if (showToast) {
-			if (resultingScore == 0) {
+			if (resultingScore == 0.0) {
 				GeoQuestApp.showMessage(ctx.getText(R.string.scoreZero));
 			} else if (deltaScore > 0) {
 				// GeoQuestApp.playAudio(ResourceManager.POSITIVE_SOUND, false);
@@ -49,20 +47,24 @@ public class AddToScore extends Action {
 		}
 	}
 
-	private int addToScore(int score) {
-		Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
-		double lastScoreD = 0.;
-		int resultScore = 0;
-		if(lastScoreO.getClass().getName().equals(Integer.class.getName())){
-			resultScore = (Integer) lastScoreO + score;
-		}
-		else{
-			lastScoreD = (Double) lastScoreO;
-			resultScore = (int)lastScoreD + score;
-		}
-		if (resultScore < 0)
-			resultScore = 0;
-		Variables.setValue(SCORE_VARIABLE, resultScore);
-		return resultScore;
+	private double addToScore(int score) {
+		double newScore = (Double) Variables.getValue(SCORE_VARIABLE) + score;
+		newScore = newScore < 0.0 ? 0.0 : newScore;
+		Variables.setValue(SCORE_VARIABLE, newScore);
+		return newScore;
+		// Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
+		// double lastScoreD = 0.;
+		// int resultScore = 0;
+		// if (lastScoreO.getClass().getName().equals(Integer.class.getName()))
+		// {
+		// resultScore = (Integer) lastScoreO + score;
+		// } else {
+		// lastScoreD = (Double) lastScoreO;
+		// resultScore = (int) lastScoreD + score;
+		// }
+		// if (resultScore < 0)
+		// resultScore = 0;
+		// Variables.setValue(SCORE_VARIABLE, resultScore);
+		// return resultScore;
 	}
 }

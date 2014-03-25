@@ -28,8 +28,23 @@ public class StringTools {
 			String varComplete = m.group();
 			String varName = varComplete.substring(1, varComplete.length() - 1);
 			if (Variables.isDefined(varName)) {
-				result = result.replace(varComplete, Variables
-						.getValue(varName).toString());
+				String replacement;
+				Object value = Variables.getValue(varName);
+				// for doubles which have only zeroes after semicolon, we return
+				// int-like strings (without trailing zeroes).
+				if (value instanceof Double) {
+					replacement = value.toString();
+					if (replacement.lastIndexOf('.') >= 0) {
+						int nachKomma = Integer.parseInt(replacement.substring(
+								replacement.lastIndexOf('.') + 1,
+								replacement.length()));
+						if (nachKomma == 0) {
+							value = replacement.substring(0,
+									replacement.lastIndexOf('.'));
+						}
+					}
+				}
+				result = result.replace(varComplete, value.toString());
 			} else {
 				Log.w(StringTools.class.getCanonicalName(),
 						"Undefined variable found: " + varName);
