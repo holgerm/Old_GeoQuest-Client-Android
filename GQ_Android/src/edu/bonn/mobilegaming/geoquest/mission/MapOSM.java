@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
@@ -195,7 +196,9 @@ public class MapOSM extends MapNavigation {
 
 	public void updateZoom() {
 		ArrayList<GeoPoint> points = new ArrayList<GeoPoint>();
-		if (Variables.getValue(Variables.CENTER_MAP_POSITION).equals("true")) {
+		if (Variables.getValue(Variables.CENTER_MAP_POSITION).equals("true")
+				|| Variables.getValue(Variables.CENTER_MAP_POSITION)
+						.equals("1")) {
 			LocationManager mLocationManager = (LocationManager) GeoQuestApp
 					.getContext().getSystemService(Context.LOCATION_SERVICE);
 			Location location = mLocationManager
@@ -203,14 +206,22 @@ public class MapOSM extends MapNavigation {
 			points.add(new GeoPoint(location));
 		}
 		if (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals(
-				"true")) {
+				"true")
+				|| Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS)
+						.equals("1")) {
 			points.addAll(HotspotManager.getInstance()
 					.getGeoPointsOfActiveHotspots());
 		}
 		if (Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS).equals(
-				"true")) {
-			points.addAll(HotspotManager.getInstance()
-					.getGeoPointsOfVisibleHotspots());
+				"true")
+				|| Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS)
+						.equals("1")) {
+			Collection<GeoPoint> visiblePoints = HotspotManager.getInstance()
+					.getGeoPointsOfVisibleHotspots();
+			for (GeoPoint curPoint : visiblePoints) {
+				if (!points.contains(curPoint))
+					points.add(curPoint);
+			}
 		}
 		zoomToQuestArea(points);
 	}
