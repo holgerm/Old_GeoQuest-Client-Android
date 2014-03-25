@@ -22,6 +22,7 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		GeoQuestApp.setCurrentActivity(this);
 		ibm = new InteractionBlockingManager(this);
 		((GeoQuestApp) getApplication()).addActivity(this);
 

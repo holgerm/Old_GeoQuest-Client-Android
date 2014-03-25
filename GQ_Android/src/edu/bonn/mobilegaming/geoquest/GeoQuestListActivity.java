@@ -19,6 +19,7 @@ public abstract class GeoQuestListActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		GeoQuestApp.setCurrentActivity(this);
 		((GeoQuestApp) getApplication()).addActivity(this);
 
 		// Init progress dialogs:

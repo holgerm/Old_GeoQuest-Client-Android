@@ -57,6 +57,7 @@ public abstract class GeoQuestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		GeoQuestApp.setCurrentActivity(this);
 
 		checkAndInitializeNFCEventManager();
 
