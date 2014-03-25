@@ -18,14 +18,14 @@ public class SetHotspotActivity extends Action {
 				params.get("id"));
 		if (hotspot == null)
 			return;
-		if (params.get("mode").equals("true")) {
+		if (params.get("mode").equals("true") || params.get("mode").equals("1")) {
 			hotspot.setActive(true);
 		}
-		if (params.get("mode").equals("false")) {
+		if (params.get("mode").equals("false")
+				|| params.get("mode").equals("0")) {
 			hotspot.setActive(false);
 		}
 
 		GeoQuestApp.getInstance().refreshMapDisplay();
 	}
-
 }

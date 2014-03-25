@@ -18,10 +18,12 @@ public class SetHotspotVisibility extends Action {
 				params.get("id"));
 		if (hotspot == null)
 			return;
-		if (params.get("visible").equals("true")) {
+		if (params.get("visible").equals("true")
+				|| params.get("visible").equals("1")) {
 			hotspot.setVisible(true);
 		}
-		if (params.get("visible").equals("false")) {
+		if (params.get("visible").equals("false")
+				|| params.get("visible").equals("0")) {
 			hotspot.setVisible(false);
 		}
 
