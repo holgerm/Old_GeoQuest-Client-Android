@@ -13,10 +13,8 @@
             android:id="@+id/start_image_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:src="@drawable/geoquestlogo" />
 
         <LinearLayout
