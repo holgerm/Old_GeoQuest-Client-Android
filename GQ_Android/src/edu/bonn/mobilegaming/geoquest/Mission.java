@@ -267,7 +267,9 @@ public class Mission implements Serializable {
 				startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
 			GameDataManager.stopAudio();
-			getMainActivity().startActivityForResult(startingIntent, 1);
+			if (Mission.get(id) != null
+					&& Mission.get(id).xmlMissionNode != null)
+				getMainActivity().startActivityForResult(startingIntent, 1);
 		} else
 			Log.e(this.getClass().getName(),
 					"Mission can NOT be started since Intent is null.");
