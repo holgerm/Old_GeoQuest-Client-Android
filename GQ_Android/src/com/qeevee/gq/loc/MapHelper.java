@@ -8,6 +8,7 @@ import org.osmdroid.util.GeoPoint;
 
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
+import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
 
 public class MapHelper {
@@ -31,7 +32,8 @@ public class MapHelper {
 			public void onRelevantLocationChanged(Location location) {
 				super.onRelevantLocationChanged(location);
 				GeoPoint point = location2GP(location);
-				mapController.animateTo(point);
+				if (!locatingIsManual())
+					mapController.animateTo(point);
 
 				// calculate distance to hotspots
 				for (Iterator<Hotspot> i = mapMission.getHotspots()
@@ -47,6 +49,10 @@ public class MapHelper {
 		};
 	}
 
+	public IMapController getController() {
+		return mapController;
+	}
+
 	public void centerMap() {
 		Location lastLoc = locationListener.getLastLocation();
 		if (lastLoc != null)
@@ -55,6 +61,8 @@ public class MapHelper {
 	}
 
 	public void setCenter() {
+		if (locatingIsManual())
+			return;
 		Location lastLoc = locationListener.getLastLocation();
 		if (lastLoc != null) {
 			mapController.setCenter(location2GP(locationListener
@@ -69,8 +77,28 @@ public class MapHelper {
 				GeoPoint centerGP = new GeoPoint(firstAGP.getLatitudeE6(),
 						firstAGP.getLongitudeE6());
 				mapController.setCenter(centerGP);
+				mapController.animateTo(centerGP);
 			}
 		}
+	}
+
+	private boolean locatingIsManual() {
+		boolean positionDefined = Variables
+				.isDefined(Variables.CENTER_MAP_POSITION)
+				&& (Variables.getValue(Variables.CENTER_MAP_POSITION).equals(
+						"true") || Variables.getValue(
+						Variables.CENTER_MAP_POSITION).equals("1"));
+		boolean visbileHSDefined = Variables
+				.isDefined(Variables.CENTER_MAP_VISIBLE_HOTSPOTS)
+				&& (Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS)
+						.equals("true") || Variables.getValue(
+						Variables.CENTER_MAP_VISIBLE_HOTSPOTS).equals("1"));
+		boolean activeHSDefined = Variables
+				.isDefined(Variables.CENTER_MAP_ACTIVE_HOTSPOTS)
+				&& (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS)
+						.equals("true") || Variables.getValue(
+						Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals("1"));
+		return positionDefined || visbileHSDefined || activeHSDefined;
 	}
 
 	private GeoPoint location2GP(Location location) {
