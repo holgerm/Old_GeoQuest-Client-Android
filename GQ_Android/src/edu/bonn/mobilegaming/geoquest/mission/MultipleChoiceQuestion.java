@@ -39,6 +39,7 @@ public class MultipleChoiceQuestion extends Question {
 	private static final int MODE_QUESTION = 1;
 	private static final int MODE_REPLY_TO_CORRECT_ANSWER = 2;
 	private static final int MODE_REPLY_TO_WRONG_ANSWER = 3;
+	private static final int MODE_ONLY_WRONG_ANSWERS = 4;
 
 	private List<Answer> answers = new ArrayList<Answer>();
 	private Answer selectedAnswer;
@@ -80,6 +81,9 @@ public class MultipleChoiceQuestion extends Question {
 			setMCTextViewToReply();
 			setMCButtonPanel(loopUntilSuccess);
 			invokeOnFailEvents();
+			break;
+		case MODE_ONLY_WRONG_ANSWERS:
+			finish(Globals.STATUS_SUCCEEDED);
 			break;
 		}
 	}
@@ -222,11 +226,16 @@ public class MultipleChoiceQuestion extends Question {
 	 * called when the player taps on an answer
 	 */
 	private class AnswerClickListener implements View.OnClickListener {
+
 		public void onClick(View view) {
 			selectedAnswer = (Answer) view.getTag();
 			// set chosen answer text as result in mission specific variable:
 			Variables.registerMissionResult(mission.id,
 					selectedAnswer.answertext);
+			if (MultipleChoiceQuestion.this.allAnswersWrong()) {
+				setMode(MODE_ONLY_WRONG_ANSWERS);
+				return;
+			}
 			if (selectedAnswer.correct) {
 				setMode(MODE_REPLY_TO_CORRECT_ANSWER);
 			} else {
@@ -247,6 +256,14 @@ public class MultipleChoiceQuestion extends Question {
 
 	public void onBlockingStateUpdated(boolean blocking) {
 		mcButtonPanel.setEnabled(!blocking);
+	}
+
+	public boolean allAnswersWrong() {
+		for (Answer curAnswer : answers) {
+			if (curAnswer.correct)
+				return false;
+		}
+		return true;
 	}
 
 	public MissionOrToolUI getUI() {
