@@ -14,10 +14,10 @@ public class CenterMap extends Action {
 			initOK &= isBooleanLiteral(params.get("position"));
 		}
 		if (params.containsKey("activeHotspots")) {
-			initOK &= isBooleanLiteral(params.get("position"));
+			initOK &= isBooleanLiteral(params.get("activeHotspots"));
 		}
 		if (params.containsKey("visibleHotspots")) {
-			initOK &= isBooleanLiteral(params.get("position"));
+			initOK &= isBooleanLiteral(params.get("visibleHotspots"));
 		}
 		return initOK;
 	}
@@ -37,10 +37,13 @@ public class CenterMap extends Action {
 		if (currentActivity instanceof MapOSM) {
 			((MapOSM) currentActivity).updateZoom();
 		}
+		currentActivity = null; // allow gc
 	}
 
 	private boolean isBooleanLiteral(String literal) {
-		return literal.equals("true") || literal.equals("false");
+		if (literal == null)
+			return false;
+		return literal.equals("true") || literal.equals("false")
+				|| literal.equals("1") || literal.equals("0");
 	}
-
 }
