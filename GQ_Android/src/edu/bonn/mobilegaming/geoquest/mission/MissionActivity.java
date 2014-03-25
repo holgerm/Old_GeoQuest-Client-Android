@@ -5,7 +5,6 @@ import org.dom4j.Element;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,28 +46,28 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		return className.substring(0, indexOfLastDot + 1);
 	}
 
-	/**
-	 * Back button Handler quits the Mission, when back button is hit.
-	 */
-	@Override
-	public boolean onKeyDown(final int keyCode, KeyEvent event) {
-		switch (keyCode) {
-
-		case KeyEvent.KEYCODE_BACK: // Back => Cancel
-			if (mission.cancelStatus == 0) {
-				Log.d(this.getClass().getName(),
-						"Back Button was pressed, but mission may not be cancelled.");
-				return true;
-			} else {
-				finish(mission.cancelStatus);
-				return true;
-			}
-		case KeyEvent.KEYCODE_SEARCH:
-			// ignore search button
-			break;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+	// /**
+	// * Back button Handler quits the Mission, when back button is hit.
+	// */
+	// @Override
+	// public boolean onKeyDown(final int keyCode, KeyEvent event) {
+	// // switch (keyCode) {
+	// //
+	// // case KeyEvent.KEYCODE_BACK: // Back => Cancel
+	// // if (mission.cancelStatus == 0) {
+	// // Log.d(this.getClass().getName(),
+	// // "Back Button was pressed, but mission may not be cancelled.");
+	// // return true;
+	// // } else {
+	// // finish(mission.cancelStatus);
+	// // return true;
+	// // }
+	// // case KeyEvent.KEYCODE_SEARCH:
+	// // // ignore search button
+	// // break;
+	// // }
+	// return super.onKeyDown(keyCode, event);
+	// }
 
 	/**
 	 * Finishes the mission activity and sets the result code
