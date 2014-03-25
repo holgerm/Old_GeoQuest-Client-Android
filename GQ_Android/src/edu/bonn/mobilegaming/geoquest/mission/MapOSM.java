@@ -45,7 +45,6 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
  */
 public class MapOSM extends MapNavigation {
 
-	@SuppressWarnings("unused")
 	private static String TAG = MapOSM.class.getCanonicalName();
 
 	// set these two parameters to use Cloudmade Style
@@ -243,7 +242,6 @@ public class MapOSM extends MapNavigation {
 		BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
 		MapView mapView = (MapView) getMapView();
 		mapView.zoomToBoundingBox(boundingBox);
-
 	}
 
 	/**
