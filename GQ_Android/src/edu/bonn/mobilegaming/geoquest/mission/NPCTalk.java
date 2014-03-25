@@ -7,6 +7,7 @@ import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
@@ -31,7 +32,6 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
  */
 
 public class NPCTalk extends MissionActivity {
-	@SuppressWarnings("unused")
 	private static final String TAG = "NPCTalk";
 
 	private Iterator<Element> dialogItemIterator;
@@ -52,8 +52,13 @@ public class NPCTalk extends MissionActivity {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
 		// take only non-epty dialogItems:
+		if (mission == null || mission.xmlMissionNode == null) {
+			Log.e(TAG,
+					"Mission null or MissionXML missing for an NPCTalk mission.");
+			return;
+		}
 		List<Element> dialogItemList = mission.xmlMissionNode
 				.selectNodes("./dialogitem[text()!=\"\"]");
 		dialogItemIterator = dialogItemList.iterator();
