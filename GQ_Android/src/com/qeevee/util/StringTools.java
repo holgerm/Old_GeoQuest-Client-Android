@@ -53,4 +53,14 @@ public class StringTools {
 
 		return result;
 	}
+
+	public static boolean asBoolean(String text) {
+		if (text == null)
+			return false;
+		if (text.equals("true"))
+			return true;
+		if (text.equals("1"))
+			return true;
+		return false;
+	}
 }
