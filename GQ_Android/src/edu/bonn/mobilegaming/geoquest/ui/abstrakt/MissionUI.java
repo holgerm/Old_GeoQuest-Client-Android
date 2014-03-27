@@ -92,7 +92,7 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 		// IF NO BACKGROUND PICTURE IS GIVEN, TRY COLOR:
 		String bgColor = (String) XMLUtilities.getStringAttribute("bgcolor",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
-		if (bgColor != null) {
+		if (bgColor != null && !bgColor.trim().equals("")) {
 			outerView.setBackgroundColor(Color.parseColor(bgColor));
 			return true;
 		}
