@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,6 +56,7 @@ public class ImageResourceTests {
 
 	@SuppressWarnings("unchecked")
 	@Test
+	@Ignore
 	public void implicitlyReferingPNG() {
 		// GIVEN:
 		// nothing
@@ -68,6 +70,7 @@ public class ImageResourceTests {
 
 	@SuppressWarnings("unchecked")
 	@Test
+	@Ignore
 	public void implicitlyReferingJPG() {
 		// GIVEN:
 		// nothing
