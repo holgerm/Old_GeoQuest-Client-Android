@@ -90,8 +90,8 @@
     <string name="imageCapture_task_default">Eure Aufgabe: Nehmt ein Foto auf!</string>
     <string name="imageCapture_UploadOK">OK, das Foto wird auf den Server geladen.</string>
     <string name="imageCapture_UploadERROR">Fehler beim Upload!.</string>
-    <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Mache ein eindrucksvolles Foto ...</string>
+    <string name="imageCapture_button_takePicture">Kamera starten ...</string>
     <string name="imageCapture_replyDone_default">OK, das Foto ist gespeichert.</string>
 
     <!-- Map MISSION and TOOL -->
