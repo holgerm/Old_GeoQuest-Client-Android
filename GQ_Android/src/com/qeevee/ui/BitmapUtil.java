@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import com.qeevee.gq.res.ResourceManager;
+
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -45,7 +47,10 @@ public class BitmapUtil {
 	public static Bitmap loadBitmap(String relativeResourcePath, int reqWidth,
 			int reqHeight, boolean rounded) {
 		Bitmap bmp;
-		String path = completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
+		String path = completeImageFileSuffix(ResourceManager
+				.getResourcePath(relativeResourcePath));
+		// String path =
+		// completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
 
 		if (path == null) {
 			bmp = loadBitmapFromResource(R.drawable.missingbitmap, reqWidth,
@@ -121,18 +126,6 @@ public class BitmapUtil {
 		}
 
 		return inSampleSize;
-	}
-
-	private static String getGameBitmapFile(String ressourceFilePath) {
-		String resourcePath = GeoQuestApp.getRunningGameDir().getAbsolutePath()
-				+ "/" + ressourceFilePath;
-		resourcePath = completeImageFileSuffix(resourcePath);
-		File file = new File(resourcePath);
-		if (file.exists() && file.canRead())
-			return resourcePath;
-		else
-			throw new IllegalArgumentException(
-					"No ressource file found at path \"" + resourcePath + "\".");
 	}
 
 	private static Set<String> KNOWN_BITMAP_SUFFIXES = new HashSet<String>();
