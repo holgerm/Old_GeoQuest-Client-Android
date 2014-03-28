@@ -10,4 +10,12 @@ public interface MissionOrToolActivity extends BlockableAndReleasable {
 
 	Element getXML();
 
+	void setKeepActivity(boolean keep);
+
+	boolean keepsActivity();
+
+	void setBackAllowed(boolean backAllowed);
+
+	boolean isBackAllowed();
+
 }

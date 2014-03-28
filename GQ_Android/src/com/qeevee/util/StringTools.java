@@ -54,6 +54,15 @@ public class StringTools {
 		return result;
 	}
 
+	/**
+	 * Interprets an attribute value from game.xml as boolean value.
+	 * 
+	 * @param text
+	 *            the attribute content to interpret as boolean. Null is ok and
+	 *            leads to false.
+	 * @return true, iff the attribute either contains "true" or "1". in any
+	 *         other case it returns false.
+	 */
 	public static boolean asBoolean(String text) {
 		if (text == null)
 			return false;

@@ -34,6 +34,26 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		return mission;
 	}
 
+	private boolean keepsActivity = false;
+
+	public void setKeepActivity(boolean keep) {
+		keepsActivity = keep;
+	}
+
+	public boolean keepsActivity() {
+		return keepsActivity;
+	}
+
+	private boolean backAllowed;
+
+	public void setBackAllowed(boolean backAllowed) {
+		this.backAllowed = backAllowed;
+	}
+
+	public boolean isBackAllowed() {
+		return backAllowed;
+	}
+
 	private ContextManager contextManager;
 	protected int missionResultInPercent = 100;
 
@@ -44,6 +64,12 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		String className = MissionActivity.class.getName();
 		int indexOfLastDot = className.lastIndexOf('.');
 		return className.substring(0, indexOfLastDot + 1);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (isBackAllowed())
+			super.onBackPressed();
 	}
 
 	// /**
@@ -83,7 +109,8 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		mission.setStatus(status);
 		mission.applyOnEndRules();
 		GeoQuestApp.getInstance().removeMissionActivity(mission.id);
-		finish();
+		if (!keepsActivity())
+			finish();
 	}
 
 	@Override
@@ -108,6 +135,7 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		Bundle extras = getIntent().getExtras();
 		id = extras.getString("missionID");
 		mission = Mission.get(id);
+		setBackAllowed(extras.getBoolean(Mission.BACK_ALLOWED, false));
 
 		contextManager = GeoQuestActivity.contextManager;
 		if (contextManager != null)

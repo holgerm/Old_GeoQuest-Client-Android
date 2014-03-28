@@ -29,6 +29,33 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		// get extras
 		Bundle extras = getIntent().getExtras();
 		id = extras.getString("missionID");
+		setBackAllowed(extras.getBoolean(Mission.BACK_ALLOWED, false));
+	}
+
+	private boolean keepsActivity = false;
+
+	public void setKeepActivity(boolean keep) {
+		keepsActivity = keep;
+	}
+
+	public boolean keepsActivity() {
+		return keepsActivity;
+	}
+
+	private boolean backAllowed;
+
+	public void setBackAllowed(boolean backAllowed) {
+		this.backAllowed = backAllowed;
+	}
+
+	public boolean isBackAllowed() {
+		return backAllowed;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (isBackAllowed())
+			super.onBackPressed();
 	}
 
 	public Element getXML() {

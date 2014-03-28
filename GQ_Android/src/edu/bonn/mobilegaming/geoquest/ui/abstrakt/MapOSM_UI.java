@@ -35,4 +35,14 @@ public abstract class MapOSM_UI extends MissionUI {
 		return getOSMap().getXML();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI#setBackground()
+	 */
+	protected void setBackground() {
+		// No background usable for OSM
+		return;
+	}
+
 }

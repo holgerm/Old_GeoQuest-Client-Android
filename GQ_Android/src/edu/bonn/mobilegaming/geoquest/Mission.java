@@ -37,8 +37,9 @@ public class Mission implements Serializable {
 			.getPackageBaseName();
 	private static final String LOG_TAG = Mission.class.getName();
 
+	public static final String BACK_ALLOWED = "backAllowed";
+
 	private static boolean useWebLayoutGlobally = false;
-	private boolean useWebLayout = useWebLayoutGlobally;
 
 	/** TODO: explain; */
 	private static Activity mainActivity;
@@ -76,7 +77,7 @@ public class Mission implements Serializable {
 	public int achievedPoints = 0;
 
 	public final String id;
-	private Class<MissionActivity> missionType;
+	private Class<MissionOrToolActivity> missionType;
 
 	/**
 	 * Creates a new mission and stores it in the missionStore. If the
@@ -164,16 +165,13 @@ public class Mission implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Class<MissionActivity> missionType() {
+	private Class<MissionOrToolActivity> missionType() {
 		String mType = xmlMissionNode.attributeValue("type");
 		try {
-			if (useWebLayout) {
-				return (Class<MissionActivity>) Class.forName(PACKAGE_BASE_NAME
-						+ "WebTech");
-			} else {
-				return (Class<MissionActivity>) Class.forName(PACKAGE_BASE_NAME
-						+ xmlMissionNode.attributeValue("type"));
-			}
+
+			return (Class<MissionOrToolActivity>) Class
+					.forName(PACKAGE_BASE_NAME
+							+ xmlMissionNode.attributeValue("type"));
 		} catch (ClassNotFoundException e) {
 			Log.d(LOG_TAG, " Invalid type specified. Mission type not found: "
 					+ mType);
@@ -181,7 +179,7 @@ public class Mission implements Serializable {
 		}
 		// return abstract class as signal for error (could be better with a
 		// null object
-		return MissionActivity.class;
+		return MissionOrToolActivity.class;
 	}
 
 	private void loadXML() {
@@ -251,8 +249,12 @@ public class Mission implements Serializable {
 	/**
 	 * Starts the mission using an Intent that only has the minimal extras,
 	 * namely the mission ID.
+	 * 
+	 * @param backAllowed
+	 *            true signals that the started mission activity will allow the
+	 *            back button to pop the activity from the activity stack.
 	 */
-	public void startMission() {
+	public void startMission(boolean backAllowed) {
 		Intent startingIntent = this.startingIntent;
 		if (startingIntent != null) {
 			String id = startingIntent.getStringExtra(MISSION_ID);
@@ -264,8 +266,10 @@ public class Mission implements Serializable {
 						+ " is already running and restarted.");
 				startingIntent = GeoQuestApp.getInstance()
 						.getRunningActivityByID(id).getIntent();
-				startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				if (!backAllowed)
+					startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
+			startingIntent.putExtra(BACK_ALLOWED, backAllowed);
 			GameDataManager.stopAudio();
 			if (Mission.get(id) != null
 					&& Mission.get(id).xmlMissionNode != null)
@@ -274,6 +278,10 @@ public class Mission implements Serializable {
 			Log.e(this.getClass().getName(),
 					"Mission can NOT be started since Intent is null.");
 
+	}
+
+	public void startMission() {
+		startMission(false);
 	}
 
 	/**
@@ -315,7 +323,8 @@ public class Mission implements Serializable {
 						extraArgumentsFromAction.get(currentKey));
 			}
 		}
-		startMission();
+		startMission(false); // external mission might not know about back
+								// allowed flag.
 	}
 
 	public static void setMainActivity(Activity mainActivity) {
@@ -337,6 +346,10 @@ public class Mission implements Serializable {
 
 	Mission getParent() {
 		return parent;
+	}
+
+	public Class<MissionOrToolActivity> getMissionType() {
+		return missionType;
 	}
 
 	public String toString() {
