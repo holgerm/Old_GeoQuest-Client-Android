@@ -81,7 +81,7 @@ public class MapOSM extends MapNavigation {
 
 		initMapTileAccess();
 
-		mapHelper = new MapHelper(this);
+		mapHelper = new MapHelper(this); // activates Hotspots
 
 		initZoom();
 		initGPSMock();
