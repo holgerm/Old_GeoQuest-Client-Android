@@ -62,7 +62,8 @@
     <string name="menu_gamesInCloud">Spiele finden</string>
     <string name="menu_imprint">Impressum</string>
     <string name="menu_inventory">Inventar</string>
-
+    <string name="menu_deleteAllQuests">Alle Löschen</string>
+    
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
