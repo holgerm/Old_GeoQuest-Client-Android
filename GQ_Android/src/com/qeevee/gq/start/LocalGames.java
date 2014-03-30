@@ -120,7 +120,6 @@ public class LocalGames extends Activity {
 			listAdapter = new GameListAdapter(this,
 					android.R.layout.simple_list_item_1, games);
 			listView.setAdapter(listAdapter);
-//			listAdapter.notifyDataSetChanged(); // TODO does not work
 		}
 	}
 }
