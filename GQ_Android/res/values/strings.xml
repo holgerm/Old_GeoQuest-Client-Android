@@ -5,7 +5,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="npcimage_description">An image illustrating the current activity.</string>
-
+    <string name="info_text">GeoQuest by Qeevee GmbH. App version is</string>
+    
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventory</string>
 
@@ -61,7 +62,8 @@
     <string name="menu_imprint">Imprint</string>
     <string name="menu_inventory">Inventory</string>
     <string name="menu_deleteAllQuests">Delete All</string>
-
+    <string name="menu_info">Info</string>
+    
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
     <string name="audiorecord_activityIndicator_initial">No recording made yet!</string>

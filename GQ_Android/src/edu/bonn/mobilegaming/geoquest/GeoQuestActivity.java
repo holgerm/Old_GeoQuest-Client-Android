@@ -105,6 +105,12 @@ public abstract class GeoQuestActivity extends Activity {
 					Preferences.class);
 			startActivity(settingsActivity);
 			return true;
+		case R.id.menu_info:
+			String infotext = GeoQuestApp.getContext().getString(
+					R.string.info_text)
+					+ "" + GeoQuestApp.getContext().getString(R.string.version);
+			GeoQuestApp.showMessage(infotext);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
