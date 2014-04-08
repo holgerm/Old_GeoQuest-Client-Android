@@ -13,7 +13,7 @@ public class SetHotspotActivity extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		Hotspot hotspot = HotspotManager.getInstance().getExisting(
 				params.get("id"));
 		if (hotspot == null)

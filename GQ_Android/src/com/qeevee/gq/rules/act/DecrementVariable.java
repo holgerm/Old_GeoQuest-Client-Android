@@ -13,7 +13,7 @@ public class DecrementVariable extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		String varName = params.get("var");
 		Double value = (Double) Variables.getValue(varName);
 		if (value instanceof Double)

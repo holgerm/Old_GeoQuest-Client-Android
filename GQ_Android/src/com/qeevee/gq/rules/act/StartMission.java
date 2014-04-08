@@ -18,7 +18,7 @@ public class StartMission extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		boolean keepActivity = StringTools
 				.asBoolean(params.get("keepActivity"));
 		Mission mission = Mission.get(params.get("id"));

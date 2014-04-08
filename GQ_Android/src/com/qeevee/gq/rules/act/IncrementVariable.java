@@ -14,7 +14,7 @@ public class IncrementVariable extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		String varName = params.get("var");
 		Object value = Variables.getValue(varName);
 		if (value instanceof Double)

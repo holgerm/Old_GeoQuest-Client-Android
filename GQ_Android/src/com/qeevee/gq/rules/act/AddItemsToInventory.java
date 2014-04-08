@@ -14,7 +14,7 @@ public class AddItemsToInventory extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		Inventory inventory = Inventory.getStandardInventory();
 		inventory.addItems(params.get(ITEM_TYPE),
 				Integer.valueOf(params.get(NUMBER_OF_ITEMS)));

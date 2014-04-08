@@ -20,7 +20,7 @@ public class ShowAlert extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				(Context) GeoQuestApp.getCurrentActivity()).setTitle(
 				(params.get("message"))).setPositiveButton(R.string.ok,

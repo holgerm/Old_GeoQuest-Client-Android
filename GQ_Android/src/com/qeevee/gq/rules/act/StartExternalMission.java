@@ -20,7 +20,7 @@ public class StartExternalMission extends StartMission {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		if (elements.containsKey("parameters")) {
 			Element parametersElement = elements.get("parameters");
 			Map<String, String> inputParameters = XMLUtilities

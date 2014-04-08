@@ -14,7 +14,7 @@ public class Vibrate extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		long duration;
 
 		if (params.containsKey("duration")) {

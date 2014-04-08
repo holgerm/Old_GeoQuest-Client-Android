@@ -20,7 +20,7 @@ public class AddToScore extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		if (!Variables.isDefined(SCORE_VARIABLE)) {
 			Variables.setValue(SCORE_VARIABLE, 0);
 		}

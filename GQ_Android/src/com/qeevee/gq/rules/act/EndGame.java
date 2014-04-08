@@ -10,7 +10,7 @@ public class EndGame extends Action {
 	}
 
 	@Override
-	public void execute() {
+	public void _execute() {
 		GeoQuestApp.getInstance().endGame();
 	}
 
