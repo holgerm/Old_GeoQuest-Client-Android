@@ -92,10 +92,10 @@ public class ActionFactory {
 					params, elements);
 			if (!initializationSuccessful) {
 				Log.d(TAG, " initialization failed: " + params.toString());
-				return null;
+				return (Action) actionObject;
 			}
 		} else {
-			Log.d(TAG, " unknown Action type: " + commandType);
+			Log.d(TAG, " unknown Action type: " + commandType + ". Will beignored.");
 			return null;
 		}
 

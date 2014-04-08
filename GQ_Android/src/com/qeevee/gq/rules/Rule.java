@@ -113,7 +113,9 @@ public class Rule {
 
 	private void addActionsToList(List<Element> xmlActionNodes) {
 		for (Element xmlAction : xmlActionNodes) {
-			actions.add(ActionFactory.create(xmlAction));
+			Action newAction = ActionFactory.create(xmlAction);
+			if (newAction != null)
+				actions.add(newAction);
 		}
 	}
 
