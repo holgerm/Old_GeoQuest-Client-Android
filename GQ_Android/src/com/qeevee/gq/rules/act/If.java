@@ -47,19 +47,19 @@ public class If extends Action {
 	@Override
 	protected boolean checkInitialization() {
 		boolean initOK = true;
-		initOK &= elements.containsKey("Condition");
+		initOK &= elements.containsKey("condition");
 		return initOK;
 	}
 
 	@Override
 	public void execute() {
 		
-		Element xmlCondition = (Element) elements.get("Condition").selectNodes("*").get(0);		
+		Element xmlCondition = (Element) elements.get("condition").selectNodes("*").get(0);		
 		condition = ConditionFactory.create(xmlCondition);
 			
 		if (condition.isFulfilled()) {
 			
-			Element xmlThen = elements.get("Then");
+			Element xmlThen = elements.get("then");
 			List<Element> xmlActionNodes = xmlThen.selectNodes("action");
 			for (Element xmlAction : xmlActionNodes) {
 				actions.add(ActionFactory.create(xmlAction));
@@ -70,7 +70,7 @@ public class If extends Action {
 			
 		} else{
 			
-			Element xmlElse = elements.get("Else");
+			Element xmlElse = elements.get("else");
 			List<Element> xmlActionNodes = xmlElse.selectNodes("action");
 			for (Element xmlAction : xmlActionNodes) {
 				actions.add(ActionFactory.create(xmlAction));
