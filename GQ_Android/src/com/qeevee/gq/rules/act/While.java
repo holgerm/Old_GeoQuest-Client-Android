@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Element;
+
+import android.util.Log;
+
 import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
 
 
-/* Example Game using IF Action:
+/* Example Game using While Action:
  * <?xml version="1.0" encoding="UTF-8"?>
 <game id="3183" name="ActionDummy" xmlformat="5">
 	<mission duration="interactive" id="6485" type="StartAndExitScreen" image="files/bg.jpg">
@@ -38,7 +41,7 @@ import com.qeevee.gq.rules.cond.ConditionFactory;
  * 
  */
 
-public class If extends Action {
+public class While extends Action {
 	
 	private Condition condition;
 	private List<Action> actions = new ArrayList<Action>();
@@ -57,27 +60,18 @@ public class If extends Action {
 		Element xmlCondition = (Element) elements.get("condition").selectNodes("*").get(0);		
 		condition = ConditionFactory.create(xmlCondition);
 			
-		if (condition.isFulfilled()) {
-			
-			Element xmlThen = elements.get("then");
-			List<Element> xmlActionNodes = xmlThen.selectNodes("action");
-			for (Element xmlAction : xmlActionNodes) {
-				actions.add(ActionFactory.create(xmlAction));
+		Element xmlThen = elements.get("then");
+		List<Element> xmlActionNodes = xmlThen.selectNodes("action");
+		for (Element xmlAction : xmlActionNodes) {
+			actions.add(ActionFactory.create(xmlAction));
+		}
+		int len = actions.size();
+		
+		while (condition.isFulfilled()) {	
+			for (int i = 0; i < len; i++) {
+				actions.get(i).execute();
+				Log.d("myTag", "action performed: " + actions.get(i).params.get("type"));
 			}
-			for (Action currentAction : actions) {
-				currentAction.execute();
-			}
-			
-		} else{
-			
-			Element xmlElse = elements.get("else");
-			List<Element> xmlActionNodes = xmlElse.selectNodes("action");
-			for (Element xmlAction : xmlActionNodes) {
-				actions.add(ActionFactory.create(xmlAction));
-			}
-			for (Action currentAction : actions) {
-				currentAction.execute();
-			}	
 		}	
 	}
 }

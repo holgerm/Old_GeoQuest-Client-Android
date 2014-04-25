@@ -1,6 +1,7 @@
 package com.qeevee.gq.rules.act;
 
 import android.content.Context;
+import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
@@ -48,23 +49,24 @@ public class AddToScore extends Action {
 	}
 
 	private double addToScore(int score) {
-		double newScore = (Double) Variables.getValue(SCORE_VARIABLE) + score;
-		newScore = newScore < 0.0 ? 0.0 : newScore;
-		Variables.setValue(SCORE_VARIABLE, newScore);
-		return newScore;
-		// Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
-		// double lastScoreD = 0.;
-		// int resultScore = 0;
-		// if (lastScoreO.getClass().getName().equals(Integer.class.getName()))
-		// {
-		// resultScore = (Integer) lastScoreO + score;
-		// } else {
-		// lastScoreD = (Double) lastScoreO;
-		// resultScore = (int) lastScoreD + score;
-		// }
-		// if (resultScore < 0)
-		// resultScore = 0;
-		// Variables.setValue(SCORE_VARIABLE, resultScore);
-		// return resultScore;
+//		double newScore = (Double) Variables.getValue(SCORE_VARIABLE) + score;
+//		newScore = newScore < 0.0 ? 0.0 : newScore;
+//		Variables.setValue(SCORE_VARIABLE, newScore);
+//		return newScore;
+		 Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
+		 double lastScoreD = 0.;
+		 int resultScore = 0;
+		 if (lastScoreO.getClass().getName().equals(Integer.class.getName()))
+		 {
+		 resultScore = (Integer) lastScoreO + score;
+		 } else {
+		 lastScoreD = (Double) lastScoreO;
+		 resultScore = (int) lastScoreD + score;
+		 }
+		 if (resultScore < 0)
+		 resultScore = 0;
+		 Variables.setValue(SCORE_VARIABLE, resultScore);
+		 Log.d("myTag", "score is: " + resultScore);
+		 return resultScore;
 	}
 }
