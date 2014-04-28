@@ -17,7 +17,7 @@ public class GameDescription {
 
 	private static final String TAG = GameDescription.class.getCanonicalName();
 	private String name;
-	private String ID;
+	private String id;
 	private String zipURL = "none";
 
 	public String getZipURL() {
@@ -26,7 +26,7 @@ public class GameDescription {
 
 	public GameDescription(JSONObject jsonObject) throws JSONException {
 		name = (String) jsonObject.get("name");
-		ID = ((Integer) jsonObject.get("id")).toString();
+		id = ((Integer) jsonObject.get("id")).toString();
 		zipURL = (String) jsonObject.get("zip");
 	}
 
@@ -37,7 +37,7 @@ public class GameDescription {
 	 *            game.xml and media data used in the game.
 	 */
 	public GameDescription(File gameDir) {
-		ID = gameDir.getName();
+		id = gameDir.getName();
 		File gameXML = new File(gameDir, GameDataManager.GAME_XML_FILENAME);
 		name = extractNameFromXML(gameXML);
 	}
@@ -60,7 +60,7 @@ public class GameDescription {
 	}
 
 	public String getID() {
-		return ID;
+		return id;
 	}
 
 	public String getName() {
