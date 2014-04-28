@@ -21,6 +21,7 @@ import android.os.Bundle;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.HistoryItem;
 import com.qeevee.gq.history.HistoryItemModifier;
+import com.qeevee.gq.start.Start;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
 import com.qeevee.gq.tests.ui.mock.UseGameSpecUIFactory;
 import com.xtremelabs.robolectric.Robolectric;
@@ -30,7 +31,6 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
 import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 

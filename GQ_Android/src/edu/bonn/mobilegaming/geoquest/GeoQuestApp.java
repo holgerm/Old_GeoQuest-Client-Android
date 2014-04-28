@@ -43,6 +43,7 @@ import com.google.android.maps.MapView;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.start.Start;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;

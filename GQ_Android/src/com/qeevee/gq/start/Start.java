@@ -1,4 +1,4 @@
-package edu.bonn.mobilegaming.geoquest;
+package com.qeevee.gq.start;
 
 import java.io.File;
 
@@ -23,14 +23,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.qeevee.gq.start.ExtractGamesFromAssets;
-import com.qeevee.gq.start.GameDataManager;
-import com.qeevee.gq.start.GameDescription;
-import com.qeevee.gq.start.GamesInCloud;
-import com.qeevee.gq.start.LocalGames;
-import com.qeevee.gq.start.StartLocalGame;
-
+import edu.bonn.mobilegaming.geoquest.GameLoader;
+import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.GeoQuestProgressHandler;
+import edu.bonn.mobilegaming.geoquest.Mission;
+import edu.bonn.mobilegaming.geoquest.Preferences;
+import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.views.GeoquestButton;
 
@@ -148,8 +147,10 @@ public class Start extends GeoQuestActivity {
 	}
 
 	private boolean checkAndPerformAutostartByAssets() {
+		boolean usesAutostart = false;
+
 		// TODO Auto-generated method stub
-		return false;
+		return usesAutostart;
 	}
 
 	/**

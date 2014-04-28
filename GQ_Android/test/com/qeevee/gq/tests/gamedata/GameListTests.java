@@ -9,12 +9,12 @@ import android.widget.ListView;
 
 import com.qeevee.gq.host.ConnectionStrategy;
 import com.qeevee.gq.start.GamesInCloud;
+import com.qeevee.gq.start.Start;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Start;
 
 @RunWith(GQTestRunner.class)
 public class GameListTests {

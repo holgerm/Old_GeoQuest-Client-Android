@@ -16,7 +16,7 @@ public class ExtractGamesFromAssets extends AsyncTask<Void, Integer, Void> {
 	private static final String TAG = ExtractGamesFromAssets.class
 			.getCanonicalName();
 	private final static int BYTE_SIZE = 1024;
-	private static final String ASSET_DIR_FOR_INCLUDED_QUESTS = "included";
+	static final String ASSET_DIR_FOR_INCLUDED_QUESTS = "included";
 	private AssetManager assetManager;
 
 	protected Void doInBackground(Void... nothing) {

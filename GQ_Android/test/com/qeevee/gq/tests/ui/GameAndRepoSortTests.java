@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.loc.Distance;
+import com.qeevee.gq.start.Start;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.FileUtilities;
 import com.qeevee.gq.tests.util.TestUtils;
@@ -28,7 +29,6 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.GeoQuestProgressHandler;
 import edu.bonn.mobilegaming.geoquest.RepoListActivity;
 import edu.bonn.mobilegaming.geoquest.SortingOptionsActivity;
-import edu.bonn.mobilegaming.geoquest.Start;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
