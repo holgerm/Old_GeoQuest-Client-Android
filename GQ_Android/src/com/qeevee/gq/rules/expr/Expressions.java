@@ -7,7 +7,6 @@ import org.dom4j.Element;
 import android.util.Log;
 
 import com.qeevee.gq.rules.cond.Condition;
-import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -57,7 +56,8 @@ public class Expressions {
 				.getInteger(R.integer.maxDefaultRandom)
 				: Integer.parseInt(xmlRandomExpression.attributeValue("max")));
 		Random generator = new Random();
-		return new Double((double) (generator.nextInt(max - min + 1) + min));
+		return Double
+				.valueOf((double) (generator.nextInt(max - min + 1) + min));
 	}
 
 	private static String evaluateString(Element xmlStringExpression) {
