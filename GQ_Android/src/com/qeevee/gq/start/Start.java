@@ -1,12 +1,17 @@
 package com.qeevee.gq.start;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -49,6 +54,7 @@ public class Start extends GeoQuestActivity {
 	static final int FIRST_LOCAL_MENU_ID = GeoQuestActivity.MENU_ID_OFFSET;
 
 	static final String RELOAD_REPO_DATA = "edu.bonn.mobilegaming.geoquest.start.reload_repo_data";
+	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
 
 	private final int repoListRequestCode = 101;
 
@@ -130,7 +136,7 @@ public class Start extends GeoQuestActivity {
 			disableLastGameButton(R.string.start_text_last_game_text_no_game);
 		}
 
-		GeoQuestApp.getInstance().setUsingAutostart(checkAndPerformAutostart());
+		checkAndPerformAutostart();
 
 		super.onResume();
 
@@ -139,18 +145,43 @@ public class Start extends GeoQuestActivity {
 	}
 
 	/**
-	 * @return true iff autostart is applied.
+	 * If an autostart quest is defined in assets, i.e. precompiled with the
+	 * app, this is called and no other quest can be started with this app.
+	 * 
+	 * If the user has set an autostart quest in the preferences (which is only
+	 * possible if no autostart quest is set in the assets), it will be started.
+	 * This setting can only after the start be changed again.
 	 */
-	private boolean checkAndPerformAutostart() {
-		return checkAndPerformAutostartByAssets()
-				&& checkAndPerformAutostartFormPrefs();
+	private void checkAndPerformAutostart() {
+		boolean isUsingAutoStart = checkAndPerformAutostartByAssets()
+				|| checkAndPerformAutostartFormPrefs();
+		GeoQuestApp.getInstance().setUsingAutostart(isUsingAutoStart);
 	}
 
 	private boolean checkAndPerformAutostartByAssets() {
-		boolean usesAutostart = false;
+		boolean autostart = false;
+		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
+		String autostartGameID = null;
+		try {
+			InputStream is = assetManager.open(ASSET_FILE_FOR_AUTOSTART_ID);
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(is));
+			autostartGameID = reader.readLine();
+			is.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// TODO Auto-generated method stub
-		return usesAutostart;
+		if (autostartGameID != null) {
+			if (GameDataManager.existsLocalQuest(autostartGameID)) {
+				autostart = true;
+				File gameDir = GameDataManager.getQuestDir(autostartGameID);
+				GameDescription gameDescr = new GameDescription(gameDir);
+				new StartLocalGame().execute(gameDescr);
+			}
+		}
+		return autostart;
 	}
 
 	/**
