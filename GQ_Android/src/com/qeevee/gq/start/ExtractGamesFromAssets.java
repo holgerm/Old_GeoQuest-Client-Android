@@ -99,18 +99,4 @@ public class ExtractGamesFromAssets extends AsyncTask<Void, Integer, Void> {
 		}
 	}
 
-	private void deleteDir(File dir) {
-		File[] files = dir.listFiles();
-		if (files != null) { // some JVMs return null for empty dirs
-			for (File file : files) {
-				if (file.isDirectory()) {
-					deleteDir(file);
-				} else {
-					file.delete();
-				}
-			}
-		}
-		dir.delete();
-	}
-
 }

@@ -106,17 +106,6 @@ public class StartLocalGame extends
 				Log.e(TAG, exception.toString());
 			}
 		}
-
-//		list = document.selectNodes("//hotspotset");
-//
-//		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
-//			Element hotspotset = i.next();
-//			try {
-//				new Hotspotset(hotspotset);
-//			} catch (Hotspot.IllegalHotspotNodeException exception) {
-//				Log.e(TAG, exception.toString());
-//			}
-//		}
 	}
 
 	@Override

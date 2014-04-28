@@ -69,18 +69,6 @@ public class LocalGames extends Activity {
 			}
 
 		});
-
-		// listView.setOnItemLongClickListener(new
-		// AdapterView.OnItemLongClickListener() {
-		//
-		// public boolean onItemLongClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// deleteGame(games.get(position);
-		// return false;
-		// }
-		//
-		//
-		// });
 	}
 
 	/**
