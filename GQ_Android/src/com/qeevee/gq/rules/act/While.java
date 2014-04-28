@@ -2,60 +2,52 @@ package com.qeevee.gq.rules.act;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.dom4j.Element;
-
-import android.util.Log;
-
 import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
+import edu.bonn.mobilegaming.geoquest.Variables;
 
 
 /* Example Game using While Action:
- * <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <game id="3183" name="ActionDummy" xmlformat="5">
 	<mission duration="interactive" id="6485" type="StartAndExitScreen" image="files/bg.jpg">
 		<onStart>
 			<rule>
-				<action type="If">
+				<action type="While">
 					<condition>
-						<Eq>
-							<num>1</num>
-							<num>2</num>
-						</Eq>
+						<Leq>
+							<var>score</var>
+							<num>10</num>
+						</Leq>
 					</condition>
 					<then>
-						<action type="ShowMessage" message="thenAction1"/>
-						<action type="ShowMessage" message="thenAction2"/>
+						<action type="AddToScore" value="2"/>
 					</then>
-					<else>
-						<action type="ShowMessage" message="elseAction1"/>
-						<action type="ShowMessage" message="elseAction2"/>
-					</else>
 				</action>
 			</rule>
 		</onStart>
 	</mission>
 </game>
- * 
- * 
  */
 
 public class While extends Action {
-	
-	private Condition condition;
-	private List<Action> actions = new ArrayList<Action>();
 
+	private Condition condition;
+	private List<Action> actions;
 
 	@Override
 	protected boolean checkInitialization() {
 		boolean initOK = true;
-		initOK &= elements.containsKey("condition");
+		initOK &= elements.containsKey("condition") && elements.containsKey("then");
 		return initOK;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void execute() {
+		actions = new ArrayList<Action>();
+		Variables.setValue("break_while", Boolean.valueOf("false"));
 		
 		Element xmlCondition = (Element) elements.get("condition").selectNodes("*").get(0);		
 		condition = ConditionFactory.create(xmlCondition);
@@ -70,7 +62,11 @@ public class While extends Action {
 		while (condition.isFulfilled()) {	
 			for (int i = 0; i < len; i++) {
 				actions.get(i).execute();
-				Log.d("myTag", "action performed: " + actions.get(i).params.get("type"));
+				if((Boolean)Variables.getValue("break_while")) break;
+			}
+			if((Boolean)Variables.getValue("break_while")){
+				Variables.setValue("break_while", Boolean.valueOf("false"));
+				break;
 			}
 		}	
 	}
