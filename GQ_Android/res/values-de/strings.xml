@@ -8,7 +8,13 @@
     <string name="cancel">Abbrechen</string>
     <string name="npcimage_description">Ein Bild passend zur aktuellen Aktivität.</string>
     <string name="info_text">GeoQuest. Ein Produkt der Qeevee GmbH. App Version ist</string>
-    
+
+    <!-- User Alerts -->
+    <string name="alert_endGameTitel">Spiel Beenden</string>
+    <string name="alert_endGameMessage">Möchtest du dieses Spiel wirklich beenden?</string>
+    <string name="alert_endGameButtonOK">Ja, beenden</string>
+    <string name="alert_endGameButtonCancel">Nein, weiter spielen</string>
+
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventar</string>
 
@@ -65,7 +71,7 @@
     <string name="menu_inventory">Inventar</string>
     <string name="menu_deleteAllQuests">Alle Löschen</string>
     <string name="menu_info">Info</string>
-    
+
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>

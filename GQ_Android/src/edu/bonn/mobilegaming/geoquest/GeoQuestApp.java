@@ -40,8 +40,8 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
+import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.host.HostConnector;
-import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.start.Start;
 
@@ -150,8 +150,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public void addActivity(Activity newActivityOfThisApp) {
-		if (!activities.contains(newActivityOfThisApp))
-			activities.add(newActivityOfThisApp);
+		if (!getActivities().contains(newActivityOfThisApp))
+			getActivities().add(newActivityOfThisApp);
 		if (newActivityOfThisApp instanceof MissionActivity) {
 			MissionActivity missionActivity = (MissionActivity) newActivityOfThisApp;
 			String id = missionActivity.getMission().id;
@@ -160,8 +160,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	void removeActivity(Activity finishedActivity) {
-		if (activities.contains(finishedActivity))
-			activities.remove(finishedActivity);
+		if (getActivities().contains(finishedActivity))
+			getActivities().remove(finishedActivity);
 	}
 
 	public void removeMissionActivity(String missionID) {
@@ -207,10 +207,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	 * 
 	 */
 	public void terminateApp() {
-		Activity[] allActivities = new Activity[activities.size()];
-		activities.toArray(allActivities);
+		Activity[] allActivities = new Activity[getActivities().size()];
+		getActivities().toArray(allActivities);
 		for (int i = 0; i < allActivities.length; i++) {
-			activities.remove(allActivities[i]);
+			getActivities().remove(allActivities[i]);
 			allActivities[i].finish();
 		}
 		GameDataManager.cleanMediaPlayer();
@@ -679,36 +679,15 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public void endGame() {
-		stopAudio();
-		Mission.clean();
-		Hotspot.clean();
-		Variables.clean();
-		Activity[] allActivities = new Activity[activities.size()];
-		activities.toArray(allActivities);
-		for (int i = 0; i < allActivities.length; i++) {
-			if (isGameActivity(allActivities[i])) {
-				activities.remove(allActivities[i]);
-				allActivities[i].finish();
-			}
-			if (allActivities[i] instanceof MissionActivity) {
-				MissionActivity missionActivity = (MissionActivity) allActivities[i];
-				GeoQuestApp.getInstance().removeMissionActivity(
-						missionActivity.getMission().id);
-			}
-		}
-		setInGame(false);
-		setRunningGameDir(null);
-		cleanMediaPlayer();
-
-		if (isUsingAutostart())
-			terminateApp();
+		EndGame command = new EndGame();
+		command.makeUserConfirmAndDoIt();
 	}
 
 	/**
 	 * TODO replace by asking for implementing an interface (similar to
 	 * NeedsNFC...)
 	 */
-	private boolean isGameActivity(Activity activity) {
+	public boolean isGameActivity(Activity activity) {
 		@SuppressWarnings("rawtypes")
 		Class actClass = activity.getClass();
 		if (actClass.equals(Start.class)
@@ -940,6 +919,14 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public void clean() {
 		missionActivities.clear();
+	}
+
+	public ArrayList<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(ArrayList<Activity> activities) {
+		this.activities = activities;
 	}
 
 }
