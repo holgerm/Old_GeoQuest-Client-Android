@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game name="ItemTest" xmlformat="5">
+	<mission type="UserDialog" cancelable="true">
+		<selections>
+			<selection name="Take" image="drawable/take.png">
+				<onSelected>
+					<action type="takeItem" id="Trum"></action>
+				</onSelected>
+			</selection>
+		</selections>
+	</mission>
+
+	<!-- DECLARATION of a PROCEDURE: -->
+	<procedure type="Declaration" usage="Füttere @eater mit @food"
+		name="Feed" id="FeedID">
+		<param name="eater">
+			<hasType var="@eater" type="Wesen" />
+		</param>
+		<param name="food">
+			<hasType var="@food" type="Nahrung" />
+		</param>
+		<param name="score">
+			<hasType var="@score" type="Integer" />
+			<geq>
+				<var name="@score" />
+				<integer>0</integer>
+			</geq>
+		</param>
+		<do>
+			<action type="DeleteItem" item="@food" />
+			<action type="AddScore" score="@score" />
+		</do>
+	</procedure>
+
+	<itemtype type="Wesen" supertype="item">
+		<function id="FeedID" />
+	</itemtype>
+
+	<itemtype type="Nahrung" supertype="item">
+		<function id="FeedID">
+			<!-- bindings should follow the restrictions given in the procedure param -->
+			<bind param="eater">
+				<var name="@this" />
+			</bind>
+			<bind param="score">
+				<integer>50</integer>
+			</bind>
+			<!-- unbound params must be bound by interaction through tool e.g. item 
+				inspector -->
+		</function>
+	</itemtype>
+
+	<item type="Wesen" id="WesenItem">
+		<onAccess>
+			<rule>
+				<if>
+					<state name="drop" state="dropped" />
+				</if>
+				<then>
+					<action type="OfferAction" id="take">
+						<action type="SetState" object="item:Turmfalke" name="drop"
+							value="taken"></action>
+						<action type="MoveItem" to="player" id="item:Turmfalke"></action>
+					</action>
+				</then>
+			</rule>
+		</onAccess>
+	</item>
+	<mission type="AudioRecord" id="With_Defaults"
+		task="Special text to ask the player to record some audio." file="test_recording.3gp">
+		<onStart>
+			<rule>
+				<action type="SetVariable" var="onStart">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onStart>
+		<onSuccess>
+			<rule>
+				<action type="SetVariable" var="onSuccess">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onSuccess>
+		<onEnd>
+			<rule>
+				<action type="SetVariable" var="onEnd">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+				<action type="StartMission" id="Use_audio" />
+			</rule>
+		</onEnd>
+	</mission>
+	<mission type="NPCTalk" id="Use_audio" image="drawable/ploppschutz.png">
+		<onStart>
+			<rule>
+				<action type="PlayAudio" file="@_test_recording.3gp" />
+			</rule>
+		</onStart>
+		<dialogitem nextbuttontext="Again">Now you should hear your recent
+			recording.
+		</dialogitem>
+		<dialogitem sound="@_test_recording.3gp">You can use this recording now anywhere
+			later in your quests.
+		</dialogitem>
+	</mission>
+</game>

@@ -9,6 +9,8 @@ import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
@@ -17,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.qeevee.gq.loc.SmartLocationListener;
+
 
 /**
  * @author hm
@@ -29,7 +32,9 @@ public class LocationSource {
 	public static final int REAL_MODE = 0;
 	public static final int MOCK_MODE = 1;
 
-	private static final String LOCATION_MOCK_SERVER_URL = "http://geoquest.qeevee.org/control/";
+	// private static final String LOCATION_MOCK_SERVER_URL =
+	// "http://geoquest.qeevee.org/control/";
+	static final String LOCATION_MOCK_SERVER_URL = "http://qeevee.com/gqcontrol/";
 
 	private static URL makeURLForGetPosition(Context context) {
 		URL url = null;
@@ -44,25 +49,13 @@ public class LocationSource {
 		return url;
 	}
 
-	public static boolean setDeviceName(Context context, String deviceName) {
-		String deviceID = getDeviceID(context);
-		StringBuilder responseString = new StringBuilder();
-		try {
-			URL url = new URL(LOCATION_MOCK_SERVER_URL + "?set=1&id="
-					+ deviceID + "&name=" + deviceName);
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-					url.openStream()));
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				responseString.append(line);
-			}
-			rd.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String response = responseString.toString();
-		return (response.startsWith("ok " + deviceID) && response
-				.endsWith(deviceName));
+	public static void setDeviceName(Context context, String deviceName) {
+		AsyncTask<String, Void, Boolean> setDeviceName = new RegisterDeviceForGPSMocking();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			setDeviceName.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+					deviceName);
+		else
+			setDeviceName.execute(deviceName);
 	}
 
 	private LocationManager locationManager;
