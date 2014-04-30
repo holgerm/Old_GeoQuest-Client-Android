@@ -55,7 +55,7 @@ public class PostScore extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		Variables.setValueIfUndefined(USER_NAME_VARIABLE,
 				ctx.getText(R.string.varDefaultUserName));
 		Variables.setValueIfUndefined(USER_ID_VARIABLE,

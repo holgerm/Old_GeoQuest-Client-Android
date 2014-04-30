@@ -13,7 +13,7 @@ public class SetHotspotVisibility extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		Hotspot hotspot = HotspotManager.getInstance().getExisting(
 				params.get("id"));
 		if (hotspot == null)

@@ -2,7 +2,6 @@ package com.qeevee.gq.rules.act;
 
 import edu.bonn.mobilegaming.geoquest.Variables;
 
-
 public class Break extends Action {
 
 	@Override
@@ -13,6 +12,6 @@ public class Break extends Action {
 
 	@Override
 	public void execute() {
-		Variables.setValue("break_while", Boolean.valueOf("true"));
+		Variables.setValue(Variables.BREAK_WHILE, Boolean.valueOf("true"));
 	}
 }

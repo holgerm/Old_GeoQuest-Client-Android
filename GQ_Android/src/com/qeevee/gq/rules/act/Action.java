@@ -34,15 +34,15 @@ public abstract class Action {
 
 	protected abstract boolean checkInitialization();
 
-	public void execute() {
+	public void executeSavely() {
 		if (executable)
-			_execute();
+			execute();
 		else {
 			Log.w(this.getClass().getCanonicalName(),
 					"tried to execute incorrectly initialized action");
 		}
 	}
 
-	protected abstract void _execute();
+	protected abstract void execute();
 
 }

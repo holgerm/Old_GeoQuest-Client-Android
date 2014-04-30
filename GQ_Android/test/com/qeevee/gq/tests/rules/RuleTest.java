@@ -14,6 +14,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,13 +24,13 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
 @RunWith(GQTestRunner.class)
-public class RuleTests {
+public class RuleTest {
 
 	Element root;
 	@SuppressWarnings("rawtypes")
 	List rules;
 
-	private void loadXMLFile(String fileName) {
+	protected void loadXMLFile(String fileName) {
 		SAXReader reader = new SAXReader();
 		URL xmlFileURL = this.getClass().getResource("/testrules/" + fileName);
 		Document document;
@@ -43,9 +44,18 @@ public class RuleTests {
 		}
 	}
 
-	private void applyRule(int i) {
+	protected void applyRule() {
+		applyRule(0);
+	}
+
+	protected void applyRule(int i) {
 		Rule rule = Rule.createFromXMLElement((Element) rules.get(i));
 		rule.apply();
+	}
+
+	@Before
+	public void clearVariables() {
+		Variables.clean();
 	}
 
 	@Test

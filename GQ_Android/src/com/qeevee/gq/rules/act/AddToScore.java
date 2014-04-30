@@ -10,7 +10,7 @@ public class AddToScore extends Action {
 	static final String SCORE_VARIABLE = "score";
 
 	private Context ctx = GeoQuestApp.getContext();
-	private boolean showToast = true;
+	private boolean showToast = false;
 
 	@Override
 	protected boolean checkInitialization() {
@@ -20,7 +20,7 @@ public class AddToScore extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		if (!Variables.isDefined(SCORE_VARIABLE)) {
 			Variables.setValue(SCORE_VARIABLE, 0.);
 		}
@@ -52,20 +52,20 @@ public class AddToScore extends Action {
 		newScore = newScore < 0.0 ? 0.0 : newScore;
 		Variables.setValue(SCORE_VARIABLE, newScore);
 		return newScore;
-//		 Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
-//		 double lastScoreD = 0.;
-//		 int resultScore = 0;
-//		 if (lastScoreO.getClass().getName().equals(Integer.class.getName()))
-//		 {
-//		 resultScore = (Integer) lastScoreO + score;
-//		 } else {
-//		 lastScoreD = (Double) lastScoreO;
-//		 resultScore = (int) lastScoreD + score;
-//		 }
-//		 if (resultScore < 0)
-//		 resultScore = 0;
-//		 Variables.setValue(SCORE_VARIABLE, resultScore);
-//		 Log.d("myTag", "score is: " + resultScore);
-//		 return resultScore;
+		// Object lastScoreO = Variables.getValue(SCORE_VARIABLE);
+		// double lastScoreD = 0.;
+		// int resultScore = 0;
+		// if (lastScoreO.getClass().getName().equals(Integer.class.getName()))
+		// {
+		// resultScore = (Integer) lastScoreO + score;
+		// } else {
+		// lastScoreD = (Double) lastScoreO;
+		// resultScore = (int) lastScoreD + score;
+		// }
+		// if (resultScore < 0)
+		// resultScore = 0;
+		// Variables.setValue(SCORE_VARIABLE, resultScore);
+		// Log.d("myTag", "score is: " + resultScore);
+		// return resultScore;
 	}
 }

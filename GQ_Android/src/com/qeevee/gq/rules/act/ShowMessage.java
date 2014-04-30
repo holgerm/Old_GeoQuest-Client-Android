@@ -11,7 +11,7 @@ public class ShowMessage extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		GeoQuestApp.showMessage(params.get("message"));
 	}
 

@@ -61,6 +61,8 @@ public class Variables {
 	public static final String CENTER_MAP_VISIBLE_HOTSPOTS = SYSTEM_PREFIX
 			+ "centerToVisibleHotspots";
 
+	public static final String BREAK_WHILE = "break_while";
+
 	private static final String TAG = Variables.class.getCanonicalName();
 
 	private static Object UNDEFINED_VARIABLE = new Object() {
@@ -79,9 +81,7 @@ public class Variables {
 
 	static {
 		variables = new HashMap<String, Object>();
-		variables.put(CENTER_MAP_POSITION, "false");
-		variables.put(CENTER_MAP_ACTIVE_HOTSPOTS, "false");
-		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "false");
+		clean();
 	}
 
 	/**
@@ -174,6 +174,10 @@ public class Variables {
 
 	public static void clean() {
 		variables.clear();
+		variables.put(CENTER_MAP_POSITION, "false");
+		variables.put(CENTER_MAP_ACTIVE_HOTSPOTS, "false");
+		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "false");
+		variables.put(BREAK_WHILE, Boolean.valueOf("true"));
 	}
 
 	/**

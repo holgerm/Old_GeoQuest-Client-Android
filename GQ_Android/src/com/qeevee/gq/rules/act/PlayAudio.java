@@ -10,7 +10,7 @@ public class PlayAudio extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		if (params.containsKey("file"))
 			GeoQuestApp.playAudio(params.get("file"), false);
     }

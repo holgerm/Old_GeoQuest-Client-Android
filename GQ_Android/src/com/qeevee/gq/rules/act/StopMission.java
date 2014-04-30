@@ -11,7 +11,7 @@ public class StopMission extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		GeoQuestApp.stopMission(params.get("id"), Globals.STATUS_SUCCEEDED);
 	}
 

@@ -37,7 +37,7 @@ public class Rule {
 	public final boolean apply() {
 		if (precondition.isFulfilled()) {
 			for (Action currentAction : actions) {
-				currentAction.execute();
+				currentAction.executeSavely();
 			}
 			Rule.ruleFired = true;
 			return true;

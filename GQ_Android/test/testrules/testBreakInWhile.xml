@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="While">
+			<condition>
+				<Leq>
+					<var>score</var>
+					<num>10</num>
+				</Leq>
+			</condition>
+			<then>
+				<action type="AddToScore" value="2" />
+				<action type="IncrementVariable" var="counter" />
+				<action type="If">
+					<condition>
+						<geq>
+							<var>counter</var>
+							<num>2</num>
+						</geq>
+					</condition>
+					<then>
+						<action type="Break" />
+					</then>
+				</action>
+			</then>
+		</action>
+	</rule>
+</test>

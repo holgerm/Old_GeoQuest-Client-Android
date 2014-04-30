@@ -23,7 +23,7 @@ public class CenterMap extends Action {
 	}
 
 	@Override
-	public void _execute() {
+	public void execute() {
 		if (params.containsKey("position"))
 			Variables.setValue(Variables.CENTER_MAP_POSITION,
 					params.get("position"));
