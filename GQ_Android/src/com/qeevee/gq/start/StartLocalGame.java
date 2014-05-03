@@ -92,6 +92,8 @@ public class StartLocalGame extends
 
 	/**
 	 * Gets the Hotspots data from the XML file.
+	 * 
+	 * TODO move into a new HotspotFactory class.
 	 */
 	@SuppressWarnings("unchecked")
 	static private void createHotspots(Element document)

@@ -94,7 +94,7 @@ public class XMLUtilities {
 		return cleanText;
 	}
 
-	private static CharSequence textify(CharSequence rawText) {
+	public static CharSequence textify(CharSequence rawText) {
 		return (CharSequence) textify(rawText.toString());
 	}
 

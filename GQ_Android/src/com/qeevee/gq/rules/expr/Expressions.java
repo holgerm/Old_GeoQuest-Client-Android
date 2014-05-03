@@ -49,11 +49,11 @@ public class Expressions {
 		int min, max;
 		min = (Integer) (xmlRandomExpression.attributeValue("min") == null ? GeoQuestApp
 				.getContext().getResources()
-				.getInteger(R.integer.minDefaultRandom)
+				.getInteger(R.integer.randomExpression_defaultMin)
 				: Integer.parseInt(xmlRandomExpression.attributeValue("min")));
 		max = (Integer) (xmlRandomExpression.attributeValue("max") == null ? GeoQuestApp
 				.getContext().getResources()
-				.getInteger(R.integer.maxDefaultRandom)
+				.getInteger(R.integer.randomExpression_defaultMax)
 				: Integer.parseInt(xmlRandomExpression.attributeValue("max")));
 		Random generator = new Random();
 		return Double

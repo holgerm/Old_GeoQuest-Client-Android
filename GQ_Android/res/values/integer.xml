@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <integer name="minDefaultRandom">1</integer>
-    <integer name="maxDefaultRandom">10</integer>
-
-</resources>
