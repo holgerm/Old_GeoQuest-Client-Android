@@ -182,6 +182,50 @@ public class XMLUtilities {
 	}
 
 	/**
+	 * 
+	 * @param attributeName
+	 * @param defaultAsResourceID
+	 *            either NECESSARY_ATTRIBUTE, OPTIONAL_ATTRIBUTE or a valid
+	 *            resource ID which points to the default value for this
+	 *            attribute as a string resource.
+	 * @param xmlElement
+	 *            the XML element which defines the attribute, e.g. representing
+	 *            a mission or an item in game.xml
+	 * 
+	 * @return the corresponding attribute value as specified in the game.xml or
+	 *         null if the attribute is optional and not specified
+	 * @throws IllegalArgumentException
+	 *             if the attribute is necessary but not given in the game.xml
+	 */
+	public static Boolean getBooleanAttribute(String attributeName,
+			int defaultAsResourceID, Element xmlElement) {
+		if (xmlElement == null
+				|| xmlElement.attributeValue(attributeName) == null)
+			if (defaultAsResourceID == NECESSARY_ATTRIBUTE) {
+				// attribute needed but not found => error in game.xml:
+				IllegalArgumentException e = new IllegalArgumentException(
+						"Necessary attribute \"" + attributeName
+								+ "\" missing. Rework game specification.");
+				Log.e(TAG, e.toString());
+				throw e;
+			} else if (defaultAsResourceID == OPTIONAL_ATTRIBUTE) {
+				// optional attribute not set in game.xml => return null:
+				return null;
+			} else
+				// attribute not set in game.xml but given as parameter => use
+				// referenced resource as default and return its value:
+				return GeoQuestApp.getInstance().getResources()
+						.getBoolean(defaultAsResourceID);
+		else
+			return stringToBool(xmlElement.attributeValue(attributeName));
+	}
+
+	public static boolean stringToBool(String string) {
+		String trimmed = textify(string);
+		return ("true".equalsIgnoreCase(trimmed) || "0".equals(trimmed));
+	}
+
+	/**
 	 * Loads the content (including html tags) of the given xml element into the
 	 * given webview.
 	 * 
