@@ -2,7 +2,7 @@
 
 <test>
 	<rule>
-		<action type="While">
+		<action type="Loop">
 			<condition>
 				<Leq>
 					<var>score</var>
@@ -22,6 +22,7 @@
 					<then>
 						<action type="Break" />
 					</then>
+					<else/>
 				</action>
 			</then>
 		</action>

@@ -7,30 +7,7 @@ import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
-/* Example Game using While Action:
- <?xml version="1.0" encoding="UTF-8"?>
- <game id="3183" name="ActionDummy" xmlformat="5">
- <mission duration="interactive" id="6485" type="StartAndExitScreen" image="files/bg.jpg">
- <onStart>
- <rule>
- <action type="While">
- <condition>
- <Leq>
- <var>score</var>
- <num>10</num>
- </Leq>
- </condition>
- <then>
- <action type="AddToScore" value="2"/>
- </then>
- </action>
- </rule>
- </onStart>
- </mission>
- </game>
- */
-
-public class While extends Action {
+public class Loop extends Action {
 
 	private Condition condition;
 	private List<Action> actions;

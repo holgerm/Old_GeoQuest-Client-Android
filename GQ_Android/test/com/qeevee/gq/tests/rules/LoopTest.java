@@ -11,11 +11,11 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
 @RunWith(GQTestRunner.class)
-public class WhileTest extends RuleTest {
+public class LoopTest extends RuleTest {
 
 	@Test
 	public void testWhileCondition() {
-		loadXMLFile("testWhile.xml");
+		loadXMLFile("testWhile.xml"); 
 
 		assertFalse(Variables.isDefined("counter"));
 

@@ -19,8 +19,26 @@ public class BreakTest extends RuleTest {
 
 		assertFalse(Variables.isDefined("counter"));
 
-		applyRule(0);
-//		assertEquals(2.0d, Variables.getValue("counter"));
+		applyRule();
+		assertEquals(2.0d, Variables.getValue("counter"));
+	}
+
+	@Test
+	public void testBreakInSequenceOfActions() {
+		// GIVEN:
+		loadXMLFile("testBreakInSequenceOfActions.xml");
+
+		assertFalse(Variables.isDefined("counter"));
+
+		// WHEN:
+		applyRule();
+
+		// THEN:
+		shouldNotHaveBrokenSequence();
+	}
+
+	void shouldNotHaveBrokenSequence() {
+		assertEquals(6.0d, Variables.getValue("counter"));
 	}
 
 }
