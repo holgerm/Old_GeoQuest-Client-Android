@@ -84,7 +84,7 @@ public class XMLUtilities {
 		return textify(builder.toString());
 	}
 
-	private static String textify(String rawText) {
+	public static String textify(String rawText) {
 		String cleanText;
 		cleanText = rawText.replaceAll("\\s+", " ").trim();
 		cleanText = StringTools.replaceVariables(cleanText);
@@ -220,6 +220,12 @@ public class XMLUtilities {
 			return stringToBool(xmlElement.attributeValue(attributeName));
 	}
 
+	/**
+	 * TODO use it anywhere in our code where we interpret boolean attributes.
+	 * 
+	 * @param string
+	 * @return true if the given string either is "true" or zero.
+	 */
 	public static boolean stringToBool(String string) {
 		String trimmed = textify(string);
 		return ("true".equalsIgnoreCase(trimmed) || "0".equals(trimmed));
