@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.qeevee.gq.loc.Hotspot;
 
-public class GQMenuManager {
+public class GQMenuManager { 
 
 	private static final String TAG = GQMenuManager.class.getCanonicalName();
 

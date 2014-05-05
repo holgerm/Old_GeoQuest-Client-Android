@@ -16,13 +16,23 @@ import edu.bonn.mobilegaming.geoquest.R;
 @RunWith(GQTestRunner.class)
 public class ShowStateAttributeTest {
 
+	/**
+	 * This test assures two things:
+	 * 
+	 * <li>that the given default value in the resources of the app is one of
+	 * the alternatives recognized by the Java code of the app. Otherwise an
+	 * endless loop would occur and the test would fail.
+	 * 
+	 * <li>that if the specifications are correct valueOf() always the returns
+	 * the default value.
+	 */
 	@Test
 	public void wrongInitialization() {
 		// GIVEN:
 		startApp();
 		GQMenuItem.ShowState showState;
 
-		// WHEN: 
+		// WHEN:
 		showState = ShowState.valueOf((CharSequence) "quatsch");
 
 		// THEN:

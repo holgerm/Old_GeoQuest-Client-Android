@@ -45,6 +45,8 @@ public class GQMenuItem {
 				R.integer.menuItem_defaultPriority, menuItemXML);
 		iconURL = XMLUtilities.getStringAttribute("icon",
 				XMLUtilities.NECESSARY_ATTRIBUTE, menuItemXML);
+		showState = ShowState.valueOf(XMLUtilities.getStringAttribute(
+				"showstate", R.string.menuItem_showState_default, menuItemXML));
 		activity = XMLUtilities.getBooleanAttribute("initialActivity",
 				R.bool.menuItem_default_initialActivity, menuItemXML);
 	}
