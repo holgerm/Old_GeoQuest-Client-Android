@@ -228,7 +228,7 @@ public class XMLUtilities {
 	 */
 	public static boolean stringToBool(String string) {
 		String trimmed = textify(string);
-		return ("true".equalsIgnoreCase(trimmed) || "0".equals(trimmed));
+		return ("true".equalsIgnoreCase(trimmed) || "1".equals(trimmed));
 	}
 
 	/**
