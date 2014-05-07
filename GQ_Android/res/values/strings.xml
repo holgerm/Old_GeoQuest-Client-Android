@@ -103,7 +103,7 @@
 
     <!-- MultipleChoiceQuestion MISSION -->
     <string name="multipleChoiceQuestion_default_shuffle_mode">false</string>
-
+    
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Proceed</string>
 

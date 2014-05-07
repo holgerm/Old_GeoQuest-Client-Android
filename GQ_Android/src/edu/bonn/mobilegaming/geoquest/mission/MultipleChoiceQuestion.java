@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
+import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -39,7 +40,7 @@ public class MultipleChoiceQuestion extends Question {
 	private static final int MODE_QUESTION = 1;
 	private static final int MODE_REPLY_TO_CORRECT_ANSWER = 2;
 	private static final int MODE_REPLY_TO_WRONG_ANSWER = 3;
-	private static final int MODE_ONLY_WRONG_ANSWERS = 4;
+	private static final int MODE_CHOICE = 4;
 
 	private List<Answer> answers = new ArrayList<Answer>();
 	private Answer selectedAnswer;
@@ -82,7 +83,7 @@ public class MultipleChoiceQuestion extends Question {
 			setMCButtonPanel(loopUntilSuccess);
 			invokeOnFailEvents();
 			break;
-		case MODE_ONLY_WRONG_ANSWERS:
+		case MODE_CHOICE:
 			finish(Globals.STATUS_SUCCEEDED);
 			break;
 		}
@@ -106,7 +107,7 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	private void setMCTextViewToReply() {
-		String answerToShow;
+		CharSequence answerToShow;
 		if (selectedAnswer.onChoose != null) {
 			answerToShow = selectedAnswer.onChoose;
 		} else {
@@ -168,26 +169,7 @@ public class MultipleChoiceQuestion extends Question {
 				.selectNodes(".//answer");
 		for (Iterator<Element> j = xmlAnswers.iterator(); j.hasNext();) {
 			Element xmlAnswer = j.next();
-			Attribute correct = (Attribute) xmlAnswer
-					.selectSingleNode("./@correct");
-			Answer answer = new Answer();
-			if ((correct != null) && (correct.getText().equals("1")))
-				answer.correct = true;
-			answer.answertext = xmlAnswer.getText().replaceAll("\\s+", " ")
-					.trim();
-
-			Attribute onChoose = ((Attribute) xmlAnswer
-					.selectSingleNode("./@onChoose"));
-			if (onChoose != null)
-				answer.onChoose = onChoose.getText().replaceAll("\\s+", " ")
-						.trim();
-
-			Attribute nbt = ((Attribute) xmlAnswer
-					.selectSingleNode("./@nextbuttontext"));
-			if (nbt != null)
-				answer.nextbuttontext = nbt.getText().replaceAll("\\s+", " ")
-						.trim();
-
+			Answer answer = new Answer(xmlAnswer);
 			answers.add(answer);
 		}
 		shuffleAnswers();
@@ -233,7 +215,7 @@ public class MultipleChoiceQuestion extends Question {
 			Variables.registerMissionResult(mission.id,
 					selectedAnswer.answertext);
 			if (MultipleChoiceQuestion.this.allAnswersWrong()) {
-				setMode(MODE_ONLY_WRONG_ANSWERS);
+				setMode(MODE_CHOICE);
 				return;
 			}
 			if (selectedAnswer.correct) {
@@ -249,9 +231,30 @@ public class MultipleChoiceQuestion extends Question {
 	 */
 	private class Answer {
 		public String answertext;
-		public Boolean correct = false;
-		public String onChoose;
-		public String nextbuttontext = null;
+		public Boolean correct;
+		public CharSequence onChoose;
+		public CharSequence nextbuttontext;
+		public CharSequence imagePath;
+		public boolean showAsImage;
+
+		public Answer(Element xmlElement) {
+			this.answertext = XMLUtilities.getXMLContent(xmlElement);
+			this.correct = XMLUtilities
+					.getBooleanAttribute(
+							"correct",
+							R.bool.mission_MultipleChoiceQuestion_default_answerCorrectness,
+							xmlElement);
+			this.onChoose = XMLUtilities.getStringAttribute("onChoose",
+					this.correct ? R.string.questionandanswer_rightAnswer
+							: R.string.questionandanswer_wrongAnswer,
+					xmlElement);
+			this.nextbuttontext = XMLUtilities.getStringAttribute(
+					"nextbuttontext",
+					this.correct ? R.string.question_proceed_button
+							: R.string.question_repeat_button, xmlElement);
+			this.imagePath = XMLUtilities.getStringAttribute("image",
+					XMLUtilities.OPTIONAL_ATTRIBUTE, xmlElement);
+		}
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
