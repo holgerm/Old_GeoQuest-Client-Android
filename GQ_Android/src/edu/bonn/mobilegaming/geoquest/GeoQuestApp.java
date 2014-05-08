@@ -680,7 +680,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public void endGame() {
 		EndGame command = new EndGame();
-		command.makeUserConfirmAndDoIt();
+		// command.makeUserConfirmAndDoIt(); // TODO
+		command.doIt();
 	}
 
 	/**

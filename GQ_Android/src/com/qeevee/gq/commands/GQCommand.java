@@ -41,6 +41,7 @@ public abstract class GQCommand {
 				.getString(okButtonTextID),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
 						doIt();
 					}
 				});
