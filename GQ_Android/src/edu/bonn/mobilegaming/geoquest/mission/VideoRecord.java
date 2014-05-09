@@ -26,7 +26,8 @@ import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 import android.hardware.Camera.Size;
 
-public class VideoRecord extends InteractiveMission implements SurfaceHolder.Callback{
+public class VideoRecord extends InteractiveMission implements
+		SurfaceHolder.Callback {
 
 	private static final String TAG = "VideoRecord";
 
@@ -43,7 +44,7 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 
 	private TextView taskView;
 	private TextView activityIndicator;
-	
+
 	private SurfaceView cameraPreview;
 	private Camera mCamera;
 	private SurfaceHolder holder;
@@ -81,7 +82,7 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 	private void startPlaying() {
 		mPlayer = new MediaPlayer();
 		mPlayer.setDisplay(holder);
-		
+
 		try {
 			mPlayer.setDataSource(mFileName);
 			mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -99,6 +100,7 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 	}
 
 	private void stopPlaying() {
+		mPlayer.reset();
 		mPlayer.release();
 		mPlayer = null;
 	}
@@ -109,28 +111,26 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 		mCamera.stopPreview();
 		mCamera.setDisplayOrientation(90);
 		mCamera.unlock();
-		
 
-		
 		mRecorder = new MediaRecorder();
-		
-	    mRecorder.setCamera(mCamera);
+
+		mRecorder.setCamera(mCamera);
 
 		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-	
+
 		mRecorder.setPreviewDisplay(holder.getSurface());
 		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		mRecorder.setOutputFile(mFileName);
-		
+
 		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		mRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-			
-        mRecorder.setMaxDuration(120000); // 120 seconds
-        mRecorder.setMaxFileSize(10000000); // Approximately 10 megabytes
-        
-        mRecorder.setOrientationHint(90);
-        
+
+		mRecorder.setMaxDuration(120000); // 120 seconds
+		mRecorder.setMaxFileSize(10000000); // Approximately 10 megabytes
+
+		mRecorder.setOrientationHint(90);
+
 		try {
 			mRecorder.prepare();
 		} catch (IOException e) {
@@ -142,17 +142,19 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 
 	private void stopRecording() {
 		mRecorder.stop();
+		mRecorder.reset();
 		mRecorder.release();
 		mCamera.lock();
 		mCamera.release();
 		mCamera = null;
 		mRecorder = null;
 		if (mPlayer != null) {
+			mPlayer.reset();
 			mPlayer.release();
 			mPlayer = null;
 		}
-	
-		if (cameraPreview != null){
+
+		if (cameraPreview != null) {
 			cameraPreview.destroyDrawingCache();
 			cameraPreview = null;
 		}
@@ -234,7 +236,7 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 			playBT.setCompoundDrawablesWithIntrinsicBounds(null, getResources()
 					.getDrawable(R.drawable.icon_play_stop), null, null);
 			playBT.setText(R.string.button_text_stop);
-			playBT.setTag(BUTTON_TAG_STOP_PLAYING);			
+			playBT.setTag(BUTTON_TAG_STOP_PLAYING);
 			startPlaying();
 			mode = newMode;
 			break;
@@ -316,17 +318,17 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 	public void onPause() {
 		super.onPause();
 		if (mRecorder != null) {
+			mRecorder.reset();
 			mRecorder.release();
 			mRecorder = null;
 		}
 
 		if (mPlayer != null) {
+			mPlayer.reset();
 			mPlayer.release();
 			mPlayer = null;
 		}
 	}
-
-
 
 	private void performFinish() {
 		Variables.registerMissionResult(mission.id, mFileName.toString());
@@ -346,49 +348,48 @@ public class VideoRecord extends InteractiveMission implements SurfaceHolder.Cal
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		
+
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		
+
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		
+
 	}
-	
-	 private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
-		    Camera.Size result=null;
 
-		    for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
-		        if (size.width<=width && size.height<=height) {
-		            if (result==null) {
-		                result=size;
-		            } else {
-		                int resultArea=result.width*result.height;
-		                int newArea=size.width*size.height;
+	private Camera.Size getBestPreviewSize(int width, int height,
+			Camera.Parameters parameters) {
+		Camera.Size result = null;
 
-		                if (newArea>resultArea) {
-		                    result=size;
-		                }
-		            }
-		        }
-		    }
-		    return(result);
-		}  
-	 
+		for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
+			if (size.width <= width && size.height <= height) {
+				if (result == null) {
+					result = size;
+				} else {
+					int resultArea = result.width * result.height;
+					int newArea = size.width * size.height;
 
+					if (newArea > resultArea) {
+						result = size;
+					}
+				}
+			}
+		}
+		return (result);
+	}
 
-   public Camera open() {
-       int numberOfCameras = Camera.getNumberOfCameras();
-       CameraInfo cameraInfo = new CameraInfo();
-       for (int i = 0; i < numberOfCameras; i++) {
-           Camera.getCameraInfo(i, cameraInfo);
-           if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-               return Camera.open(i);
-           }
-       }
-       return null;
-   }     
+	public Camera open() {
+		int numberOfCameras = Camera.getNumberOfCameras();
+		CameraInfo cameraInfo = new CameraInfo();
+		for (int i = 0; i < numberOfCameras; i++) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
+				return Camera.open(i);
+			}
+		}
+		return null;
+	}
 
 }

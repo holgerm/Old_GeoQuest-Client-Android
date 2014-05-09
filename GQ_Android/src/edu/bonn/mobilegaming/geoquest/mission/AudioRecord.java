@@ -83,6 +83,7 @@ public class AudioRecord extends InteractiveMission {
 	}
 
 	private void stopPlaying() {
+		mPlayer.reset();
 		mPlayer.release();
 		mPlayer = null;
 	}
@@ -105,6 +106,7 @@ public class AudioRecord extends InteractiveMission {
 
 	private void stopRecording() {
 		mRecorder.stop();
+		mRecorder.reset();
 		mRecorder.release();
 		mRecorder = null;
 	}
@@ -262,11 +264,13 @@ public class AudioRecord extends InteractiveMission {
 	public void onPause() {
 		super.onPause();
 		if (mRecorder != null) {
+			mRecorder.reset();
 			mRecorder.release();
 			mRecorder = null;
 		}
 
 		if (mPlayer != null) {
+			mPlayer.reset();
 			mPlayer.release();
 			mPlayer = null;
 		}

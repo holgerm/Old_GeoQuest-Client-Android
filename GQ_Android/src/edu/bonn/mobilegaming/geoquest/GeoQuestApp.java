@@ -741,6 +741,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		if (mPlayer != null && mPlayer.isLooping()) {
 			Log.d(TAG, "MediaPlayer Resources were cleaned");
 			mPlayer.stop();
+			mPlayer.reset();
 			mPlayer.release();
 		}
 	}
