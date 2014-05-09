@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.TextItem;
@@ -22,6 +22,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
+import edu.bonn.mobilegaming.geoquest.mission.helpers.ChoiceListAdapter;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 /**
@@ -30,8 +31,8 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
  * @author Holger Muegge
  */
 public class MultipleChoiceQuestion extends Question {
-	/** layout */
-	private LinearLayout mcButtonPanel;
+	/** list view that holds all choices that are offered as answers */
+	private ListView choiceList;
 	/** text view for displaying text */
 	private TextView mcTextView;
 	private Button bottomButton;
@@ -42,7 +43,8 @@ public class MultipleChoiceQuestion extends Question {
 	private static final int MODE_REPLY_TO_WRONG_ANSWER = 3;
 	private static final int MODE_CHOICE = 4;
 
-	private List<Answer> answers = new ArrayList<Answer>();
+	private List<Answer> textAnswers = new ArrayList<Answer>();
+	private List<Answer> imageAnswers = new ArrayList<Answer>();
 	private Answer selectedAnswer;
 	private String questionText;
 	private OnClickListener proceed, restart;
@@ -51,7 +53,7 @@ public class MultipleChoiceQuestion extends Question {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initContentView();
-		initQuestion();
+		initQuestionAndAnswers();
 		setMode(MODE_QUESTION);
 	}
 
@@ -65,7 +67,6 @@ public class MultipleChoiceQuestion extends Question {
 			return;
 		// real change in mode:
 		mode = newMode;
-		mcButtonPanel.removeAllViews();
 		switch (mode) {
 		case MODE_QUESTION:
 			setBackgroundQuestion();
@@ -74,13 +75,13 @@ public class MultipleChoiceQuestion extends Question {
 		case MODE_REPLY_TO_CORRECT_ANSWER:
 			setBackgroundCorrectReply();
 			setMCTextViewToReply();
-			setMCButtonPanel(loopUntilSuccess);
+			setBottomButton(loopUntilSuccess);
 			invokeOnSuccessEvents();
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
 			setBackgroundWrongReply();
 			setMCTextViewToReply();
-			setMCButtonPanel(loopUntilSuccess);
+			setBottomButton(loopUntilSuccess);
 			invokeOnFailEvents();
 			break;
 		case MODE_CHOICE:
@@ -89,8 +90,8 @@ public class MultipleChoiceQuestion extends Question {
 		}
 	}
 
-	private void setMCButtonPanel(boolean loop) {
-		mcButtonPanel.addView(bottomButton);
+	private void setBottomButton(boolean loop) {
+		bottomButton.setVisibility(View.VISIBLE);
 
 		if (!selectedAnswer.correct && loop) {
 			if (selectedAnswer.nextbuttontext != null)
@@ -124,7 +125,8 @@ public class MultipleChoiceQuestion extends Question {
 		setContentView(R.layout.multiplechoice);
 		outerView = findViewById(R.id.outerview);
 		mcTextView = (TextView) findViewById(R.id.mcTextView);
-		mcButtonPanel = (LinearLayout) findViewById(R.id.mcButtonPanel);
+		choiceList = (ListView) findViewById(R.id.choiceList);
+		bottomButton = (Button) findViewById(R.id.bottomButton);
 		// prefab neccessary buttons:
 		prepareBottomButton();
 	}
@@ -161,7 +163,7 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initQuestion() {
+	private void initQuestionAndAnswers() {
 		questionText = mission.xmlMissionNode
 				.selectSingleNode(".//questiontext").getText()
 				.replaceAll("\\s+", " ").trim();
@@ -169,10 +171,31 @@ public class MultipleChoiceQuestion extends Question {
 				.selectNodes(".//answer");
 		for (Iterator<Element> j = xmlAnswers.iterator(); j.hasNext();) {
 			Element xmlAnswer = j.next();
-			Answer answer = new Answer(xmlAnswer);
-			answers.add(answer);
+			new Answer(xmlAnswer);
 		}
 		shuffleAnswers();
+		setUpAnswerList();
+	}
+
+	private void setUpAnswerList() {
+		ChoiceListAdapter listAdapter = new ChoiceListAdapter(this,
+				R.layout.choice_item, textAnswers);
+
+		choiceList.setAdapter(listAdapter);
+
+		choiceList
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					public void onItemClick(AdapterView<?> parent,
+							final View view, int position, long id) {
+						selectedAnswer = (Answer) parent
+								.getItemAtPosition(position);
+						onAnswerSelected();
+					}
+
+				});
+
+		choiceList.invalidate();
 	}
 
 	private void shuffleAnswers() {
@@ -181,61 +204,30 @@ public class MultipleChoiceQuestion extends Question {
 				.toString();
 
 		if (shuffleString.equals("true")) {
-			java.util.Collections.shuffle(answers);
+			java.util.Collections.shuffle(imageAnswers);
+			java.util.Collections.shuffle(textAnswers);
 		}
 	}
 
 	private void setUpQuestionView() {
-		mcButtonPanel.removeAllViews();
-
 		// show question:
 		mcTextView.setText(questionText);
 		new TextItem(questionText, this, TextType.QUESTION);
 
 		// list answers:
-		for (Iterator<Answer> i = answers.iterator(); i.hasNext();) {
-			Answer answer = i.next();
-			Button answerButton = new Button(MultipleChoiceQuestion.this);
-			answerButton.setText(answer.answertext);
-			answerButton.setWidth(LayoutParams.FILL_PARENT);
-			answerButton.setTag(answer);
-			answerButton.setOnClickListener(new AnswerClickListener());
-			mcButtonPanel.addView(answerButton);
-		}
-	}
-
-	/**
-	 * called when the player taps on an answer
-	 */
-	private class AnswerClickListener implements View.OnClickListener {
-
-		public void onClick(View view) {
-			selectedAnswer = (Answer) view.getTag();
-			// set chosen answer text as result in mission specific variable:
-			Variables.registerMissionResult(mission.id,
-					selectedAnswer.answertext);
-			if (MultipleChoiceQuestion.this.allAnswersWrong()) {
-				setMode(MODE_CHOICE);
-				return;
-			}
-			if (selectedAnswer.correct) {
-				setMode(MODE_REPLY_TO_CORRECT_ANSWER);
-			} else {
-				setMode(MODE_REPLY_TO_WRONG_ANSWER);
-			}
-		}
+		setUpAnswerList();
+		choiceList.setVisibility(View.VISIBLE);
 	}
 
 	/**
 	 * Simple class that encapsulates an answer
 	 */
-	private class Answer {
+	public class Answer {
 		public String answertext;
 		public Boolean correct;
 		public CharSequence onChoose;
 		public CharSequence nextbuttontext;
 		public CharSequence imagePath;
-		public boolean showAsImage;
 
 		public Answer(Element xmlElement) {
 			this.answertext = XMLUtilities.getXMLContent(xmlElement);
@@ -254,15 +246,19 @@ public class MultipleChoiceQuestion extends Question {
 							: R.string.question_repeat_button, xmlElement);
 			this.imagePath = XMLUtilities.getStringAttribute("image",
 					XMLUtilities.OPTIONAL_ATTRIBUTE, xmlElement);
+			if ("imageanswer".equals(xmlElement.getName()))
+				imageAnswers.add(this);
+			else
+				textAnswers.add(this);
 		}
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
-		mcButtonPanel.setEnabled(!blocking);
+		choiceList.setEnabled(!blocking);
 	}
 
 	public boolean allAnswersWrong() {
-		for (Answer curAnswer : answers) {
+		for (Answer curAnswer : textAnswers) {
 			if (curAnswer.correct)
 				return false;
 		}
@@ -272,6 +268,21 @@ public class MultipleChoiceQuestion extends Question {
 	public MissionOrToolUI getUI() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private void onAnswerSelected() {
+		// set chosen answer text as result in mission specific
+		// variable:
+		Variables.registerMissionResult(mission.id, selectedAnswer.answertext);
+		if (MultipleChoiceQuestion.this.allAnswersWrong()) {
+			setMode(MODE_CHOICE);
+			return;
+		}
+		if (selectedAnswer.correct) {
+			setMode(MODE_REPLY_TO_CORRECT_ANSWER);
+		} else {
+			setMode(MODE_REPLY_TO_WRONG_ANSWER);
+		}
 	}
 
 }

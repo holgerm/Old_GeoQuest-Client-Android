@@ -111,7 +111,8 @@ public class GameDataManager {
 		GameDataManager.stopAudio();
 		GameDataManager.mPlayer = new MediaPlayer();
 		try {
-			GameDataManager.mPlayer.setDataSource(ResourceManager.getResourcePath(path));
+			GameDataManager.mPlayer.setDataSource(ResourceManager
+					.getResourcePath(path));
 			GameDataManager.mPlayer.prepare();
 			GameDataManager.mPlayer.start();
 			if (blocking)
@@ -130,15 +131,18 @@ public class GameDataManager {
 	}
 
 	public static void cleanMediaPlayer() {
-		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isLooping()) {
+		if (GameDataManager.mPlayer != null
+				&& GameDataManager.mPlayer.isLooping()) {
 			Log.d(TAG, "MediaPlayer Resources were cleaned");
 			GameDataManager.mPlayer.stop();
+			GameDataManager.mPlayer.reset();
 			GameDataManager.mPlayer.release();
 		}
 	}
 
 	public static void stopMediaPlayer() {
-		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isPlaying()) {
+		if (GameDataManager.mPlayer != null
+				&& GameDataManager.mPlayer.isPlaying()) {
 			Log.d(TAG, "MediaPlayer was stoped");
 			GameDataManager.mPlayer.stop();
 		}
