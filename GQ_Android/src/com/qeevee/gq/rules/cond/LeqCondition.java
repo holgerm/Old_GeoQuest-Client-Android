@@ -7,9 +7,13 @@ public class LeqCondition extends ComparisonCondition {
 		return operandA <= operandB;
 	}
 
-
 	@Override
 	protected boolean compare(String object, String object2) {
 		return (object.compareTo(object2) <= 0);
+	}
+
+	@Override
+	public String getComparisonName() {
+		return "LEQ";
 	}
 }

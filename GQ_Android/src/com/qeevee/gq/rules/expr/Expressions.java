@@ -7,6 +7,7 @@ import org.dom4j.Element;
 import android.util.Log;
 
 import com.qeevee.gq.rules.cond.Condition;
+import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -98,6 +99,11 @@ public class Expressions {
 											// of
 											// undefined variables.
 		}
+	}
+
+	public static String toString(Element xmlExpression) {
+		return xmlExpression.getName() + "("
+				+ XMLUtilities.getXMLContent(xmlExpression) + ")";
 	}
 
 }
