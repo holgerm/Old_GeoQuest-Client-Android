@@ -18,7 +18,8 @@ public class If extends Action {
 	protected boolean checkInitialization() {
 		boolean initOK = true;
 		initOK &= elements.containsKey("condition")
-				&& elements.containsKey("then") && elements.containsKey("else");
+				&& (elements.containsKey("then") || elements
+						.containsKey("else"));
 		return initOK;
 	}
 
@@ -31,9 +32,11 @@ public class If extends Action {
 				.selectNodes("*").get(0);
 		condition = ConditionFactory.create(xmlCondition);
 
-		if (condition.isFulfilled()) {
+		boolean conditionFulfilled = condition.isFulfilled();
+		Element xmlThen = elements.get("then");
+		Element xmlElse = elements.get("else");
 
-			Element xmlThen = elements.get("then");
+		if (conditionFulfilled && xmlThen != null) {
 			List<Element> xmlActionNodes = xmlThen.selectNodes("action");
 			for (Element xmlAction : xmlActionNodes) {
 				actions.add(ActionFactory.create(xmlAction));
@@ -43,10 +46,9 @@ public class If extends Action {
 				if ((Boolean) Variables.getValue(Variables.BREAK_WHILE))
 					break;
 			}
-
-		} else {
-
-			Element xmlElse = elements.get("else");
+			return;
+		}
+		if (!conditionFulfilled && xmlElse != null) {
 			List<Element> xmlActionNodes = xmlElse.selectNodes("action");
 			for (Element xmlAction : xmlActionNodes) {
 				actions.add(ActionFactory.create(xmlAction));
