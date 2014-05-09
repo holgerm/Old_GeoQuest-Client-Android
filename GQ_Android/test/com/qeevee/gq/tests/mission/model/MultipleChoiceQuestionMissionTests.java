@@ -10,15 +10,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.Actor;
@@ -53,9 +50,9 @@ public class MultipleChoiceQuestionMissionTests {
 
 	protected MissionActivity mcqM;
 	protected String questionText;
-	protected List<Button> answerButtons;
 	protected int mode;
 	protected Button bottomButton;
+	private ListView cl;
 
 	@Before
 	public void cleanUp() {
@@ -82,13 +79,8 @@ public class MultipleChoiceQuestionMissionTests {
 		questionText = (String) getFieldValue(mcqM, "questionText");
 		DEFAULT_RESPONSE_ON_CORRECT_ANSWER = getResString(R.string.questionandanswer_rightAnswer);
 		DEFAULT_RESPONSE_ON_WRONG_ANSWER = getResString(R.string.questionandanswer_wrongAnswer);
-		LinearLayout mcButtonPanel = (LinearLayout) getFieldValue(mcqM,
-				"mcButtonPanel");
+		cl = (ListView) getFieldValue(mcqM, "choiceList");
 		mode = (Integer) getFieldValue(mcqM, "mode");
-		answerButtons = new ArrayList<Button>(mcButtonPanel.getChildCount());
-		for (int i = 0; i < mcButtonPanel.getChildCount(); i++) {
-			answerButtons.add((Button) mcButtonPanel.getChildAt(i));
-		}
 		bottomButton = (Button) getFieldValue(mcqM, "bottomButton");
 	}
 
@@ -283,7 +275,7 @@ public class MultipleChoiceQuestionMissionTests {
 	}
 
 	protected void clickOnAnswerButton(int i) {
-		answerButtons.get(i).performClick();
+		cl.performItemClick(cl, i, i);
 	}
 
 	protected void shouldHaveTriggeredEvents(String... eventName) {
@@ -306,7 +298,7 @@ public class MultipleChoiceQuestionMissionTests {
 	}
 
 	protected void numberOfAnswersShouldBe(int nr) {
-		assertEquals(nr, answerButtons.size());
+		assertEquals(nr, cl.getCount());
 	}
 
 	protected void shouldStoreQuestionText() {
