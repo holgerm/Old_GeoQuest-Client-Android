@@ -2,29 +2,81 @@ package com.qeevee.gq.res;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 
 public class ResourceManager {
 
-	private static final String JPEG_FILE_PREFIX = "IMG_";
-	private static final String JPEG_FILE_SUFFIX = ".jpg";
 	private static final String TAG = ResourceManager.class.getCanonicalName();
 
-	public static String getResourcePath(String specifiedPath) {
+	public enum ResourceType {
+		IMAGE, AUDIO, VIDEO, TEXT, HTML;
 
-		if (specifiedPath.startsWith(Globals.RUNTIME_RESOURCE_PREFIX)) {
+		File getExternalStorageDir() {
+			File storageDir = null;
+			switch (this) {
+			case AUDIO:
+				storageDir = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+				break;
+			case HTML:
+				storageDir = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+				break;
+			case IMAGE:
+				storageDir = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+				break;
+			case TEXT:
+				storageDir = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+				break;
+			case VIDEO:
+				storageDir = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+				break;
+			default:
+				break;
+			}
+			return storageDir;
+		}
+
+		String getSuffix() {
+			String suffix = null;
+			switch (this) {
+			case AUDIO:
+				suffix = ".3gp";
+				break;
+			case HTML:
+				suffix = ".html";
+				break;
+			case IMAGE:
+				suffix = ".jpg";
+				break;
+			case TEXT:
+				suffix = ".txt";
+				break;
+			case VIDEO:
+				suffix = ".mp4";
+				break;
+			default:
+				break;
+
+			}
+			return suffix;
+		}
+	};
+
+	public static String getResourcePath(String specifiedPath, ResourceType type) {
+
+		if (specifiedPath.startsWith(ResourceManager.RUNTIME_RESOURCE_PREFIX)) {
 			String filepath = specifiedPath
-					.substring(Globals.RUNTIME_RESOURCE_PREFIX.length());
+					.substring(ResourceManager.RUNTIME_RESOURCE_PREFIX.length());
 			try {
-				return getImageFile(filepath).getAbsolutePath();
+				return getFile(filepath, type).getAbsolutePath();
 			} catch (IOException e) {
 				Log.e(TAG, e.getMessage());
 				return null;
@@ -37,59 +89,55 @@ public class ResourceManager {
 		}
 	}
 
-	@SuppressLint("SimpleDateFormat")
-	public static File createImageFile() throws IOException {
-		// Create an image file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
-		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
-		return getImageFile(imageFileName);
-	}
-
-	public static File getImageFile(String imageFileName) throws IOException {
-		File albumF = getAlbumDir();
-		File imageF = new File(albumF, imageFileName + JPEG_FILE_SUFFIX);
-		// File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX,
-		// albumF);
+	public static File getFile(String fileName, ResourceType type)
+			throws IOException {
+		File albumF = getAlbumDir(type);
+		File imageF = new File(albumF, fileName + type.getSuffix());
 		return imageF;
 	}
 
-	/* Photo album for this application */
-	private static String getAlbumName() {
-		return GeoQuestApp.getContext().getString(R.string.album_name);
+	/**
+	 * @return the album path which is special for the app, the quest and the
+	 *         session. E.g. GeoQuest/1234/201405111345200
+	 */
+	private static String getAlbumBaseName() {
+		return GeoQuestApp.getContext().getString(R.string.album_base_name);
 	}
 
-	private static File getAlbumDir() {
-		File storageDir = null;
+	private static File getAlbumDir(ResourceType type) {
+		File albumDir = null;
 
 		if (Environment.MEDIA_MOUNTED.equals(Environment
 				.getExternalStorageState())) {
 
-			storageDir = getAlbumStorageDir(getAlbumName());
+			albumDir = new File(type.getExternalStorageDir(),
+					getAlbumBaseName());
+			String subAlbumName = GeoQuestApp.getContext().getString(
+					R.string.album_prefix)
+					+ "_"
+					+ GeoQuestApp.getInstance().getRunningGameID()
+					+ "_"
+					+ GeoQuestApp.getInstance().getGameSessionString();
+			albumDir = new File(albumDir, subAlbumName);
 
-			if (storageDir != null) {
-				if (!storageDir.mkdirs()) {
-					if (!storageDir.exists()) {
-						Log.d("CameraSample", "failed to create directory");
+			if (albumDir != null) {
+				if (!albumDir.mkdirs()) {
+					if (!albumDir.exists()) {
+						Log.d(TAG,
+								"failed to create directory "
+										+ albumDir.getAbsolutePath());
 						return null;
 					}
 				}
 			}
 
 		} else {
-			Log.v(GeoQuestApp.getContext().getString(R.string.app_name),
-					"External storage is not mounted READ/WRITE.");
+			Log.v(TAG, "External storage is not mounted READ/WRITE.");
 		}
 
-		return storageDir;
+		return albumDir;
 	}
 
-	public static File getAlbumStorageDir(String albumName) {
-		// TODO Auto-generated method stub
-		return new File(
-				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				albumName);
-	}
+	public static final String RUNTIME_RESOURCE_PREFIX = "@_";
 
 }

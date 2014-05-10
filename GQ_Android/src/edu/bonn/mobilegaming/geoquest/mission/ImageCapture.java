@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
@@ -30,6 +31,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.ZoomImageView;
@@ -151,6 +153,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 					.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 		} catch (IOException e) {
 			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 			f = null;
 			mCurrentPhotoPath = null;
 		}
@@ -158,9 +161,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	}
 
 	private File setUpPhotoFile() throws IOException {
-		File f = ResourceManager.getImageFile(mFileName);
+		File f = ResourceManager.getFile(mFileName, ResourceType.IMAGE);
 		mCurrentPhotoPath = f.getAbsolutePath();
-
 		return f;
 	}
 

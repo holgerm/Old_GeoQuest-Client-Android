@@ -50,6 +50,8 @@ public class StartLocalGame extends
 			Mission.documentRoot = document.getRootElement();
 			setGlobalMissionLayout();
 			GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
+			GeoQuestApp.setRunningGameID(Mission.documentRoot
+					.attributeValue("id"));
 
 			firstMission = createMissions();
 			createHotspots(Mission.documentRoot);

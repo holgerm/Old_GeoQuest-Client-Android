@@ -5,12 +5,15 @@ import java.io.IOException;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
+
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
@@ -51,12 +54,15 @@ public class AudioRecord extends InteractiveMission {
 
 		setContentView(R.layout.audiorecord);
 
-		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ "/"
-				+ getMissionAttribute("file", R.string.audiorecord_file_default);
-
-		// mURL = getMissionAttribute("url",
-		// XMLUtilities.OPTIONAL_ATTRIBUTE);
+		String fileName = getMissionAttribute("file",
+				R.string.audiorecord_file_default).toString();
+		try {
+			mFileName = ResourceManager.getFile(fileName, ResourceType.AUDIO)
+					.getAbsolutePath();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
+		}
 
 		initTaskViewAndActivityIndicator();
 		initButtons();

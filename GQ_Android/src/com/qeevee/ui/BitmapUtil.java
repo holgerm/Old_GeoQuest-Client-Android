@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -47,8 +48,8 @@ public class BitmapUtil {
 	public static Bitmap loadBitmap(String relativeResourcePath, int reqWidth,
 			int reqHeight, boolean rounded) {
 		Bitmap bmp;
-		String path = completeImageFileSuffix(ResourceManager
-				.getResourcePath(relativeResourcePath));
+		String path = completeImageFileSuffix(ResourceManager.getResourcePath(
+				relativeResourcePath, ResourceType.IMAGE));
 		// String path =
 		// completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
 

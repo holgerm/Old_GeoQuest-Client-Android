@@ -76,7 +76,6 @@
     <string name="audiorecord_activityIndicator_recording">Recording ...</string>
     <string name="audiorecord_activityIndicator_ready">You made an audio record!\nRecord again? Use it? Replay?</string>
     <string name="audiorecord_activityIndicator_playing">Playing your recorded audio ...</string>
-    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
     <string name="startingARView">Starting AR View ...</string>

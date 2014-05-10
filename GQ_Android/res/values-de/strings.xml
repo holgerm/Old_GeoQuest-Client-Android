@@ -78,7 +78,6 @@
     <string name="audiorecord_activityIndicator_recording">Aufnahme läuft ...</string>
     <string name="audiorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Hören?</string>
     <string name="audiorecord_activityIndicator_playing">Aufnahme wird vorgespielt ...</string>
-    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
     <!-- VideoRecord MISSION -->
     <string name="videorecord_task_default">Eure Aufgabe: Nehmt ein Video auf!</string>

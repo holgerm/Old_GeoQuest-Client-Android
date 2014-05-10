@@ -5,12 +5,15 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,6 +46,7 @@ import com.google.android.maps.MapView;
 import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.Start;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
@@ -732,6 +736,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	private static MediaPlayer mPlayer = null;
 	private static Imprint imprint;
+	private static String gameID;
+	private static String gameSession;
 
 	public static Imprint getImprint() {
 		return imprint;
@@ -776,7 +782,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		stopAudio();
 		mPlayer = new MediaPlayer();
 		try {
-			mPlayer.setDataSource(ResourceManager.getResourcePath(path));
+			mPlayer.setDataSource(ResourceManager.getResourcePath(path,
+					ResourceType.AUDIO));
 			mPlayer.prepare();
 			mPlayer.start();
 			if (blocking)
@@ -929,6 +936,20 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public void setActivities(ArrayList<Activity> activities) {
 		this.activities = activities;
+	}
+
+	public static void setRunningGameID(String id) {
+		gameID = id;
+		SimpleDateFormat s = new SimpleDateFormat("yyyyMMddhhmmss", Locale.US);
+		gameSession = s.format(new Date());
+	}
+
+	public String getRunningGameID() {
+		return gameID;
+	}
+
+	public String getGameSessionString() {
+		return gameSession;
 	}
 
 }

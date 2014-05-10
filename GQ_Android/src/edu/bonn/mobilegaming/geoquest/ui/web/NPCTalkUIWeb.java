@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.util.JSUtil;
 
 import edu.bonn.mobilegaming.geoquest.R;
@@ -31,8 +32,6 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	private TextView dialogText;
 	private ScrollView scrollView;
 	private DialogItem currentDialogItem = null;
-	private static final long milliseconds_per_part = 100;
-
 	private int state = 0;
 	private static final int STATE_NEXT_DIALOG_ITEM = 1;
 	private static final int STATE_END = 2;
@@ -51,7 +50,6 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	};
 
 	private CharSequence nextDialogButtonTextDefault;
-	private CharSequence mode;
 	private WebView mainView;
 	private JsHandler _jsHandler;
 
@@ -76,13 +74,15 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
-				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT);
+				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT)
+						.show();
 			}
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT);
+				Toast.makeText(getNPCTalk(), "Page started", Toast.LENGTH_SHORT)
+						.show();
 				init();
 			}
 
@@ -100,7 +100,8 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 		mainView.addJavascriptInterface(_jsHandler, "JsHandler");
 
 		String htmlFilePath = "file:///"
-				+ ResourceManager.getResourcePath("ui/npctalk.html");
+				+ ResourceManager.getResourcePath("ui/npctalk.html",
+						ResourceType.HTML);
 		try {
 			mainView.loadUrl(htmlFilePath);
 		} catch (IllegalArgumentException iae) {

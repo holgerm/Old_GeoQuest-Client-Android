@@ -3,8 +3,12 @@
 
     <string name="xmlformat">5</string>
     <string name="local_default_repository">default</string>
-    <string name="album_name">GeoQuest</string>
+    <string name="album_base_name">GeoQuest</string>
+    <string name="album_prefix">GQ</string>
     <string name="version">0.8.1.1</string>
+
+    <!-- AudioRecord MISSION -->
+    <string name="audiorecord_file_default">gqAudiorecord</string>
 
     <!-- ImageCapture MISSION -->
     <string name="imageCapture_file_default">gqImage</string>
@@ -27,7 +31,7 @@
 
     <!-- HOTSPOTS -->
     <string name="hotspot_default_activity">true</string>
-    
+
     <!-- Menu Items -->
     <string name="menuItem_showState_default">if_room</string>
 
