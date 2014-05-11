@@ -177,7 +177,7 @@ public class Variables {
 		variables.put(CENTER_MAP_POSITION, "false");
 		variables.put(CENTER_MAP_ACTIVE_HOTSPOTS, "false");
 		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "false");
-		variables.put(BREAK_WHILE, Boolean.valueOf("true"));
+		variables.put(BREAK_WHILE, Boolean.valueOf("false"));
 	}
 
 	/**
