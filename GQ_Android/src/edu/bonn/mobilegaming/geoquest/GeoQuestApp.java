@@ -33,6 +33,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.os.Environment;
@@ -781,6 +782,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean playAudio(String path, boolean blocking) {
 		stopAudio();
 		mPlayer = new MediaPlayer();
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
 			mPlayer.setDataSource(ResourceManager.getResourcePath(path,
 					ResourceType.AUDIO));

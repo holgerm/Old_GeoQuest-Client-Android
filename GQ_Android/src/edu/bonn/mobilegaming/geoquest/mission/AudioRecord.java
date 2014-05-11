@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import java.io.IOException;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -72,6 +73,7 @@ public class AudioRecord extends InteractiveMission {
 
 	private void startPlaying() {
 		mPlayer = new MediaPlayer();
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
 			mPlayer.setDataSource(mFileName);
 			mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

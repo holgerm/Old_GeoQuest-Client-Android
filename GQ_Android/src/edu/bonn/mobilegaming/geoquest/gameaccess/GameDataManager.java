@@ -12,6 +12,7 @@ import java.util.List;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
@@ -111,6 +112,7 @@ public class GameDataManager {
 	public static boolean playAudio(String path, boolean blocking) {
 		GameDataManager.stopAudio();
 		GameDataManager.mPlayer = new MediaPlayer();
+		GameDataManager.mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
 			GameDataManager.mPlayer.setDataSource(ResourceManager
 					.getResourcePath(path, ResourceType.AUDIO));

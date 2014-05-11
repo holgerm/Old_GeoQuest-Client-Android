@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -81,6 +82,7 @@ public class VideoRecord extends InteractiveMission implements
 
 	private void startPlaying() {
 		mPlayer = new MediaPlayer();
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		mPlayer.setDisplay(holder);
 
 		try {
