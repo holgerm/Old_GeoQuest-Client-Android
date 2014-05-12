@@ -77,7 +77,7 @@ public class BitmapUtil {
 		return bmp;
 	}
 
-	public static Bitmap loadBitmapFromResource(int resourceID, int reqWidth,
+	private static Bitmap loadBitmapFromResource(int resourceID, int reqWidth,
 			int reqHeight, boolean rounded) {
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -137,6 +137,9 @@ public class BitmapUtil {
 	};
 
 	private static String completeImageFileSuffix(String absolutePath) {
+		if (absolutePath == null)
+			throw new IllegalArgumentException("Invalid image path (null)."
+					+ absolutePath);
 		if (hasKnownImageSuffix(absolutePath))
 			return absolutePath;
 		else if (new File(absolutePath + ".png").canRead())
@@ -151,6 +154,8 @@ public class BitmapUtil {
 	}
 
 	private static boolean hasKnownImageSuffix(String path) {
+		if (path == null)
+			return false;
 		int suffixStartingIndex = path.lastIndexOf('.');
 		if (suffixStartingIndex <= 0)
 			return false;
