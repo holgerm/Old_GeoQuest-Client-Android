@@ -1,5 +1,6 @@
 package com.qeevee.gq.menu;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import android.util.Log;
 
 import com.qeevee.gq.loc.Hotspot;
 
-public class GQMenuManager { 
+public class GQMenuManager {
 
 	private static final String TAG = GQMenuManager.class.getCanonicalName();
 
@@ -27,6 +28,41 @@ public class GQMenuManager {
 				Log.e(TAG, exception.toString());
 			}
 		}
+	}
+
+	private static GQMenuManager instance;
+
+	public static GQMenuManager getInstance() {
+		if (instance == null)
+			instance = new GQMenuManager();
+		return instance;
+	}
+
+	private Hashtable<CharSequence, GQMenuItem> allMenuItems = new Hashtable<CharSequence, GQMenuItem>();
+
+	public void add(CharSequence id, GQMenuItem gqMenuItem) {
+		allMenuItems.put(id, gqMenuItem);
+		updateMenuView();
+	}
+
+	public void clear() {
+		allMenuItems.clear();
+		updateMenuView();
+	}
+
+	public void remove(CharSequence id) {
+		allMenuItems.remove(id);
+		updateMenuView();
+	}
+
+	/**
+	 * Updates the visibile menu items in the app which holds for all in quest
+	 * activities, i.e. all types that implement
+	 * {@link edu.bonn.mobilegaming.geoquest.MissionOrToolActivity}.
+	 */
+	private void updateMenuView() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

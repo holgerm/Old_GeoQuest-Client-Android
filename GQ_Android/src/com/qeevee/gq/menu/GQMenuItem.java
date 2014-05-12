@@ -35,6 +35,7 @@ public class GQMenuItem {
 	}
 
 	public GQMenuItem(Element menuItemXML) {
+		// get attributes:
 		id = XMLUtilities.getStringAttribute("id",
 				XMLUtilities.NECESSARY_ATTRIBUTE, menuItemXML);
 		title = XMLUtilities.getStringAttribute("title",
@@ -49,6 +50,9 @@ public class GQMenuItem {
 				"showstate", R.string.menuItem_showState_default, menuItemXML));
 		activity = XMLUtilities.getBooleanAttribute("initialActivity",
 				R.bool.menuItem_default_initialActivity, menuItemXML);
+		
+		// store in manager:
+		GQMenuManager.getInstance().add(id, this);
 	}
 
 }
