@@ -47,7 +47,6 @@ public class HotspotManager {
 
 	public void clear() {
 		allHotspots.clear();
-
 	}
 
 	public Collection<GeoPoint> getGeoPointsOfActiveHotspots() {
