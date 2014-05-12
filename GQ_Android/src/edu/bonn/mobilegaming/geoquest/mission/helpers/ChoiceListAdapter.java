@@ -2,8 +2,6 @@ package edu.bonn.mobilegaming.geoquest.mission.helpers;
 
 import java.util.List;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion.Answer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Util;
+
+import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion.Answer;
 
 public class ChoiceListAdapter extends ArrayAdapter<Answer> {
 
@@ -51,9 +55,14 @@ public class ChoiceListAdapter extends ArrayAdapter<Answer> {
 
 		// fill data
 		ViewHolder holder = (ViewHolder) rowView.getTag();
-		String s = (answers.get(position)).answertext;
+		String s = answers.get(position).answertext;
 		holder.text.setText(s);
-		holder.image.setImageResource(R.drawable.ic_launcher);
+		CharSequence imagePath = answers.get(position).imagePath;
+		if (imagePath == null)
+			holder.image.setImageResource(R.drawable.ic_launcher);
+		else
+			holder.image.setImageBitmap(BitmapUtil.loadBitmap(
+					imagePath.toString(), Util.getDisplayWidth() / 4, 0, true));
 
 		return rowView;
 	}
