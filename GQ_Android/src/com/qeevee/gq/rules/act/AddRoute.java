@@ -1,0 +1,86 @@
+package com.qeevee.gq.rules.act;
+
+import org.osmdroid.util.GeoPoint;
+
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
+
+import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.HotspotManager;
+import com.qeevee.gq.loc.Route;
+import com.qeevee.gq.loc.RouteManager;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+
+public class AddRoute extends Action {
+
+	@Override
+	protected boolean checkInitialization() {
+		return params.containsKey("from") && params.containsKey("to");
+	}
+
+	@Override
+	public void execute() {
+		
+		GeoPoint fromGp = null;
+		GeoPoint toGp = null;
+		
+		Hotspot fromHs = HotspotManager.getInstance().getExisting(
+				params.get("from"));
+		Hotspot toHs = HotspotManager.getInstance().getExisting(
+				params.get("to"));
+		
+		
+		if (fromHs == null){
+			if(params.get("from").equals("currentPos")){
+				
+				LocationManager mLocationManager = (LocationManager) GeoQuestApp
+						.getContext().getSystemService(Context.LOCATION_SERVICE);
+				Location location = mLocationManager
+						.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				if(location != null)
+					fromGp = new GeoPoint(location);
+				else
+					return; //still need to handle location update anyway
+				
+			}
+			else return;
+		}
+		else{
+			fromGp = fromHs.getOSMGeoPoint();
+		}
+		
+		if (toHs == null){
+			if(params.get("to").equals("currentPos")){
+				
+				LocationManager mLocationManager = (LocationManager) GeoQuestApp
+						.getContext().getSystemService(Context.LOCATION_SERVICE);
+				Location location = mLocationManager
+						.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				if(location != null)
+					toGp = new GeoPoint(location);
+				else
+					return; //still need to handle location update anyway
+				
+			}
+			else return;
+		}
+		else{
+			toGp = toHs.getOSMGeoPoint();
+		}
+		
+		String id = params.get("from") + "/" + params.get("to");
+		Route route = new Route(fromGp, toGp, id);
+		
+		if(params.containsKey("color")){
+			int color = Integer.parseInt(params.get("color"));
+			route.setColor(color);
+		}
+		if(params.containsKey("width")){
+			float width = Float.parseFloat(params.get("width"));
+			route.setWidth(width);
+		}	
+		RouteManager.getInstance().add(id, route);
+	}
+}

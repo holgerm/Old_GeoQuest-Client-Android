@@ -8,8 +8,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.osmdroid.api.IMapView;
+import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
@@ -34,6 +36,8 @@ import android.view.View.OnClickListener;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
+import com.qeevee.gq.loc.Route;
+import com.qeevee.gq.loc.RouteManager;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -87,6 +91,29 @@ public class MapOSM extends MapNavigation {
 		initGPSMock();
 
 		mission.applyOnStartRules();
+		
+		//create overlay of all existing routes
+		addAllRoutesToMap();
+	}
+
+	private void addAllRoutesToMap() {
+		List<Route> routes = RouteManager.getInstance().getListOfRoutes();
+		for (Route route : routes) {
+			addRouteToMap(route);
+		}  		
+	}
+	
+	public void addRouteToMap(Route route){
+		MapView mapView = (MapView) getMapView();
+		route.setRoadOverlay(RoadManager.buildRoadOverlay(route.getRoad(), route.getColor(), route.getWidth(), this));
+		mapView.getOverlays().add(route.getRoadOverlay());
+		mapView.postInvalidate();
+	}
+	
+	public void removeRouteFromMap(Route route){
+		MapView mapView = (MapView) getMapView();
+		mapView.getOverlays().remove(route);
+		mapView.postInvalidate();
 	}
 
 	public MapHelper getMapHelper() {
