@@ -25,7 +25,6 @@ public class Route {
 		fromGp = from;
 		toGp = to;
 		this.id = id;
-		RouteManager.getInstance().add(id, this);
 	}
 
 	public GeoPoint getStartingGeoPoint() {
