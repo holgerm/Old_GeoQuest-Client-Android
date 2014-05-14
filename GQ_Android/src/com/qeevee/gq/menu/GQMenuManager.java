@@ -56,7 +56,7 @@ public class GQMenuManager {
 	}
 
 	/**
-	 * Updates the visibile menu items in the app which holds for all in quest
+	 * Updates the visible menu items in the app which holds for all in quest
 	 * activities, i.e. all types that implement
 	 * {@link edu.bonn.mobilegaming.geoquest.MissionOrToolActivity}.
 	 */
