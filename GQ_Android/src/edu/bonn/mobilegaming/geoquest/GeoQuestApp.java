@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -49,6 +50,7 @@ import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.Start;
+import com.qeevee.ui.BitmapUtil;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
@@ -103,6 +105,11 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private Map<String, MissionActivity> missionActivities = new HashMap<String, MissionActivity>();
+	private Bitmap missingBitmap;
+
+	public Bitmap getMissingBitmap() {
+		return missingBitmap;
+	}
 
 	private static File currentGameDir = null;
 
@@ -140,6 +147,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		super.onCreate();
 		theApp = this;
 		singleThreadExecutor = Executors.newFixedThreadPool(1);
+
+		missingBitmap = BitmapUtil.loadBitmapFromResource(
+				R.drawable.missingbitmap, 100, 100, false);
 
 		// TODO: initialize all preferences to their defaults if they are not
 		// already set

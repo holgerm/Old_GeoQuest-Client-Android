@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import com.qeevee.gq.res.ResourceManager;
-import com.qeevee.gq.res.ResourceManager.ResourceType;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -17,14 +14,22 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
+
+import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
+
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 
 public class BitmapUtil {
 
+	private static final String TAG = BitmapUtil.class.getCanonicalName();
+
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Config.ARGB_8888);
+		Bitmap output = null;
+		output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
+				Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
@@ -53,31 +58,35 @@ public class BitmapUtil {
 		// String path =
 		// completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
 
-		if (path == null) {
-			bmp = loadBitmapFromResource(R.drawable.missingbitmap, reqWidth,
-					reqHeight, rounded);
-			return bmp;
-		} else {
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = true;
-			BitmapFactory.decodeFile(path, options);
+		try {
+			if (path == null) {
+				return GeoQuestApp.getInstance().getMissingBitmap();
+			} else {
+				final BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = true;
+				BitmapFactory.decodeFile(path, options);
 
-			options.inSampleSize = calculateInSampleSize(options, reqWidth,
-					reqHeight);
+				options.inSampleSize = calculateInSampleSize(options, reqWidth,
+						reqHeight);
 
-			// Decode bitmap with inSampleSize set
-			options.inJustDecodeBounds = false;
-			bmp = BitmapFactory.decodeFile(path, options);
-		}
-		if (rounded) {
-			int radius = GeoQuestApp.getContext().getResources()
-					.getDimensionPixelSize(R.dimen.button_corner_radius);
-			bmp = getRoundedCornerBitmap(bmp, radius);
+				// Decode bitmap with inSampleSize set
+				options.inJustDecodeBounds = false;
+				bmp = BitmapFactory.decodeFile(path, options);
+			}
+			if (rounded) {
+				int radius = GeoQuestApp.getContext().getResources()
+						.getDimensionPixelSize(R.dimen.button_corner_radius);
+				bmp = getRoundedCornerBitmap(bmp, radius);
+			}
+		} catch (OutOfMemoryError oome) {
+			Log.e(TAG, "OutOfMemoryError catched trying to load bitmap for "
+					+ relativeResourcePath);
+			bmp = GeoQuestApp.getInstance().getMissingBitmap();
 		}
 		return bmp;
 	}
 
-	private static Bitmap loadBitmapFromResource(int resourceID, int reqWidth,
+	public static Bitmap loadBitmapFromResource(int resourceID, int reqWidth,
 			int reqHeight, boolean rounded) {
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
