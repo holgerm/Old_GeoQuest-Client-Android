@@ -30,7 +30,7 @@ import edu.bonn.mobilegaming.geoquest.R;
  * @author Folker Hoffmann
  * @author Holger Mügge
  */
-public class MapGoogle extends MapNavigation {
+public class MapGoogle extends MapMissionActivity {
 
 	private MapView myMapView;
 	private MyLocationOverlay myLocationOverlay;

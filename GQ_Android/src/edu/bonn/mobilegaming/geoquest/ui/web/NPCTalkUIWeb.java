@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -188,5 +189,15 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 	public void finishMission() {
 		if (state == STATE_END)
 			button.performClick();
+	}
+
+	public void release() {
+		contentView.destroyDrawingCache();
+		if (contentView instanceof ViewGroup) {
+			((ViewGroup) contentView).removeAllViews();
+		}
+
+		currentDialogItem = null;
+		contentView = null;
 	}
 }

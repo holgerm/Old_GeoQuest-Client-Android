@@ -9,13 +9,13 @@ import org.osmdroid.util.GeoPoint;
 import android.location.Location;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
 import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
+import edu.bonn.mobilegaming.geoquest.mission.MapMissionActivity;
 
 public class MapHelper {
 
 	private IMapController mapController;
 	private GeoQuestLocationListener locationListener;
-	private MapNavigation mapMission;
+	private MapMissionActivity mapMission;
 
 	/**
 	 * Constructor for Google Map based Navigation Mission.
@@ -23,7 +23,7 @@ public class MapHelper {
 	 * @param mapMission
 	 * @param mapCtrl
 	 */
-	public MapHelper(final MapNavigation mapMission) {
+	public MapHelper(final MapMissionActivity mapMission) {
 		this.mapMission = mapMission;
 		mapController = mapMission.getMapController();
 

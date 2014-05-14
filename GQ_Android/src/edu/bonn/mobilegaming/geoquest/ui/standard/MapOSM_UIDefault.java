@@ -13,6 +13,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
@@ -110,5 +111,18 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 			return false;
 		}
 	};
+
+	public void release() {
+		contentView.destroyDrawingCache();
+		if (contentView instanceof ViewGroup) {
+			((ViewGroup) contentView).removeAllViews();
+		}
+		mapView.destroyDrawingCache();
+		mapView.removeAllViews();
+		
+		contentView = null;
+		mapView = null;
+		myLocationOverlay = null;
+	}
 
 }

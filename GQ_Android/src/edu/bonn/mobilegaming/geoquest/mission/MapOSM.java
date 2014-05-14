@@ -43,7 +43,7 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 /**
  * OpenStreetMap-based Map Navigation.
  */
-public class MapOSM extends MapNavigation {
+public class MapOSM extends MapMissionActivity {
 
 	private static String TAG = MapOSM.class.getCanonicalName();
 

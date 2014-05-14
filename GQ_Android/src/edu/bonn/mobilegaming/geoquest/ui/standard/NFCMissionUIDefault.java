@@ -9,6 +9,7 @@ import android.nfc.FormatException;
 import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -244,5 +245,14 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 	protected Element getMissionXML() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void release() {
+		contentView.destroyDrawingCache();
+		if (contentView instanceof ViewGroup) {
+			((ViewGroup) contentView).removeAllViews();
+		}
+
+		contentView = null;
 	}
 }

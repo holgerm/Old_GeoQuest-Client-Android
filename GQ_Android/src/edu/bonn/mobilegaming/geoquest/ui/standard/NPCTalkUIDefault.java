@@ -7,6 +7,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -227,5 +228,17 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	public void finishMission() {
 		if (state == STATE_END)
 			button.performClick();
+	}
+
+	public void release() {
+		charImage.destroyDrawingCache();
+		contentView.destroyDrawingCache();
+		if (contentView instanceof ViewGroup) {
+			((ViewGroup) contentView).removeAllViews();
+		}
+
+		charImage = null;
+		currentDialogItem = null;
+		contentView = null;
 	}
 }

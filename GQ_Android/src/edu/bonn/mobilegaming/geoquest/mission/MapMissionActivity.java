@@ -27,7 +27,7 @@ import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
-public abstract class MapNavigation extends GeoQuestMapActivity {
+public abstract class MapMissionActivity extends GeoQuestMapActivity {
 
 	protected MissionOrToolUI ui;
 
@@ -43,6 +43,12 @@ public abstract class MapNavigation extends GeoQuestMapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		getUI().release();
 	}
 
 	private IMapView mapView;

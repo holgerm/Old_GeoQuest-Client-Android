@@ -22,4 +22,9 @@ public interface MissionOrToolUI extends BlockableAndReleasable {
 	 */
 	void enable();
 
+	/**
+	 * Releases all objects so that memory leaks are avaoided, e.g. Bitmaps are not referenced any more.
+	 */
+	void release();
+
 }

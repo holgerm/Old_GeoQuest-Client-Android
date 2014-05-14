@@ -5,6 +5,7 @@ import org.dom4j.Element;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -161,6 +162,17 @@ public class NFCScanMissionUIDefault extends NFCScanMissionUI {
 	protected Element getMissionXML() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void release() {
+		imageView.destroyDrawingCache();
+		contentView.destroyDrawingCache();
+		if (contentView instanceof ViewGroup) {
+			((ViewGroup) contentView).removeAllViews();
+		}
+
+		imageView = null;
+		contentView = null;
 	}
 
 }

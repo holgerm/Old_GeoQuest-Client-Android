@@ -54,6 +54,13 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		return backAllowed;
 	}
 
+	@Override
+	protected void onDestroy() {
+		if (getUI() != null)
+			getUI().release();
+		super.onDestroy();
+	}
+
 	private ContextManager contextManager;
 	protected int missionResultInPercent = 100;
 
