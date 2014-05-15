@@ -47,10 +47,15 @@ public class MapGoogle extends MapMissionActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (mission == null || mission.xmlMissionNode == null)
+			finish();
+
 		setContentView(R.layout.main);
 
 		// Setup Google MapView
 		myMapView = (MapView) findViewById(R.id.mapview);
+		if (myMapView == null)
+			finish();
 		myMapView.setBuiltInZoomControls(false);
 		myMapView.displayZoomControls(false);
 
