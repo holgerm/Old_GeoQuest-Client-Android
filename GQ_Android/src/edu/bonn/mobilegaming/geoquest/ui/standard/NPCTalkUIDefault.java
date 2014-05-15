@@ -232,6 +232,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 	public void release() {
 		charImage.destroyDrawingCache();
+		charImage.setImageBitmap(null);
 		contentView.destroyDrawingCache();
 		if (contentView instanceof ViewGroup) {
 			((ViewGroup) contentView).removeAllViews();
