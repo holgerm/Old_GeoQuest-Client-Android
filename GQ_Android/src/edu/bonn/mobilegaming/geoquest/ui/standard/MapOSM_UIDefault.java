@@ -54,7 +54,7 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		}
 		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(itemList,
 				gestureListener, new DefaultResourceProxyImpl(getOSMap()));
-		itemizedOverlay.setUseSafeCanvas(false);
+		// itemizedOverlay.setUseSafeCanvas(false);
 		mapView.getOverlays().add(itemizedOverlay);
 
 		GeoQuestApp.getInstance().setOSMap(mapView);
@@ -119,7 +119,7 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		}
 		mapView.destroyDrawingCache();
 		mapView.removeAllViews();
-		
+
 		contentView = null;
 		mapView = null;
 		myLocationOverlay = null;
