@@ -103,8 +103,9 @@ public class MapOSM extends MapNavigation {
 		}  		
 	}
 	
-	public void addRouteToMap(Route route){
-		MapView mapView = (MapView) getMapView();
+	public void addRouteToMap(Route route){		
+		if(route.getRoad() == null) return;	
+		MapView mapView = (MapView) getMapView();		
 		route.setRoadOverlay(RoadManager.buildRoadOverlay(route.getRoad(), route.getColor(), route.getWidth(), this));
 		mapView.getOverlays().add(route.getRoadOverlay());
 		mapView.postInvalidate();
@@ -112,7 +113,7 @@ public class MapOSM extends MapNavigation {
 	
 	public void removeRouteFromMap(Route route){
 		MapView mapView = (MapView) getMapView();
-		mapView.getOverlays().remove(route);
+		mapView.getOverlays().remove(route.getRoadOverlay());
 		mapView.postInvalidate();
 	}
 

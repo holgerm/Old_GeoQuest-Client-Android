@@ -15,10 +15,12 @@ public class Route {
 	static String TAG = "Route";
 	private GeoPoint fromGp, toGp;
 	private String id;
-	private Road road;
+	private Road road = null;
 	private int color = DEFAULT_COLOR;
 	private float width = DEFAULT_WIDTH;
 	private Polyline roadOverlay;
+	private boolean isCommingFromPlayerLocation = false;
+	private boolean isEndingAtPlayerLocation = false;
 
 	public Route(GeoPoint from, GeoPoint to, String id) {
 		
@@ -33,6 +35,14 @@ public class Route {
 	
 	public GeoPoint getEndingGeoPoint() {
 		return toGp;
+	}
+	
+	public void setStartingGeoPoint(GeoPoint gp) {
+		this.fromGp = gp;
+	}
+	
+	public void setEndingGeoPoint(GeoPoint gp) {
+		this.toGp = gp;
 	}
 
 	public String getId() {
@@ -69,5 +79,21 @@ public class Route {
 
 	public void setRoadOverlay(Polyline roadOverlay) {
 		this.roadOverlay = roadOverlay;
-	}		
+	}
+
+	public boolean isCommingFromPlayerLocation() {
+		return isCommingFromPlayerLocation;
+	}
+
+	public void setCommingFromPlayerLocation(boolean isCommingFromPlayerLocation) {
+		this.isCommingFromPlayerLocation = isCommingFromPlayerLocation;
+	}
+
+	public boolean isEndingAtPlayerLocation() {
+		return isEndingAtPlayerLocation;
+	}
+
+	public void setEndingAtPlayerLocation(boolean isEndingAtPlayerLocation) {
+		this.isEndingAtPlayerLocation = isEndingAtPlayerLocation;
+	}	
 }

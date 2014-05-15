@@ -13,8 +13,8 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.AsyncTask;
-
 
 
 public class RouteManager {
@@ -58,30 +58,48 @@ public class RouteManager {
 		allRoutes.clear();
 	}
 	
+	public void updateRoutesConnectedToPlayer(Location newLocation){
+		List<Route> routes = getListOfRoutes();
+		for (Route route : routes) {
+			if(route.isCommingFromPlayerLocation()){
+				route.setStartingGeoPoint(new GeoPoint(newLocation));
+				new CreateRouteAsync().execute(route);
+			}
+			if(route.isEndingAtPlayerLocation()){
+				route.setEndingGeoPoint(new GeoPoint(newLocation));
+				new CreateRouteAsync().execute(route);
+			}
+		}  	
+	}	
 	
 	/**
      * Async task to create the route in a separate thread 
      */
     private class CreateRouteAsync extends AsyncTask<Route, Void, Route> {
-    	
-    	
+    	 	
     	protected Route doInBackground(Route... params) {
             	
     		Route route = params[0];
     		Road road = null;
     		RoadManager roadManager = new OSRMRoadManager();
     		ArrayList<GeoPoint> routePoints = new ArrayList<GeoPoint>();
-    		routePoints.add(route.getStartingGeoPoint());
-    		routePoints.add(route.getEndingGeoPoint());
-    		road = roadManager.getRoad(routePoints);
-    		route.setRoad(road);
+    		
+    		if(route.getStartingGeoPoint() != null && route.getEndingGeoPoint() != null){
+        		routePoints.add(route.getStartingGeoPoint());
+        		routePoints.add(route.getEndingGeoPoint());
+        		road = roadManager.getRoad(routePoints);
+        		route.setRoad(road);
+    		}
     		return route;
     	}
 
     	protected void onPostExecute(Route route) {
-    		RouteManager.getInstance().allRoutes.put(route.getId(), route);
+    		if(!RouteManager.getInstance().existsRoute(route.getId()))
+    			RouteManager.getInstance().allRoutes.put(route.getId(), route);
+    		
     		Activity currentActivity = GeoQuestApp.getCurrentActivity();
     		if (currentActivity instanceof MapOSM) {
+    			((MapOSM) currentActivity).removeRouteFromMap(route);
     			((MapOSM) currentActivity).addRouteToMap(route);
     		}
     	}

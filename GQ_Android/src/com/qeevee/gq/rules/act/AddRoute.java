@@ -8,6 +8,7 @@ import android.location.LocationManager;
 
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
+import com.qeevee.gq.loc.LocationUtilities;
 import com.qeevee.gq.loc.Route;
 import com.qeevee.gq.loc.RouteManager;
 
@@ -25,6 +26,9 @@ public class AddRoute extends Action {
 		
 		GeoPoint fromGp = null;
 		GeoPoint toGp = null;
+		boolean isCommingFromPlayerLocation = false;
+		boolean isEndingAtPlayerLocation = false;
+
 		
 		Hotspot fromHs = HotspotManager.getInstance().getExisting(
 				params.get("from"));
@@ -34,16 +38,11 @@ public class AddRoute extends Action {
 		
 		if (fromHs == null){
 			if(params.get("from").equals("currentPos")){
-				
-				LocationManager mLocationManager = (LocationManager) GeoQuestApp
-						.getContext().getSystemService(Context.LOCATION_SERVICE);
-				Location location = mLocationManager
-						.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				isCommingFromPlayerLocation = true;
+				Location location = LocationUtilities.getCurrentLocation(
+						GeoQuestApp.getInstance().getApplicationContext());
 				if(location != null)
-					fromGp = new GeoPoint(location);
-				else
-					return; //still need to handle location update anyway
-				
+					fromGp = new GeoPoint(location);				
 			}
 			else return;
 		}
@@ -53,16 +52,11 @@ public class AddRoute extends Action {
 		
 		if (toHs == null){
 			if(params.get("to").equals("currentPos")){
-				
-				LocationManager mLocationManager = (LocationManager) GeoQuestApp
-						.getContext().getSystemService(Context.LOCATION_SERVICE);
-				Location location = mLocationManager
-						.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				isEndingAtPlayerLocation = true;
+				Location location = LocationUtilities.getCurrentLocation(
+						GeoQuestApp.getInstance().getApplicationContext());
 				if(location != null)
-					toGp = new GeoPoint(location);
-				else
-					return; //still need to handle location update anyway
-				
+					toGp = new GeoPoint(location);				
 			}
 			else return;
 		}
@@ -73,6 +67,8 @@ public class AddRoute extends Action {
 		String id = params.get("from") + "/" + params.get("to");
 		Route route = new Route(fromGp, toGp, id);
 		
+		if(isCommingFromPlayerLocation) route.setCommingFromPlayerLocation(true);
+		if(isEndingAtPlayerLocation) route.setEndingAtPlayerLocation(true);
 		if(params.containsKey("color")){
 			int color = Integer.parseInt(params.get("color"));
 			route.setColor(color);
