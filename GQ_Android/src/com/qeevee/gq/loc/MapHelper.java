@@ -7,7 +7,6 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 
 import android.location.Location;
-import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
 import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.mission.MapNavigation;
@@ -31,7 +30,6 @@ public class MapHelper {
 		// register location changed listener:
 		locationListener = new GeoQuestLocationListener(mapMission) {
 			public void onRelevantLocationChanged(Location location) {
-				Log.e("myTag", "foundsNewLocation!!");
 				super.onRelevantLocationChanged(location);
 				GeoPoint point = location2GP(location);
 				
