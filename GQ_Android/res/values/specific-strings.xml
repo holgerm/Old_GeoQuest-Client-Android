@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">GeoQuest in der ARS</string>
-    <string name="quest_name">GeoQuest in der ARS</string>
+    <string name="app_name">GeoQuest</string>
+    <string name="quest_name">GeoQuest</string>
     <string name="imprint_authorName">TODO</string>
     <string name="imprint_city">Remscheid</string>
     <string name="imprint_email">TODO</string>
