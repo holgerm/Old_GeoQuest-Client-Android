@@ -47,11 +47,6 @@ public class MapOSM extends MapMissionActivity {
 
 	private static String TAG = MapOSM.class.getCanonicalName();
 
-	// set these two parameters to use Cloudmade Style
-	private static String APIKey = null; // eg
-	// "6f218baf0ee44fdc9a9563c37e55851e"
-	private static String CmStyleId = null; // eg "63694"
-
 	private TilesOverlay tilesOverlay;
 
 	/**
@@ -95,11 +90,6 @@ public class MapOSM extends MapMissionActivity {
 
 	private void initMapTileAccess() {
 		MapView mapView = (MapView) getMapView();
-		if (APIKey != null && CmStyleId != null) {
-			mapView.setTileSource(new XYTileSource("cmMap", null, 0, 15, 256,
-					".png", new String[] { "http://tile.cloudmade.com/"
-							+ APIKey + "/" + CmStyleId + "/256/" }));
-		}
 		// handling local custom maptiles here
 		String localTilePath = GeoQuestApp.getRunningGameDir()
 				.getAbsolutePath() + "/customTiles/";
