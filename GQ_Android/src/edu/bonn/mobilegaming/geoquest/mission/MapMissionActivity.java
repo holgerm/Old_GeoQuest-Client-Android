@@ -48,7 +48,8 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		getUI().release();
+		if (getUI() != null)
+			getUI().release();
 	}
 
 	private IMapView mapView;
