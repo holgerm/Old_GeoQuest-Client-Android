@@ -30,6 +30,10 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	protected Mission mission;
 	protected String id;
 
+	public String getMissionID() {
+		return id;
+	}
+
 	public Mission getMission() {
 		return mission;
 	}

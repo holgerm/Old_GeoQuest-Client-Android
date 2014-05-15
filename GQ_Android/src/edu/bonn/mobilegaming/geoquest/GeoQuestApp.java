@@ -104,7 +104,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	private static GeoQuestApp theApp = null;
 
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
-	private Map<String, MissionActivity> missionActivities = new HashMap<String, MissionActivity>();
+	private Map<String, MissionOrToolActivity> missionActivities = new HashMap<String, MissionOrToolActivity>();
 	private Bitmap missingBitmap;
 
 	public Bitmap getMissingBitmap() {
@@ -133,7 +133,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		if (!missionActivities.containsKey(id))
 			return null;
 		else
-			return missionActivities.get(id);
+			return (Activity) missionActivities.get(id);
 	}
 
 	public static GeoQuestApp getInstance() {
@@ -165,13 +165,18 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public void addActivity(Activity newActivityOfThisApp) {
-		if (!getActivities().contains(newActivityOfThisApp))
-			getActivities().add(newActivityOfThisApp);
-		if (newActivityOfThisApp instanceof MissionActivity) {
-			MissionActivity missionActivity = (MissionActivity) newActivityOfThisApp;
-			String id = missionActivity.getMission().id;
+		if (newActivityOfThisApp instanceof MissionOrToolActivity) {
+			MissionOrToolActivity missionActivity = (MissionOrToolActivity) newActivityOfThisApp;
+			String id = missionActivity.getMissionID();
+			if (missionActivities.containsKey(id)) {
+				Activity oldActivity = (Activity) missionActivities.get(id);
+				getActivities().remove(oldActivity);
+				oldActivity.finish();
+			}
 			missionActivities.put(id, missionActivity);
 		}
+		if (!getActivities().contains(newActivityOfThisApp))
+			getActivities().add(newActivityOfThisApp);
 	}
 
 	void removeActivity(Activity finishedActivity) {
@@ -719,7 +724,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static File getGameXMLFile(CharSequence repoName, String gameFileName) {
-		return new File(getLocalRepoDir(repoName), gameFileName + "/game.xml");
+		return new File(getLocalRepoDir(repoName), gameFileName + "/game.xml"); 
 		// TODO deal with the case that thie game xml file does not exist or
 		// even the game dir.
 	}

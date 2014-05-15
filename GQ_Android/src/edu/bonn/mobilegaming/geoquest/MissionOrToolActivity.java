@@ -18,4 +18,8 @@ public interface MissionOrToolActivity extends BlockableAndReleasable {
 
 	boolean isBackAllowed();
 
+	String getMissionID();
+
+	void finish(Double status);
+
 }

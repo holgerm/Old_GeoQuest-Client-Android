@@ -19,6 +19,10 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 
 	protected String id;
 
+	public String getMissionID() {
+		return id;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
