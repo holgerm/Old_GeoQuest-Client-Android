@@ -71,6 +71,10 @@ public class ResourceManager {
 	};
 
 	public static String getResourcePath(String specifiedPath, ResourceType type) {
+		if (specifiedPath == null) {
+			Log.e(TAG, "Resource path is null.");
+			return null;
+		}
 
 		if (specifiedPath.startsWith(ResourceManager.RUNTIME_RESOURCE_PREFIX)) {
 			String filepath = specifiedPath
