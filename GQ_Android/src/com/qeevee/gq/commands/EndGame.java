@@ -42,12 +42,14 @@ public class EndGame extends GQCommand {
 				gqApp.removeMissionActivity(missionActivity.getMission().id);
 			}
 		}
-		gqApp.setInGame(false);
-		GeoQuestApp.setRunningGameDir(null);
-		GeoQuestApp.cleanMediaPlayer();
 
 		if (gqApp.isUsingAutostart())
 			gqApp.terminateApp();
+		else {
+			GeoQuestApp.setRunningGameDir(null);
+			gqApp.setInGame(false);
+			GeoQuestApp.cleanMediaPlayer();
+		}
 		return true;
 	}
 }
