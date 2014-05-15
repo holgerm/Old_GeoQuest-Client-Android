@@ -37,4 +37,10 @@ public class NPCTalkUIMock extends NPCTalkUI {
 		getNPCTalk().finishMission();
 	}
 
+	@Override
+	public void release() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
