@@ -138,11 +138,11 @@
     <string name="textquestion_answerET_hint_default">Antwort hier eingeben ...</string>
 
     <!-- VideoPlay MISSION -->
-    <string name="videoplay_finishdialog_title">Diese Mission beenden?</string>
-    <string name="videoplay_finishdialog_message">Video abbrechen?</string>
-    <string name="videoplay_finishdialog_keepwatching">Noch ansehen</string>
-    <string name="videoplay_finishdialog_watchagain">Noch einmal</string>
-    <string name="videoplay_finishdialog_leave">Weiter!</string>
+    <string name="videoplay_finishdialog_title">Video beenden?</string>
+    <string name="videoplay_finishdialog_message"> </string>
+    <string name="videoplay_finishdialog_keepwatching">Nein</string>
+    <string name="videoplay_finishdialog_watchagain">Nochmal</string>
+    <string name="videoplay_finishdialog_leave">Ja</string>
     <string name="videoplay_errordialog_message">Das Video kann nicht abgespielt werden.</string>
 
     <!-- HOTSPOTS -->

@@ -128,11 +128,11 @@
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
 
     <!-- VideoPlay MISSION -->
-    <string name="videoplay_finishdialog_title">Terminate this mission?</string>
-    <string name="videoplay_finishdialog_message">Leave the video?</string>
-    <string name="videoplay_finishdialog_keepwatching">Keep watching</string>
+    <string name="videoplay_finishdialog_title">Stop watching?</string>
+    <string name="videoplay_finishdialog_message"> </string>
+    <string name="videoplay_finishdialog_keepwatching">No</string>
     <string name="videoplay_finishdialog_watchagain">Watch again</string>
-    <string name="videoplay_finishdialog_leave">Leave it!</string>
+    <string name="videoplay_finishdialog_leave">Yes</string>
     <string name="videoplay_errordialog_message">I can not play that video.</string>
 
     <!-- HOTSPOTS -->
