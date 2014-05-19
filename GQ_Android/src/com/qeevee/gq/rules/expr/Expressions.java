@@ -6,7 +6,6 @@ import org.dom4j.Element;
 
 import android.util.Log;
 
-import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -14,14 +13,7 @@ import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class Expressions {
-	public static final String PACKAGE_NAME = getPackageName();
 	private static final String TAG = "Expressions";
-
-	private static String getPackageName() {
-		String conditionClassName = Condition.class.getName();
-		int indexOfLastDot = conditionClassName.lastIndexOf('.');
-		return conditionClassName.substring(0, indexOfLastDot + 1);
-	}
 
 	public static Object evaluate(Element xmlExpression) {
 		final String exprName = xmlExpression.getName();
