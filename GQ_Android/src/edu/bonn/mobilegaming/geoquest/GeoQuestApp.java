@@ -51,12 +51,12 @@ import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.Start;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
 import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 
 public class GeoQuestApp extends Application implements InteractionBlocker {
@@ -657,6 +657,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static void showMessage(CharSequence text) {
+		text = StringTools.replaceVariables((String) text);
 		Toast t = Toast.makeText(GeoQuestApp.getContext(), text,
 				Toast.LENGTH_LONG);
 		t.setGravity(Gravity.CENTER, 0, 0);
@@ -724,7 +725,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static File getGameXMLFile(CharSequence repoName, String gameFileName) {
-		return new File(getLocalRepoDir(repoName), gameFileName + "/game.xml"); 
+		return new File(getLocalRepoDir(repoName), gameFileName + "/game.xml");
 		// TODO deal with the case that thie game xml file does not exist or
 		// even the game dir.
 	}

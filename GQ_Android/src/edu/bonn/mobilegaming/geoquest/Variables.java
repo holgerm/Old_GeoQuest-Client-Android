@@ -61,6 +61,8 @@ public class Variables {
 	public static final String CENTER_MAP_VISIBLE_HOTSPOTS = SYSTEM_PREFIX
 			+ "centerToVisibleHotspots";
 
+	private static final String NULL_VARIABLE = SYSTEM_PREFIX + "null";
+
 	public static final String BREAK_WHILE = "break_while";
 
 	private static final String TAG = Variables.class.getCanonicalName();
@@ -92,7 +94,9 @@ public class Variables {
 	 * @return
 	 */
 	public static boolean isDefined(String varName) {
-		return variables.containsKey(varName);
+		if (varName == null)
+			varName = NULL_VARIABLE;
+		return variables.containsKey(varName.trim());
 	}
 
 	/**
@@ -110,6 +114,9 @@ public class Variables {
 	 *         "0.0"
 	 */
 	public static Object getValue(String var) {
+		if (var == null) {
+			var = NULL_VARIABLE;
+		}
 		String varName = var.trim();
 		if (varName.startsWith(HOTSPOT_PREFIX)
 				&& varName.endsWith(VISIBLE_SUFFIX)) {
@@ -163,10 +170,14 @@ public class Variables {
 	 * @param value
 	 */
 	public static void setValue(String varName, Object value) {
+		if (varName == null)
+			varName = NULL_VARIABLE;
 		variables.put(varName.trim(), value);
 	}
 
 	public static void setValueIfUndefined(String varName, Object value) {
+		if (varName == null)
+			varName = NULL_VARIABLE;
 		if (!isDefined(varName)) {
 			setValue(varName, value);
 		}
