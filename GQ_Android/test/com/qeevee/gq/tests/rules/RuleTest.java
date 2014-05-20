@@ -49,6 +49,9 @@ public class RuleTest {
 	}
 
 	protected void applyRule(int i) {
+		if (rules.size() < i)
+			throw new ArrayIndexOutOfBoundsException(
+					"Current test does not contain " + i + 1 + " rules.");
 		Rule rule = Rule.createFromXMLElement((Element) rules.get(i));
 		rule.apply();
 	}

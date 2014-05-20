@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="SetVariable" var="numbers">
+			<value>
+				<sum>
+					<num>10</num>
+					<num>20</num>
+					<num>30</num>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="empty">
+			<value>
+				<sum></sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="strings">
+			<value>
+				<sum>
+					<string>Hier </string>
+					<string>kommt </string>
+					<string>ein </string>
+					<string>Text.</string>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="mixedStartingWithNum">
+			<value>
+				<sum>
+					<num>3</num>
+					<string> Söhne hatte König Witzbold, der </string>
+					<num>
+						4
+					</num>
+					<string>.</string>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="mixedStartingWithString">
+			<value>
+				<sum>
+					<string>Es war einmal </string>
+					<num>1</num>
+					<string> König Witzbold, der hatte </string>
+					<num>
+						3
+					</num>
+					<string> Söhne.</string>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="var1">
+			<value>
+				<num>10</num>
+			</value>
+		</action>
+		<action type="SetVariable" var="var2">
+			<value>
+				<num>20</num>
+			</value>
+		</action>
+
+		<action type="SetVariable" var="vars">
+			<value>
+				<sum>
+					<var>
+						var1
+					</var>
+					<var>
+						var2
+					</var>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="randoms">
+			<value>
+				<sum>
+					<random min="10" max="20" />
+					<random min="100" max="120" />
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="varInMix">
+			<value>
+				<num>500</num>
+			</value>
+		</action>
+
+		<action type="SetVariable" var="mixedNumVarRandom">
+			<value>
+				<sum>
+					<random min="100" max="120" />
+					<var>varInMix</var>
+					<num>1000</num>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="withBoolean">
+			<value>
+				<sum>
+					<num>10</num>
+					<bool>true</bool>
+					<num>30</num>
+				</sum>
+			</value>
+		</action>
+	</rule>
+
+</test>

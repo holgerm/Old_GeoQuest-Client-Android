@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="SetVariable" var="numbers">
+			<value>
+				<multiply>
+					<num>2</num>
+					<num>5</num>
+					<num>20</num>
+				</multiply>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="empty">
+			<value>
+				<multiply></multiply>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="strings">
+			<value>
+				<multiply>
+					<string>Does </string>
+					<string>not </string>
+					<string>work.</string>
+				</multiply>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="mixedStartingWithNum">
+			<value>
+				<multiply>
+					<num>3</num>
+					<string>Does not work.</string>
+				</multiply>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="var1">
+			<value>
+				<num>10</num>
+			</value>
+		</action>
+		<action type="SetVariable" var="var2">
+			<value>
+				<num>5</num>
+			</value>
+		</action>
+		<action type="SetVariable" var="var3">
+			<value>
+				<num>2</num>
+			</value>
+		</action>
+
+		<action type="SetVariable" var="vars">
+			<value>
+				<multiply>
+					<var>
+						var1
+					</var>
+					<var>
+						var2
+					</var>
+					<var>
+						var3
+					</var>
+				</multiply>
+			</value>
+		</action>
+	</rule>
+
+</test>

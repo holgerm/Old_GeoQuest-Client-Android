@@ -63,7 +63,7 @@ public class Variables {
 
 	private static final String NULL_VARIABLE = SYSTEM_PREFIX + "null";
 
-	public static final String BREAK_WHILE = "break_while";
+	public static final String BREAK_WHILE = SYSTEM_PREFIX + "break_while";
 
 	private static final String TAG = Variables.class.getCanonicalName();
 
