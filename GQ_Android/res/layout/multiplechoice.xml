@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:text="@string/ok"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_size"
+        android:visibility="gone" />
 
 </LinearLayout>

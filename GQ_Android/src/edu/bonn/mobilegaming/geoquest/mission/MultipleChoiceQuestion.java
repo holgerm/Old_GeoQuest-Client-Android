@@ -105,6 +105,8 @@ public class MultipleChoiceQuestion extends Question {
 			bottomButton.setText(getString(R.string.question_proceed_button));
 			bottomButton.setOnClickListener(proceed);
 		}
+
+		outerView.invalidate();
 	}
 
 	private void setMCTextViewToReply() {
@@ -217,6 +219,10 @@ public class MultipleChoiceQuestion extends Question {
 		// list answers:
 		setUpAnswerList();
 		choiceList.setVisibility(View.VISIBLE);
+
+		// hide buttom:
+		bottomButton.setVisibility(View.GONE);
+		outerView.invalidate();
 	}
 
 	/**
