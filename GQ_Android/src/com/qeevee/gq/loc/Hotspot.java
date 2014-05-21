@@ -78,6 +78,7 @@ public class Hotspot {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+		GeoQuestApp.getInstance().refreshMapDisplay();
 	}
 
 	public Overlay getGoogleOverlay() {

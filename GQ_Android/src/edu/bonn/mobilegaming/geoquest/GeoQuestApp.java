@@ -921,10 +921,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public void refreshMapDisplay() {
 		if (getGoogleMap() != null)
-			getGoogleMap().postInvalidate();
+			getGoogleMap().invalidate();
 
 		if (getOsmap() != null)
-			getOsmap().postInvalidate();
+			getOsmap().invalidate();
 	}
 
 	public static boolean isMissionRunning(String id) {

@@ -1,9 +1,5 @@
 package edu.bonn.mobilegaming.geoquest.ui.standard;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
@@ -15,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.map.OSMItemizedOverlay;
-import com.qeevee.gq.loc.map.OSMOverlayItem;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -43,22 +37,22 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		mapView.getOverlays().add(myLocationOverlay);
 		// List<Overlay> mapOverlays = mapView.getOverlays();
 
-		OverlayItem currentItem;
-		List<OverlayItem> itemList = new ArrayList<OverlayItem>();
-		for (Iterator<Hotspot> iterator = HotspotManager.getInstance()
-				.getListOfVisibleHotspots().iterator(); iterator.hasNext();) {
-			Hotspot hotspot = (Hotspot) iterator.next();
-			currentItem = new OSMOverlayItem(hotspot);
-			currentItem.setMarker(hotspot.getDrawable());
-			itemList.add(currentItem);
-		}
-		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(itemList,
-				gestureListener, new DefaultResourceProxyImpl(getOSMap()));
-		// itemizedOverlay.setUseSafeCanvas(false);
+		// OverlayItem currentItem;
+		// List<OverlayItem> itemList = new ArrayList<OverlayItem>();
+		// for (Iterator<Hotspot> iterator = HotspotManager.getInstance()
+		// .getListOfVisibleHotspots().iterator(); iterator.hasNext();) {
+		// Hotspot hotspot = (Hotspot) iterator.next();
+		// currentItem = new OSMOverlayItem(hotspot);
+		// currentItem.setMarker(hotspot.getDrawable());
+		// itemList.add(currentItem);
+		// }
+		HotspotManager hm = HotspotManager.getInstance();
+		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(
+				hm.getHotspotOverlayItems(), gestureListener,
+				new DefaultResourceProxyImpl(getOSMap()));
 		mapView.getOverlays().add(itemizedOverlay);
 
 		GeoQuestApp.getInstance().setOSMap(mapView);
-		// mapView.invalidate();
 
 	}
 

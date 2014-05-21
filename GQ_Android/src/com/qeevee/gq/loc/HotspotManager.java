@@ -3,9 +3,13 @@ package com.qeevee.gq.loc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.OverlayItem;
+
+import com.qeevee.gq.loc.map.OSMOverlayItem;
 
 public class HotspotManager {
 
@@ -74,5 +78,18 @@ public class HotspotManager {
 				visibleHotspots.add(hotspot);
 		}
 		return visibleHotspots;
+	}
+
+	public List<OverlayItem> getHotspotOverlayItems() {
+		OverlayItem currentItem;
+		List<OverlayItem> itemList = new ArrayList<OverlayItem>();
+		for (Iterator<Hotspot> iterator = getListOfVisibleHotspots().iterator(); iterator
+				.hasNext();) {
+			Hotspot hotspot = (Hotspot) iterator.next();
+			currentItem = new OSMOverlayItem(hotspot);
+			currentItem.setMarker(hotspot.getDrawable());
+			itemList.add(currentItem);
+		}
+		return itemList;
 	}
 }
