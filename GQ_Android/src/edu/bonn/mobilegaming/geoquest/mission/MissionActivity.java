@@ -83,29 +83,6 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 			super.onBackPressed();
 	}
 
-	// /**
-	// * Back button Handler quits the Mission, when back button is hit.
-	// */
-	// @Override
-	// public boolean onKeyDown(final int keyCode, KeyEvent event) {
-	// // switch (keyCode) {
-	// //
-	// // case KeyEvent.KEYCODE_BACK: // Back => Cancel
-	// // if (mission.cancelStatus == 0) {
-	// // Log.d(this.getClass().getName(),
-	// // "Back Button was pressed, but mission may not be cancelled.");
-	// // return true;
-	// // } else {
-	// // finish(mission.cancelStatus);
-	// // return true;
-	// // }
-	// // case KeyEvent.KEYCODE_SEARCH:
-	// // // ignore search button
-	// // break;
-	// // }
-	// return super.onKeyDown(keyCode, event);
-	// }
-
 	/**
 	 * Finishes the mission activity and sets the result code
 	 * 
