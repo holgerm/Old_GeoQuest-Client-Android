@@ -179,7 +179,7 @@ public class Variables {
 		if (varName == null)
 			varName = NULL_VARIABLE;
 		if (!isDefined(varName)) {
-			setValue(varName, value);
+			setValue(varName.trim(), value);
 		}
 	}
 
