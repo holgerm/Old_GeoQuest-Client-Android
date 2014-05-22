@@ -90,6 +90,10 @@ public class MapOSM extends MapMissionActivity {
 
 					public void onGlobalLayout() {
 						mission.applyOnStartRules();
+						// do this only once, since onGlobalLayout might be
+						// called often:
+						((MapView) mapView).getViewTreeObserver()
+								.removeGlobalOnLayoutListener(this);
 					}
 				});
 	}
@@ -246,25 +250,13 @@ public class MapOSM extends MapMissionActivity {
 		MapView mapView = (MapView) getMapView();
 		if (hotspotPoints.size() == 1) {
 			mapView.getController().setZoom(zoomLevelInt);
-			// mapView.getController().animateTo(hotspotPoints.get(0));
-			setCenter(hotspotPoints.get(0));
+			mapView.getController().animateTo(hotspotPoints.get(0));
+			// setCenter(hotspotPoints.get(0));
 		} else {
 			BoundingBoxE6 boundingBox = BoundingBoxE6
 					.fromGeoPoints(hotspotPoints);
 			mapView.zoomToBoundingBox(boundingBox);
 		}
-	}
-
-	private void setCenter(IGeoPoint point) {
-		MapView osmapView = (MapView) mapView;
-		Point p = osmapView.getProjection().toPixels(point, null);
-		p = osmapView.getProjection().toMercatorPixels(p.x, p.y, p);
-		// The points provided are "center", we want relative to upper-left for
-		// scrolling
-		osmapView.invalidate();
-		p.offset(-osmapView.getWidth() / 2, -osmapView.getHeight() / 2);
-		osmapView.scrollTo(p.x, p.y);
-
 	}
 
 	/**

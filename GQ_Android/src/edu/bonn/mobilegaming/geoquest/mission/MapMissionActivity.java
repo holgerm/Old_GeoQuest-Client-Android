@@ -52,7 +52,7 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 			getUI().release();
 	}
 
-	private IMapView mapView;
+	protected IMapView mapView;
 	private IMapController mapController;
 
 	public IMapView getMapView() {
