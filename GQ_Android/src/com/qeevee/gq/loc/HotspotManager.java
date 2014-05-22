@@ -45,12 +45,16 @@ public class HotspotManager {
 		return allHotspots.containsKey(id);
 	}
 
-	public void add(String id, Hotspot hotspot) {
-		allHotspots.put(id, hotspot);
+	public void add(Hotspot hotspot) {
+		allHotspots.put(hotspot.id, hotspot);
+		if (hotspot.isVisible()) {
+			overlayItemList.add(new OSMOverlayItem(hotspot));
+		}
 	}
 
 	public void clear() {
 		allHotspots.clear();
+		overlayItemList.clear();
 	}
 
 	public Collection<GeoPoint> getGeoPointsOfActiveHotspots() {
@@ -80,16 +84,47 @@ public class HotspotManager {
 		return visibleHotspots;
 	}
 
+	private List<OverlayItem> overlayItemList = new ArrayList<OverlayItem>();
+
 	public List<OverlayItem> getHotspotOverlayItems() {
-		OverlayItem currentItem;
-		List<OverlayItem> itemList = new ArrayList<OverlayItem>();
-		for (Iterator<Hotspot> iterator = getListOfVisibleHotspots().iterator(); iterator
-				.hasNext();) {
-			Hotspot hotspot = (Hotspot) iterator.next();
-			currentItem = new OSMOverlayItem(hotspot);
-			currentItem.setMarker(hotspot.getDrawable());
-			itemList.add(currentItem);
-		}
-		return itemList;
+		return overlayItemList;
 	}
+
+	public void hideHotspot(Hotspot hotspot) {
+		if (allHotspots.containsKey(hotspot.id)) {
+			overlayItemList.remove(hotspot.getOverlayItem());
+			for (Iterator<HotspotVisbilityListener> iterator = hotspotVisbilityListeners
+					.iterator(); iterator.hasNext();) {
+				HotspotVisbilityListener listener = (HotspotVisbilityListener) iterator
+						.next();
+				listener.hideHotspot(hotspot);
+			}
+		}
+	}
+
+	public void unveilHotspot(Hotspot hotspot) {
+		if (allHotspots.containsKey(hotspot.id)) {
+			overlayItemList.add(hotspot.getOverlayItem());
+			for (Iterator<HotspotVisbilityListener> iterator = hotspotVisbilityListeners
+					.iterator(); iterator.hasNext();) {
+				HotspotVisbilityListener listener = (HotspotVisbilityListener) iterator
+						.next();
+				listener.unveilHotspot(hotspot);
+			}
+		}
+	}
+
+	private List<HotspotVisbilityListener> hotspotVisbilityListeners = new ArrayList<HotspotVisbilityListener>();
+
+	public void registerHotspotVisbilityListener(
+			HotspotVisbilityListener listener) {
+		hotspotVisbilityListeners.add(listener);
+		listener.initializeVisibleHotspots();
+	}
+
+	public boolean unregisterHotspotVisbilityListener(
+			HotspotVisbilityListener listener) {
+		return hotspotVisbilityListeners.remove(listener);
+	}
+
 }

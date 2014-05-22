@@ -8,27 +8,13 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import com.qeevee.gq.loc.Hotspot;
-import com.qeevee.gq.loc.HotspotManager;
 
 public class OSMItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
-
-	private List<Hotspot> hotspots;
 
 	public OSMItemizedOverlay(List<OverlayItem> itemlist,
 			OnItemGestureListener<OverlayItem> itemGestureListener,
 			ResourceProxy resourceProxy) {
 		super(itemlist, itemGestureListener, resourceProxy);
-		hotspots = HotspotManager.getInstance().getListOfHotspots();
-	}
-
-	public void updateHotspots() {
-		hotspots = HotspotManager.getInstance().getListOfVisibleHotspots();
-		OSMOverlayItem item;
-		for (Hotspot curHotspot : hotspots) {
-			item = new OSMOverlayItem(curHotspot);
-			item.setMarker(curHotspot.getDrawable());
-			this.addItem(item);
-		}
 	}
 
 	@Override

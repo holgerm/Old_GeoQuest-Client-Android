@@ -7,11 +7,14 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
+import com.qeevee.gq.loc.HotspotVisbilityListener;
 import com.qeevee.gq.loc.map.OSMItemizedOverlay;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -19,9 +22,12 @@ import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 
-public class MapOSM_UIDefault extends MapOSM_UI {
+public class MapOSM_UIDefault extends MapOSM_UI implements
+		HotspotVisbilityListener {
 
 	private static final int LAYOUT_RESOURCE = R.layout.m_default_osmap;
+	private static final String TAG = MapOSM_UIDefault.class.getCanonicalName();
+	private OSMItemizedOverlay itemizedOverlay;
 
 	public MapOSM_UIDefault(MapOSM activity) {
 		super(activity);
@@ -35,25 +41,11 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		myLocationOverlay.enableMyLocation();
 		// myLocationOverlay.setCompassCenter(60L, 60L);
 		mapView.getOverlays().add(myLocationOverlay);
-		// List<Overlay> mapOverlays = mapView.getOverlays();
 
-		// OverlayItem currentItem;
-		// List<OverlayItem> itemList = new ArrayList<OverlayItem>();
-		// for (Iterator<Hotspot> iterator = HotspotManager.getInstance()
-		// .getListOfVisibleHotspots().iterator(); iterator.hasNext();) {
-		// Hotspot hotspot = (Hotspot) iterator.next();
-		// currentItem = new OSMOverlayItem(hotspot);
-		// currentItem.setMarker(hotspot.getDrawable());
-		// itemList.add(currentItem);
-		// }
 		HotspotManager hm = HotspotManager.getInstance();
-		OSMItemizedOverlay itemizedOverlay = new OSMItemizedOverlay(
-				hm.getHotspotOverlayItems(), gestureListener,
-				new DefaultResourceProxyImpl(getOSMap()));
-		mapView.getOverlays().add(itemizedOverlay);
+		hm.registerHotspotVisbilityListener(this);
 
 		GeoQuestApp.getInstance().setOSMap(mapView);
-
 	}
 
 	private MyLocationNewOverlay myLocationOverlay;
@@ -107,6 +99,7 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 	};
 
 	public void release() {
+		HotspotManager.getInstance().unregisterHotspotVisbilityListener(this);
 		contentView.destroyDrawingCache();
 		if (contentView instanceof ViewGroup) {
 			((ViewGroup) contentView).removeAllViews();
@@ -119,4 +112,49 @@ public class MapOSM_UIDefault extends MapOSM_UI {
 		myLocationOverlay = null;
 	}
 
+	public void updateHotspotVisibility() {
+		mapView.getOverlays().remove(itemizedOverlay);
+		itemizedOverlay = new OSMItemizedOverlay(HotspotManager.getInstance()
+				.getHotspotOverlayItems(), gestureListener,
+				new DefaultResourceProxyImpl(getOSMap()));
+		mapView.getOverlays().add(itemizedOverlay);
+		mapView.postInvalidate();
+	}
+
+	public void hideHotspot(Hotspot hotspot) {
+		if (mapView == null || mapView.getOverlays() == null) {
+			Log.e(TAG, "MapView not initialized correctly.");
+			return;
+		}
+		int i = mapView.getOverlays().indexOf(itemizedOverlay);
+		if (i < 0) {
+			Log.e(TAG, "ItemizedOverlay not found in OSMMap overlay list.");
+			return;
+		}
+		OSMItemizedOverlay curItemizedOverlay = (OSMItemizedOverlay) mapView
+				.getOverlays().get(i);
+		curItemizedOverlay.removeItem(hotspot.getOverlayItem());
+	}
+
+	public void unveilHotspot(Hotspot hotspot) {
+		if (mapView == null || mapView.getOverlays() == null) {
+			Log.e(TAG, "MapView not initialized correctly.");
+			return;
+		}
+		int i = mapView.getOverlays().indexOf(itemizedOverlay);
+		if (i < 0) {
+			Log.e(TAG, "ItemizedOverlay not found in OSMMap overlay list.");
+			return;
+		}
+		OSMItemizedOverlay curItemizedOverlay = (OSMItemizedOverlay) mapView
+				.getOverlays().get(i);
+		curItemizedOverlay.addItem(hotspot.getOverlayItem());
+	}
+
+	public void initializeVisibleHotspots() {
+		itemizedOverlay = new OSMItemizedOverlay(HotspotManager.getInstance()
+				.getHotspotOverlayItems(), gestureListener,
+				new DefaultResourceProxyImpl(getOSMap()));
+		mapView.getOverlays().add(itemizedOverlay);
+	}
 }

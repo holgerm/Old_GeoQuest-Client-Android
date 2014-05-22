@@ -5,17 +5,18 @@ import java.util.List;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Overlay;
 import com.qeevee.gq.loc.map.GoogleHotspotOverlay;
+import com.qeevee.gq.loc.map.OSMOverlayItem;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
@@ -35,11 +36,11 @@ import edu.bonn.mobilegaming.geoquest.Variables;
  */
 public class Hotspot {
 
+	private static HotspotManager hm = HotspotManager.getInstance();
+
 	public Hotspot(Element hotspotXML) {
-		String id = hotspotXML.selectSingleNode("@id").getText();
-		Log.d(getClass().getName(), "initiating hotspot. id=" + id);
 		readXML(hotspotXML);
-		HotspotManager.getInstance().add(id, this);
+		hm.add(this);
 	}
 
 	/** location of the hotspot */
@@ -76,9 +77,14 @@ public class Hotspot {
 		return visible;
 	}
 
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-		GeoQuestApp.getInstance().refreshMapDisplay();
+	public void setVisible(boolean newVisibility) {
+		if (this.visible && !newVisibility) {
+			hm.hideHotspot(this);
+		}
+		if (!this.visible && newVisibility) {
+			hm.unveilHotspot(this);
+		}
+		this.visible = newVisibility;
 	}
 
 	public Overlay getGoogleOverlay() {
@@ -151,6 +157,9 @@ public class Hotspot {
 	 */
 	private void readXML(Element _hotspotNode)
 			throws IllegalHotspotNodeException {
+		// ID of the hotspot:
+		this.id = _hotspotNode.attributeValue("id").trim();
+
 		double latitude, longitude;
 		// first look for 'latlong' abbreviating attribute:
 		String latLongString = _hotspotNode.attributeValue("latlong");
@@ -184,9 +193,6 @@ public class Hotspot {
 					.getResources()
 					.getDrawable(R.drawable.default_hotspot_icon)).getBitmap());
 		}
-
-		// ID of the hotspot:
-		this.id = _hotspotNode.attributeValue("id");
 
 		// Default for initialVisibility attribute is "true"
 		if (_hotspotNode.attributeValue("initialVisibility") != null
@@ -232,6 +238,7 @@ public class Hotspot {
 		paint.setStyle(Paint.Style.FILL);
 
 		googleOverlay = new GoogleHotspotOverlay(this);
+		setOverlayItem(new OSMOverlayItem(this));
 	}
 
 	private List<Rule> onEnterRules = new ArrayList<Rule>();
@@ -240,6 +247,8 @@ public class Hotspot {
 	public float halfBitmapHeight;
 	public float halfBitmapWidth;
 	private boolean active = true;
+
+	private OverlayItem overlayItem;
 
 	public boolean isActive() {
 		return active;
@@ -329,6 +338,14 @@ public class Hotspot {
 
 	public void setActive(boolean newActivityValue) {
 		this.active = newActivityValue;
+	}
+
+	public void setOverlayItem(OverlayItem overlayItem) {
+		this.overlayItem = overlayItem;
+	}
+
+	public OverlayItem getOverlayItem() {
+		return overlayItem;
 	}
 
 }
