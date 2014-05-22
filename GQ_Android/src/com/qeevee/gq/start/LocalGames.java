@@ -100,10 +100,9 @@ public class LocalGames extends Activity {
 		File questsDir = GameDataManager.getQuestsDir();
 		File[] questDirs = questsDir.listFiles(GameDataManager.GAMEDIRFILTER);
 		for (int i = 0; i < questDirs.length; i++) {
-
+			FileOperations.deleteDirectory(questDirs[i]);
 		}
 		if (questsDir != null && questsDir.exists()) {
-			FileOperations.deleteDirectory(questsDir);
 			games = GameDataManager.getGameDescriptions();
 			listAdapter = new GameListAdapter(this,
 					android.R.layout.simple_list_item_1, games);

@@ -30,6 +30,7 @@ public class GameDataManager {
 	static private File questsDir = null;
 
 	static public final GameDirFilter GAMEDIRFILTER = new GameDirFilter();
+	private static final String TAG = GameDataManager.class.getCanonicalName();
 
 	public static boolean existsLocalQuest(String questName) {
 		File gameDir = new File(getQuestsDir(), questName);
@@ -55,23 +56,30 @@ public class GameDataManager {
 		}
 		File dir = ctx.getExternalFilesDir(null);
 		if (dir == null) {
-			return ctx.getDir(QUEST_DIR_NAME, Context.MODE_PRIVATE);
+			questsDir = ctx.getDir(QUEST_DIR_NAME, Context.MODE_PRIVATE);
 		} else {
-			return getOrCreateSubDir(dir, QUEST_DIR_NAME);
+			questsDir = getOrCreateSubDir(dir, QUEST_DIR_NAME);
 		}
+		return questsDir;
 	}
 
 	private static File getOrCreateSubDir(File dir, String subDirName) {
 		File qDir = new File(dir, subDirName);
-		if (qDir.exists() && qDir.canWrite())
+
+		if (qDir.exists() && qDir.canWrite()) {
 			return qDir;
-		else {
-			boolean created = qDir.mkdirs();
-			if (!created)
-				return null;
-			else
-				return qDir;
 		}
+
+		Log.i(TAG, "1");
+		boolean created = qDir.mkdirs();
+		if (created) {
+			Log.i(TAG, "2");
+			return qDir;
+		} else {
+			Log.i(TAG, "3");
+			return null;
+		}
+
 	}
 
 	public static List<GameDescription> getGameDescriptions() {
@@ -79,9 +87,10 @@ public class GameDataManager {
 		GameDirFilter gameDirFilter = new GameDirFilter();
 		File questsDir = getQuestsDir();
 		File[] gameDirs = questsDir.listFiles(gameDirFilter);
-		for (int i = 0; i < gameDirs.length; i++) {
-			games.add(new GameDescription(gameDirs[i]));
-		}
+		if (gameDirs != null)
+			for (int i = 0; i < gameDirs.length; i++) {
+				games.add(new GameDescription(gameDirs[i]));
+			}
 		return games;
 	}
 
