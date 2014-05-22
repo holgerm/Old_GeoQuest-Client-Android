@@ -229,9 +229,15 @@ public class MapOSM extends MapMissionActivity {
 	private void zoomToQuestArea(ArrayList<GeoPoint> hotspotPoints) {
 		if (hotspotPoints == null || hotspotPoints.size() == 0)
 			return;
-		BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(hotspotPoints);
 		MapView mapView = (MapView) getMapView();
-		mapView.zoomToBoundingBox(boundingBox);
+		if (hotspotPoints.size() == 1) {
+			mapView.getController().setZoom(zoomLevelInt);
+			mapView.getController().animateTo(hotspotPoints.get(0));
+		} else {
+			BoundingBoxE6 boundingBox = BoundingBoxE6
+					.fromGeoPoints(hotspotPoints);
+			mapView.zoomToBoundingBox(boundingBox);
+		}
 	}
 
 	/**

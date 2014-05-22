@@ -80,6 +80,7 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 	protected Handler handler = new Handler();
 	protected LocationSource locationSource;
 	protected Mission mission;
+	protected int zoomLevelInt;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 		getMapController().setZoom(18);
 		String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
 		if (zoomLevel != null) {
-			int zoomLevelInt = Integer.parseInt(zoomLevel);
+			zoomLevelInt = Integer.parseInt(zoomLevel);
 			if (zoomLevelInt > 0 && zoomLevelInt < 24)
 				getMapController().setZoom(zoomLevelInt);
 		}
