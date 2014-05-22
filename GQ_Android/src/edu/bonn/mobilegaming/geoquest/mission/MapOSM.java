@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
@@ -20,6 +21,8 @@ import org.osmdroid.views.overlay.TilesOverlay;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
@@ -81,7 +85,13 @@ public class MapOSM extends MapMissionActivity {
 		initZoom();
 		initGPSMock();
 
-		mission.applyOnStartRules();
+		((MapView) mapView).getViewTreeObserver().addOnGlobalLayoutListener(
+				new OnGlobalLayoutListener() {
+
+					public void onGlobalLayout() {
+						mission.applyOnStartRules();
+					}
+				});
 	}
 
 	public MapHelper getMapHelper() {
@@ -190,8 +200,12 @@ public class MapOSM extends MapMissionActivity {
 						.equals("1")) {
 			LocationManager mLocationManager = (LocationManager) GeoQuestApp
 					.getContext().getSystemService(Context.LOCATION_SERVICE);
-			Location location = mLocationManager
-					.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			Criteria crit = new Criteria();
+			crit.setAccuracy(Criteria.ACCURACY_FINE);
+			String provider = mLocationManager.getBestProvider(crit, true);
+			Location location = mLocationManager.getLastKnownLocation(provider);
+			if (location == null)
+				return;
 			points.add(new GeoPoint(location));
 		}
 		if (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals(
@@ -232,12 +246,25 @@ public class MapOSM extends MapMissionActivity {
 		MapView mapView = (MapView) getMapView();
 		if (hotspotPoints.size() == 1) {
 			mapView.getController().setZoom(zoomLevelInt);
-			mapView.getController().animateTo(hotspotPoints.get(0));
+			// mapView.getController().animateTo(hotspotPoints.get(0));
+			setCenter(hotspotPoints.get(0));
 		} else {
 			BoundingBoxE6 boundingBox = BoundingBoxE6
 					.fromGeoPoints(hotspotPoints);
 			mapView.zoomToBoundingBox(boundingBox);
 		}
+	}
+
+	private void setCenter(IGeoPoint point) {
+		MapView osmapView = (MapView) mapView;
+		Point p = osmapView.getProjection().toPixels(point, null);
+		p = osmapView.getProjection().toMercatorPixels(p.x, p.y, p);
+		// The points provided are "center", we want relative to upper-left for
+		// scrolling
+		osmapView.invalidate();
+		p.offset(-osmapView.getWidth() / 2, -osmapView.getHeight() / 2);
+		osmapView.scrollTo(p.x, p.y);
+
 	}
 
 	/**

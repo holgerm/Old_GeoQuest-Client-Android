@@ -258,18 +258,16 @@ public class Mission implements Serializable {
 		Intent startingIntent = this.startingIntent;
 		if (startingIntent != null) {
 			String id = startingIntent.getStringExtra(MISSION_ID);
-			// do not keep the new mission on stack
-			// startingIntent.setFlags(startingIntent.getFlags()
-			// | Intent.FLAG_ACTIVITY_NO_HISTORY);
 			if (GeoQuestApp.isMissionRunning(id)) {
 				Log.e(this.getClass().getName(), "Mission " + id
 						+ " is already running and restarted.");
 				startingIntent = GeoQuestApp.getInstance()
 						.getRunningActivityByID(id).getIntent();
-				if (!backAllowed)
-					startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
-			startingIntent.putExtra(BACK_ALLOWED, backAllowed);
+			if (!backAllowed)
+				startingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			else
+				startingIntent.putExtra(BACK_ALLOWED, backAllowed);
 			GameDataManager.stopAudio();
 			if (Mission.get(id) != null
 					&& Mission.get(id).xmlMissionNode != null)
