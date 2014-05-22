@@ -105,6 +105,10 @@ public class Hotspot {
 	};
 
 	public void runOnTapEvent() {
+		if (GeoQuestApp.getInstance().isInDebugmode()) {
+			// in debug mode we emulate enter event when tapping.
+			runOnEnterEvent();
+		}
 		Rule.resetRuleFiredTracker();
 		for (Rule rule : onTapRules) {
 			rule.apply();

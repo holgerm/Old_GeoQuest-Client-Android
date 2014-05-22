@@ -71,7 +71,8 @@
     <string name="menu_inventory">Inventar</string>
     <string name="menu_deleteAllQuests">Alle Löschen</string>
     <string name="menu_info">Info</string>
-
+    <string name="menu_debugMode">Debug Modus</string>
+    
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>

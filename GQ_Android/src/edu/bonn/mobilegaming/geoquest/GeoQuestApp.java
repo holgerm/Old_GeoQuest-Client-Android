@@ -418,6 +418,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	private static File runningGameDir;
 	private boolean repoDataAvailable = false;
 	private org.osmdroid.views.MapView osmap;
+	private boolean debugMode;
 
 	public org.osmdroid.views.MapView getOsmap() {
 		return osmap;
@@ -968,6 +969,14 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	public String getGameSessionString() {
 		return gameSession;
+	}
+
+	public void setDebugMode(boolean newState) {
+		debugMode = newState;
+	}
+
+	public boolean isInDebugmode() {
+		return debugMode;
 	}
 
 }

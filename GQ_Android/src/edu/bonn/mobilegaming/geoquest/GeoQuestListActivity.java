@@ -52,6 +52,10 @@ public abstract class GeoQuestListActivity extends ListActivity {
 					Preferences.class);
 			startActivity(settingsActivity);
 			return true;
+		case R.id.menu_debugMode:
+			item.setChecked(!item.isChecked());
+			GeoQuestApp.getInstance().setDebugMode(item.isChecked());
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

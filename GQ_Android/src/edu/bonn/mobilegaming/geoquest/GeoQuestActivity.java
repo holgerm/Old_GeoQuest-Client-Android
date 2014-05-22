@@ -111,6 +111,10 @@ public abstract class GeoQuestActivity extends Activity {
 					+ "" + GeoQuestApp.getContext().getString(R.string.version);
 			GeoQuestApp.showMessage(infotext);
 			return true;
+		case R.id.menu_debugMode:
+			item.setChecked(!item.isChecked());
+			GeoQuestApp.getInstance().setDebugMode(item.isChecked());
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

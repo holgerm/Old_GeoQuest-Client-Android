@@ -94,6 +94,10 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 					HistoryActivity.class);
 			startActivity(historyActivity);
 			return true;
+		case R.id.menu_debugMode:
+			item.setChecked(!item.isChecked());
+			GeoQuestApp.getInstance().setDebugMode(item.isChecked());
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
