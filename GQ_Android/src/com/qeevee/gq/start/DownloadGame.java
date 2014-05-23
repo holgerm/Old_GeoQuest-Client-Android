@@ -52,17 +52,21 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 			deleteDir(gameDir);
 		gameDir = GameDataManager.getQuestDir(gameName);
 
-		File gameZipFile;
-		try {
-			gameZipFile = downloadZipFile(gameDir, game);
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());
-			return false;
+		File gameZipFile = null;
+		if (!isCancelled()) {
+			try {
+				gameZipFile = downloadZipFile(gameDir, game);
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+				return false;
+			}
 		}
 
-		GameDataManager.unzipGameArchive(gameZipFile);
+		if (!isCancelled() && gameZipFile != null) {
+			GameDataManager.unzipGameArchive(gameZipFile);
 
-		gameZipFile.delete();
+			gameZipFile.delete();
+		}
 
 		return true;
 	}
@@ -113,6 +117,10 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean success) {
+		if (isCancelled()) {
+			doCancel();
+			return;
+		}
 		progressDialog.dismiss();
 		reenableGamesInCloud();
 		CharSequence toastText = null;
@@ -144,22 +152,14 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+		// TODO: make cancellable
 		progressDialog = ProgressDialog.show(callBackToReenable,
-				"Downloading ...", "Please wait.", true, true,
+				"Downloading ...", "Please wait.", true, false,
 				new OnCancelListener() {
 
 					public void onCancel(DialogInterface dialog) {
 						// cancel:
 						DownloadGame.this.cancel(true);
-
-						// Delete already loaded parts:
-						File questsDir = GameDataManager.getQuestsDir();
-						File deleteDir = new File(questsDir, DownloadGame.this
-								.getGame().getID());
-						FileOperations.deleteDirectory(deleteDir);
-
-						// reenable listview:
-						reenableGamesInCloud();
 					}
 
 				});
@@ -171,5 +171,16 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	public void reenableGamesInCloud() {
 		callBackToReenable.reenable();
+	}
+
+	private void doCancel() {
+		// Delete already loaded parts:
+		File questsDir = GameDataManager.getQuestsDir();
+		File deleteDir = new File(questsDir, DownloadGame.this.getGame()
+				.getID());
+		FileOperations.deleteDirectory(deleteDir);
+
+		// reenable listview:
+		reenableGamesInCloud();
 	}
 }
