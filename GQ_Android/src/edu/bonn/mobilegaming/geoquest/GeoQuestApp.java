@@ -979,4 +979,12 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		return debugMode;
 	}
 
+	public void showInfo() {
+		String infotext = GeoQuestApp.getContext()
+				.getString(R.string.info_text)
+				+ " "
+				+ GeoQuestApp.getContext().getString(R.string.version);
+		GeoQuestApp.showMessage(infotext);
+	}
+
 }

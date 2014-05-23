@@ -106,11 +106,7 @@ public abstract class GeoQuestActivity extends Activity {
 			startActivity(settingsActivity);
 			return true;
 		case R.id.menu_info:
-			String infotext = GeoQuestApp.getContext().getString(
-					R.string.info_text)
-					+ " "
-					+ GeoQuestApp.getContext().getString(R.string.version);
-			GeoQuestApp.showMessage(infotext);
+			GeoQuestApp.getInstance().showInfo();
 			return true;
 		case R.id.menu_debugMode:
 			item.setChecked(!item.isChecked());

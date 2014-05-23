@@ -86,6 +86,9 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 					Preferences.class);
 			startActivity(settingsActivity);
 			return true;
+		case R.id.menu_info:
+			GeoQuestApp.getInstance().showInfo();
+			return true;
 		case R.id.menu_endGame:
 			GeoQuestApp.getInstance().endGame();
 			return true;
