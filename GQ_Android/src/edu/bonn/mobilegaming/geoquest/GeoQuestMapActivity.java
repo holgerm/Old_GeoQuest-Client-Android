@@ -76,6 +76,13 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(R.id.menu_debugMode).setChecked(
+				GeoQuestApp.getInstance().isInDebugmode());
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_imprint:
