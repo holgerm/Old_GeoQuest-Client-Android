@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.R;
 
 public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
@@ -18,6 +20,11 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	private final static int BYTE_SIZE = 1024;
 	private GameDescription game;
 	private GamesInCloud callBackToReenable;
+	private ProgressDialog progressDialog;
+
+	public DownloadGame(GamesInCloud activity) {
+		callBackToReenable = activity;
+	}
 
 	protected Boolean doInBackground(GameDescription... games) {
 		this.game = games[0];
@@ -27,6 +34,9 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
+		progressDialog.setMessage(game.getName());
+		progressDialog.setIcon(R.drawable.gqlogo_solo_trans); // TODO use game
+																// icon instead.
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
 			deleteDir(gameDir);
@@ -93,6 +103,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean success) {
+		progressDialog.dismiss();
 		reenableGamesInCloud();
 		CharSequence toastText = null;
 		if (success)
@@ -104,8 +115,11 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	}
 
-	public void setCallbackToReenable(GamesInCloud gamesInCloud) {
-		callBackToReenable = gamesInCloud;
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		progressDialog = ProgressDialog.show(callBackToReenable, GeoQuestApp
+				.getContext().getText(R.string.downloadDialogTitle), "");
 	}
 
 	public void reenableGamesInCloud() {

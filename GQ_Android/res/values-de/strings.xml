@@ -47,7 +47,8 @@
     <string name="sortByDistance">Distanz</string>
     <string name="sortByLastPlayed">Zuletzt gespielt</string>
     <string name="game_list_sort">Sortieren...</string>
-
+    <string name="downloadDialogTitle">Quest wird geladen ...</string>
+    
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">OK</string>
     <string name="button_text_play">Wiedergeben</string>

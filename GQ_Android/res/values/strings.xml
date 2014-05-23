@@ -45,6 +45,7 @@
     <string name="sortByDistance">Distance</string>
     <string name="sortByLastPlayed">Last played</string>
     <string name="game_list_sort">Sort...</string>
+    <string name="downloadDialogTitle">Downloading quest ...</string>
 
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">Accept</string>
@@ -70,7 +71,7 @@
     <string name="menu_deleteAllQuests">Delete All</string>
     <string name="menu_info">Info</string>
     <string name="menu_debugMode">Debug Mode</string>
-    
+
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
     <string name="audiorecord_activityIndicator_initial">No recording made yet!</string>
@@ -103,7 +104,7 @@
 
     <!-- MultipleChoiceQuestion MISSION -->
     <string name="multipleChoiceQuestion_default_shuffle_mode">false</string>
-    
+
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Proceed</string>
 
@@ -130,7 +131,7 @@
 
     <!-- VideoPlay MISSION -->
     <string name="videoplay_finishdialog_title">Stop watching?</string>
-    <string name="videoplay_finishdialog_message"> </string>
+    <string name="videoplay_finishdialog_message"></string>
     <string name="videoplay_finishdialog_keepwatching">No</string>
     <string name="videoplay_finishdialog_watchagain">Watch again</string>
     <string name="videoplay_finishdialog_leave">Yes</string>

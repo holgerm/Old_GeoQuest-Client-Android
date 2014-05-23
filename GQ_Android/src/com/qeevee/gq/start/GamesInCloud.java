@@ -79,8 +79,8 @@ public class GamesInCloud extends Activity {
 				public void onItemClick(AdapterView<?> parent, final View view,
 						int position, long id) {
 					listView.setEnabled(false);
-					DownloadGame downloader = new DownloadGame();
-					downloader.setCallbackToReenable(GamesInCloud.this);
+					DownloadGame downloader = new DownloadGame(
+							GamesInCloud.this);
 					downloader.execute((GameDescription) parent
 							.getItemAtPosition(position));
 				}
