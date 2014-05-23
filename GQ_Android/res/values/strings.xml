@@ -2,6 +2,8 @@
 <resources>
 
     <!-- Generic Values -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="npcimage_description">An image illustrating the current activity.</string>
@@ -45,11 +47,13 @@
     <string name="sortByDistance">Distance</string>
     <string name="sortByLastPlayed">Last played</string>
     <string name="game_list_sort">Sort...</string>
+
+    <!-- Generic DIALOG Labels -->
     <string name="downloadDialogTitleSuffix">is downloading</string>
     <string name="downloadDialogMessage">Please wait ...</string>
+    <string name="deleteAllDialogTitle">Really remove all quest from this device?</string>
 
     <!-- Generic BUTTON Labels -->
-
     <string name="button_text_accept">Accept</string>
     <string name="button_text_play">Play</string>
     <string name="button_text_next">Next</string>

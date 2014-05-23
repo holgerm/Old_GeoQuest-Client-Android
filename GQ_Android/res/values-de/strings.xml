@@ -4,6 +4,8 @@
 <resources>
 
     <!-- Generic Values -->
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     <string name="npcimage_description">Ein Bild passend zur aktuellen Aktivität.</string>
@@ -47,9 +49,12 @@
     <string name="sortByDistance">Distanz</string>
     <string name="sortByLastPlayed">Zuletzt gespielt</string>
     <string name="game_list_sort">Sortieren...</string>
+
+    <!-- Generic DIALOG Labels -->
     <string name="downloadDialogTitleSuffix"> wird geladen</string>
     <string name="downloadDialogMessage">Bitte warten ...</string>
-    
+    <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>
+
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">OK</string>
     <string name="button_text_play">Wiedergeben</string>
@@ -74,7 +79,7 @@
     <string name="menu_deleteAllQuests">Alle Löschen</string>
     <string name="menu_info">Info</string>
     <string name="menu_debugMode">Debug Modus</string>
-    
+
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
     <string name="audiorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
@@ -142,7 +147,7 @@
 
     <!-- VideoPlay MISSION -->
     <string name="videoplay_finishdialog_title">Video beenden?</string>
-    <string name="videoplay_finishdialog_message"> </string>
+    <string name="videoplay_finishdialog_message"></string>
     <string name="videoplay_finishdialog_keepwatching">Nein</string>
     <string name="videoplay_finishdialog_watchagain">Nochmal</string>
     <string name="videoplay_finishdialog_leave">Ja</string>

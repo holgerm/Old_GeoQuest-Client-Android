@@ -3,9 +3,11 @@ package com.qeevee.gq.start;
 import java.io.File;
 import java.util.List;
 
-import com.qeevee.util.FileOperations;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,11 +18,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.qeevee.util.FileOperations;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class LocalGames extends Activity {
 
+	private static final int DIALOG_DELETE_ALL = 2;
 	private ListView listView;
 	private GameListAdapter listAdapter;
 	private TextView titleView;
@@ -89,11 +96,44 @@ public class LocalGames extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_DeleteAllQUests:
-			deleteAllGames();
+			showDialog(DIALOG_DELETE_ALL);
 			break;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DIALOG_DELETE_ALL:
+			Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.deleteAllDialogTitle);
+			builder.setCancelable(true);
+			builder.setPositiveButton(
+					GeoQuestApp.getContext().getText(R.string.yes),
+					new OkOnClickListener());
+			builder.setNegativeButton(
+					GeoQuestApp.getContext().getText(R.string.no),
+					new CancelOnClickListener());
+			AlertDialog dialog = builder.create();
+			dialog.show();
+			break;
+		}
+		return super.onCreateDialog(id);
+	}
+
+	private final class CancelOnClickListener implements
+			DialogInterface.OnClickListener {
+		public void onClick(DialogInterface dialog, int which) {
+		}
+	}
+
+	private final class OkOnClickListener implements
+			DialogInterface.OnClickListener {
+		public void onClick(DialogInterface dialog, int which) {
+			deleteAllGames();
+		}
 	}
 
 	private void deleteAllGames() {
