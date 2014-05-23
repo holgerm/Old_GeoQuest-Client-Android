@@ -55,6 +55,11 @@
     <string name="downloadDialogMessage">Bitte warten ...</string>
     <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>
 
+    <!-- Generic MESSAGE Labels -->
+    <string name="messageDownloadFinishedPrefix">Quest</string>
+    <string name="messageDownloadFinishedSuffix">ist geladen und startet ...</string>
+    <string name="messageDownloadErrorPrefix">Fehler beim Laden des Quests</string>
+
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">OK</string>
     <string name="button_text_play">Wiedergeben</string>

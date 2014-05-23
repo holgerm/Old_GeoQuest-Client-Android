@@ -111,13 +111,21 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		progressDialog.dismiss();
 		reenableGamesInCloud();
 		CharSequence toastText = null;
-		if (success)
-			toastText = "Game " + game.getName() + " downloaded.";
-		else
-			toastText = "Error while downloading game " + game.getName();
-		Toast.makeText(GeoQuestApp.getContext(), toastText, Toast.LENGTH_LONG)
-				.show();
-
+		if (success) {
+			toastText = GeoQuestApp.getContext().getText(
+					R.string.messageDownloadFinishedPrefix)
+					+ " "
+					+ game.getName()
+					+ " "
+					+ GeoQuestApp.getContext().getText(
+							R.string.messageDownloadFinishedSuffix);
+		} else {
+			toastText = GeoQuestApp.getContext().getText(
+					R.string.messageDownloadErrorPrefix)
+					+ " " + game.getName();
+			Toast.makeText(GeoQuestApp.getContext(), toastText,
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override

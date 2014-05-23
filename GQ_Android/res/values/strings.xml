@@ -53,6 +53,11 @@
     <string name="downloadDialogMessage">Please wait ...</string>
     <string name="deleteAllDialogTitle">Really remove all quest from this device?</string>
 
+    <!-- Generic MESSAGE Labels -->
+    <string name="messageDownloadFinishedPrefix">Quest</string>
+    <string name="messageDownloadFinishedSuffix">dowloaded and is starting ...</string>
+    <string name="messageDownloadErrorPrefix">Error downloading quest</string>
+
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">Accept</string>
     <string name="button_text_play">Play</string>
