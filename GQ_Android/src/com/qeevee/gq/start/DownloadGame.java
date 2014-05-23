@@ -9,6 +9,7 @@ import java.net.URL;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -119,6 +120,14 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 					+ " "
 					+ GeoQuestApp.getContext().getText(
 							R.string.messageDownloadFinishedSuffix);
+
+			// Start quest:
+			AsyncTask<GameDescription, Integer, Boolean> startLocalGame = new StartLocalGame();
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				startLocalGame.executeOnExecutor(
+						AsyncTask.THREAD_POOL_EXECUTOR, game);
+			else
+				startLocalGame.execute(game);
 		} else {
 			toastText = GeoQuestApp.getContext().getText(
 					R.string.messageDownloadErrorPrefix)
