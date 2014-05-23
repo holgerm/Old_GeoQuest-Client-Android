@@ -17,9 +17,14 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	static final String TAG = DownloadGame.class.getCanonicalName();
 	private final static int BYTE_SIZE = 1024;
 	private GameDescription game;
+	private GamesInCloud callBackToReenable;
 
 	protected Boolean doInBackground(GameDescription... games) {
 		this.game = games[0];
+
+		// if (game.isBusy())
+		// return false;
+
 		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
@@ -37,7 +42,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 		GameDataManager.unzipGameArchive(gameZipFile);
 
-		// TODO delete local zipfile
+		gameZipFile.delete();
 
 		return true;
 	}
@@ -88,6 +93,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean success) {
+		reenableGamesInCloud();
 		CharSequence toastText = null;
 		if (success)
 			toastText = "Game " + game.getName() + " downloaded.";
@@ -98,4 +104,11 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 	}
 
+	public void setCallbackToReenable(GamesInCloud gamesInCloud) {
+		callBackToReenable = gamesInCloud;
+	}
+
+	public void reenableGamesInCloud() {
+		callBackToReenable.reenable();
+	}
 }
