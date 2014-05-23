@@ -189,6 +189,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 		@Override
 		public void onTick(long millisUntilFinished) {
+			if (currentDialogItem == null)
+				return;
 			CharSequence next = currentDialogItem.getNextTextToken();
 			if (next != null)
 				dialogText.append(next);
@@ -201,6 +203,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 
 		@Override
 		public void onFinish() {
+			if (currentDialogItem == null)
+				return;
 			CharSequence next = currentDialogItem.getNextTextToken();
 			while (next != null) {
 				dialogText.append(next);
