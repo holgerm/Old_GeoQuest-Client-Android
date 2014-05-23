@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.qeevee.util.FileOperations;
+
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -141,7 +145,28 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 		progressDialog = ProgressDialog.show(callBackToReenable,
-				"Downloading ...", "Please wait.");
+				"Downloading ...", "Please wait.", true, true,
+				new OnCancelListener() {
+
+					public void onCancel(DialogInterface dialog) {
+						// cancel:
+						DownloadGame.this.cancel(true);
+
+						// Delete already loaded parts:
+						File questsDir = GameDataManager.getQuestsDir();
+						File deleteDir = new File(questsDir, DownloadGame.this
+								.getGame().getID());
+						FileOperations.deleteDirectory(deleteDir);
+
+						// reenable listview:
+						reenableGamesInCloud();
+					}
+
+				});
+	}
+
+	protected GameDescription getGame() {
+		return game;
 	}
 
 	public void reenableGamesInCloud() {
