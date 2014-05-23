@@ -45,9 +45,11 @@
     <string name="sortByDistance">Distance</string>
     <string name="sortByLastPlayed">Last played</string>
     <string name="game_list_sort">Sort...</string>
-    <string name="downloadDialogTitle">Downloading quest ...</string>
+    <string name="downloadDialogTitleSuffix">is downloading</string>
+    <string name="downloadDialogMessage">Please wait ...</string>
 
     <!-- Generic BUTTON Labels -->
+
     <string name="button_text_accept">Accept</string>
     <string name="button_text_play">Play</string>
     <string name="button_text_next">Next</string>

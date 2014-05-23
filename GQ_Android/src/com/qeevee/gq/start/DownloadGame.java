@@ -34,7 +34,12 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
-		progressDialog.setMessage(game.getName());
+		progressDialog.setTitle(game.getName()
+				+ " "
+				+ GeoQuestApp.getContext().getText(
+						R.string.downloadDialogTitleSuffix));
+		progressDialog.setMessage(GeoQuestApp.getContext().getText(
+				R.string.downloadDialogMessage));
 		progressDialog.setIcon(R.drawable.gqlogo_solo_trans); // TODO use game
 																// icon instead.
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
@@ -118,8 +123,8 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = ProgressDialog.show(callBackToReenable, GeoQuestApp
-				.getContext().getText(R.string.downloadDialogTitle), "");
+		progressDialog = ProgressDialog.show(callBackToReenable,
+				"Downloading ...", "Please wait.");
 	}
 
 	public void reenableGamesInCloud() {
