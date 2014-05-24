@@ -9,7 +9,7 @@
         android:title="@string/menu_quit">
     </item>
     <item
-        android:id="@+id/menu_reload"
+        android:id="@+id/menu_showLocalGames"
         android:checkable="false"
         android:icon="@drawable/icon_reload"
         android:showAsAction="never"

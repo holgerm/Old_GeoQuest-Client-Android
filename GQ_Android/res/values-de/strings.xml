@@ -54,6 +54,8 @@
     <string name="downloadDialogTitleSuffix"> wird geladen</string>
     <string name="downloadDialogMessage">Bitte warten ...</string>
     <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>
+    <string name="dialogTerminateAppTitle">Wirklich die App beenden?</string>
+    <string name="dialogEndGameTitle">Wirklich das Quest abbrechen?</string>
 
     <!-- Generic MESSAGE Labels -->
     <string name="messageDownloadFinishedPrefix">Quest</string>

@@ -2,6 +2,7 @@ package edu.bonn.mobilegaming.geoquest;
 
 import org.dom4j.Element;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
 import com.qeevee.gq.history.HistoryActivity;
+import com.qeevee.util.Dialogs;
 
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
@@ -97,7 +99,7 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 			GeoQuestApp.getInstance().showInfo();
 			return true;
 		case R.id.menu_endGame:
-			GeoQuestApp.getInstance().endGame();
+			showDialog(Dialogs.DIALOG_END_GAME);
 			return true;
 		case R.id.menu_history:
 			Intent historyActivity = new Intent(getBaseContext(),
@@ -110,6 +112,21 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case Dialogs.DIALOG_END_GAME:
+			Dialog dialog = Dialogs.createYesNoDialog(this,
+					R.string.dialogEndGameTitle,
+					Dialogs.endGameOnClickListener,
+					Dialogs.cancelOnClickListener);
+			dialog.show();
+			return dialog;
+		default:
+			return super.onCreateDialog(id);
 		}
 	}
 

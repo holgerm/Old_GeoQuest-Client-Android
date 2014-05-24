@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.qeevee.util.Dialogs;
 import com.qeevee.util.FileOperations;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
@@ -27,7 +28,6 @@ import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class LocalGames extends Activity {
 
-	private static final int DIALOG_DELETE_ALL = 2;
 	private ListView listView;
 	private GameListAdapter listAdapter;
 	private TextView titleView;
@@ -96,7 +96,7 @@ public class LocalGames extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_DeleteAllQUests:
-			showDialog(DIALOG_DELETE_ALL);
+			showDialog(Dialogs.DIALOG_DELETE_ALL);
 			break;
 		}
 
@@ -106,30 +106,25 @@ public class LocalGames extends Activity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
-		case DIALOG_DELETE_ALL:
+		case Dialogs.DIALOG_DELETE_ALL:
 			Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.deleteAllDialogTitle);
 			builder.setCancelable(true);
 			builder.setPositiveButton(
 					GeoQuestApp.getContext().getText(R.string.yes),
-					new OkOnClickListener());
+					new DeleteAllGamesOnClickListener());
 			builder.setNegativeButton(
 					GeoQuestApp.getContext().getText(R.string.no),
-					new CancelOnClickListener());
+					Dialogs.cancelOnClickListener);
 			AlertDialog dialog = builder.create();
 			dialog.show();
-			break;
-		}
-		return super.onCreateDialog(id);
-	}
-
-	private final class CancelOnClickListener implements
-			DialogInterface.OnClickListener {
-		public void onClick(DialogInterface dialog, int which) {
+			return dialog;
+		default:
+			return super.onCreateDialog(id);
 		}
 	}
 
-	private final class OkOnClickListener implements
+	private final class DeleteAllGamesOnClickListener implements
 			DialogInterface.OnClickListener {
 		public void onClick(DialogInterface dialog, int which) {
 			deleteAllGames();
