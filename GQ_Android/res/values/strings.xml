@@ -18,24 +18,12 @@
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventory</string>
 
-    <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Loading repositories</string>
-    <string name="start_text_game_list_progress_process_text">Processing repository data</string>
-    <string name="start_button_game_list_text">Select a new Quest</string>
-    <string name="start_welcome">Welcome to GeoQuest!</string>
-    <string name="start_text_last_game_text">Last played Quest:</string>
-    <string name="start_text_last_game_text_no_game">You haven\'t played a Quest recently</string>
-    <string name="start_gameNotFound">Game not found</string>
-    <string name="start_toast_download_failed">Repo list download failed - check your internet connection and try again by choosing "Reload repo data" from menu or restarting the app!</string>
-    <string name="start_downloadGame">Downloading game from GeoQuest server</string>
-    <string name="start_startGame">Starting locally stored game</string>
+    <!-- Start Activity -->
     <string name="start_fetchingDataFromServer">Fetching game information from server</string>
     <string name="start_initializeGame">Loading Missions</string>
     <string name="start_gameFileCouldNotBeParsed">Sorry, this game file could not be parsed.</string>
-    <string name="start_gameList_headerPart">Games in</string>
-    <string name="start_gameList_headerPartNoLoc">no Location</string>
-    <string name="start_gameList_headerPartLoc">with Location</string>
-    <string name="start_repoList_header">Accessible Repositories</string>
+    <string name="startShowLocalQuestsButtonText">Your quests</string>
+    <string name="startShowCloudQuestsButtonText">Find more quests</string>
 
     <!-- Repository -->
     <string name="predefinedRepoName">Preinstalled quests</string>
@@ -232,5 +220,6 @@
 
     <!-- DESCRIPTIONS for Accessibility -->
     <string name="description_questIcon">Icon for a quest</string>
+    <string name="description_geoQuestLogo">The GeoQuest Logo</string>
 
 </resources>

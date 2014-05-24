@@ -20,24 +20,12 @@
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventar</string>
 
-    <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
-    <string name="start_text_game_list_progress_process_text">Verarbeite Repository-Daten</string>
-    <string name="start_button_game_list_text">Wähle ein neues Quest</string>
-    <string name="start_welcome">Willkommen zu GeoQuest!</string>
-    <string name="start_text_last_game_text">Zuletzt gespieltes Quest:</string>
-    <string name="start_text_last_game_text_no_game">Du hast zuletzt kein Quest gespielt</string>
-    <string name="start_gameNotFound">Spiel konnte nicht gefunden werden</string>
-    <string name="start_toast_download_failed">Herunterladen der Repository-Daten fehlgeschlagen - überprüfe Deine Internetverbindung und versuche es erneut, indem du "Repository-Daten neu laden" aus dem Menü auswählst oder die App neu startest!</string>
-    <string name="start_downloadGame">Lade Quest vom Server</string>
-    <string name="start_startGame">Spiel wird gestartet</string>
+    <!-- Start Activity -->
     <string name="start_fetchingDataFromServer">Spielinfos werden vom Server geladen</string>
     <string name="start_initializeGame">Spiel wird initialisiert</string>
     <string name="start_gameFileCouldNotBeParsed">Quest Datei ist fehlerhaft!</string>
-    <string name="start_gameList_headerPart">Quests in</string>
-    <string name="start_gameList_headerPartNoLoc">ohne Location</string>
-    <string name="start_gameList_headerPartLoc">mit Location</string>
-    <string name="start_repoList_header">Verfügbare Repositories</string>
+    <string name="startShowLocalQuestsButtonText">Deine Quests</string>
+    <string name="startShowCloudQuestsButtonText">Finde mehr Quests</string>
 
     <!-- Repository -->
     <string name="predefinedRepoName">Vorinstallierte Quests</string>
@@ -243,5 +231,6 @@
 
     <!-- DESCRIPTIONS for Accessibility -->
     <string name="description_questIcon">Bild für ein Quest</string>
+    <string name="description_geoQuestLogo">Das GeoQuest Logo</string>
 
 </resources>

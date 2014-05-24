@@ -16,7 +16,7 @@
         android:title="@string/menu_localGames">
     </item>
     <item
-        android:id="@+id/menu_cloudsearch"
+        android:id="@+id/menu_showCloudGames"
         android:checkable="false"
         android:icon="@drawable/icon_reload"
         android:showAsAction="never"

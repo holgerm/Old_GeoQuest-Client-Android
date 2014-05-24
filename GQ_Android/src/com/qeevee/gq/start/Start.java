@@ -18,6 +18,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.qeevee.util.Dialogs;
 
@@ -31,6 +34,8 @@ public class Start extends GeoQuestActivity {
 
 	private ProgressDialog startLocalGameDialog;
 	private ProgressDialog downloadRepoDataDialog;
+	private Button showCloudGamesButton;
+	private Button showLocalGamesButton;
 
 	private static final String TAG = "Start";
 
@@ -49,7 +54,28 @@ public class Start extends GeoQuestActivity {
 		// extract included games asynchronously:
 		new ExtractGamesFromAssets().execute();
 
+		// set button listeners:
+		setButtonListeners();
+
 		GameDataManager.getQuestsDir();
+	}
+
+	private void setButtonListeners() {
+		showCloudGamesButton = (Button) findViewById(R.id.showCloudQuests);
+		showCloudGamesButton.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				showCloudGames();
+			}
+		});
+
+		showLocalGamesButton = (Button) findViewById(R.id.showLocalQuests);
+		showLocalGamesButton.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				showLocalGames();
+			}
+		});
 	}
 
 	private void startQuestFromQRCodeScan() {
@@ -146,17 +172,24 @@ public class Start extends GeoQuestActivity {
 			showDialog(Dialogs.DIALOG_TERMINATE_APP);
 			return true;
 		case R.id.menu_showLocalGames:
-			Intent loadActivity = new Intent(getBaseContext(), LocalGames.class);
-			startActivity(loadActivity);
+			showLocalGames();
 			return true;
-		case R.id.menu_cloudsearch:
-			Intent searchActivity = new Intent(getBaseContext(),
-					GamesInCloud.class);
-			startActivity(searchActivity);
+		case R.id.menu_showCloudGames:
+			showCloudGames();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void showCloudGames() {
+		Intent searchActivity = new Intent(getBaseContext(), GamesInCloud.class);
+		startActivity(searchActivity);
+	}
+
+	private void showLocalGames() {
+		Intent loadActivity = new Intent(getBaseContext(), LocalGames.class);
+		startActivity(loadActivity);
 	}
 
 	/**
@@ -170,7 +203,7 @@ public class Start extends GeoQuestActivity {
 	}
 
 	private void updateCloudSearchMenuItem(Menu menu) {
-		menu.findItem(R.id.menu_cloudsearch).setVisible(areWeOnline());
+		menu.findItem(R.id.menu_showCloudGames).setVisible(areWeOnline());
 	}
 
 	private boolean areWeOnline() {
