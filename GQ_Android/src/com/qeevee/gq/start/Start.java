@@ -12,23 +12,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import edu.bonn.mobilegaming.geoquest.GameLoader;
+
+import com.qeevee.util.Dialogs;
+
 import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.GeoQuestProgressHandler;
@@ -55,33 +53,19 @@ public class Start extends GeoQuestActivity {
 
 	static final String RELOAD_REPO_DATA = "edu.bonn.mobilegaming.geoquest.start.reload_repo_data";
 	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
-
 	private final int repoListRequestCode = 101;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.webupdate);
+		setContentView(R.layout.start);
 		Mission.setMainActivity(this);
 
 		// extract included games asynchronously:
 		new ExtractGamesFromAssets().execute();
 
 		GameDataManager.getQuestsDir();
-
-		gameListButton = (GeoquestButton) findViewById(R.id.start_button_game_list);
-
-		gameListButton.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				Intent intent = new Intent(GeoQuestApp.getContext(),
-						edu.bonn.mobilegaming.geoquest.RepoListActivity.class);
-				startActivityForResult(intent, repoListRequestCode);
-			}
-		});
-
-		lastGameButton = (GeoquestButton) findViewById(R.id.start_button_last_game);
 	}
 
 	private void startQuestFromQRCodeScan() {
@@ -113,29 +97,31 @@ public class Start extends GeoQuestActivity {
 	 */
 	@Override
 	protected void onResume() {
-		final String recentRepo = GeoQuestApp.getRecentRepo();
-		final String recentGame = GeoQuestApp.getRecentGame();
-		final String recentGameFileName = GeoQuestApp.getRecentGameFileName();
-		if (recentRepo != null && recentGame != null) {
-			// there has been played a game recently
-			if (GameLoader.existsGameOnClient(recentRepo, recentGameFileName)) {
-				// game exists locally and can be offered to start again:
-
-				// overwrite displayed message
-				Button.OnClickListener restartRecentGameListener = createGameButtonClickListener(
-						recentRepo, recentGameFileName);
-
-				lastGameButton.setOnClickListener(restartRecentGameListener);
-				lastGameButton.setEnabled(true);
-				lastGameButton.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
-				lastGameButton.setText(recentGame);
-			} else {
-				disableLastGameButton(R.string.start_gameNotFound);
-			}
-		} else {
-			disableLastGameButton(R.string.start_text_last_game_text_no_game);
-		}
-
+		// final String recentRepo = GeoQuestApp.getRecentRepo();
+		// final String recentGame = GeoQuestApp.getRecentGame();
+		// final String recentGameFileName =
+		// GeoQuestApp.getRecentGameFileName();
+		// if (recentRepo != null && recentGame != null) {
+		// // there has been played a game recently
+		// if (GameLoader.existsGameOnClient(recentRepo, recentGameFileName)) {
+		// // game exists locally and can be offered to start again:
+		//
+		// // overwrite displayed message
+		// Button.OnClickListener restartRecentGameListener =
+		// createGameButtonClickListener(
+		// recentRepo, recentGameFileName);
+		//
+		// lastGameButton.setOnClickListener(restartRecentGameListener);
+		// lastGameButton.setEnabled(true);
+		// lastGameButton.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+		// lastGameButton.setText(recentGame);
+		// } else {
+		// disableLastGameButton(R.string.start_gameNotFound);
+		// }
+		// } else {
+		// disableLastGameButton(R.string.start_text_last_game_text_no_game);
+		// }
+		//
 		checkAndPerformAutostart();
 
 		super.onResume();
@@ -249,39 +235,6 @@ public class Start extends GeoQuestActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void disableLastGameButton(int messageStringID) {
-		lastGameButton.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
-		lastGameButton.setText(messageStringID);
-		lastGameButton.setEnabled(false);
-	}
-
-	private OnClickListener createGameButtonClickListener(final String repo,
-			final String gameFileName) {
-		OnClickListener gameButtonClickListener = new OnClickListener() {
-			public void onClick(View v) {
-				final Handler startGameHandler;
-
-				startLocalGameDialog.setProgress(0);
-				startLocalGameDialog.setMessage(GeoQuestApp.getContext()
-						.getText(R.string.start_startGame));
-				showDialog(GeoQuestApp.DIALOG_ID_START_GAME);
-				startGameHandler = new GeoQuestProgressHandler(
-						startLocalGameDialog,
-						GeoQuestProgressHandler.LAST_IN_CHAIN);
-				GeoQuestApp.singleThreadExecutor.execute(new Runnable() {
-
-					public void run() {
-						GameLoader.startGame(startGameHandler,
-								GeoQuestApp.getGameXMLFile(repo, gameFileName));
-					}
-
-				});
-			}
-
-		};
-		return gameButtonClickListener;
-	}
-
 	/**
 	 * Called when the activity's options menu needs to be created.
 	 */
@@ -297,10 +250,9 @@ public class Start extends GeoQuestActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_quit:
-			GeoQuestApp.getInstance().terminateApp();
+			showDialog(Dialogs.DIALOG_TERMINATE_APP);
 			return true;
-		case R.id.menu_reload:
-			// loadRepoData(true);
+		case R.id.menu_showLocalGames:
 			Intent loadActivity = new Intent(getBaseContext(), LocalGames.class);
 			startActivity(loadActivity);
 			return true;
@@ -337,6 +289,13 @@ public class Start extends GeoQuestActivity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
+		case Dialogs.DIALOG_TERMINATE_APP:
+			Dialog dialog = Dialogs.createYesNoDialog(this,
+					R.string.dialogTerminateAppTitle,
+					Dialogs.terminateAppOnClickListener,
+					Dialogs.cancelOnClickListener);
+			dialog.show();
+			break;
 		case GeoQuestApp.DIALOG_ID_DOWNLOAD_REPO_DATA:
 			return downloadRepoDataDialog;
 		case GeoQuestApp.DIALOG_ID_START_GAME:
@@ -344,6 +303,7 @@ public class Start extends GeoQuestActivity {
 		default:
 			return null;
 		}
+		return super.onCreateDialog(id);
 	}
 
 	/**
