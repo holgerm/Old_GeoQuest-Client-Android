@@ -2,14 +2,14 @@ package edu.bonn.mobilegaming.geoquest.mission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.qeevee.gq.xml.XMLUtilities;
@@ -28,17 +28,22 @@ public class VideoPlay extends InteractiveMission {
 	private VideoView videoView;
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+
+		// hide endgame menu item into submenu, since it looks misleading while
+		// watching a movie.
+		menu.findItem(R.id.menu_endGame).setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_NEVER);
+		return true;
+	}
+
+	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		this.setContentView(R.layout.m_default_videoplay);
-		RelativeLayout outerView = (RelativeLayout) this
-				.findViewById(R.id.outerview);
-		long mm = Runtime.getRuntime().maxMemory();
-		// Drawable d = this.getResources()
-		// .getDrawable(R.drawable.background_test);
-		// outerView.setBackgroundDrawable(d);
+
 		videoView = (VideoView) this.findViewById(R.id.video);
-//		videoView.setPadding(10, 10, 10, 10);
 		videoView.setVideoURI(initVideoUri());
 		MediaController mc = new MediaController(this);
 		mc.setPrevNextListeners(finishButtonClickListener, null);
