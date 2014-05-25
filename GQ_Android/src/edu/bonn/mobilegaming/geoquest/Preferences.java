@@ -66,7 +66,7 @@ public class Preferences extends PreferenceActivity implements
 
 		// prepare auto-start-quest preference
 		PasswordProtectedListPreference questPref = (PasswordProtectedListPreference) findPreference(PREF_KEY_AUTO_START_GAME);
-		prepareRepoListForAutoStartQuest(questPref);
+		// prepareRepoListForAutoStartQuest(questPref);
 		if (questPref.getValue() != null) {
 			questPref.setTitle(questPref.getValue());
 		}
@@ -194,7 +194,7 @@ public class Preferences extends PreferenceActivity implements
 		if (hasFocus && clickAutoStartQuestChooser) {
 			clickAutoStartQuestChooser = false;
 			PasswordProtectedListPreference questPref = (PasswordProtectedListPreference) findPreference(PREF_KEY_AUTO_START_GAME);
-			prepareRepoListForAutoStartQuest(questPref);
+			// prepareRepoListForAutoStartQuest(questPref);
 			questPref.setPasswordEnabled(false);
 			// checkAutoStartGameSet = true;
 			int order = getCurrentPreferenceCount(
@@ -206,29 +206,7 @@ public class Preferences extends PreferenceActivity implements
 				Log.i("Geoquest#" + TAG,
 						"key pref_key_auto_start_game not found in preferences");
 			}
-			// TODO: check if preferences quest preference is set - hasFocus
-			// code below runs to early therefore commented out
-			// clickAutoStartQuestChooser = false;
 		}
-		// if (hasFocus && checkAutoStartGameSet) {
-		// if (!mainPrefs.contains(PREF_KEY_AUTO_START_GAME) ||
-		// !mainPrefs.contains(PREF_KEY_AUTO_START_REPO)) {
-		// PasswordProtectedCheckBoxPreference questCheckPref =
-		// (PasswordProtectedCheckBoxPreference)
-		// findPreference(PREF_KEY_AUTO_START_GAME_CHECK);
-		// questCheckPref.setPasswordEnabled(false);
-		// int order =
-		// getCurrentPreferenceCount(PasswordProtectedCheckBoxPreference.class,
-		// PREF_KEY_AUTO_START_GAME_CHECK);
-		// if (order != -1){
-		// getPreferenceScreen().onItemClick(null, null, order, 0);
-		// } else {
-		// Log.i("Geoquest#" + TAG,
-		// "key pref_key_auto_start_game_check not found in preferences");
-		// }
-		// checkAutoStartGameSet = false;
-		// }
-		// }
 		super.onWindowFocusChanged(hasFocus);
 	}
 
@@ -293,7 +271,7 @@ public class Preferences extends PreferenceActivity implements
 			// recreate repo list alert dialog so it won't have it's old
 			// selected state causing it not to be displayed
 			PasswordProtectedListPreference questPref = (PasswordProtectedListPreference) findPreference(PREF_KEY_AUTO_START_GAME);
-			prepareRepoListForAutoStartQuest(questPref);
+			// prepareRepoListForAutoStartQuest(questPref);
 			String autoStartQuestName = questPref.getValue();
 			if (autoStartQuestName != null) {
 				questPref.setTitle(autoStartQuestName);
@@ -301,7 +279,9 @@ public class Preferences extends PreferenceActivity implements
 			Log.i("Geoquest", "pref_auto_start_game: " + autoStartQuestName);
 		}
 		if (key.equals(PREF_KEY_SERVER_URL)) {
-//			PasswordProtectedEditTextPreference serverPref = (PasswordProtectedEditTextPreference) findPreference(PREF_KEY_SERVER_URL);
+			// PasswordProtectedEditTextPreference serverPref =
+			// (PasswordProtectedEditTextPreference)
+			// findPreference(PREF_KEY_SERVER_URL);
 			String serverURL = sharedPreferences.getString(PREF_KEY_SERVER_URL,
 					getString(R.string.geoquest_server_url));
 			if (serverURL.equals("")) {
@@ -337,7 +317,9 @@ public class Preferences extends PreferenceActivity implements
 		final String[] repos = new String[repoList.size()];
 		repoList.toArray(repos);
 		AlertDialog immediateAlert = new AlertDialog.Builder(this)
-				.setTitle(R.string.start_repoList_header)
+				.setTitle("Repo List - OLD HEADER REMOVED") // TODO build new
+															// autostart runtime
+															// selection feature
 				.setItems(repos, new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {

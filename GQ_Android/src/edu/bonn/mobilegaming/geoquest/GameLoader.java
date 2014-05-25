@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -174,61 +173,6 @@ public class GameLoader {
 
 	final static int BYTE_SIZE = 1024;
 
-	/**
-	 * downloads the game.
-	 * 
-	 * TODO: check if SD Card is available and accessible. Otherwise display
-	 * error or even switch to "just online" gaming.
-	 */
-	public static void downloadGame(Handler handler, CharSequence repoName,
-			String gameFileName) {
-		URL url = GeoQuestApp.makeGameURL(repoName, gameFileName);
-		File newGameZipFile = new File(
-				GameDataManager.getLocalRepoDir(repoName), gameFileName
-						+ ".zip");
-		InputStream in;
-
-		Log.d(TAG, "start download: '" + url);
-
-		removeOldGameFile(newGameZipFile);
-		FileOutputStream fOutLocal = createFileWriter(newGameZipFile);
-
-		try {
-			in = new BufferedInputStream(url.openStream(), BYTE_SIZE);
-			int lenght = url.openConnection().getContentLength();
-
-			// TODO: care about lenght == -1, i.e. if info not available, send
-			// other msg to handler.
-			Message msg = handler.obtainMessage();
-			msg.what = GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
-			msg.arg1 = lenght / BYTE_SIZE;
-			msg.arg2 = R.string.start_downloadGame;
-			handler.sendMessage(msg);
-
-			byte by[] = new byte[BYTE_SIZE];
-			int c;
-
-			while ((c = in.read(by, 0, BYTE_SIZE)) != -1) {
-				// TODO check access to SDCard!
-				fOutLocal.write(by, 0, c);
-				// trigger progress bar to proceed:
-				handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
-			}
-
-			in.close();
-			fOutLocal.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Log.d(TAG, "completed download: '" + url);
-		handler.sendEmptyMessage(GeoQuestProgressHandler.MSG_FINISHED);
-
-		GameLoader.unzipGameArchive(newGameZipFile);
-
-		// TODO delete local zipfile
-	}
-
 	private static FileOutputStream createFileWriter(File newGameZipFile) {
 		FileOutputStream fOutLocal = null;
 		try {
@@ -237,15 +181,6 @@ public class GameLoader {
 			Log.e(TAG, e.toString());
 		}
 		return fOutLocal;
-	}
-
-	private static void removeOldGameFile(File newGameZipFile) {
-		if (newGameZipFile.exists()) {
-			newGameZipFile.delete();
-		} else {
-			if (!getGameDirectory(newGameZipFile).exists())
-				getGameDirectory(newGameZipFile).mkdirs();
-		}
 	}
 
 	/**

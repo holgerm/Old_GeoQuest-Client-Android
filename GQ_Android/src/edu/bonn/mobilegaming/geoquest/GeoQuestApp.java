@@ -55,7 +55,6 @@ import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
-import edu.bonn.mobilegaming.geoquest.gameaccess.GeoQuestServerProxy;
 import edu.bonn.mobilegaming.geoquest.gameaccess.RepositoryItem;
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
 
@@ -449,103 +448,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		return result;
 	}
 
-	@SuppressWarnings("unused")
-	private static boolean loadRepoDataFromServer(
-			final GeoQuestProgressHandler progressHandler) {
-		boolean success = false;
-		if (!GeoQuestApp.getInstance().isOnline())
-			return false;
-		try {
-			GeoQuestServerProxy server = GeoQuestServerProxy.getInstance();
-			Document doc = server.getRepoMetadata(progressHandler);
-			if (doc == null)
-				return false; // if no xml document is returned stop and return
-			// false. Then no repository items are created.
-
-			// create internal representation of repositories:
-			XPath xpathSelector = DocumentHelper.createXPath("//repository");
-			@SuppressWarnings("unchecked")
-			List<Element> nodesFromRemoteRepo = xpathSelector.selectNodes(doc);
-
-			Message msg = new Message();
-
-			File localRepoDir = GameDataManager.getLocalRepoDir(null);
-
-			if (localRepoDir != null && localRepoDir.list() != null
-					&& nodesFromRemoteRepo != null) {
-				msg.arg1 = nodesFromRemoteRepo.size()
-						+ GameDataManager.getLocalRepoDir(null).list().length;
-				// we also need some space for local loading progress
-			} else if (localRepoDir != null && localRepoDir.list() != null) {
-				msg.arg1 = localRepoDir.list().length;
-				Message errorMsg = new Message();
-				errorMsg.arg1 = R.string.error_fetching_remote_repo_list;
-				errorMsg.what = GeoQuestProgressHandler.MSG_ABORT_BY_ERROR;
-				progressHandler.sendMessage(errorMsg);
-			} else if (nodesFromRemoteRepo != null) {
-				msg.arg1 = nodesFromRemoteRepo.size();
-			}
-			msg.arg2 = R.string.start_text_game_list_progress_process_text;
-			msg.what = GeoQuestProgressHandler.MSG_TELL_MAX_AND_TITLE;
-			progressHandler.sendMessage(msg);
-
-			RepositoryItem curRepoItem;
-			GameItem curGameItem;
-			for (@SuppressWarnings("rawtypes")
-			Iterator repoIterator = nodesFromRemoteRepo.iterator(); repoIterator
-					.hasNext();) {
-				progressHandler
-						.sendEmptyMessage(GeoQuestProgressHandler.MSG_PROGRESS);
-				Element repoNode = (Element) repoIterator.next();
-				String repoName = repoNode.attributeValue("name");
-				if (repoName == null) {
-					SharedPreferences prefs = PreferenceManager
-							.getDefaultSharedPreferences(getContext());
-					Log.d(TAG,
-							"loadRepoDataFromServer(): Repository name missing on host "
-									+ prefs.getString(
-											Preferences.PREF_KEY_SERVER_URL,
-											getContext()
-													.getString(
-															R.string.geoquest_server_url)));
-				} else {
-					// create RepositoryItem:
-					curRepoItem = new RepositoryItem(repoName);
-					curRepoItem.setOnServer();
-					repositoryItems.put(repoName, curRepoItem);
-
-					// create GameItems for current repository:
-					@SuppressWarnings("rawtypes")
-					List gameNodes = repoNode.elements("game");
-					for (@SuppressWarnings("rawtypes")
-					Iterator gameIterator = gameNodes.iterator(); gameIterator
-							.hasNext();) {
-						Element gameNode = (Element) gameIterator.next();
-						curGameItem = GameItem.createFromRepoListGameNode(
-								gameNode, curRepoItem);
-						if (curGameItem != null)
-							curRepoItem.addGame(curGameItem);
-					}
-				}
-			}
-			success = true;
-
-		} catch (Exception e) {
-			Log.d(TAG, "getServerRepositories() : " + e);
-			e.printStackTrace();
-			success = false;
-			File repoDir = GameDataManager.getLocalRepoDir(null);
-			if (repoDir != null && repoDir.list() != null) {
-				Message setMaxToLocal = new Message();
-				setMaxToLocal.arg1 = repoDir.list().length;
-				setMaxToLocal.what = GeoQuestProgressHandler.MSG_TELL_MAX;
-				progressHandler.sendMessage(setMaxToLocal);
-			}
-		}
-
-		return success;
-	}
-
 	private static boolean loadRepoDataFromClient(
 			GeoQuestProgressHandler handler) {
 		boolean success = false;
@@ -713,9 +615,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public boolean isGameActivity(Activity activity) {
 		@SuppressWarnings("rawtypes")
 		Class actClass = activity.getClass();
-		if (actClass.equals(Start.class)
-				|| actClass.equals(RepoListActivity.class)
-				|| actClass.equals(GameListActivity.class))
+		if (actClass.equals(Start.class))
 			return false;
 		else
 			return true;
