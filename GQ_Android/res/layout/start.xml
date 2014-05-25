@@ -14,7 +14,7 @@
         android:orientation="vertical" />
 
     <RelativeLayout
-        android:id="@+id/start_layout_main"
+        android:id="@+id/layout4Logo"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -37,10 +37,10 @@
         android:orientation="vertical" />
 
     <RelativeLayout
-        android:id="@+id/layout_2"
+        android:id="@+id/layout4DownloadButton"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.06"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <Button
@@ -48,9 +48,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/button_padding_large"
+            android:layout_marginRight="@dimen/button_padding_large"
+            android:background="@drawable/button_download"
             android:gravity="center"
             android:onClick="showCloudGames"
-            android:text="@string/startShowCloudQuestsButtonText" />
+            android:scaleType="centerInside" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,10 +64,10 @@
         android:orientation="vertical" />
 
     <RelativeLayout
-        android:id="@+id/layout_3"
+        android:id="@+id/layout4StartButton"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.75"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <Button
@@ -72,9 +75,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/button_padding_large"
+            android:layout_marginRight="@dimen/button_padding_large"
+            android:background="@drawable/button_start"
             android:gravity="center"
             android:onClick="showLocalGames"
-            android:text="@string/startShowLocalQuestsButtonText" />
+            android:scaleType="center" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_empty_3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:orientation="vertical" />
 
 </LinearLayout>

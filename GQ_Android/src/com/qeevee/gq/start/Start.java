@@ -39,9 +39,6 @@ public class Start extends GeoQuestActivity {
 
 	private static final String TAG = "Start";
 
-	static final int FIRST_LOCAL_MENU_ID = GeoQuestActivity.MENU_ID_OFFSET;
-
-	static final String RELOAD_REPO_DATA = "edu.bonn.mobilegaming.geoquest.start.reload_repo_data";
 	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
 
 	/** Called when the activity is first created. */
