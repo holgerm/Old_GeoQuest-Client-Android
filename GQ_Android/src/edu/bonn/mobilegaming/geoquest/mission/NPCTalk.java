@@ -53,12 +53,13 @@ public class NPCTalk extends MissionActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// take only non-epty dialogItems:
 		if (mission == null || mission.xmlMissionNode == null) {
 			Log.e(TAG,
 					"Mission null or MissionXML missing for an NPCTalk mission.");
 			return;
 		}
+
+		// take only non-empty dialogItems:
 		List<Element> dialogItemList = mission.xmlMissionNode
 				.selectNodes("./dialogitem[text()!=\"\"]");
 		dialogItemIterator = dialogItemList.iterator();

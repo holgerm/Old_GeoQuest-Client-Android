@@ -9,7 +9,6 @@ import org.dom4j.Element;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -73,16 +72,26 @@ public class MultipleChoiceQuestion extends Question {
 			setUpQuestionView();
 			break;
 		case MODE_REPLY_TO_CORRECT_ANSWER:
-			setBackgroundCorrectReply();
-			setMCTextViewToReply();
-			setBottomButton(loopUntilSuccess);
-			invokeOnSuccessEvents();
+			if (isOnSuccessRulesLeaveMission()) {
+				invokeOnSuccessEvents();
+				proceedAfterFeedback();
+			} else {
+				setBackgroundCorrectReply();
+				setTextViewToReply();
+				setBottomButton(loopUntilSuccess);
+				invokeOnSuccessEvents();
+			}
 			break;
 		case MODE_REPLY_TO_WRONG_ANSWER:
-			setBackgroundWrongReply();
-			setMCTextViewToReply();
-			setBottomButton(loopUntilSuccess);
-			invokeOnFailEvents();
+			if (isOnFailRulesLeaveMission()) {
+				invokeOnFailEvents();
+				proceedAfterFeedback();
+			} else {
+				setBackgroundWrongReply();
+				setTextViewToReply();
+				setBottomButton(loopUntilSuccess);
+				invokeOnFailEvents();
+			}
 			break;
 		case MODE_CHOICE:
 			finish(Globals.STATUS_SUCCEEDED);
@@ -109,7 +118,7 @@ public class MultipleChoiceQuestion extends Question {
 		outerView.invalidate();
 	}
 
-	private void setMCTextViewToReply() {
+	private void setTextViewToReply() {
 		CharSequence answerToShow;
 		if (selectedAnswer.onChoose != null) {
 			answerToShow = selectedAnswer.onChoose;
@@ -121,6 +130,7 @@ public class MultipleChoiceQuestion extends Question {
 		new TextItem(answerToShow, this,
 				selectedAnswer.correct ? TextType.REACTION_ON_CORRECT
 						: TextType.REACTION_ON_WRONG);
+		choiceList.setVisibility(View.GONE);
 	}
 
 	private void initContentView() {
@@ -134,25 +144,12 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	private void prepareBottomButton() {
-		bottomButton = new Button(this);
 		bottomButton.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.button));
-		bottomButton.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT));
-		bottomButton.setWidth(LayoutParams.FILL_PARENT);
 		proceed = new OnClickListener() {
 
 			public void onClick(View v) {
-				if (loopUntilSuccess) {
-					if (!selectedAnswer.correct) {
-						setMode(MODE_QUESTION);
-					} else {
-						finish(Globals.STATUS_SUCCEEDED);
-					}
-				} else {
-					finish(selectedAnswer.correct ? Globals.STATUS_SUCCEEDED
-							: Globals.STATUS_FAIL);
-				}
+				proceedAfterFeedback();
 			}
 		};
 
@@ -196,7 +193,7 @@ public class MultipleChoiceQuestion extends Question {
 					}
 
 				});
-
+		choiceList.setVisibility(View.VISIBLE);
 		choiceList.invalidate();
 	}
 
@@ -288,6 +285,19 @@ public class MultipleChoiceQuestion extends Question {
 			setMode(MODE_REPLY_TO_CORRECT_ANSWER);
 		} else {
 			setMode(MODE_REPLY_TO_WRONG_ANSWER);
+		}
+	}
+
+	private void proceedAfterFeedback() {
+		if (loopUntilSuccess) {
+			if (!selectedAnswer.correct) {
+				setMode(MODE_QUESTION);
+			} else {
+				finish(Globals.STATUS_SUCCEEDED);
+			}
+		} else {
+			finish(selectedAnswer.correct ? Globals.STATUS_SUCCEEDED
+					: Globals.STATUS_FAIL);
 		}
 	}
 

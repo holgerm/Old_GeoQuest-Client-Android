@@ -8,7 +8,7 @@ import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.MissionOrToolActivity;
 
-public class StartMission extends Action {
+public class StartMission extends Action implements LeavesMission {
 
 	private static final String TAG = StartMission.class.getCanonicalName();
 
@@ -31,4 +31,5 @@ public class StartMission extends Action {
 		}
 		mission.startMission(keepActivity);
 	}
+
 }

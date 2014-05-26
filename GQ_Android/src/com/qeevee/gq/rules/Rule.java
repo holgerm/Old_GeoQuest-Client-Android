@@ -7,6 +7,7 @@ import org.dom4j.Element;
 
 import com.qeevee.gq.rules.act.Action;
 import com.qeevee.gq.rules.act.ActionFactory;
+import com.qeevee.gq.rules.act.LeavesMission;
 import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
 import com.qeevee.gq.rules.cond.True;
@@ -45,46 +46,23 @@ public class Rule {
 			return false;
 	}
 
+	public boolean leavesMission() {
+		boolean leavesMission = false;
+		for (Action action : actions) {
+			if (action instanceof LeavesMission) {
+				leavesMission = true;
+				break;
+			}
+		}
+		return leavesMission;
+	}
+
 	// //////////////// STATIC FACTORY STUFF FOLLOWS: ///////////////////
 
 	private Rule() {
 		this.actions = new ArrayList<Action>();
 	}
 
-	/**
-	 * An example of a rule xml element is:
-	 * 
-	 * <pre>
-	 * {@code
-	 * <rule>
-	 *  <if>
-	 *   <and>
-	 *    <geq>
-	 *     <num>5</num>
-	 *     <var>points</var>
-	 *    </geq>
-	 *    <geq>
-	 *     <var>points</var>
-	 *     <num>9</num>
-	 *    </geq>
-	 *   </and>
-	 *  </if>
-	 *  <action type="Vibrate"/>
-	 *  <action type="StartMission" id="medium_winner_info"/>
-	 * </rule>
-	 * }
-	 * </pre>
-	 * 
-	 * This rule checks whether the {@code points} variable is between 5 and 9
-	 * (incl.) and if so the mobile device vibrates and the specified mission is
-	 * started.
-	 * 
-	 * @param xmlRuleContent
-	 *            the content of the xml element {@code<rule>} which typically
-	 *            is {@code<if>...</if><then>...</then>}.
-	 * @param id
-	 * @return
-	 */
 	@SuppressWarnings("unchecked")
 	public static Rule createFromXMLElement(Element xmlRuleContent) {
 		Rule rule = new Rule();

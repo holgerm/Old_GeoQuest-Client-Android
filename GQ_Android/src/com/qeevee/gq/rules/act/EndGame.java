@@ -2,7 +2,7 @@ package com.qeevee.gq.rules.act;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
-public class EndGame extends Action {
+public class EndGame extends Action implements LeavesMission {
 
 	@Override
 	protected boolean checkInitialization() {

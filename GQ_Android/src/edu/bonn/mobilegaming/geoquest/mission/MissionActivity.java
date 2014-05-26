@@ -88,8 +88,8 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	/**
 	 * Finishes the mission activity and sets the result code
 	 * 
-	 * TODO only real stati should be allowed, i.e. FAIL and SUCCESS. Hence, we
-	 * can use boolena here and make calls much more readable. Cf.
+	 * TODO only real static should be allowed, i.e. FAIL and SUCCESS. Hence, we
+	 * can use boolean here and make calls much more readable. Cf.
 	 * {@link MultipleChoiceQuestion}.
 	 * 
 	 * @param status

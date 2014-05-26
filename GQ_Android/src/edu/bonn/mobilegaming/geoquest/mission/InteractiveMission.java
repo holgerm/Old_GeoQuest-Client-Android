@@ -21,9 +21,9 @@ import edu.bonn.mobilegaming.geoquest.Variables;
  * {@link Variables#RESULT_SUFFIX} and then call any specified rules for the
  * onInteractionPerformed event.
  * 
- * Examples are {@link QRTagReading} where the Scan is the event
- * triggering interaction, and {@link QuestionAndAnswer} where it is the choice
- * of one answer.
+ * Examples are {@link QRTagReading} where the Scan is the event triggering
+ * interaction, and {@link QuestionAndAnswer} where it is the choice of one
+ * answer.
  * 
  * @author muegge
  * 
@@ -51,18 +51,31 @@ public abstract class InteractiveMission extends MissionActivity {
 				XMLUtilities.OPTIONAL_ATTRIBUTE);
 		if (loopCS != null && loopCS.equals("true")) {
 			loopUntilSuccess = true;
-		}
-		else {
+		} else {
 			loopUntilSuccess = false;
 		}
 
 		// init interaction rules from game spec:
 		addRulesToList(onSuccessRules, "onSuccess/rule");
+		for (Rule rule : onSuccessRules) {
+			if (rule.leavesMission()) {
+				setOnSuccessRulesLeaveMission(true);
+				break;
+			}
+		}
 		addRulesToList(onFailRules, "onFail/rule");
+		for (Rule rule : onFailRules) {
+			if (rule.leavesMission()) {
+				setOnFailRulesLeaveMission(true);
+				break;
+			}
+		}
 	}
 
 	private List<Rule> onSuccessRules = new ArrayList<Rule>();
+	private boolean onSuccessRulesLeaveMission = false;
 	private List<Rule> onFailRules = new ArrayList<Rule>();
+	private boolean onFailRulesLeaveMission = false;
 
 	/**
 	 * TODO we should merge this with the same implementation in {@link Mission}
@@ -102,6 +115,22 @@ public abstract class InteractiveMission extends MissionActivity {
 	@Override
 	public void finish(Double status) {
 		super.finish(status);
+	}
+
+	protected boolean isOnSuccessRulesLeaveMission() {
+		return onSuccessRulesLeaveMission;
+	}
+
+	protected void setOnSuccessRulesLeaveMission(boolean onSuccessRulesLeaveMission) {
+		this.onSuccessRulesLeaveMission = onSuccessRulesLeaveMission;
+	}
+
+	protected boolean isOnFailRulesLeaveMission() {
+		return onFailRulesLeaveMission;
+	}
+
+	protected void setOnFailRulesLeaveMission(boolean onFailRulesLeaveMission) {
+		this.onFailRulesLeaveMission = onFailRulesLeaveMission;
 	}
 
 }
