@@ -52,7 +52,7 @@
 
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">OK</string>
-    <string name="button_text_play">Wiedergeben</string>
+    <string name="button_text_play">Abspielen</string>
     <string name="button_text_next">Weiter</string>
     <string name="button_text_proceed">Weiter</string>
     <string name="button_text_record">Aufnehmen</string>
