@@ -118,21 +118,21 @@ public class VideoPlay extends InteractiveMission {
 		AlertDialog exitDialog = new AlertDialog.Builder(VideoPlay.this)
 				.setTitle(R.string.videoplay_finishdialog_title)
 				.setMessage(R.string.videoplay_finishdialog_message)
-				.setPositiveButton(
+				.setNegativeButton(
 						R.string.videoplay_finishdialog_keepwatching, null)
-				.setNegativeButton(R.string.videoplay_finishdialog_leave,
+				.setPositiveButton(R.string.videoplay_finishdialog_leave,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								finishMission();
 							}
 						}).show();
-		exitDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+		exitDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
 				.setCompoundDrawablesWithIntrinsicBounds(
 						getResources().getDrawable(R.drawable.icon_again),
 						null, null, null);
 		exitDialog
-				.getButton(AlertDialog.BUTTON_NEGATIVE)
+				.getButton(AlertDialog.BUTTON_POSITIVE)
 				.setCompoundDrawablesWithIntrinsicBounds(null, null,
 						getResources().getDrawable(R.drawable.icon_leave), null);
 	}
