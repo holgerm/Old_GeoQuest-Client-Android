@@ -7,10 +7,12 @@ import java.util.List;
 import org.dom4j.Element;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -110,9 +112,13 @@ public class MultipleChoiceQuestion extends Question {
 				bottomButton
 						.setText(getString(R.string.question_repeat_button));
 			bottomButton.setOnClickListener(restart);
+			bottomButton.setGravity(Gravity.LEFT);
+			((LinearLayout.LayoutParams) bottomButton.getLayoutParams()).gravity = Gravity.LEFT;
 		} else {
 			bottomButton.setText(getString(R.string.question_proceed_button));
 			bottomButton.setOnClickListener(proceed);
+			bottomButton.setGravity(Gravity.RIGHT);
+			((LinearLayout.LayoutParams) bottomButton.getLayoutParams()).gravity = Gravity.RIGHT;
 		}
 
 		outerView.invalidate();
@@ -219,6 +225,8 @@ public class MultipleChoiceQuestion extends Question {
 
 		// hide buttom:
 		bottomButton.setVisibility(View.GONE);
+		bottomButton.setGravity(Gravity.RIGHT);
+		((LinearLayout.LayoutParams) bottomButton.getLayoutParams()).gravity = Gravity.RIGHT;
 		outerView.invalidate();
 	}
 

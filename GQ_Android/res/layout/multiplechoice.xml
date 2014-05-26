@@ -11,29 +11,36 @@
         android:id="@+id/mcTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
         android:layout_weight="10"
         android:background="@drawable/background_text"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:textSize="30sp" />
 
     <ListView
         android:id="@+id/choiceList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginLeft="@dimen/margin_small"
-        android:layout_marginRight="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:layout_weight="80"
-        android:background="@drawable/background_rounded"
+        android:background="@drawable/background_text"
         android:cacheColorHint="@color/semitransparent" />
 
     <Button
         android:id="@+id/bottomButton"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:text="@string/ok"
-        android:textSize="@dimen/text_size" />
+        android:layout_gravity="right"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/button"
+        android:padding="@dimen/button_padding"
+        android:textColor="@color/foreground" />
 
 </LinearLayout>
