@@ -24,10 +24,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qeevee.gq.res.ResourceManager;
@@ -131,7 +133,6 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (endButtonMode) {
 		case TAKE_PICTURE:
-			// takePicture();
 			takePicture();
 			break;
 		case AFTER_UPLOAD:
@@ -278,6 +279,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 			break;
 		case AFTER_UPLOAD:
 			okButton.setText(getText(R.string.button_text_proceed));
+			((LinearLayout.LayoutParams) okButton.getLayoutParams()).gravity = Gravity.RIGHT;
 			taskTextView.setText(getMissionAttribute("replyOnDone",
 					R.string.imageCapture_replyDone_default));
 			break;
