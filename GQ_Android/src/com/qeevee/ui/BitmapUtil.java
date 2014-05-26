@@ -60,6 +60,7 @@ public class BitmapUtil {
 
 		try {
 			if (path == null) {
+				Log.e(TAG, "Path to Bitmap was null.");
 				return GeoQuestApp.getInstance().getMissingBitmap();
 			} else {
 				final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -72,6 +73,10 @@ public class BitmapUtil {
 				// Decode bitmap with inSampleSize set
 				options.inJustDecodeBounds = false;
 				bmp = BitmapFactory.decodeFile(path, options);
+				if (bmp == null) {
+					Log.e(TAG, "Bitmap could not be decoded (path: " + path);
+					return GeoQuestApp.getInstance().getMissingBitmap();
+				}
 			}
 			if (rounded) {
 				int radius = GeoQuestApp.getContext().getResources()
