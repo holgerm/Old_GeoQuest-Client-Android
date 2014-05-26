@@ -5,12 +5,14 @@ import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -156,6 +158,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 				button.setText(currentDialogItem.getNextDialogButtonText());
 			else
 				button.setText(R.string.button_text_next);
+			button.setGravity(Gravity.CENTER);
+			((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.CENTER_HORIZONTAL;
 			break;
 		case STATE_END:
 			button.setOnClickListener(endMissionListener);
@@ -166,6 +170,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 				button.setText(currentDialogItem.getNextDialogButtonText());
 			else
 				button.setText(R.string.button_text_proceed);
+			button.setGravity(Gravity.RIGHT);
+			((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.RIGHT;
 			break;
 		}
 
