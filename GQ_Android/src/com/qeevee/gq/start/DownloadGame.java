@@ -34,9 +34,6 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	protected Boolean doInBackground(GameDescription... games) {
 		this.game = games[0];
 
-		// if (game.isBusy())
-		// return false;
-
 		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
 		progressDialog.setTitle(game.getName()

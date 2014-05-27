@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,10 +48,34 @@ public class GamesInCloud extends Activity {
 	private class GetGameList extends
 			AsyncTask<HostConnector, Integer, List<GameDescription>> {
 
+		private ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// TODO: make cancellable
+			progressDialog = ProgressDialog.show(GamesInCloud.this,
+					"Downloading ...", "Please wait.", true, false,
+					new OnCancelListener() {
+
+						public void onCancel(DialogInterface dialog) {
+							// cancel:
+							GetGameList.this.cancel(true);
+						}
+
+					});
+		}
+
 		@Override
 		protected List<GameDescription> doInBackground(HostConnector... params) {
 			List<GameDescription> collectedGames = new ArrayList<GameDescription>();
 			List<GameDescription> curHostGames;
+			progressDialog.setTitle(GeoQuestApp.getContext().getText(
+					R.string.dialogGetGameListTitle));
+			progressDialog.setMessage(GeoQuestApp.getContext().getText(
+					R.string.wait));
+			progressDialog.setIcon(R.drawable.gqlogo_solo_trans);
+
 			for (HostConnector connector : params) {
 				curHostGames = connector.getGameList();
 				for (GameDescription curOtherGameDescription : curHostGames) {
@@ -86,6 +113,7 @@ public class GamesInCloud extends Activity {
 				}
 
 			});
+			progressDialog.dismiss();
 
 			listView.invalidate();
 		}

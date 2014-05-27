@@ -7,6 +7,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="ok">OK</string>
+    <string name="wait">Bitte warten ...</string>
     <string name="cancel">Abbrechen</string>
     <string name="npcimage_description">Ein Bild passend zur aktuellen Aktivität.</string>
     <string name="info_text">GeoQuest. Ein Produkt der Qeevee GmbH. App Version ist</string>
@@ -39,6 +40,7 @@
     <string name="game_list_sort">Sortieren...</string>
 
     <!-- Generic DIALOG Labels -->
+    <string name="dialogGetGameListTitle">Lade Liste aller Quests</string>
     <string name="downloadDialogTitleSuffix"> wird geladen</string>
     <string name="downloadDialogMessage">Bitte warten ...</string>
     <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>

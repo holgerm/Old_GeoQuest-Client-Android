@@ -22,9 +22,11 @@
 
         <ImageView
             android:id="@+id/start_image_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/button_padding_large"
+            android:layout_marginRight="@dimen/button_padding_large"
             android:contentDescription="@string/description_geoQuestLogo"
             android:src="@drawable/geoquestlogo" />
     </RelativeLayout>
@@ -40,20 +42,20 @@
         android:id="@+id/layout4DownloadButton"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:orientation="vertical" >
 
         <Button
             android:id="@+id/showCloudQuests"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/button_padding_large"
             android:layout_marginRight="@dimen/button_padding_large"
             android:background="@drawable/button_download"
             android:gravity="center"
             android:onClick="showCloudGames"
-            android:scaleType="centerInside" />
+            android:scaleType="centerCrop" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,20 +69,20 @@
         android:id="@+id/layout4StartButton"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:orientation="vertical" >
 
         <Button
             android:id="@+id/showLocalQuests"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/button_padding_large"
             android:layout_marginRight="@dimen/button_padding_large"
             android:background="@drawable/button_start"
             android:gravity="center"
             android:onClick="showLocalGames"
-            android:scaleType="center" />
+            android:scaleType="centerCrop" />
     </RelativeLayout>
 
     <RelativeLayout
