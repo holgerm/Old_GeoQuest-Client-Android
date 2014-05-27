@@ -159,7 +159,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			else
 				button.setText(R.string.button_text_next);
 			button.setGravity(Gravity.CENTER);
-			((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.CENTER_HORIZONTAL;
+			if (button.getLayoutParams() instanceof LinearLayout.LayoutParams)
+				((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.CENTER_HORIZONTAL;
 			break;
 		case STATE_END:
 			button.setOnClickListener(endMissionListener);
@@ -171,7 +172,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			else
 				button.setText(R.string.button_text_proceed);
 			button.setGravity(Gravity.RIGHT);
-			((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.RIGHT;
+			if (button.getLayoutParams() instanceof LinearLayout.LayoutParams)
+				((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.RIGHT;
 			break;
 		}
 
