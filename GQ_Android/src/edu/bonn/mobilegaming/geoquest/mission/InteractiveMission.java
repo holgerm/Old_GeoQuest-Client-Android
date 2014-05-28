@@ -3,14 +3,12 @@ package edu.bonn.mobilegaming.geoquest.mission;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dom4j.Element;
 
 import android.os.Bundle;
 
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 
-import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.Variables;
 
 /**
@@ -76,22 +74,6 @@ public abstract class InteractiveMission extends MissionActivity {
 	private boolean onSuccessRulesLeaveMission = false;
 	private List<Rule> onFailRules = new ArrayList<Rule>();
 	private boolean onFailRulesLeaveMission = false;
-
-	/**
-	 * TODO we should merge this with the same implementation in {@link Mission}
-	 * .
-	 * 
-	 * @param ruleList
-	 * @param xpath
-	 */
-	@SuppressWarnings("unchecked")
-	private void addRulesToList(List<Rule> ruleList, String xpath) {
-		List<Element> xmlRuleNodes;
-		xmlRuleNodes = getXML().selectNodes(xpath);
-		for (Element xmlRule : xmlRuleNodes) {
-			ruleList.add(Rule.createFromXMLElement(xmlRule));
-		}
-	}
 
 	protected void invokeOnSuccessEvents() {
 		Rule.resetRuleFiredTracker();

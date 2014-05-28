@@ -1,5 +1,8 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 import android.app.Dialog;
@@ -12,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.qeevee.gq.history.HistoryActivity;
+import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.Dialogs;
 
@@ -253,6 +257,25 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 			return dialog;
 		default:
 			return super.onCreateDialog(id);
+		}
+	}
+
+	/**
+	 * TODO we should merge this with the same implementation in {@link Mission}
+	 * .
+	 * 
+	 * @param ruleList
+	 * @param xpath
+	 */
+	@SuppressWarnings("unchecked")
+	protected void addRulesToList(List<Rule> ruleList, String xpath) {
+		if (ruleList == null) {
+			ruleList = new ArrayList<Rule>();
+		}
+		List<Element> xmlRuleNodes;
+		xmlRuleNodes = getXML().selectNodes(xpath);
+		for (Element xmlRule : xmlRuleNodes) {
+			ruleList.add(Rule.createFromXMLElement(xmlRule));
 		}
 	}
 
