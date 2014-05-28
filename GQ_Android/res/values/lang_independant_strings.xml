@@ -5,7 +5,7 @@
     <string name="local_default_repository">default</string>
     <string name="album_base_name">GeoQuest</string>
     <string name="album_prefix">GQ</string>
-    <string name="version">0.8.1.5</string>
+    <string name="version">0.8.1.6</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_file_default">gqAudiorecord</string>
