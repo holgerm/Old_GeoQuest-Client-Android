@@ -193,6 +193,18 @@ public class MapOSM extends MapMissionActivity {
 	protected void onResume() {
 		super.onResume();
 		ui.enable();
+
+		((MapView) mapView).getViewTreeObserver().addOnGlobalLayoutListener(
+				new OnGlobalLayoutListener() {
+
+					public void onGlobalLayout() {
+						updateZoom();
+						// do this only once, since onGlobalLayout might be
+						// called often:
+						((MapView) mapView).getViewTreeObserver()
+								.removeGlobalOnLayoutListener(this);
+					}
+				});
 	}
 
 	public void updateZoom() {
@@ -206,9 +218,8 @@ public class MapOSM extends MapMissionActivity {
 			crit.setAccuracy(Criteria.ACCURACY_FINE);
 			String provider = mLocationManager.getBestProvider(crit, true);
 			Location location = mLocationManager.getLastKnownLocation(provider);
-			if (location == null)
-				return;
-			points.add(new GeoPoint(location));
+			if (location != null)
+				points.add(new GeoPoint(location));
 		}
 		if (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals(
 				"true")
