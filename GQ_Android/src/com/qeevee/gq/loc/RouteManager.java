@@ -15,7 +15,6 @@ import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import android.app.Activity;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.util.Log;
 
 
 public class RouteManager {
@@ -90,10 +89,6 @@ public class RouteManager {
         		routePoints.add(route.getEndingGeoPoint());
         		road = roadManager.getRoad(routePoints);
         		route.setRoad(road);
-        		Log.e("GP1O", "Lat: " + route.getStartingGeoPoint().getLatitude() + "lon: " + route.getStartingGeoPoint().getLongitude());
-        		Log.e("GP2O", "Lat: " + route.getEndingGeoPoint().getLatitude() + "lon: " + route.getEndingGeoPoint().getLongitude());
-        		Log.e("GP1R", "Lat: " + road.mNodes.get(0).mLocation.getLatitude() + "lon: " + road.mNodes.get(0).mLocation.getLongitude());
-        		Log.e("GP2R", "Lat: " + road.mNodes.get(1).mLocation.getLatitude() + "lon: " + road.mNodes.get(1).mLocation.getLongitude());
     		}
     		return route;
     	}
