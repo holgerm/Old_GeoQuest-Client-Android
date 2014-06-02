@@ -1,4 +1,4 @@
-package com.qeevee.gq.tests.xml;
+package com.qeevee.gq.tests.rules.xml;
 
 import static org.junit.Assert.assertEquals;
 

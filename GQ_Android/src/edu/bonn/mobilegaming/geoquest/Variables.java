@@ -61,6 +61,9 @@ public class Variables {
 	public static final String CENTER_MAP_VISIBLE_HOTSPOTS = SYSTEM_PREFIX
 			+ "centerToVisibleHotspots";
 
+	public static final String LAST_TAP_X = SYSTEM_PREFIX + "tap.x";
+	public static final String LAST_TAP_Y = SYSTEM_PREFIX + "tap.y";
+
 	private static final String NULL_VARIABLE = SYSTEM_PREFIX + "null";
 
 	public static final String BREAK_WHILE = SYSTEM_PREFIX + "break_while";
@@ -185,9 +188,9 @@ public class Variables {
 
 	public static void clean() {
 		variables.clear();
-		variables.put(CENTER_MAP_POSITION, "false");
+		variables.put(CENTER_MAP_POSITION, "true");
 		variables.put(CENTER_MAP_ACTIVE_HOTSPOTS, "false");
-		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "false");
+		variables.put(CENTER_MAP_VISIBLE_HOTSPOTS, "true");
 		variables.put(BREAK_WHILE, Boolean.valueOf("false"));
 	}
 

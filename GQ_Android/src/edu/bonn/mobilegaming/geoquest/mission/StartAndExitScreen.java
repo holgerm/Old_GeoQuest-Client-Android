@@ -1,13 +1,19 @@
 package edu.bonn.mobilegaming.geoquest.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
+import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Util;
@@ -15,6 +21,7 @@ import com.qeevee.util.Util;
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
+import edu.bonn.mobilegaming.geoquest.Variables;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 
 public class StartAndExitScreen extends MissionActivity {
@@ -23,6 +30,25 @@ public class StartAndExitScreen extends MissionActivity {
 			.getCanonicalName();
 	private ImageView imageView;
 	private boolean endByTouch = false;
+
+	private List<Rule> onTapRules = new ArrayList<Rule>();
+	private boolean onTapRulesLeaveMission = false;
+
+	public boolean doOnTapRulesLeaveMission() {
+		return onTapRulesLeaveMission;
+	}
+
+	public void setOnTapRulesLeaveMission(boolean onTapRulesLeaveMission) {
+		this.onTapRulesLeaveMission = onTapRulesLeaveMission;
+	}
+
+	/** runs the GQEvents when the user taps on the screen */
+	public void applyOnTapRules() {
+		Rule.resetRuleFiredTracker();
+		for (Rule rule : onTapRules) {
+			rule.apply();
+		}
+	}
 
 	/** countdowntimer for the start countdown */
 	private MyCountDownTimer myCountDownTimer;
@@ -34,6 +60,7 @@ public class StartAndExitScreen extends MissionActivity {
 		setContentView(R.layout.m_default_startscreen);
 
 		imageView = (ImageView) findViewById(R.id.startimage);
+		outerView = (View) findViewById(R.id.outerview);
 
 		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
@@ -55,8 +82,37 @@ public class StartAndExitScreen extends MissionActivity {
 			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 		}
 		setImage();
+
+		initOnTap();
+
 		if (!endByTouch)
 			myCountDownTimer.start();
+	}
+
+	private void initOnTap() {
+		// init interaction rules from game spec:
+		addRulesToList(onTapRules, "onTap/rule");
+		if (onTapRules.size() == 0)
+			return;
+		else {
+			imageView.setOnTouchListener(new OnTouchListener() {
+
+				public boolean onTouch(View v, MotionEvent event) {
+					Variables.setValue(Variables.LAST_TAP_X,
+							(double) event.getX() * event.getXPrecision());
+					Variables.setValue(Variables.LAST_TAP_Y,
+							(double) event.getY() * event.getYPrecision());
+					applyOnTapRules();
+					return false;
+				}
+			});
+			for (Rule rule : onTapRules) {
+				if (rule.leavesMission()) {
+					setOnTapRulesLeaveMission(true);
+					break;
+				}
+			}
+		}
 	}
 
 	private void setImage() {

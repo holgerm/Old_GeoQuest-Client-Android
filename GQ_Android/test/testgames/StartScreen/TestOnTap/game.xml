@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game name="StartScreenTest" xmlformat="5">
+	<mission type="StartAndExitScreen" id="TestNrOfTaps"
+		image="drawable/ploppschutz.png" duration="interactive">
+		<onStart>
+			<rule>
+				<action type="SetVariable" var="nrOfTaps">
+					<value>
+						<num>0</num>
+					</value>
+				</action>
+			</rule>
+		</onStart>
+		<onTap>
+			<rule>
+				<action type="IncrementVariable" var="nrOfTaps" />
+			</rule>
+		</onTap>
+	</mission>
+</game>
