@@ -99,8 +99,8 @@ public class MapOSM extends MapMissionActivity {
 					}
 				});
 		mission.applyOnStartRules();
-		
-		//create overlay of all existing routes
+
+		// create overlay of all existing routes
 		addAllRoutesToMap();
 	}
 
@@ -108,18 +108,20 @@ public class MapOSM extends MapMissionActivity {
 		List<Route> routes = RouteManager.getInstance().getListOfRoutes();
 		for (Route route : routes) {
 			addRouteToMap(route);
-		}  		
+		}
 	}
-	
-	public void addRouteToMap(Route route){		
-		if(route.getRoad() == null) return;	
-		MapView mapView = (MapView) getMapView();		
-		route.setRoadOverlay(RoadManager.buildRoadOverlay(route.getRoad(), route.getColor(), route.getWidth(), this));
+
+	public void addRouteToMap(Route route) {
+		if (route.getRoad() == null)
+			return;
+		MapView mapView = (MapView) getMapView();
+		route.setRoadOverlay(RoadManager.buildRoadOverlay(route.getRoad(),
+				route.getColor(), route.getWidth(), this));
 		mapView.getOverlays().add(route.getRoadOverlay());
 		mapView.postInvalidate();
 	}
-	
-	public void removeRouteFromMap(Route route){
+
+	public void removeRouteFromMap(Route route) {
 		MapView mapView = (MapView) getMapView();
 		mapView.getOverlays().remove(route.getRoadOverlay());
 		mapView.postInvalidate();
