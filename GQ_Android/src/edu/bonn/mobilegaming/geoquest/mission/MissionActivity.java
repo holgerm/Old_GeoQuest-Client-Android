@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.qeevee.gq.history.HistoryActivity;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.Dialogs;
@@ -240,11 +239,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		case R.id.menu_endGame:
 			showDialog(Dialogs.DIALOG_END_GAME);
 			return true;
-		case R.id.menu_history:
-			Intent historyActivity = new Intent(getBaseContext(),
-					HistoryActivity.class);
-			startActivity(historyActivity);
-			return true;
+			// case R.id.menu_history:
+			// Intent historyActivity = new Intent(getBaseContext(),
+			// HistoryActivity.class);
+			// startActivity(historyActivity);
+			// return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

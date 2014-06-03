@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
-import com.qeevee.gq.history.HistoryActivity;
 import com.qeevee.util.Dialogs;
 
 import edu.bonn.mobilegaming.geoquest.ui.InteractionBlocker;
@@ -92,9 +91,9 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_imprint:
-			GeoQuestApp.getInstance().showImprint();
-			return true;
+		// case R.id.menu_imprint:
+		// GeoQuestApp.getInstance().showImprint();
+		// return true;
 		case R.id.menu_preferences:
 			Intent settingsActivity = new Intent(getBaseContext(),
 					Preferences.class);
@@ -106,11 +105,11 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		case R.id.menu_endGame:
 			showDialog(Dialogs.DIALOG_END_GAME);
 			return true;
-		case R.id.menu_history:
-			Intent historyActivity = new Intent(getBaseContext(),
-					HistoryActivity.class);
-			startActivity(historyActivity);
-			return true;
+			// case R.id.menu_history:
+//			Intent historyActivity = new Intent(getBaseContext(),
+//					HistoryActivity.class);
+//			startActivity(historyActivity);
+//			return true;
 		case R.id.menu_debugMode:
 			item.setChecked(!item.isChecked());
 			GeoQuestApp.getInstance().setDebugMode(item.isChecked());

@@ -86,9 +86,9 @@ public abstract class GeoQuestActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_imprint:
-			GeoQuestApp.getInstance().showImprint();
-			return true;
+		// case R.id.menu_imprint:
+		// GeoQuestApp.getInstance().showImprint();
+		// return true;
 		case R.id.menu_preferences:
 			Intent settingsActivity = new Intent(getBaseContext(),
 					Preferences.class);
