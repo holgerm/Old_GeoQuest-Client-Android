@@ -22,6 +22,11 @@ public abstract class GeoQuestListActivity extends ListActivity {
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_basic, menu);
+		if (GeoQuestApp.getInstance().isUsingAutostart()) {
+			MenuItem endGameItem = menu.findItem(R.id.menu_endGame);
+			if (endGameItem != null)
+				endGameItem.setTitle(R.id.menu_quit);
+		}
 		return true;
 	}
 

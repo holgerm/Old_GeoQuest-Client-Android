@@ -74,6 +74,11 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_basic, menu);
 		inflater.inflate(R.menu.menu_gqactivity, menu);
+		if (GeoQuestApp.getInstance().isUsingAutostart()) {
+			MenuItem endGameItem = menu.findItem(R.id.menu_endGame);
+			if (endGameItem != null)
+				endGameItem.setTitle(R.id.menu_quit);
+		}
 		return true;
 	}
 

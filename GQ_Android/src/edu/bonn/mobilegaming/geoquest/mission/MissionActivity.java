@@ -226,6 +226,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_gqactivity, menu);
+		if (GeoQuestApp.getInstance().isUsingAutostart()) {
+			MenuItem endGameItem = menu.findItem(R.id.menu_endGame);
+			if (endGameItem != null)
+				endGameItem.setTitle(R.id.menu_quit);
+		}
 		return true;
 	}
 
@@ -249,10 +254,18 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case Dialogs.DIALOG_END_GAME:
-			Dialog dialog = Dialogs.createYesNoDialog(this,
-					R.string.dialogEndGameTitle,
-					Dialogs.endGameOnClickListener,
-					Dialogs.cancelOnClickListener);
+			Dialog dialog;
+			if (GeoQuestApp.getInstance().isUsingAutostart()) {
+				dialog = Dialogs.createYesNoDialog(this,
+						R.string.dialogTerminateAppTitle,
+						Dialogs.terminateAppOnClickListener,
+						Dialogs.cancelOnClickListener);
+			} else {
+				dialog = Dialogs.createYesNoDialog(this,
+						R.string.dialogEndGameTitle,
+						Dialogs.endGameOnClickListener,
+						Dialogs.cancelOnClickListener);
+			}
 			dialog.show();
 			return dialog;
 		default:
