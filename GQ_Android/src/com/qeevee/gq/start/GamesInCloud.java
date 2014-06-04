@@ -55,12 +55,13 @@ public class GamesInCloud extends Activity {
 			super.onPreExecute();
 			// TODO: make cancellable
 			progressDialog = ProgressDialog.show(GamesInCloud.this,
-					"Downloading ...", "Please wait.", true, false,
+					"Downloading ...", "Please wait.", true, true,
 					new OnCancelListener() {
 
 						public void onCancel(DialogInterface dialog) {
 							// cancel:
 							GetGameList.this.cancel(true);
+							GamesInCloud.this.finish();
 						}
 
 					});

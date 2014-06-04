@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.8.3.4 ##
+
+- in Autostart the quest starts directly without shortly showing any other start screen. Without autostart nothing has changed.
+
 ## 0.8.3.3 ##
 
 - minor bugfixes

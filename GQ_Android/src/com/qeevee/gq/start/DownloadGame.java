@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import com.qeevee.util.FileOperations;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -16,6 +14,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.qeevee.util.FileOperations;
+
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.R;
 
@@ -86,7 +87,8 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		int readThisTime;
 		int alreadyRead = 0;
 
-		while ((readThisTime = in.read(by, 0, BYTE_SIZE)) != -1) {
+		while ((readThisTime = in.read(by, 0, BYTE_SIZE)) != -1
+				&& !isCancelled()) {
 			fOutLocal.write(by, 0, readThisTime);
 			alreadyRead += readThisTime;
 			publishProgress((int) ((alreadyRead / (float) lenght) * 100));
@@ -151,12 +153,13 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		super.onPreExecute();
 		// TODO: make cancellable
 		progressDialog = ProgressDialog.show(callBackToReenable,
-				"Downloading ...", "Please wait.", true, false,
+				"Downloading ...", "Please wait.", true, true,
 				new OnCancelListener() {
 
 					public void onCancel(DialogInterface dialog) {
 						// cancel:
 						DownloadGame.this.cancel(true);
+						reenableGamesInCloud();
 					}
 
 				});
