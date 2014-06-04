@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -104,11 +106,12 @@ public class Start extends GeoQuestActivity {
 	 */
 	@Override
 	protected void onResume() {
-		checkAndPerformAutostart();
-
 		super.onResume();
 
-		startQuestFromQRCodeScan();
+		boolean started = checkAndPerformAutostart();
+
+		if (!started)
+			startQuestFromQRCodeScan();
 
 	}
 
@@ -120,9 +123,10 @@ public class Start extends GeoQuestActivity {
 	 * possible if no autostart quest is set in the assets), it will be started.
 	 * This setting can only after the start be changed again.
 	 */
-	private void checkAndPerformAutostart() {
+	private boolean checkAndPerformAutostart() {
 		boolean isUsingAutoStart = checkAndPerformAutostartByAssets();
 		GeoQuestApp.getInstance().setUsingAutostart(isUsingAutoStart);
+		return isUsingAutoStart;
 	}
 
 	private boolean checkAndPerformAutostartByAssets() {
@@ -145,7 +149,13 @@ public class Start extends GeoQuestActivity {
 				autostart = true;
 				File gameDir = GameDataManager.getQuestDir(autostartGameID);
 				GameDescription gameDescr = new GameDescription(gameDir);
-				new StartLocalGame().execute(gameDescr);
+				// Start quest:
+				AsyncTask<GameDescription, Integer, Boolean> startLocalGame = new StartLocalGame();
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+					startLocalGame.executeOnExecutor(
+							AsyncTask.THREAD_POOL_EXECUTOR, gameDescr);
+				else
+					startLocalGame.execute(gameDescr);
 			}
 		}
 		return autostart;
