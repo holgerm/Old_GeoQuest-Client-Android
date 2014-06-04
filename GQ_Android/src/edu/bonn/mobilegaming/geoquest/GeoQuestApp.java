@@ -49,7 +49,7 @@ import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
-import com.qeevee.gq.start.Start;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.StringTools;
 
@@ -615,7 +615,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public boolean isGameActivity(Activity activity) {
 		@SuppressWarnings("rawtypes")
 		Class actClass = activity.getClass();
-		if (actClass.equals(Start.class))
+		if (actClass.equals(LandingScreen.class))
 			return false;
 		else
 			return true;

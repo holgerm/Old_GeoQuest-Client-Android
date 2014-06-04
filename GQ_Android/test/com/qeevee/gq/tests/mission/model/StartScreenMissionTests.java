@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.qeevee.gq.history.History;
-import com.qeevee.gq.start.Start;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
@@ -27,7 +27,7 @@ import edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen;
 @RunWith(GQTestRunner.class)
 public class StartScreenMissionTests {
 	private View imageView;
-	private Start start;
+	private LandingScreen start;
 	private StartAndExitScreen mission;
 
 	@After

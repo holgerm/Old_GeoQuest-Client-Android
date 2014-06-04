@@ -19,7 +19,7 @@ import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
 import com.qeevee.gq.history.TransitionItem;
-import com.qeevee.gq.start.Start;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
@@ -31,7 +31,7 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 @RunWith(GQTestRunner.class)
 public class NPCTalkMissionTests {
 	NPCTalkUI ui;
-	private Start start;
+	private LandingScreen start;
 	private NPCTalk npcTalk;
 
 	@After

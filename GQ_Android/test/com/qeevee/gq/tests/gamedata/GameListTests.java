@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.qeevee.gq.host.ConnectionStrategy;
 import com.qeevee.gq.start.GamesInCloud;
-import com.qeevee.gq.start.Start;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
@@ -57,7 +57,7 @@ public class GameListTests {
 	}
 
 	private void startWithServerMock(String mockResponseFile) {
-		Start start = new Start();
+		LandingScreen start = new LandingScreen();
 		GeoQuestApp app = (GeoQuestApp) start.getApplication();
 		app.onCreate();
 		ConnectionStrategy testConnectionStrategy = new MockConnectionStrategy(

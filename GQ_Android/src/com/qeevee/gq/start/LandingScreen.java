@@ -1,23 +1,12 @@
 package com.qeevee.gq.start;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.concurrent.ExecutionException;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,28 +22,22 @@ import edu.bonn.mobilegaming.geoquest.Mission;
 import edu.bonn.mobilegaming.geoquest.R;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 
-public class Start extends GeoQuestActivity {
+public class LandingScreen extends GeoQuestActivity {
 
 	private ProgressDialog startLocalGameDialog;
 	private ProgressDialog downloadRepoDataDialog;
 	private Button showCloudGamesButton;
 	private Button showLocalGamesButton;
 
-	private static final String TAG = "Start";
-
-	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
-
-	private AsyncTask<Void, Integer, Void> extractionTask;
+	@SuppressWarnings("unused")
+	private static final String TAG = LandingScreen.class.getCanonicalName();
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.start);
+		setContentView(R.layout.landing_screen);
 		Mission.setMainActivity(this);
-
-		// extract included games asynchronously:
-		extractionTask = new ExtractGamesFromAssets().execute();
 
 		// set button listeners:
 		setButtonListeners();
@@ -80,29 +63,6 @@ public class Start extends GeoQuestActivity {
 		});
 	}
 
-	private void startQuestFromQRCodeScan() {
-		Intent startingIntent = getIntent();
-		String startString = null;
-		if (startingIntent == null)
-			return;
-
-		startString = startingIntent.getDataString();
-		if (startString == null)
-			return;
-
-		Log.d(TAG, "started with intent. Received: " + startString);
-		int indexOfGameID = startString.lastIndexOf('/');
-		if (indexOfGameID == -1)
-			return;
-
-		String gameID = startString.substring(indexOfGameID);
-		if (GameDataManager.existsLocalQuest(gameID)) {
-			File gameDir = GameDataManager.getQuestDir(gameID);
-			GameDescription gameDescr = new GameDescription(gameDir);
-			new StartLocalGame().execute(gameDescr);
-		}
-	}
-
 	/**
 	 * This method calls {@link GeoQuestActivity#startGame(GameItem, String)} in
 	 * case you are in AutoStart mode.
@@ -111,68 +71,6 @@ public class Start extends GeoQuestActivity {
 	protected void onResume() {
 		super.onResume();
 
-		boolean started = checkAndPerformAutostart();
-
-		if (!started)
-			startQuestFromQRCodeScan();
-
-	}
-
-	/**
-	 * If an autostart quest is defined in assets, i.e. precompiled with the
-	 * app, this is called and no other quest can be started with this app.
-	 * 
-	 * If the user has set an autostart quest in the preferences (which is only
-	 * possible if no autostart quest is set in the assets), it will be started.
-	 * This setting can only after the start be changed again.
-	 */
-	private boolean checkAndPerformAutostart() {
-		boolean isUsingAutoStart = checkAndPerformAutostartByAssets();
-		GeoQuestApp.getInstance().setUsingAutostart(isUsingAutoStart);
-		return isUsingAutoStart;
-	}
-
-	private boolean checkAndPerformAutostartByAssets() {
-		boolean autostart = false;
-		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
-		String autostartGameID = null;
-		try {
-			InputStream is = assetManager.open(ASSET_FILE_FOR_AUTOSTART_ID);
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(is));
-			autostartGameID = reader.readLine();
-			is.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (autostartGameID != null) {
-			// in case we autostart, we might have to wait for extraction of the
-			// game:
-			try {
-				extractionTask.get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (GameDataManager.existsLocalQuest(autostartGameID)) {
-				autostart = true;
-				File gameDir = GameDataManager.getQuestDir(autostartGameID);
-				GameDescription gameDescr = new GameDescription(gameDir);
-				// Start quest:
-				AsyncTask<GameDescription, Integer, Boolean> startLocalGame = new StartLocalGame();
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					startLocalGame.executeOnExecutor(
-							AsyncTask.THREAD_POOL_EXECUTOR, gameDescr);
-				else
-					startLocalGame.execute(gameDescr);
-			}
-		}
-		return autostart;
 	}
 
 	/**

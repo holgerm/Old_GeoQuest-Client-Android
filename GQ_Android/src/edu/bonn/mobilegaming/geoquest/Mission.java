@@ -184,7 +184,7 @@ public class Mission implements Serializable {
 
 	private void loadXML() {
 		missionType = missionType();
-		startingIntent = new Intent(getMainActivity(), missionType);
+		startingIntent = new Intent(GeoQuestApp.getContext(), missionType);
 		startingIntent.putExtra(MISSION_ID, id);
 		setCancelStatus();
 		createRules();

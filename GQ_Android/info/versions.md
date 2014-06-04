@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.8.3.3 ##
+
+- minor bugfixes
+
 ## 0.8.3.2 ##
 
 - minor bugfixes

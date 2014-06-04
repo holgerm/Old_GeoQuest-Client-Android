@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
-import com.qeevee.gq.start.Start;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
@@ -34,7 +34,7 @@ public class NPCTalkUIDefaultTests {
 	ImageView imageView;
 	TextView textView;
 	Button proceedBT;
-	private Start start;
+	private LandingScreen start;
 	private NPCTalk npcTalk;
 	private WordTicker ticker;
 
