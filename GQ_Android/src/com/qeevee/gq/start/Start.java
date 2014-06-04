@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -43,6 +44,8 @@ public class Start extends GeoQuestActivity {
 
 	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
 
+	private AsyncTask<Void, Integer, Void> extractionTask;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class Start extends GeoQuestActivity {
 		Mission.setMainActivity(this);
 
 		// extract included games asynchronously:
-		new ExtractGamesFromAssets().execute();
+		extractionTask = new ExtractGamesFromAssets().execute();
 
 		// set button listeners:
 		setButtonListeners();
@@ -145,6 +148,17 @@ public class Start extends GeoQuestActivity {
 		}
 
 		if (autostartGameID != null) {
+			// in case we autostart, we might have to wait for extraction of the
+			// game:
+			try {
+				extractionTask.get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (GameDataManager.existsLocalQuest(autostartGameID)) {
 				autostart = true;
 				File gameDir = GameDataManager.getQuestDir(autostartGameID);
