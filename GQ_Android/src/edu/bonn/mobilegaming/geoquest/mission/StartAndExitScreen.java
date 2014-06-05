@@ -115,12 +115,14 @@ public class StartAndExitScreen extends MissionActivity {
 					int width = size.x;
 					int height = size.y;
 
-					Variables.setValue(Variables.LAST_TAP_X, (int) Math
-							.abs((double) event.getX() * 1000 / width));
-					Variables.setValue(
-							Variables.LAST_TAP_Y,
-							(int) Math.abs((double) event.getY() * 1000
-									/ height));
+					int x = (int) Math.abs((double) event.getX() * 1000
+							/ (v.getMeasuredWidth()));
+					int y = (int) Math.abs((double) event.getY() * 1000
+							/ (v.getMeasuredHeight()));
+
+					Variables.setValue(Variables.LAST_TAP_X, (double) x);
+					Variables.setValue(Variables.LAST_TAP_Y, (double) y);
+
 					applyOnTapRules();
 					return false;
 				}
