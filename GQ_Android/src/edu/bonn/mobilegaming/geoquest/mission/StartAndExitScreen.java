@@ -64,6 +64,16 @@ public class StartAndExitScreen extends MissionActivity {
 		imageView = (ImageView) findViewById(R.id.startimage);
 		outerView = (View) findViewById(R.id.outerview);
 
+		readDurationAttribute();
+		setImage();
+
+		initOnTap();
+
+		if (!endByTouch)
+			myCountDownTimer.start();
+	}
+
+	private void readDurationAttribute() {
 		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
@@ -75,20 +85,18 @@ public class StartAndExitScreen extends MissionActivity {
 					finish(Globals.STATUS_SUCCEEDED);
 				}
 			});
-		} else {
-			long durationLong;
-			if (duration == null)
-				durationLong = 5000;
-			else
-				durationLong = Long.parseLong(duration);
-			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+			return;
 		}
-		setImage();
+		if (duration != null && duration.equals("infinite"))
+			return;
 
-		initOnTap();
-
-		if (!endByTouch)
-			myCountDownTimer.start();
+		// else:
+		long durationLong;
+		if (duration == null)
+			durationLong = 5000;
+		else
+			durationLong = Long.parseLong(duration);
+		myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 	}
 
 	private void initOnTap() {
@@ -100,17 +108,19 @@ public class StartAndExitScreen extends MissionActivity {
 			imageView.setOnTouchListener(new OnTouchListener() {
 
 				public boolean onTouch(View v, MotionEvent event) {
-					
+
 					Display display = getWindowManager().getDefaultDisplay();
 					Point size = new Point();
 					display.getSize(size);
 					int width = size.x;
 					int height = size.y;
-					
-					Variables.setValue(Variables.LAST_TAP_X,
-							(int) Math.abs((double) event.getX()  * 1000 /  width));
-					Variables.setValue(Variables.LAST_TAP_Y,
-							(int) Math.abs((double) event.getY()  *1000 /  height));
+
+					Variables.setValue(Variables.LAST_TAP_X, (int) Math
+							.abs((double) event.getX() * 1000 / width));
+					Variables.setValue(
+							Variables.LAST_TAP_Y,
+							(int) Math.abs((double) event.getY() * 1000
+									/ height));
 					applyOnTapRules();
 					return false;
 				}
