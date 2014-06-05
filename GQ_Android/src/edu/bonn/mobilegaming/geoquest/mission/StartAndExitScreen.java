@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -98,10 +100,17 @@ public class StartAndExitScreen extends MissionActivity {
 			imageView.setOnTouchListener(new OnTouchListener() {
 
 				public boolean onTouch(View v, MotionEvent event) {
+					
+					Display display = getWindowManager().getDefaultDisplay();
+					Point size = new Point();
+					display.getSize(size);
+					int width = size.x;
+					int height = size.y;
+					
 					Variables.setValue(Variables.LAST_TAP_X,
-							(double) event.getX() * event.getXPrecision());
+							(int) Math.abs((double) event.getX()  * 1000 /  width));
 					Variables.setValue(Variables.LAST_TAP_Y,
-							(double) event.getY() * event.getYPrecision());
+							(int) Math.abs((double) event.getY()  *1000 /  height));
 					applyOnTapRules();
 					return false;
 				}
