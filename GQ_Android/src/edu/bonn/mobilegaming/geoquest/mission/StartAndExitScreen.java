@@ -203,4 +203,11 @@ public class StartAndExitScreen extends MissionActivity {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void finish() {
+		GeoQuestApp.recycleImagesFromView(imageView);
+		super.finish();
+	}
+
 }

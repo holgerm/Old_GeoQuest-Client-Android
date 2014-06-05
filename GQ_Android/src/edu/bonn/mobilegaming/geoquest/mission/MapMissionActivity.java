@@ -105,7 +105,7 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 			zoomLevelInt = Integer.parseInt(zoomLevel);
 			if (zoomLevelInt > 0 && zoomLevelInt < 24)
 				getMapController().setZoom(zoomLevelInt);
-		}
+		} 
 
 		// Setup Zoom Controls:
 		Button zoomIn = (Button) findViewById(R.id.zoom_in);

@@ -33,6 +33,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -42,6 +44,9 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
@@ -885,6 +890,22 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 				+ " "
 				+ GeoQuestApp.getContext().getString(R.string.version);
 		GeoQuestApp.showMessage(infotext);
+	}
+
+	public static void recycleImagesFromView(View view) {
+		if (view instanceof ImageView) {
+			Drawable drawable = ((ImageView) view).getDrawable();
+			if (drawable instanceof BitmapDrawable) {
+				BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+				bitmapDrawable.getBitmap().recycle();
+				bitmapDrawable = null;
+			}
+		} else if (view instanceof ViewGroup) {
+			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+				recycleImagesFromView(((ViewGroup) view).getChildAt(i));
+			}
+		}
+
 	}
 
 }
