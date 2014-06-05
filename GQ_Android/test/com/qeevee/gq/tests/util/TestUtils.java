@@ -70,6 +70,10 @@ public class TestUtils {
 		return new File(xmlFileURL.getFile());
 	}
 
+	public static File getFile(String path) {
+		return new File(TestUtils.class.getResource(path).getFile());
+	}
+
 	/**
 	 * @param fileName
 	 *            the relative path to the file containing the text.
