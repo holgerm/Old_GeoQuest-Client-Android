@@ -1,7 +1,10 @@
 package com.qeevee.ui;
 
 import java.io.File;
+import java.lang.ref.SoftReference;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
@@ -45,7 +48,8 @@ public class BitmapUtil {
 
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, paint);
-		bitmap.recycle();
+		// bitmap.recycle();
+		// bitmap = null;
 
 		return output;
 	}
@@ -55,8 +59,6 @@ public class BitmapUtil {
 		Bitmap bmp;
 		String path = completeImageFileSuffix(ResourceManager.getResourcePath(
 				relativeResourcePath, ResourceType.IMAGE));
-		// String path =
-		// completeImageFileSuffix(getGameBitmapFile(relativeResourcePath));
 
 		try {
 			if (path == null) {
@@ -72,6 +74,7 @@ public class BitmapUtil {
 
 				// Decode bitmap with inSampleSize set
 				options.inJustDecodeBounds = false;
+				addInBitmapOptions(options);
 				bmp = BitmapFactory.decodeFile(path, options);
 				if (bmp == null) {
 					Log.e(TAG, "Bitmap could not be decoded (path: " + path);
@@ -114,6 +117,90 @@ public class BitmapUtil {
 			bmp = getRoundedCornerBitmap(bmp, radius);
 		}
 		return bmp;
+	}
+
+	private static Set<SoftReference<Bitmap>> reusableBitmaps = Collections
+			.synchronizedSet(new HashSet<SoftReference<Bitmap>>());
+
+	private static void addInBitmapOptions(BitmapFactory.Options options) {
+		// inBitmap only works with mutable bitmaps, so force the decoder to
+		// return mutable bitmaps.
+		options.inMutable = true;
+
+		// Try to find a bitmap to use for inBitmap.
+		Bitmap inBitmap = getBitmapFromReusableSet(options);
+
+		if (inBitmap != null) {
+			// If a suitable bitmap has been found, set it as the value of
+			// inBitmap.
+			options.inBitmap = inBitmap;
+		}
+	}
+
+	public static void addBitmapToSetOfReusables(Bitmap bmp) {
+		reusableBitmaps.add(new SoftReference<Bitmap>(bmp));
+	}
+
+	// This method iterates through the reusable bitmaps, looking for one
+	// to use for inBitmap:
+	private static Bitmap getBitmapFromReusableSet(BitmapFactory.Options options) {
+		Bitmap bitmap = null;
+
+		if (reusableBitmaps != null && !reusableBitmaps.isEmpty()) {
+			synchronized (reusableBitmaps) {
+				final Iterator<SoftReference<Bitmap>> iterator = reusableBitmaps
+						.iterator();
+				Bitmap item;
+
+				while (iterator.hasNext()) {
+					item = iterator.next().get();
+
+					if (null != item && item.isMutable()) {
+						// Check to see it the item can be used for inBitmap.
+						if (canUseForInBitmap(item, options)) {
+							bitmap = item;
+
+							// Remove from reusable set so it can't be used
+							// again.
+							iterator.remove();
+							break;
+						}
+					} else {
+						// Remove from the set if the reference has been
+						// cleared.
+						iterator.remove();
+					}
+				}
+			}
+		}
+		return bitmap;
+	}
+
+	static boolean canUseForInBitmap(Bitmap candidate,
+			BitmapFactory.Options targetOptions) {
+
+		// On earlier versions than 4.4 (Kitkat), the dimensions must match
+		// exactly and the inSampleSize must be 1
+		return candidate.getWidth() == targetOptions.outWidth
+				&& candidate.getHeight() == targetOptions.outHeight
+				&& targetOptions.inSampleSize == 1;
+	}
+
+	/**
+	 * A helper function to return the byte usage per pixel of a bitmap based on
+	 * its configuration.
+	 */
+	static int getBytesPerPixel(Config config) {
+		if (config == Config.ARGB_8888) {
+			return 4;
+		} else if (config == Config.RGB_565) {
+			return 2;
+		} else if (config == Config.ARGB_4444) {
+			return 2;
+		} else if (config == Config.ALPHA_8) {
+			return 1;
+		}
+		return 1;
 	}
 
 	private static int calculateInSampleSize(BitmapFactory.Options options,

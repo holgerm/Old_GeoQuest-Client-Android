@@ -897,8 +897,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			Drawable drawable = ((ImageView) view).getDrawable();
 			if (drawable instanceof BitmapDrawable) {
 				BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-				bitmapDrawable.getBitmap().recycle();
-				bitmapDrawable = null;
+				BitmapUtil
+						.addBitmapToSetOfReusables(bitmapDrawable.getBitmap());
+				// bitmapDrawable.getBitmap().recycle();
+				// bitmapDrawable = null;
 			}
 		} else if (view instanceof ViewGroup) {
 			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
