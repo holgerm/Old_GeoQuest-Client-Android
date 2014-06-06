@@ -66,7 +66,7 @@ public class InvisibleStart extends Activity {
 			InputStream is = assetManager.open(ASSET_FILE_FOR_AUTOSTART_ID);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(is));
-			autostartGameID = reader.readLine();
+			autostartGameID = reader.readLine().trim();
 			is.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
