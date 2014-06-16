@@ -141,6 +141,8 @@ public class XMLUtilities {
 			return (CharSequence) textify(xmlElement
 					.attributeValue(attributeName));
 	}
+	
+	
 
 	/**
 	 * 

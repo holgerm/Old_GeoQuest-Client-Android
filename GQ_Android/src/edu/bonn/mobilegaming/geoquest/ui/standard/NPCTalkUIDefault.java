@@ -56,6 +56,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	};
 
 	private CharSequence mode;
+	private CharSequence globalNextDialogItemButtonText;
 
 	/**
 	 * @see GeoQuestUI#GeoQuestUI(android.app.Activity)
@@ -77,6 +78,9 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		outerView = (View) contentView.findViewById(R.id.outerview);
 		charImage = (ImageView) contentView.findViewById(R.id.npcimage);
 		button = (Button) contentView.findViewById(R.id.proceedButton);
+		setGlobalNextDialogItemButtonText(XMLUtilities.getStringAttribute(
+				"nextdialogbuttontext", R.string.button_text_next, getNPCTalk()
+						.getXML()));
 		dialogText = (TextView) contentView.findViewById(R.id.npctext);
 		dialogText.setTextSize(getTextsize());
 		dialogText.setTextColor(getTextColor());
@@ -157,7 +161,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			if (currentDialogItem.getNextDialogButtonText() != null)
 				button.setText(currentDialogItem.getNextDialogButtonText());
 			else
-				button.setText(R.string.button_text_next);
+				button.setText(getGlobalNextDialogItemButtonText());
 			button.setGravity(Gravity.CENTER);
 			if (button.getLayoutParams() instanceof LinearLayout.LayoutParams)
 				((LinearLayout.LayoutParams) button.getLayoutParams()).gravity = Gravity.CENTER_HORIZONTAL;
@@ -253,5 +257,14 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		charImage = null;
 		currentDialogItem = null;
 		contentView = null;
+	}
+
+	public CharSequence getGlobalNextDialogItemButtonText() {
+		return globalNextDialogItemButtonText;
+	}
+
+	public void setGlobalNextDialogItemButtonText(
+			CharSequence globalNextDialogItemButtonText) {
+		this.globalNextDialogItemButtonText = globalNextDialogItemButtonText;
 	}
 }

@@ -161,12 +161,12 @@ public class NPCTalk extends MissionActivity {
 			speaker = xml.attributeValue("speaker");
 
 			// read nextdialogbuttontext:
-			Attribute a = (Attribute) xml
-					.selectSingleNode("@nextdialogbuttontext");
-			nextDialogButtonText = (a != null) ? a.getText() : null;
+			nextDialogButtonText = XMLUtilities.getStringAttribute(
+					"nextdialogbuttontext", XMLUtilities.OPTIONAL_ATTRIBUTE,
+					xmlElement);
 
 			// read sound (might be an audiofile for listenig to the text):
-			a = (Attribute) xml.selectSingleNode("@sound");
+			Attribute a = (Attribute) xml.selectSingleNode("@sound");
 			if (a != null) {
 				audioFilePath = a.getText();
 			}
