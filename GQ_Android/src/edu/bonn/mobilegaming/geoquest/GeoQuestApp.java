@@ -15,8 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -101,7 +99,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static final int DIALOG_ID_DOWNLOAD_GAME = 1;
 	public static final int DIALOG_ID_DOWNLOAD_REPO_DATA = 2;
 
-	public static ExecutorService singleThreadExecutor;
 	private static final String TAG = GeoQuestApp.class.getCanonicalName();
 	public static final String MAIN_PREF_FILE_NAME = "GeoQuestPreferences";
 	public static final String GQ_MANUAL_LOCATION_PROVIDER = "GeoQuest Manual Location Provider";
@@ -150,7 +147,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public void onCreate() {
 		super.onCreate();
 		theApp = this;
-		singleThreadExecutor = Executors.newFixedThreadPool(1);
 
 		missingBitmap = BitmapUtil.loadBitmapFromResource(
 				R.drawable.missingbitmap, 100, 100, false);
@@ -201,7 +197,6 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 	@Override
 	public void onTerminate() {
-		singleThreadExecutor.shutdown();
 		terminateApp();
 		super.onTerminate();
 	}
