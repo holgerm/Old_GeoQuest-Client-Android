@@ -180,6 +180,16 @@ public class MultipleChoiceQuestion extends Question {
 			Element xmlAnswer = j.next();
 			new Answer(xmlAnswer);
 		}
+		List<Element> xmlImageAnswers = mission.xmlMissionNode
+				.selectNodes(".//imageanswer");
+		for (Iterator<Element> j = xmlImageAnswers.iterator(); j.hasNext();) {
+			Element xmlImageAnswer = j.next();
+			new Answer(xmlImageAnswer); // TODO create different Answer objects
+		}
+
+		textAnswers.addAll(imageAnswers); // TODO Do something different for
+		// imageAnswers
+
 		shuffleAnswers();
 		setUpAnswerList();
 	}
