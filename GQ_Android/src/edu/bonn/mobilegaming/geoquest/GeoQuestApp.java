@@ -48,6 +48,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
+import com.qeevee.gq.Configuration;
 import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
@@ -150,6 +151,9 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 		missingBitmap = BitmapUtil.loadBitmapFromResource(
 				R.drawable.missingbitmap, 100, 100, false);
+
+		// read configs from assets file:
+		Configuration.initialize();
 
 		// TODO: initialize all preferences to their defaults if they are not
 		// already set

@@ -1,28 +1,24 @@
 package com.qeevee.gq.start;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Mission;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.qeevee.gq.Configuration;
+
+import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import edu.bonn.mobilegaming.geoquest.Mission;
+
 public class InvisibleStart extends Activity {
 
 	private AsyncTask<Void, Integer, Void> extractionTask;
 	private final String TAG = InvisibleStart.class.getCanonicalName();
-
-	private static final String ASSET_FILE_FOR_AUTOSTART_ID = "autostart_id";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +56,8 @@ public class InvisibleStart extends Activity {
 
 	private boolean checkAndPerformAutostartByAssets() {
 		boolean autostart = false;
-		AssetManager assetManager = GeoQuestApp.getContext().getAssets();
-		String autostartGameID = null;
-		try {
-			InputStream is = assetManager.open(ASSET_FILE_FOR_AUTOSTART_ID);
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(is));
-			autostartGameID = reader.readLine().trim();
-			is.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		String autostartGameID = Configuration
+				.get(Configuration.CONFIG_AUTOSTART);
 		if (autostartGameID != null) {
 			// in case we autostart, we might have to wait for extraction of the
 			// game:

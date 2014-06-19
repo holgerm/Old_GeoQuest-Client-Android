@@ -15,6 +15,12 @@ import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 
 public abstract class GeoQuestActivity extends Activity {
 
+	// @Override
+	// public void finish() {
+	// get
+	// super.finish();
+	// }
+	//
 	private NFCEventManager mNFCEventManager = null;
 
 	@Override
@@ -104,13 +110,6 @@ public abstract class GeoQuestActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void startContextManager() {
-		if (contextManager == null) {
-			contextManager = new ContextManager(this.getApplicationContext());
-		}
-
 	}
 
 	protected void onDestroy() {
