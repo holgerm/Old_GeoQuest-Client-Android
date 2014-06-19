@@ -18,12 +18,14 @@ public class Configuration {
 	private static final String CONFIG_FILE = "gq.conf";
 	private static final String CONFIG_COMMENT = "//";
 	private static final String CONFIG_KEY_VALUE_DELIMITERS = ":=";
+	private static final String CONFIG_VALUES_DELIMITERS = ",;";
 
 	private static final String TAG = Configuration.class.getCanonicalName();
 
 	private static Map<String, String> configs;
 
 	public static final String CONFIG_AUTOSTART = "autostartquest";
+	public static final String CONFIG_PORTALS = "portals";
 
 	public static void initialize() {
 		configs = new HashMap<String, String>();
@@ -67,4 +69,16 @@ public class Configuration {
 		return configs.get(configKey);
 	}
 
+	public static int[] getPortalIDs() {
+		String portalsString = configs.get(CONFIG_PORTALS);
+		if (portalsString == null)
+			return new int[] {};
+		StringTokenizer portalTokenizer = new StringTokenizer(portalsString,
+				CONFIG_VALUES_DELIMITERS);
+		int[] portalIDs = new int[portalTokenizer.countTokens()];
+		for (int i = 0; i < portalIDs.length; i++) {
+			portalIDs[i] = Integer.parseInt(portalTokenizer.nextToken().trim());
+		}
+		return portalIDs;
+	}
 }

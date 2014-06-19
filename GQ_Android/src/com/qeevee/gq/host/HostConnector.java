@@ -22,6 +22,10 @@ public class HostConnector {
 		this.connectionStrategy = connectionStrategy;
 	}
 
+	public ConnectionStrategy getConnectionStrategy() {
+		return connectionStrategy;
+	}
+
 	public HostConnector() {
 		setConnectionStrategy(new DefaultConnectionStrategy(
 				GEOQUEST_PUBLIC_PORTAL_ID));
@@ -46,7 +50,8 @@ public class HostConnector {
 				JSONObject jsonObj = jsonArray.getJSONObject(i);
 				if (!jsonObj.isNull("zip")
 						&& !jsonObj.get("zip").equals("none"))
-					gameList.add(new GameDescription(jsonObj));
+					gameList.add(new GameDescription(jsonObj,
+							connectionStrategy.getPortalID()));
 			}
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());

@@ -34,15 +34,13 @@ public class GamesInCloud extends Activity {
 		titleView = (TextView) findViewById(R.id.titleGamesList);
 		titleView.setText(R.string.titleGamesInCloud);
 
-		final HostConnector publicHostConnector = GeoQuestApp
-				.getHostConnector();
-		final HostConnector gq_internalHostConnector = new HostConnector(1);
 		AsyncTask<HostConnector, Integer, List<GameDescription>> loadGameList = new GetGameList();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			loadGameList.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-					publicHostConnector, gq_internalHostConnector);
+					GeoQuestApp.getHostConnectors());
 		else
-			loadGameList.execute(publicHostConnector, gq_internalHostConnector);
+			loadGameList.execute(GeoQuestApp.getHostConnectors());
+
 	}
 
 	private class GetGameList extends

@@ -6,6 +6,6 @@ public interface ConnectionStrategy {
 
 	public abstract String getDownloadURL(String id);
 
-	String getPortalID();
+	public String getPortalID();
 
 }

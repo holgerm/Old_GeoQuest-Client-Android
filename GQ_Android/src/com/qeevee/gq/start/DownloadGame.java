@@ -76,8 +76,8 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		FileOutputStream fOutLocal = null;
 		fOutLocal = new FileOutputStream(gameZipFile);
 
-		URL url = new URL(GeoQuestApp.getHostConnector().getDownloadURL(
-				game.getID()));
+		URL url = new URL(GeoQuestApp.getHostConnector(game.getPortalID())
+				.getDownloadURL(game.getID()));
 
 		Log.d(TAG, "starting download: " + url);
 		in = new BufferedInputStream(url.openStream(), BYTE_SIZE);

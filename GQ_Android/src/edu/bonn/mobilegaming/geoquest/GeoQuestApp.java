@@ -67,13 +67,21 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
 
-	private static HostConnector hostConnector;
+	private static HostConnector[] hostConnectors;
 
-	public static HostConnector getHostConnector() {
-		if (GeoQuestApp.hostConnector == null) {
-			GeoQuestApp.hostConnector = new HostConnector();
+	public static HostConnector[] getHostConnectors() {
+		if (hostConnectors == null) {
+			int[] hostIDs = Configuration.getPortalIDs();
+			hostConnectors = new HostConnector[hostIDs.length];
+			for (int i = 0; i < hostIDs.length; i++) {
+				hostConnectors[i] = new HostConnector(hostIDs[i]);
+			}
 		}
-		return GeoQuestApp.hostConnector;
+		return hostConnectors;
+	}
+
+	public void setHostConnectors(HostConnector[] connectors) {
+		hostConnectors = connectors;
 	}
 
 	private MapView googleMap;
@@ -907,6 +915,16 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			}
 		}
 
+	}
+
+	public static HostConnector getHostConnector(String portalID) {
+		HostConnector[] connectors = getHostConnectors();
+		for (int i = 0; i < connectors.length; i++) {
+			if (portalID.equals(connectors[i].getConnectionStrategy()
+					.getPortalID()))
+				return connectors[i];
+		}
+		return null;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import android.widget.ListView;
 
 import com.qeevee.gq.host.ConnectionStrategy;
+import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.start.GamesInCloud;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
@@ -28,11 +29,11 @@ public class GameListTests {
 		startWithServerMock("/testresponse/gamelist.json");
 
 		// WHEN:
-		startGameList(); 
+		startGameList();
 
 		// THEN:
-//		shouldShowGames(1);
-//		shouldShowGameWithName("TestGame");
+		// shouldShowGames(1);
+		// shouldShowGameWithName("TestGame");
 
 	}
 
@@ -62,7 +63,8 @@ public class GameListTests {
 		app.onCreate();
 		ConnectionStrategy testConnectionStrategy = new MockConnectionStrategy(
 				mockResponseFile);
-		app.getHostConnector().setConnectionStrategy(testConnectionStrategy);
+		HostConnector connector = new HostConnector();
+		connector.setConnectionStrategy(testConnectionStrategy);
+		app.setHostConnectors(new HostConnector[] { connector });
 	}
-
 }

@@ -19,15 +19,18 @@ public class GameDescription {
 	private String name;
 	private String id;
 	private String zipURL = "none";
+	private String portalID;
 
 	public String getZipURL() {
 		return zipURL;
 	}
 
-	public GameDescription(JSONObject jsonObject) throws JSONException {
+	public GameDescription(JSONObject jsonObject, String portalID)
+			throws JSONException {
 		name = (String) jsonObject.get("name");
 		id = ((Integer) jsonObject.get("id")).toString();
 		zipURL = (String) jsonObject.get("zip");
+		this.setPortalID(portalID);
 	}
 
 	/**
@@ -65,6 +68,14 @@ public class GameDescription {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getPortalID() {
+		return portalID;
+	}
+
+	private void setPortalID(String portalID) {
+		this.portalID = portalID;
 	}
 
 }
