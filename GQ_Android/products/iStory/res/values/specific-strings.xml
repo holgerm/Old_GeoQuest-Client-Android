@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="app_name">Story of i</string>
+    <string name="quest_name">Story of i</string>
+    <string name="imprint_authorName">TODO</string>
+    <string name="imprint_city">Remscheid</string>
+    <string name="imprint_email">TODO</string>
+    <string name="imprint_fax">TODO</string>
+    <string name="imprint_legalForm">TODO</string>
+    <string name="imprint_phone">TODO</string>
+    <string name="imprint_postalCode">TODO</string>
+    <string name="imprint_registeredOffice">TODO</string>
+    <string name="imprint_registrationNumber">TODO</string>
+    <string name="imprint_streetAndNr">TODO</string>
+    <string name="imprint_vatIdNr">TODO</string>
+    
+</resources>
