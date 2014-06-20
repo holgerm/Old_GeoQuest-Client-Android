@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Switch to other GeoQuest Variant
+
+if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters - just specify product name."
+fi
+
+# Copy resources in place, i.e. logos, name etc.
+
+cp -r /Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/products/$1/  /Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/
