@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.8.3.9 ##
+
+- external missions completely removed 
+
 ## 0.8.3.8 ##
 
 - new: config option portals 
