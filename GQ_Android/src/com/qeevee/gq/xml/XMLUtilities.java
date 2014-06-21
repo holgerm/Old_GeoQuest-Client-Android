@@ -1,9 +1,7 @@
 package com.qeevee.gq.xml;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -15,63 +13,8 @@ import com.qeevee.ui.WebViewUtil;
 import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.ubonn.gq.extmissionhelper.ExternalMissionHelper;
 
 public class XMLUtilities {
-
-	/**
-	 * Used to extract the parameters for external missions.
-	 * 
-	 * Reads the given XML node element, which must represent the
-	 * <code>parameters</code> tag. All found arguments (i.e. input parameters
-	 * as well as result declarations with their default values which are send
-	 * to the Mission) are stored in the map returned.
-	 * 
-	 * @param parametersElement
-	 *            a <code>parameters</code> xml tag from the game specification
-	 *            (e.g. in a StartExternelMission action or in an
-	 *            ExternalMission itself.
-	 * @return a map containing all arguments (aka input parameters) with
-	 *         <code>name</code> (preceded by "arg:") as key and
-	 *         <code>value</code> as value and all result declarations with with
-	 *         <code>name</code> (preceded by "res:") as key and
-	 *         <code>default</code> as value.
-	 */
-	@SuppressWarnings("unchecked")
-	public static Map<String, String> extractParameters(
-			Element parametersElement) {
-		Map<String, String> inputParameters = null;
-		// Arguments:
-		List<Element> paramElements = parametersElement.selectNodes("argument");
-		if (paramElements != null && paramElements.size() > 0) {
-			inputParameters = new HashMap<String, String>();
-			for (Iterator<Element> iterator = paramElements.iterator(); iterator
-					.hasNext();) {
-				Element currentParamElement = iterator.next();
-				String attributeValue = currentParamElement
-						.attributeValue("value");
-				if (attributeValue.startsWith("$")) {
-					attributeValue = (String) Variables
-							.getValue(attributeValue).toString();
-				}
-				inputParameters.put(ExternalMissionHelper.ARG_PREFIX
-						+ currentParamElement.attributeValue("name"),
-						attributeValue);
-			}
-		}
-		paramElements = parametersElement.selectNodes("result");
-		if (paramElements != null && paramElements.size() > 0) {
-			for (Iterator<Element> iterator = paramElements.iterator(); iterator
-					.hasNext();) {
-				Element currentParamElement = iterator.next();
-				inputParameters.put(ExternalMissionHelper.RES_PREFIX
-						+ currentParamElement.attributeValue("name"),
-						currentParamElement.attributeValue("default"));
-			}
-		}
-		return inputParameters;
-	}
 
 	@SuppressWarnings("rawtypes")
 	public static String getXMLContent(Element element) {
@@ -141,8 +84,6 @@ public class XMLUtilities {
 			return (CharSequence) textify(xmlElement
 					.attributeValue(attributeName));
 	}
-	
-	
 
 	/**
 	 * 

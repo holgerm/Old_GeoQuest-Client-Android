@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.qeevee.gq.rules.Rule;
-import com.qeevee.gq.xml.XMLUtilities;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameDataManager;
 import edu.bonn.mobilegaming.geoquest.mission.InteractiveMission;
@@ -189,10 +188,6 @@ public class Mission implements Serializable {
 		setCancelStatus();
 		createRules();
 		storeDirectSubmissions();
-		// Read parameters which can be used as extras to start another activity
-		// from within this Missions Activity. This has been introduced for
-		// ExternalMissions.
-		createBundleForExternalMission();
 	}
 
 	private void setCancelStatus() {
@@ -220,30 +215,6 @@ public class Mission implements Serializable {
 			directSubMissions.add(Mission.create(e.attributeValue("id"), this,
 					e));
 		}
-	}
-
-	private void createBundleForExternalMission() {
-		// TODO: This method should probably go into a specific subclass of
-		// Mission which encapsulates the specifics of ExternalMissions.
-		Element parametersElement = (Element) xmlMissionNode
-				.selectSingleNode("parameters");
-		if (parametersElement != null) {
-			Map<String, String> arguments = XMLUtilities
-					.extractParameters(parametersElement);
-			if (bundleForExternalMission == null)
-				bundleForExternalMission = new Bundle();
-			Set<String> keys = arguments.keySet();
-			for (Iterator<String> iterator = keys.iterator(); iterator
-					.hasNext();) {
-				String currentKey = iterator.next();
-				bundleForExternalMission.putString(currentKey,
-						arguments.get(currentKey));
-			}
-		}
-	}
-
-	public Bundle getBundleForExternalMission() {
-		return bundleForExternalMission;
 	}
 
 	/**

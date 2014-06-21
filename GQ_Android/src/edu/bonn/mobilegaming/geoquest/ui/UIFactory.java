@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.util.Log;
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
-import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
 import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
@@ -18,7 +17,6 @@ import edu.bonn.mobilegaming.geoquest.mission.TextQuestion;
 import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
 import edu.bonn.mobilegaming.geoquest.mission.WebPage;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
@@ -106,8 +104,6 @@ public abstract class UIFactory {
 	public abstract MapOSM_UI createUI(MapOSM activity);
 
 	public abstract ImageCaptureUI createUI(ImageCapture activity);
-
-	public abstract ExternalMissionUI createUI(ExternalMission activity);
 
 	public abstract MultipleChoiceQuestionUI createUI(
 			MultipleChoiceQuestion activity);

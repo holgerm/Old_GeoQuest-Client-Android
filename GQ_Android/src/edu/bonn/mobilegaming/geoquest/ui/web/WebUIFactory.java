@@ -9,7 +9,6 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import edu.bonn.mobilegaming.geoquest.mission.AudioRecord;
-import edu.bonn.mobilegaming.geoquest.mission.ExternalMission;
 import edu.bonn.mobilegaming.geoquest.mission.ImageCapture;
 import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
@@ -24,7 +23,6 @@ import edu.bonn.mobilegaming.geoquest.mission.VideoPlay;
 import edu.bonn.mobilegaming.geoquest.mission.WebPage;
 import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.AudioRecordUI;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ExternalMissionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.ImageCaptureUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MapOSM_UI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MultipleChoiceQuestionUI;
@@ -38,7 +36,6 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.TextQuestionUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.VideoPlayUI;
 import edu.bonn.mobilegaming.geoquest.ui.abstrakt.WebPageUI;
 import edu.bonn.mobilegaming.geoquest.ui.standard.AudioRecordUIDefault;
-import edu.bonn.mobilegaming.geoquest.ui.standard.ExternalMissionUIDefault;
 import edu.bonn.mobilegaming.geoquest.ui.standard.ImageCaptureUIDefault;
 import edu.bonn.mobilegaming.geoquest.ui.standard.MapOSM_UIDefault;
 import edu.bonn.mobilegaming.geoquest.ui.standard.NFCMissionUIDefault;
@@ -74,10 +71,6 @@ public class WebUIFactory extends UIFactory {
 
 	public ImageCaptureUI createUI(ImageCapture activity) {
 		return new ImageCaptureUIDefault(activity);
-	}
-
-	public ExternalMissionUI createUI(ExternalMission activity) {
-		return new ExternalMissionUIDefault(activity);
 	}
 
 	public TextQuestionUI createUI(TextQuestion activity) {
