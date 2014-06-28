@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.uni.bonn.nfc4mg.constants.TagConstants;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
 import com.uni.bonn.nfc4mg.nfctag.ParseTagListener;
 import com.uni.bonn.nfc4mg.nfctag.TagHandler;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
@@ -50,7 +49,7 @@ public class NFCTagReadingProduct extends InteractiveMission implements
 
 		ui.init(taskDescription);
 		try {
-			mHandler = new TagHandler(this);
+			mHandler = new TagHandler(this, this);
 		} catch (NfcTagException e) {
 			e.printStackTrace();
 			Toast.makeText(this.ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -76,8 +75,6 @@ public class NFCTagReadingProduct extends InteractiveMission implements
 				try {
 					Log.d(TAG, "processing Intent");
 					mHandler.processIntent(intent);
-
-				} catch (TagModelException e) {
 
 				} catch (IOException e) {
 

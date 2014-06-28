@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,10 +52,10 @@ import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionOrToolUI;
 public class ImageCapture extends MissionActivity implements OnClickListener {
 	private static final String TAG = "ImageCapture";
 
+	private static final String SAVED_CURRENT_PHOTO_PATH_KEY = "currentPhotoPath";
+
 	/** button to start the QRTag Reader */
 	private Button okButton;
-
-	WebView webview;
 
 	private TextView taskTextView;
 	private ZoomImageView imageView;
@@ -73,6 +72,9 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		// get mCurrentPhotoPath from bundle in case this is the call during
+		// onActivityResult
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.imagecapture);
@@ -80,7 +82,6 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		// init Button at bottom:
 		okButton = (Button) findViewById(R.id.imageCaptureStartButton);
 		okButton.setOnClickListener(this);
-		setMode(TAKE_PICTURE);
 
 		// init task description text:
 		taskTextView = (TextView) findViewById(R.id.imageCaptureTextView);
@@ -97,6 +98,17 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		// initial image:
 		imageView = (ZoomImageView) findViewById(R.id.imageCaptureImageView);
 		setImage();
+
+		// in case we are called after returning from camera app we read the
+		// photo path again:
+		if (savedInstanceState != null
+				&& savedInstanceState.containsKey(SAVED_CURRENT_PHOTO_PATH_KEY)) {
+			setCurrentPhotoPath(savedInstanceState
+					.getString(SAVED_CURRENT_PHOTO_PATH_KEY));
+			setMode(AFTER_UPLOAD);
+		} else {
+			setMode(TAKE_PICTURE);
+		}
 	}
 
 	private void setImage() {
@@ -149,21 +161,28 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 		try {
 			f = setUpPhotoFile();
-			mCurrentPhotoPath = f.getAbsolutePath();
+			setCurrentPhotoPath(f.getAbsolutePath());
 			takePictureIntent
 					.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+
+			startActivityForResult(takePictureIntent, TAKE_PICTURE);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 			f = null;
-			mCurrentPhotoPath = null;
+			setCurrentPhotoPath(null);
 		}
-		startActivityForResult(takePictureIntent, TAKE_PICTURE);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(SAVED_CURRENT_PHOTO_PATH_KEY, getCurrentPhotoPath());
+		super.onSaveInstanceState(outState);
 	}
 
 	private File setUpPhotoFile() throws IOException {
 		File f = ResourceManager.getFile(mFileName, ResourceType.IMAGE);
-		mCurrentPhotoPath = f.getAbsolutePath();
+		setCurrentPhotoPath(f.getAbsolutePath());
 		return f;
 	}
 
@@ -216,10 +235,10 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
-			if (mCurrentPhotoPath != null) {
+			if (getCurrentPhotoPath() != null) {
 				setPic();
 				galleryAddPic();
-				mCurrentPhotoPath = null;
+				setCurrentPhotoPath(null);
 			}
 			setMode(AFTER_UPLOAD);
 		} else {
@@ -230,7 +249,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	private void galleryAddPic() {
 		Intent mediaScanIntent = new Intent(
 				"android.intent.action.MEDIA_SCANNER_SCAN_FILE");
-		File f = new File(mCurrentPhotoPath);
+		File f = new File(getCurrentPhotoPath());
 		Uri contentUri = Uri.fromFile(f);
 		mediaScanIntent.setData(contentUri);
 		this.sendBroadcast(mediaScanIntent);
@@ -248,15 +267,16 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		/* Get the size of the image */
 		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 		bmOptions.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+		BitmapFactory.decodeFile(getCurrentPhotoPath(), bmOptions);
 		int photoW = bmOptions.outWidth;
 		int photoH = bmOptions.outHeight;
 
 		/* Figure out which way needs to be reduced less */
 		int scaleFactor = 1;
-		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-		}
+		// if ((targetW > 0) || (targetH > 0)) {
+		// scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+		// }
+		scaleFactor = photoW / 600;
 
 		/* Set bitmap options to scale the image decode target */
 		bmOptions.inJustDecodeBounds = false;
@@ -264,7 +284,8 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		bmOptions.inPurgeable = true;
 
 		/* Decode the JPEG file into a Bitmap */
-		Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+		Bitmap bitmap = BitmapFactory.decodeFile(getCurrentPhotoPath(),
+				bmOptions);
 
 		/* Associate the Bitmap to the ImageView */
 		imageView.setImageBitmap(bitmap);
@@ -294,5 +315,13 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 	public MissionOrToolUI getUI() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private String getCurrentPhotoPath() {
+		return mCurrentPhotoPath;
+	}
+
+	private void setCurrentPhotoPath(String mCurrentPhotoPath) {
+		this.mCurrentPhotoPath = mCurrentPhotoPath;
 	}
 }

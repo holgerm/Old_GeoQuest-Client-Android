@@ -2,7 +2,7 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
@@ -12,16 +12,22 @@ import android.nfc.Tag;
 import android.util.Log;
 
 import com.uni.bonn.nfc4mg.TextRecord;
+import com.uni.bonn.nfc4mg.bttag.BTTag;
 import com.uni.bonn.nfc4mg.constants.TagConstants;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
+import com.uni.bonn.nfc4mg.gpstag.GpsTag;
+import com.uni.bonn.nfc4mg.groups.GroupManager;
+import com.uni.bonn.nfc4mg.infotag.InfoTag;
+import com.uni.bonn.nfc4mg.inventory.InventoryManager;
 import com.uni.bonn.nfc4mg.tagmodels.BTTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.BaseTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.GroupTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
+import com.uni.bonn.nfc4mg.tagmodels.ResourceTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.WiFiTagModel;
 import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
+import com.uni.bonn.nfc4mg.wifitag.WiFiTag;
 
 /**
  * Class responsible to handle scanned NFC Tag. This class provide various
@@ -30,7 +36,6 @@ import com.uni.bonn.nfc4mg.utility.NfcReadWrite;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class TagHandler {
 
 	private static final String TAG = "TagHandler";
@@ -45,8 +50,10 @@ public class TagHandler {
 	private WiFiTagModel mWiFiTagModel = null;
 	private BTTagModel mBTTagModel = null;
 	private GroupTagModel mGroupTagModel = null;
+	private ResourceTagModel mResourceTagModel = null;
 
 	private Tag mTag = null;
+	private Context mContext;
 
 	/**
 	 * Function to get the instance of scanned tag
@@ -64,14 +71,19 @@ public class TagHandler {
 	 * @param listener
 	 * @throws NfcTagException
 	 */
-	public TagHandler(ParseTagListener listener) throws NfcTagException {
+	public TagHandler(Context ctx, ParseTagListener listener)
+			throws NfcTagException {
 
 		if (null == listener) {
 			throw new NfcTagException("ParseTagListener is null");
 		}
-
+		this.mContext = ctx;
 		mParseListener = listener;
 
+	}
+
+	public ResourceTagModel getmResourceTagModel() {
+		return mResourceTagModel;
 	}
 
 	/**
@@ -128,8 +140,8 @@ public class TagHandler {
 	 * @throws IOException
 	 * @throws NfcTagException
 	 */
-	public void processIntent(Intent nfcIntent) throws TagModelException,
-			IOException, FormatException, NfcTagException {
+	public void processIntent(Intent nfcIntent) throws IOException,
+			FormatException, NfcTagException {
 
 		Log.v(TAG, "Intent Action :: " + nfcIntent.getAction());
 
@@ -146,7 +158,7 @@ public class TagHandler {
 				parseScannedTag(mTag);
 
 			} else {
-				throw new TagModelException("Tag is empty.");
+				throw new NfcTagException("Tag is empty.");
 			}
 		} else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(nfcIntent
 				.getAction())) {
@@ -178,23 +190,21 @@ public class TagHandler {
 	 * @throws IOException
 	 * @throws NfcTagException
 	 */
-	public void parseScannedTag(Tag tag) throws TagModelException, IOException,
-			FormatException, NfcTagException {
+	public void parseScannedTag(Tag tag) throws IOException, FormatException,
+			NfcTagException {
 
 		mTag = tag;
 		NdefMessage msg = NfcReadWrite.readNfcData(tag);
 
 		if (msg == null) {
-			throw new TagModelException(
-					"Tag data cannot be parsed by framework.");
+			throw new NfcTagException("Tag data cannot be parsed by framework.");
 		}
 
 		NdefRecord records[] = msg.getRecords();
 
 		// In case record length is zero throw error
 		if (0 == records.length)
-			throw new TagModelException(
-					"Tag data cannot be parsed by framework.");
+			throw new NfcTagException("Tag data cannot be parsed by framework.");
 
 		// check for tag Id field to know tag type.
 		// NOTE : Id field MIME type is always TEXT
@@ -219,7 +229,7 @@ public class TagHandler {
 	private void parseGpsTag(Tag tag) throws IOException, FormatException,
 			NfcTagException {
 
-		GpsTag gTag = new GpsTag();
+		GpsTag gTag = GpsTag.getInstance();
 		mGPSTagModel = gTag.readTagData(tag);
 
 	}
@@ -235,7 +245,7 @@ public class TagHandler {
 	private void parseInfoTag(Tag tag) throws IOException, FormatException,
 			NfcTagException {
 
-		InfoTag iTag = new InfoTag();
+		InfoTag iTag = InfoTag.getInstance();
 		mInfoTagModel = iTag.readTagData(tag);
 
 	}
@@ -246,10 +256,12 @@ public class TagHandler {
 	 * @param tag
 	 * @throws IOException
 	 * @throws FormatException
+	 * @throws NfcTagException
 	 */
-	private void parseBtTag(Tag tag) throws IOException, FormatException {
+	private void parseBtTag(Tag tag) throws IOException, FormatException,
+			NfcTagException {
 
-		BTTag bTag = new BTTag();
+		BTTag bTag = BTTag.getInstance();
 		mBTTagModel = bTag.readTagData(tag);
 
 	}
@@ -260,11 +272,45 @@ public class TagHandler {
 	 * @param tag
 	 * @throws IOException
 	 * @throws FormatException
+	 * @throws NfcTagException
 	 */
-	private void parseWifiTag(Tag tag) throws IOException, FormatException {
+	private void parseWifiTag(Tag tag) throws IOException, FormatException,
+			NfcTagException {
 
-		WiFiTag wTag = new WiFiTag();
+		WiFiTag wTag = WiFiTag.getInstance();
 		mWiFiTagModel = wTag.readTagData(tag);
+
+	}
+
+	/**
+	 * Internal function for parsing tag of type Resource
+	 * 
+	 * @param tag
+	 * @throws IOException
+	 * @throws FormatException
+	 * @throws NfcTagException
+	 */
+	private void parseResourceTag(Tag tag) throws IOException, FormatException,
+			NfcTagException {
+
+		mResourceTagModel = InventoryManager.getInventoryManager()
+				.readData(tag);
+
+	}
+
+	/**
+	 * Internal function for parsing tag of type Group
+	 * 
+	 * @param tag
+	 * @throws IOException
+	 * @throws FormatException
+	 * @throws NfcTagException
+	 */
+	private void parseGroupTag(Tag tag) throws IOException, FormatException,
+			NfcTagException {
+
+		mGroupTagModel = GroupManager.getGroupManager().readGroupData(
+				this.mContext, tag);
 
 	}
 
@@ -279,7 +325,7 @@ public class TagHandler {
 	 * @throws NfcTagException
 	 */
 	private void findTagType(String id, Tag tag) throws IOException,
-			FormatException, TagModelException, NfcTagException {
+			FormatException, NfcTagException {
 
 		if (id.startsWith(TagConstants.TAG_TYPE_INFO_PREFIX)) {
 
@@ -304,13 +350,18 @@ public class TagHandler {
 		} else if (id.startsWith(TagConstants.TAG_TYPE_GROUP_PREFIX)) {
 
 			tagType = TagConstants.TAG_TYPE_GROUP;
+			parseGroupTag(tag);
+
+		} else if (id.startsWith(TagConstants.TAG_TYPE_RESOURCE_PREFIX)) {
+
+			tagType = TagConstants.TAG_TYPE_RESOURCE;
+			parseResourceTag(tag);
 
 		} else {
 
 			// Throw exception in case id is not matched with any of the above
 			// defined ids
-			throw new TagModelException(
-					"Tag data cannot be parsed by framework.");
+			throw new NfcTagException("Tag data cannot be parsed by framework.");
 		}
 	}
 

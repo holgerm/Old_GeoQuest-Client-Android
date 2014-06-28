@@ -19,9 +19,8 @@ import android.widget.Toast;
 
 import com.uni.bonn.nfc4mg.NFCEventManager;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
-import com.uni.bonn.nfc4mg.nfctag.GpsTag;
-import com.uni.bonn.nfc4mg.nfctag.InfoTag;
+import com.uni.bonn.nfc4mg.gpstag.GpsTag;
+import com.uni.bonn.nfc4mg.infotag.InfoTag;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 
@@ -57,7 +56,7 @@ public class GPSTagActivity extends Activity implements OnClickListener {
 		write.setOnClickListener(this);
 
 		try {
-			mNFCEventManager = new NFCEventManager(this.ctx);
+			mNFCEventManager = NFCEventManager.getInstance(this.ctx);
 			mNFCEventManager.initialize(this.ctx, GPSTagActivity.this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,12 +101,12 @@ public class GPSTagActivity extends Activity implements OnClickListener {
 
 			if (null != mTag) {
 				try {
-					InfoTag tag = new InfoTag();
+					InfoTag tag = InfoTag.getInstance();
 					InfoTagModel model = tag.readTagData(mTag);
 
 					if (null != model) {
 						id.setText(model.getId());
-						longitude.setText(model.getMime());
+						longitude.setText(model.getId());
 						longitude.setText(model.getData());
 					} else {
 						id.setText("");
@@ -146,23 +145,17 @@ public class GPSTagActivity extends Activity implements OnClickListener {
 			String mm = latitude.getEditableText().toString();
 			String dd = longitude.getEditableText().toString();
 
-			GPSTagModel model = new GPSTagModel(ii, mm, dd,"");
+			GPSTagModel model = new GPSTagModel(ii, mm, dd, "");
 
 			if (null != mTag) {
 				try {
-					GpsTag tag = new GpsTag();
+					GpsTag tag = GpsTag.getInstance();
 					boolean status = tag.write2Tag(model, mTag);
 
 					if (status) {
 						Toast.makeText(GPSTagActivity.this, "Success.",
 								Toast.LENGTH_SHORT).show();
 					}
-
-				} catch (TagModelException e) {
-
-					e.printStackTrace();
-					Toast.makeText(GPSTagActivity.this, e.getMessage(),
-							Toast.LENGTH_SHORT).show();
 
 				} catch (IOException e) {
 

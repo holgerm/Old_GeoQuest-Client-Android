@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
 import android.content.Context;
@@ -88,14 +87,14 @@ public class BluetoothTagActivity extends Activity implements OnClickListener {
 				if (proxy instanceof BluetoothA2dp) {
 					Log.d(TAG, "Instance of BluetoothA2dp class");
 					headset = ((BluetoothA2dp) proxy);
-					
+
 					List<BluetoothDevice> connectedDevices = proxy
 							.getConnectedDevices();
-					
+
 					for (BluetoothDevice device : connectedDevices) {
 						bluetoothDevice = device;
-						Log.d(TAG, "Address = "  +device.getAddress());
-						Log.d(TAG, "Name = "  +device.getName());
+						Log.d(TAG, "Address = " + device.getAddress());
+						Log.d(TAG, "Name = " + device.getName());
 					}
 				} else {
 					Log.d(TAG, "Not an Instance of BluetoothA2dp class");

@@ -19,35 +19,33 @@ public class BTTagModel {
 	// MAX_ID length = 10 else framework will through error
 	private String id;
 
-	// Devive BT Mac Address. This is required so client can easily identify and
-	// connect to BT.
-	private String macAddr; // E.g 04:8F:E8:01:1A:C7
+	// Action mode for Bluetooth NFC interaction, currently framework is
+	// supporting two action modes
+	private int actionMode;
 
-	// Key to connect to remote Bt device. E.g. 0000
-	private String passKey;
+	public BTTagModel(){
+		
+	}
+	
+	public BTTagModel(String id, int actionMode) {
+		super();
+		this.id = id;
+		this.actionMode = actionMode;
+	}
 
 	public String getId() {
 		return id;
 	}
 
+	public int getActionMode() {
+		return actionMode;
+	}
+
+	public void setActionMode(int actionMode) {
+		this.actionMode = actionMode;
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public String getMacAddr() {
-		return macAddr;
-	}
-
-	public void setMacAddr(String macAddr) {
-		this.macAddr = macAddr;
-	}
-
-	public String getPassKey() {
-		return passKey;
-	}
-
-	public void setPassKey(String passKey) {
-		this.passKey = passKey;
-	}
-
 }

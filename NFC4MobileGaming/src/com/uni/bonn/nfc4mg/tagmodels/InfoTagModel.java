@@ -5,19 +5,14 @@ public class InfoTagModel {
 	// unique id of info tag
 	private String id;
 
-	// represents type of data stored in infor tag
-	private String mime;
-
 	// actual data stored into tag
 	private String data;
 
 	public InfoTagModel() {
 	}
 
-	public InfoTagModel(String id, String mime, String data) {
-		super();
+	public InfoTagModel(String id, String data) {
 		this.id = id;
-		this.mime = mime;
 		this.data = data;
 	}
 
@@ -27,14 +22,6 @@ public class InfoTagModel {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getMime() {
-		return mime;
-	}
-
-	public void setMime(String mime) {
-		this.mime = mime;
 	}
 
 	public String getData() {

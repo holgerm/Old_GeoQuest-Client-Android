@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.utility;
 
 import java.util.Arrays;
 
-import android.annotation.SuppressLint;
 import android.nfc.NdefRecord;
 
 /**
@@ -11,7 +10,6 @@ import android.nfc.NdefRecord;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class NfcTagUtility {
 
 	// Map represents possible URI mapping and their hexa values set in
@@ -62,5 +60,5 @@ public class NfcTagUtility {
 		} else {
 			return "UNKNOWN";
 		}
-	}
+	}	
 }

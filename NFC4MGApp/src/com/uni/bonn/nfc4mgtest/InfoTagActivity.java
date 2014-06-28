@@ -18,11 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uni.bonn.nfc4mg.NFCEventManager;
-import com.uni.bonn.nfc4mg.constants.TagConstants;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
-import com.uni.bonn.nfc4mg.nfctag.InfoTag;
-import com.uni.bonn.nfc4mg.nfctag.ParseTagListener;
+import com.uni.bonn.nfc4mg.infotag.InfoTag;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 
 public class InfoTagActivity extends Activity implements OnClickListener {
@@ -55,7 +52,7 @@ public class InfoTagActivity extends Activity implements OnClickListener {
 		write.setOnClickListener(this);
 
 		try {
-			mNFCEventManager = new NFCEventManager(this.ctx);
+			mNFCEventManager = NFCEventManager.getInstance(this.ctx);
 			mNFCEventManager.initialize(this.ctx, InfoTagActivity.this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,12 +100,12 @@ public class InfoTagActivity extends Activity implements OnClickListener {
 
 			if (null != mTag) {
 				try {
-					InfoTag tag = new InfoTag();
+					InfoTag tag = InfoTag.getInstance();
 					InfoTagModel model = tag.readTagData(mTag);
 
 					if (null != model) {
 						id.setText(model.getId());
-						mime.setText(model.getMime());
+						mime.setText(model.getId());
 						data.setText(model.getData());
 					} else {
 						id.setText("");
@@ -143,26 +140,19 @@ public class InfoTagActivity extends Activity implements OnClickListener {
 		case R.id.write:
 
 			String ii = id.getEditableText().toString();
-			String mm = mime.getEditableText().toString();
 			String dd = data.getEditableText().toString();
 
-			InfoTagModel model = new InfoTagModel(ii, mm, dd);
+			InfoTagModel model = new InfoTagModel(ii, dd);
 
 			if (null != mTag) {
 				try {
-					InfoTag tag = new InfoTag();
+					InfoTag tag = InfoTag.getInstance();
 					boolean status = tag.write2Tag(model, mTag);
 
 					if (status) {
 						Toast.makeText(InfoTagActivity.this, "Success.",
 								Toast.LENGTH_SHORT).show();
 					}
-
-				} catch (TagModelException e) {
-
-					e.printStackTrace();
-					Toast.makeText(InfoTagActivity.this, e.getMessage(),
-							Toast.LENGTH_SHORT).show();
 
 				} catch (IOException e) {
 

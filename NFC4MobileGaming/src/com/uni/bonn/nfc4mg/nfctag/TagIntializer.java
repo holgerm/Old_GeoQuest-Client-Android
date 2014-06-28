@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.nfctag;
 
 import org.dom4j.Element;
 
-import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.uni.bonn.nfc4mg.tagmodels.GroupTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.WiFiTagModel;
 
-@SuppressLint("NewApi")
 public class TagIntializer {
 
 	private static final String TAG = "TagIntializer";
@@ -100,14 +98,12 @@ public class TagIntializer {
 			tagType = TagConstants.TAG_TYPE_INFO;
 
 			String id = xmlElement.attributeValue("id");
-			String mime = xmlElement.attributeValue("mime");
 			String data = xmlElement.attributeValue("data");
 
 			Log.v(TAG, "id = " + id);
-			Log.v(TAG, "mime = " + mime);
 			Log.v(TAG, "data = " + data);
 
-			mInfoTagModel = new InfoTagModel(id, mime, data);
+			mInfoTagModel = new InfoTagModel(id, data);
 
 		} else if ("gps".equals(type)) {
 

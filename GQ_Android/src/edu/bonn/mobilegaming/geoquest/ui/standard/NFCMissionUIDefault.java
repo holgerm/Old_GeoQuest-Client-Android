@@ -9,17 +9,16 @@ import android.nfc.FormatException;
 import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uni.bonn.nfc4mg.constants.TagConstants;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
-import com.uni.bonn.nfc4mg.nfctag.GpsTag;
-import com.uni.bonn.nfc4mg.nfctag.InfoTag;
+import com.uni.bonn.nfc4mg.gpstag.GpsTag;
+import com.uni.bonn.nfc4mg.infotag.InfoTag;
 import com.uni.bonn.nfc4mg.nfctag.ParseTagListener;
 import com.uni.bonn.nfc4mg.nfctag.TagIntializer;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
@@ -82,7 +81,7 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 				infoModel = tInitializer.getmInfoTagModel();
 
 				String data = "Id : " + infoModel.getId() + "\n" + "MIME : "
-						+ infoModel.getMime() + "\n" + "Data : "
+						+ infoModel.getId() + "\n" + "Data : "
 						+ infoModel.getData();
 
 				preTagWriteView(
@@ -132,16 +131,13 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 
 			if (null != gpsModel) {
 				try {
-					GpsTag gtag = new GpsTag();
+					GpsTag gtag = GpsTag.getInstance();
 					gtag.write2Tag(gpsModel, mTag);
 					gpsModel = null;
 					preTagWriteView(
 							"",
 							"Tag is successfully initialized...Scan another Tag",
 							false);
-				} catch (TagModelException e) {
-					error(e.getMessage());
-					e.printStackTrace();
 				} catch (IOException e) {
 					error("Connection to Tag is lost.");
 					e.printStackTrace();
@@ -154,16 +150,13 @@ public class NFCMissionUIDefault extends NFCMissionUI {
 				}
 			} else if (null != infoModel) {
 				try {
-					InfoTag tag = new InfoTag();
+					InfoTag tag = InfoTag.getInstance();
 					tag.write2Tag(infoModel, mTag);
 					infoModel = null;
 					preTagWriteView(
 							"",
 							"Tag is successfully initialized...Scan another Tag",
 							false);
-				} catch (TagModelException e) {
-					error(e.getMessage());
-					e.printStackTrace();
 				} catch (IOException e) {
 					error("Connection to Tag is lost.");
 					e.printStackTrace();

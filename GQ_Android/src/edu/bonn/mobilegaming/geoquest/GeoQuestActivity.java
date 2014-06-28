@@ -65,7 +65,7 @@ public abstract class GeoQuestActivity extends Activity {
 	private void checkAndInitializeNFCEventManager() {
 		if (this instanceof NeedsNFCCapability) {
 			try {
-				mNFCEventManager = new NFCEventManager(this);
+				mNFCEventManager = NFCEventManager.getInstance(this);
 				mNFCEventManager.initialize(this, GeoQuestActivity.this);
 			} catch (Exception e) {
 				e.printStackTrace();
