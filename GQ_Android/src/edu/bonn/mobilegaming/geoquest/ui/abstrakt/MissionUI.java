@@ -23,7 +23,9 @@ import edu.bonn.mobilegaming.geoquest.ui.InteractionBlockingManager;
 
 public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 
-	/**
+	private static final String TAG = MissionUI.class.getCanonicalName();
+
+	/** 
 	 * @see GeoQuestUI#GeoQuestUI(android.app.Activity)
 	 * @param activity
 	 */
@@ -93,7 +95,12 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 		String bgColor = (String) XMLUtilities.getStringAttribute("bgcolor",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
 		if (bgColor != null && !bgColor.trim().equals("")) {
-			outerView.setBackgroundColor(Color.parseColor(bgColor));
+			try {
+				outerView.setBackgroundColor(Color.parseColor(bgColor));
+			} catch (IllegalArgumentException e) {
+				Log.e(TAG, "Invalid color given for background: " + bgColor);
+				return false;
+			}
 			return true;
 		}
 		return false;
