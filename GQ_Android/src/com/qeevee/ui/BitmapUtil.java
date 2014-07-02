@@ -250,8 +250,7 @@ public class BitmapUtil {
 		else if (new File(absolutePath + ".gif").canRead())
 			return absolutePath + ".gif";
 		else
-			throw new IllegalArgumentException(
-					"Invalid image path (not found): " + absolutePath);
+			return null;
 	}
 
 	private static boolean hasKnownImageSuffix(String path) {
