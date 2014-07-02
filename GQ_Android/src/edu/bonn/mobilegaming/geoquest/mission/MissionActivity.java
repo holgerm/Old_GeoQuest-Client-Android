@@ -17,6 +17,7 @@ import android.view.View;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.Dialogs;
+import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.BlockableAndReleasable;
 import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
@@ -178,7 +179,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 					mission.xmlMissionNode);
 			i++;
 		}
-		return result;
+		if (result != null)
+			return (CharSequence) StringTools.replaceVariables(result
+					.toString());
+		else
+			return null;
 	}
 
 	/**
