@@ -47,12 +47,12 @@ public class NfcReadWrite {
 	 * @throws IOException
 	 * @throws FormatException
 	 * @throws TagTechnologyNotSupportedException
-	 * @throws TagReadOnlyException 
-	 * @throws NfcTagException 
+	 * @throws TagReadOnlyException
+	 * @throws NfcTagException
 	 */
 	public static void writeToNfc(NdefMessage msg, Tag tag) throws IOException,
 			FormatException, NfcTagException {
-		
+
 		// getting the supported tech technology
 		getTagTech(tag);
 
@@ -60,9 +60,9 @@ public class NfcReadWrite {
 
 			Ndef ndef = Ndef.get(tag);
 
-			//Perform a pre check conditions before writing into Nfc tag
+			// Perform a pre check conditions before writing into Nfc tag
 			preConditionToWrite(msg, ndef);
-			
+
 			ndef.writeNdefMessage(msg);
 			ndef.close(); // this is mandatory to close communication channel
 
@@ -83,6 +83,7 @@ public class NfcReadWrite {
 
 	/**
 	 * Internal method to perform Ndef check before writing actual data to Tag.
+	 * 
 	 * @param msg
 	 * @param ndef
 	 * @throws IOException
@@ -91,34 +92,37 @@ public class NfcReadWrite {
 	 */
 	private static void preConditionToWrite(NdefMessage msg, Ndef ndef)
 			throws IOException, NfcTagException {
-		
-		//getting size of message, to check capacity
+
+		// getting size of message, to check capacity
 		int size = msg.toByteArray().length;
-		
-		if(null != ndef){
-			//Open connection with tag
+
+		if (null != ndef) {
+			// Open connection with tag
 			ndef.connect();
-			
-			//check for connection
-			if(ndef.isConnected()){
-				
-				//check for tag write permission.
-				if(ndef.isWritable()){
-					
-						//check for tag capacity, in case data is more, an exception will be thrown
-						if(ndef.getMaxSize() > size){
-						}else{
-							throw new NfcTagException("Tag cannot hold this amount of data");
-						}
-				}else{
-					throw new NfcTagException("Tag is read only. Cannot Write data!");
-				}				
-			}else{
+
+			// check for connection
+			if (ndef.isConnected()) {
+
+				// check for tag write permission.
+				if (ndef.isWritable()) {
+
+					// check for tag capacity, in case data is more, an
+					// exception will be thrown
+					if (ndef.getMaxSize() > size) {
+					} else {
+						throw new NfcTagException(
+								"Tag cannot hold this amount of data");
+					}
+				} else {
+					throw new NfcTagException(
+							"Tag is read only. Cannot Write data!");
+				}
+			} else {
 				throw new TagLostException("");
 			}
 		}
-	}	
-	
+	}
+
 	/**
 	 * Internal class function to determine supported tech technologies.
 	 * 
@@ -147,7 +151,7 @@ public class NfcReadWrite {
 	 * 
 	 * @param tag
 	 *            : current tag instance
-	 * @return
+	 * @return maybe null if tag not recognized
 	 * @throws IOException
 	 * @throws FormatException
 	 */
@@ -155,6 +159,8 @@ public class NfcReadWrite {
 			FormatException {
 
 		Ndef ndef = Ndef.get(tag);
+		if (ndef == null)
+			return null;
 		ndef.connect();
 		NdefMessage msg = ndef.getNdefMessage();
 		ndef.close();
