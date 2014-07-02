@@ -4,17 +4,44 @@
 
 if [ "$#" -ne 1 ]; then
     echo "Illegal number of parameters - just specify product name."
+	exit 1
 fi
 
 # Set basic variables:
 
 baseDir=/Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/
+productDir=${baseDir}products/$1/
+
+if ! [[ -d $baseDir && -r  $baseDir && -w  $baseDir && -x $baseDir ]]; then
+    echo "Base directory not usable."
+	exit 1
+else
+	echo "Base directory ok"
+fi
+
+
+if ! [[ -d $productDir && -r  $productDir && -w  $productDir && -x $productDir ]]; then
+    echo "Product directory not usable."
+	exit 1
+else
+	echo "Product found"
+fi
+	
 
 # Delete included directory in assets first, sinde this should not be kept:
 
-rm -rf ${baseDir}assets/included/
+rm -rf ${baseDir}assets/included/ || {
+	echo "Could not remove include directory."
+	exit 1
+}
 
 
 # Copy resources in place, i.e. logos, name etc.
 
-cp -r ${baseDir}products/$1/  $baseDir
+cp -r ${baseDir}products/$1/  $baseDir || {
+	echo "Could not put product assets in place."
+	exit 1
+}
+
+echo "Done."
+echo "You are using" $1 "as product now."
