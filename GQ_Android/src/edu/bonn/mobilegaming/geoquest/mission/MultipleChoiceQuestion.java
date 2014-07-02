@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.util.StringTools;
 
 import edu.bonn.mobilegaming.geoquest.Globals;
 import edu.bonn.mobilegaming.geoquest.R;
@@ -174,6 +175,7 @@ public class MultipleChoiceQuestion extends Question {
 		questionText = mission.xmlMissionNode
 				.selectSingleNode(".//questiontext").getText()
 				.replaceAll("\\s+", " ").trim();
+		questionText = StringTools.replaceVariables(questionText);
 		List<Element> xmlAnswers = mission.xmlMissionNode
 				.selectNodes(".//answer");
 		for (Iterator<Element> j = xmlAnswers.iterator(); j.hasNext();) {
