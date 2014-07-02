@@ -1,5 +1,13 @@
 # Versioning #
 
+## 0.8.3.11 ##
+
+- many Attributes (e.g. question texts) can now use variables which are automatically replaced
+
+## 0.8.3.10 ##
+
+- bug fixes
+
 ## 0.8.3.9 ##
 
 - external missions completely removed 
