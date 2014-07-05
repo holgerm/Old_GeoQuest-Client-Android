@@ -1,0 +1,71 @@
+#!/bin/bash
+
+globalWorkdir="${1%/}"
+globalTargetdir="${2%/}"
+
+function gatherCSSFiles () {
+	globalCSSFilesArray=()
+	for cssFile in ${globalWorkdir}/*; do
+		if [ "${cssFile##*.}" == "css" ] 
+			then
+			globalCSSFilesArray+=("${cssFile##*/}")
+			echo "added ${cssFile##*/}"
+		fi
+	done
+}
+
+gatherCSSFiles
+
+
+
+function copyCSSFiles () {
+	for cssFile in "${globalCSSFilesArray[@]}"
+		do
+			cp "${globalWorkdir}/$cssFile" "${1}/$cssFile"  
+		done
+}
+
+function createHTML () {
+	workFile="$1"
+	workDeltaDir="$2"
+	workFileBase="${workFile%.*}"
+	
+	workMDFile="${globalWorkdir}${workDeltaDir}/${workFile}"
+	targetDir="${globalTargetdir}${workDeltaDir}"
+	
+	if [[ ! -d "$targetDir" ]] 
+		then
+		mkdir "${targetDir}"
+	fi
+	copyCSSFiles "${targetDir}"
+	
+	workTMPFile="${targetDir}/${workFileBase}.tmp"
+	workHTMLFile="${targetDir}/${workFileBase}.html"
+	
+	multimarkdown <"${workMDFile}" >"${workTMPFile}"
+	sed 's@href="\(.*\)\.md@href="\1.html@g' <"${workTMPFile}" >"${workHTMLFile}"
+	rm "${workTMPFile}"
+}
+
+function traverse () {
+	local directory=$1
+	local f
+	
+	for f in "$directory"/*; do
+		if [[ -d "$f"  && ! -L "${f}" ]]
+		then
+			# real directory, not symbolic link!
+			traverse "$f"
+		fi
+		if [ "${f##*.}" == "md" ]
+		then
+			myPath="${f%/*}"
+			deltaDir="${myPath#$globalWorkdir}"
+			myFile="${f##*/}"
+			createHTML "$myFile" "$deltaDir"
+		fi
+	done
+}
+
+traverse $globalWorkdir
+echo "done"
