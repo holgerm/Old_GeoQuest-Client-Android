@@ -13,7 +13,6 @@ import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.util.Dialogs;
 
-
 public abstract class GeoQuestMapActivity extends MapActivity implements
 		MissionOrToolActivity {
 
@@ -89,31 +88,18 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		// case R.id.menu_imprint:
-		// GeoQuestApp.getInstance().showImprint();
-		// return true;
-		// case R.id.menu_preferences:
-		// Intent settingsActivity = new Intent(getBaseContext(),
-		// Preferences.class);
-		// startActivity(settingsActivity);
-		// return true;
-		case R.id.menu_info:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_info) {
 			GeoQuestApp.getInstance().showInfo();
 			return true;
-		case R.id.menu_endGame:
+		} else if (itemId == R.id.menu_endGame) {
 			showDialog(Dialogs.DIALOG_END_GAME);
 			return true;
-			// case R.id.menu_history:
-//			Intent historyActivity = new Intent(getBaseContext(),
-//					HistoryActivity.class);
-//			startActivity(historyActivity);
-//			return true;
-		case R.id.menu_debugMode:
+		} else if (itemId == R.id.menu_debugMode) {
 			item.setChecked(!item.isChecked());
 			GeoQuestApp.getInstance().setDebugMode(item.isChecked());
 			return true;
-		default:
+		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}

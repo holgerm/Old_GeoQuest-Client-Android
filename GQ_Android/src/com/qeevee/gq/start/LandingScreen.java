@@ -86,17 +86,17 @@ public class LandingScreen extends GeoQuestActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_quit:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_quit) {
 			showDialog(Dialogs.DIALOG_TERMINATE_APP);
 			return true;
-		case R.id.menu_showLocalGames:
+		} else if (itemId == R.id.menu_showLocalGames) {
 			showLocalGames();
 			return true;
-		case R.id.menu_showCloudGames:
+		} else if (itemId == R.id.menu_showCloudGames) {
 			showCloudGames();
 			return true;
-		default:
+		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}

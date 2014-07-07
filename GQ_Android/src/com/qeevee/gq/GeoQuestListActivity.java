@@ -38,23 +38,15 @@ public abstract class GeoQuestListActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		// case R.id.menu_imprint:
-		// GeoQuestApp.getInstance().showImprint();
-		// return true;
-		// case R.id.menu_preferences:
-		// Intent settingsActivity = new Intent(getBaseContext(),
-		// Preferences.class);
-		// startActivity(settingsActivity);
-		// return true;
-		case R.id.menu_info:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_info) {
 			GeoQuestApp.getInstance().showInfo();
 			return true;
-		case R.id.menu_debugMode:
+		} else if (itemId == R.id.menu_debugMode) {
 			item.setChecked(!item.isChecked());
 			GeoQuestApp.getInstance().setDebugMode(item.isChecked());
 			return true;
-		default:
+		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}

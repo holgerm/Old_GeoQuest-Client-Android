@@ -94,10 +94,9 @@ public class LocalGames extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_DeleteAllQUests:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_DeleteAllQUests) {
 			showDialog(Dialogs.DIALOG_DELETE_ALL);
-			break;
 		}
 
 		return super.onOptionsItemSelected(item);

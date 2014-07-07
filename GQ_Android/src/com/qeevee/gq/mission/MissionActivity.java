@@ -240,16 +240,11 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_endGame:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_endGame) {
 			showDialog(Dialogs.DIALOG_END_GAME);
 			return true;
-			// case R.id.menu_history:
-			// Intent historyActivity = new Intent(getBaseContext(),
-			// HistoryActivity.class);
-			// startActivity(historyActivity);
-			// return true;
-		default:
+		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}

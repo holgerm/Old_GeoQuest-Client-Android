@@ -316,10 +316,9 @@ public class MapOSM extends MapMissionActivity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_ZoomToQuestArea:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_ZoomToQuestArea) {
 			zoomToQuestArea();
-			break;
 		}
 
 		return super.onOptionsItemSelected(item);

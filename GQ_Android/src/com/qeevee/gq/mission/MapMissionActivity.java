@@ -165,8 +165,8 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_mockGPS:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_mockGPS) {
 			if (locationSource.getMode() == LocationSource.REAL_MODE) {
 				// From REAL mode to MOCK mode:
 				locationSource.setMode(LocationSource.MOCK_MODE);
@@ -176,10 +176,8 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 				locationSource.setMode(LocationSource.REAL_MODE);
 				item.setTitle(R.string.menu_mockGPS);
 			}
-			break;
-		case R.id.menu_center:
+		} else if (itemId == R.id.menu_center) {
 			mapHelper.centerMap();
-			break;
 		}
 
 		return super.onOptionsItemSelected(item);
