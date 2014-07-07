@@ -8,13 +8,13 @@
         android:icon="@drawable/icon_imprint"
         android:title="@string/menu_imprint">
     </item>
-    -->
     <item
         android:id="@+id/menu_preferences"
         android:checkable="false"
         android:icon="@drawable/icon_prefs"
         android:title="@string/menu_preferences">
     </item>
+    -->
     <item
         android:id="@+id/menu_info"
         android:checkable="false"
