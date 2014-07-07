@@ -20,6 +20,7 @@ public class GameDescription {
 	private String id;
 	private String zipURL = "none";
 	private String portalID;
+	private long lastUpdate;
 
 	public String getZipURL() {
 		return zipURL;
@@ -29,6 +30,7 @@ public class GameDescription {
 			throws JSONException {
 		name = (String) jsonObject.get("name");
 		id = ((Integer) jsonObject.get("id")).toString();
+//		lastUpdate = Long.parseLong((String) jsonObject.get("lastUpdate"));
 		zipURL = (String) jsonObject.get("zip");
 		this.setPortalID(portalID);
 	}
@@ -41,6 +43,7 @@ public class GameDescription {
 	 */
 	public GameDescription(File gameDir) {
 		id = gameDir.getName();
+		// TODO get lastUpdate as stored in persistent storage???
 		File gameXML = new File(gameDir, GameDataManager.GAME_XML_FILENAME);
 		name = extractNameFromXML(gameXML);
 	}
