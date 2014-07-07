@@ -74,7 +74,7 @@ public class HomeActivity extends Activity implements ParseTagListener,
 
 		String path = "android.resource://" + getPackageName() + "/"
 				+ R.raw.intro;
-		setnPlayVideo(path);
+//		setnPlayVideo(path); TEST
 
 		hidePinLyt();
 	}
