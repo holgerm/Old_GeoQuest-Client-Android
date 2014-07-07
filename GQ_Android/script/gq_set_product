@@ -10,6 +10,7 @@ fi
 # Set basic variables:
 
 baseDir=/Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/
+testDir=/Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android_Tests_Robolectric/
 productDir=${baseDir}products/$1/
 
 if ! [[ -d $baseDir && -r  $baseDir && -w  $baseDir && -x $baseDir ]]; then
@@ -42,6 +43,20 @@ cp -r ${baseDir}products/$1/  $baseDir || {
 	echo "Could not put product assets in place."
 	exit 1
 }
+
+# Renaming package:
+tmpFile=/tmp/out.tmp.$$
+stdPck="com.qeevee.gq.DRKOpaEnkel.DRKOpaEnkel"
+
+echo "Renaming package ..."
+
+LC_CLANG=C
+for f in $(find ${baseDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
+	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+done
+for f in $(find ${testDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
+	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+done
 
 echo "Done."
 echo "You are using" $1 "as product now."
