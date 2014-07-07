@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -24,7 +23,7 @@ public class NFCMission extends InteractiveMission implements
 		NeedsNFCCapability {
 
 	private static final String TAG = "NFCMission";
-	private Context ctx;
+//	private Context ctx;
 	// private NFCEventManager mNFCEventManager = null;
 
 	// Global Tag reference
@@ -40,7 +39,7 @@ public class NFCMission extends InteractiveMission implements
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "Inside NFCMission");
 
-		this.ctx = this;
+		//		this.ctx = this;
 		/*
 		 * try { mNFCEventManager = new NFCEventManager(this.ctx);
 		 * mNFCEventManager.initialize(this.ctx, NFCMission.this); } catch
@@ -48,6 +47,7 @@ public class NFCMission extends InteractiveMission implements
 		 * e.getMessage(), Toast.LENGTH_SHORT).show(); }
 		 */
 
+		@SuppressWarnings("unchecked")
 		List<Element> initialize = mission.xmlMissionNode
 				.selectNodes("./initialize");
 

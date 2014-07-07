@@ -1,19 +1,15 @@
 package com.qeevee.ui;
 
-import com.qeevee.util.Util;
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.util.Util;
 
 public class ZoomImageView extends ImageView {
 
@@ -50,9 +46,6 @@ public class ZoomImageView extends ImageView {
 
 	public void setImageByRelativePathToBitmap(String relativePath) {
 		bitmapRelPath = relativePath;
-		WindowManager wm = (WindowManager) GeoQuestApp.getContext()
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
 		int margin = GeoQuestApp.getContext().getResources()
 				.getDimensionPixelSize(R.dimen.margin);
 		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath,

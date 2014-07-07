@@ -1,9 +1,6 @@
 package com.qeevee.gq;
 
-import java.util.List;
-
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -227,18 +224,6 @@ public class Preferences extends PreferenceActivity implements
 		return order;
 	}
 
-	private void prepareRepoListForAutoStartQuest(
-			final PasswordProtectedListPreference questPref) {
-		final AlertDialog immediateAlert = createRepoListDialog(questPref);
-		Runnable run = new Runnable() {
-
-			public void run() {
-				immediateAlert.show();
-			}
-		};
-		questPref.setImmediateProcessing(run, immediateAlert);
-	}
-
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			final String key) {
 		if (key.equals("isGPSMocking")) {
@@ -291,51 +276,4 @@ public class Preferences extends PreferenceActivity implements
 		}
 	}
 
-	private AlertDialog createRepoListDialog(
-			final PasswordProtectedListPreference questPref) {
-		List<String> repoList = GeoQuestApp.getNotEmptyRepositoryNamesAsList();
-		// TODO: check via GeoQuestApp.getInstance().isRepoDataAvailable()
-		if (repoList == null || repoList.size() == 0) {
-			// repo list not locally stored - download
-			ProgressDialog downloadRepoDataDialog = new ProgressDialog(this);
-			downloadRepoDataDialog
-					.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			downloadRepoDataDialog.setCancelable(false);
-
-			final GeoQuestProgressHandler downloadRepoDataHandler;
-
-			downloadRepoDataDialog.setProgress(0);
-			downloadRepoDataDialog.setMessage(GeoQuestApp.getContext().getText(
-					R.string.start_fetchingDataFromServer));
-			downloadRepoDataHandler = new GeoQuestProgressHandler(
-					downloadRepoDataDialog,
-					GeoQuestProgressHandler.LAST_IN_CHAIN, this);
-
-			GeoQuestApp.loadRepoData(downloadRepoDataHandler);
-			repoList = GeoQuestApp.getNotEmptyRepositoryNamesAsList();
-		}
-		final String[] repos = new String[repoList.size()];
-		repoList.toArray(repos);
-		AlertDialog immediateAlert = new AlertDialog.Builder(this)
-				.setTitle("Repo List - OLD HEADER REMOVED") // TODO build new
-															// autostart runtime
-															// selection feature
-				.setItems(repos, new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						String repo = repos[which];
-						questPref.setDialogTitle(repo);
-						List<String> questList = GeoQuestApp
-								.getGameNamesForRepository(repo);
-						String[] quests = new String[questList.size()];
-						questList.toArray(quests);
-						questPref.setEntries(quests);
-						mainPrefs.edit()
-								.putString(PREF_KEY_AUTO_START_REPO, repo)
-								.commit();
-						questPref.setEntryValues(quests);
-					}
-				}).create();
-		return immediateAlert;
-	}
 }

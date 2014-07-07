@@ -11,34 +11,34 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_server_settings" android:key="pref_cat_server_settings">
-		<edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedEditTextPreference android:key="pref_server_url"
+		<com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference android:key="pref_server_url"
 			android:title="@string/pref_server_url_title" android:summary="@string/pref_server_url_summary"
 			android:dialogTitle="@string/pref_server_url_dialog_title" android:dialogMessage="@string/pref_server_url_dialog_message">
-		</edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedEditTextPreference>
+		</com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_game_start" android:key="pref_cat_game_start">
-		<edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedCheckBoxPreference android:key="pref_auto_start_game_check"
+		<com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference android:key="pref_auto_start_game_check"
 			android:title="@string/pref_auto_start_game_check_title" android:summary="@string/pref_auto_start_game_check_summary"
 			android:defaultValue="false">
-		</edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedCheckBoxPreference>
-		<edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedListPreference android:key="pref_auto_start_game"
+		</com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference>
+		<com.qeevee.gq.pwprefs.PasswordProtectedListPreference android:key="pref_auto_start_game"
 			android:title="@string/pref_auto_start_game_title" android:summary="@string/pref_auto_start_game_summary"
 			android:dialogTitle="@string/pref_auto_start_game_dialog_title" android:dependency="pref_auto_start_game_check">
-		</edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedListPreference>
+		</com.qeevee.gq.pwprefs.PasswordProtectedListPreference>
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_security">
-		<edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedEditTextPreference android:key="pref_password"
+		<com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference android:key="pref_password"
 			android:title="@string/pref_password_title" android:summary="@string/pref_password_summary"
 			android:dialogTitle="@string/pref_password_dialog_title" android:dialogMessage="@string/pref_password_dialog_message">
-		</edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedEditTextPreference>
+		</com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_misc">
-		<edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedDialogPreference android:key="pref_clean_sdcard"
+		<com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference android:key="pref_clean_sdcard"
 			android:title="@string/pref_clean_sdcard_title" android:summary="@string/pref_clean_sdcard_summary"
 			android:dialogTitle="@string/pref_clean_sdcard_dlg_title" android:dialogMessage="@string/pref_clean_sdcard_dlg_msg">
-		</edu.bonn.mobilegaming.geoquest.pwprefs.PasswordProtectedDialogPreference>
+		</com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference>
 	</PreferenceCategory>
 </PreferenceScreen>

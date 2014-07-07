@@ -31,6 +31,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Globals;
+import com.qeevee.gq.R;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
@@ -38,10 +41,6 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.ZoomImageView;
 import com.qeevee.util.Util;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.R;
 
 /**
  * Photo Taking Mission.
@@ -261,15 +260,15 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 		/* So pre-scale the target bitmap into which the file is decoded */
 
 		/* Get the size of the ImageView */
-		int targetW = imageView.getWidth();
-		int targetH = imageView.getHeight();
+		// int targetW = imageView.getWidth();
+		// int targetH = imageView.getHeight();
 
 		/* Get the size of the image */
 		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 		bmOptions.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(getCurrentPhotoPath(), bmOptions);
 		int photoW = bmOptions.outWidth;
-		int photoH = bmOptions.outHeight;
+		// int photoH = bmOptions.outHeight;
 
 		/* Figure out which way needs to be reduced less */
 		int scaleFactor = 1;

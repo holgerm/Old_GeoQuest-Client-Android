@@ -3,20 +3,18 @@ package com.qeevee.gq.ui.web;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qeevee.gq.R;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.mission.NPCTalk.DialogItem;
 import com.qeevee.gq.res.ResourceManager;
@@ -25,30 +23,28 @@ import com.qeevee.gq.ui.abstrakt.GeoQuestUI;
 import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 import com.qeevee.util.JSUtil;
 
-import com.qeevee.gq.R;
-
 public class NPCTalkUIWeb extends NPCTalkUI {
 
 	private Button button;
-	private TextView dialogText;
+	// private TextView dialogText;
 	private ScrollView scrollView;
 	private DialogItem currentDialogItem = null;
 	private int state = 0;
-	private static final int STATE_NEXT_DIALOG_ITEM = 1;
+//	private static final int STATE_NEXT_DIALOG_ITEM = 1;
 	private static final int STATE_END = 2;
 	private static final String TAG = NPCTalkUIWeb.class.getCanonicalName();
 
-	private OnClickListener showNextDialogListener = new OnClickListener() {
-		public void onClick(View v) {
-			showNextDialogItem();
-		}
-	};
-
-	private OnClickListener endMissionListener = new OnClickListener() {
-		public void onClick(View v) {
-			getNPCTalk().finishMission();
-		}
-	};
+	// private OnClickListener showNextDialogListener = new OnClickListener() {
+	// public void onClick(View v) {
+	// showNextDialogItem();
+	// }
+	// };
+	//
+	// private OnClickListener endMissionListener = new OnClickListener() {
+	// public void onClick(View v) {
+	// getNPCTalk().finishMission();
+	// }
+	// };
 
 	private CharSequence nextDialogButtonTextDefault;
 	private WebView mainView;
@@ -137,49 +133,49 @@ public class NPCTalkUIWeb extends NPCTalkUI {
 				getNPCTalk(), mainView);
 	}
 
-	private void displaySpeaker() {
-		if (currentDialogItem.getSpeaker() == null)
-			return;
-		dialogText.append(Html.fromHtml("<b>" + currentDialogItem.getSpeaker()
-				+ ": </b>"));
-	}
-
+	// private void displaySpeaker() {
+	// if (currentDialogItem.getSpeaker() == null)
+	// return;
+	// dialogText.append(Html.fromHtml("<b>" + currentDialogItem.getSpeaker()
+	// + ": </b>"));
+	// }
+	//
 	public CharSequence getNextDialogButtonTextDefault() {
 		return nextDialogButtonTextDefault;
 	}
 
-	private void refreshButton() {
-		if (getNPCTalk().hasMoreDialogItems()) {
-			setButtonMode(STATE_NEXT_DIALOG_ITEM);
-		} else {
-			setButtonMode(STATE_END);
-		}
-	}
-
-	private void setButtonMode(int newMode) {
-		state = newMode;
-		switch (state) {
-		case STATE_NEXT_DIALOG_ITEM:
-			button.setOnClickListener(showNextDialogListener);
-			if (currentDialogItem.getNextDialogButtonText() != null)
-				button.setText(currentDialogItem.getNextDialogButtonText());
-			else
-				button.setText(R.string.button_text_next);
-			break;
-		case STATE_END:
-			button.setOnClickListener(endMissionListener);
-			if (getNPCTalk().getMissionAttribute("endbuttontext") != null)
-				button.setText(getNPCTalk()
-						.getMissionAttribute("endbuttontext"));
-			else if (currentDialogItem.getNextDialogButtonText() != null)
-				button.setText(currentDialogItem.getNextDialogButtonText());
-			else
-				button.setText(R.string.button_text_proceed);
-			break;
-		}
-
-	}
-
+	// private void refreshButton() {
+	// if (getNPCTalk().hasMoreDialogItems()) {
+	// setButtonMode(STATE_NEXT_DIALOG_ITEM);
+	// } else {
+	// setButtonMode(STATE_END);
+	// }
+	// }
+	//
+	// private void setButtonMode(int newMode) {
+	// state = newMode;
+	// switch (state) {
+	// case STATE_NEXT_DIALOG_ITEM:
+	// button.setOnClickListener(showNextDialogListener);
+	// if (currentDialogItem.getNextDialogButtonText() != null)
+	// button.setText(currentDialogItem.getNextDialogButtonText());
+	// else
+	// button.setText(R.string.button_text_next);
+	// break;
+	// case STATE_END:
+	// button.setOnClickListener(endMissionListener);
+	// if (getNPCTalk().getMissionAttribute("endbuttontext") != null)
+	// button.setText(getNPCTalk()
+	// .getMissionAttribute("endbuttontext"));
+	// else if (currentDialogItem.getNextDialogButtonText() != null)
+	// button.setText(currentDialogItem.getNextDialogButtonText());
+	// else
+	// button.setText(R.string.button_text_proceed);
+	// break;
+	// }
+	//
+	// }
+	//
 	public void onBlockingStateUpdated(boolean isBlocking) {
 		button.setEnabled(!isBlocking);
 		scrollView.fullScroll(View.FOCUS_DOWN);

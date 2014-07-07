@@ -5,18 +5,15 @@ package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.res.ResourceManager;
-import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 /**
  * This class is responsible for loading, updating and persisting the
@@ -66,35 +63,6 @@ public class GameDataManager {
 	private static String repoBaseDirPath() {
 		return "/Android/data/" + GeoQuestApp.getInstance().getPackageName()
 				+ REPOSITORIES_BASE_PATH;
-	}
-
-	/**
-	 * This method collects all accessible repositories, including those
-	 * delivered statically with the app, those that the user has downloaded and
-	 * which are locally stored on the device as well as those that are
-	 * available from the server.
-	 * 
-	 * @return a list of all accessible repositories.
-	 */
-	public static List<RepositoryItem> getRepositories() {
-		List<RepositoryItem> repositories = new ArrayList<RepositoryItem>();
-		repositories.addAll(StaticallyDeployedGames.getRepositories());
-		return repositories;
-	}
-
-	/**
-	 * @param repoName
-	 * @return null iff no repository with given name repoName found.
-	 */
-	public static RepositoryItem getRepository(String repoName) {
-		List<RepositoryItem> repositories = getRepositories();
-		for (Iterator<RepositoryItem> iterator = repositories.iterator(); iterator
-				.hasNext();) {
-			RepositoryItem repositoryItem = (RepositoryItem) iterator.next();
-			if (repoName.equals(repositoryItem.getName()))
-				return repositoryItem;
-		}
-		return null;
 	}
 
 	/**

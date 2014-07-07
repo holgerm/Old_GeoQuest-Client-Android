@@ -51,7 +51,7 @@ public class PhotoPuzzle extends Question {
 	private CharSequence questionText;
 	public List<String> answers = new ArrayList<String>();
 	private OnClickListener buttonOnClickListener;
-	private String storeVariable;
+//	private String storeVariable;
 	private int numberOfAnswers = 0;
 
 	/** unsichtbare Zellen **/
@@ -157,9 +157,9 @@ public class PhotoPuzzle extends Question {
 				R.string.question_reply_correct_default);
 		replyTextOnWrong = getMissionAttribute("replyOnWrong",
 				R.string.question_reply_wrong_default);
-		storeVariable = (String) getMissionAttribute(
-				"storeAcceptedAnswerInVariable",
-				XMLUtilities.OPTIONAL_ATTRIBUTE);
+		// storeVariable = (String) getMissionAttribute(
+		// "storeAcceptedAnswerInVariable",
+		// XMLUtilities.OPTIONAL_ATTRIBUTE);
 
 		@SuppressWarnings("unchecked")
 		List<Element> xmlAnswers = ((Element) mission.xmlMissionNode)

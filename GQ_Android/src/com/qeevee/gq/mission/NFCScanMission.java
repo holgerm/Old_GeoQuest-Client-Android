@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import com.uni.bonn.nfc4mg.nfctag.TagHandler;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 
-
 public class NFCScanMission extends InteractiveMission implements
 		ParseTagListener, NeedsNFCCapability {
 
@@ -37,8 +35,8 @@ public class NFCScanMission extends InteractiveMission implements
 	private NFCEventManager mNFCEventManager = null;
 
 	// Global Tag reference
-	private Tag mTag = null;
-	private int tagType = 0;
+	// private Tag mTag = null;
+	// private int tagType = 0;
 	private TagHandler mHandler = null;
 
 	// Scan Tag local variables
@@ -48,7 +46,7 @@ public class NFCScanMission extends InteractiveMission implements
 	private String latitude;
 	private String longitude;
 	private String needFruit;
-	private String passKey;
+	// private String passKey;
 	private String description;
 	private String earnFruit;
 	private String verifyUserInput;
@@ -73,6 +71,7 @@ public class NFCScanMission extends InteractiveMission implements
 			Toast.makeText(this.ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 
+		@SuppressWarnings("unchecked")
 		List<Element> nfctouch = mission.xmlMissionNode
 				.selectNodes("./nfctouch");
 
@@ -85,7 +84,7 @@ public class NFCScanMission extends InteractiveMission implements
 		latitude = element.attributeValue("latitude");
 		longitude = element.attributeValue("longitude");
 		needFruit = element.attributeValue("needFruit");
-		passKey = element.attributeValue("passKey");
+		// passKey = element.attributeValue("passKey");
 		description = element.attributeValue("description");
 		earnFruit = element.attributeValue("earnFruit");
 		succImg = element.attributeValue("succImg");

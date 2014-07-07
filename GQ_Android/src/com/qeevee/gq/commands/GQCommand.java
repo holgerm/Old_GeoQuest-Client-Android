@@ -11,14 +11,12 @@ public abstract class GQCommand {
 	private CharSequence title;
 	private CharSequence message;
 	private int okButtonTextID;
-	private int cancelButtonTextID;
 
 	public GQCommand(CharSequence title, CharSequence message,
 			int okButtonTextID, int cancelButtonTextID) {
 		this.title = title;
 		this.message = message;
 		this.okButtonTextID = okButtonTextID;
-		this.cancelButtonTextID = cancelButtonTextID;
 	}
 
 	/**

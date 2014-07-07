@@ -26,7 +26,6 @@ import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
 
-
 public class StartAndExitScreen extends MissionActivity {
 
 	private static final String TAG = StartAndExitScreen.class
@@ -113,8 +112,6 @@ public class StartAndExitScreen extends MissionActivity {
 					Display display = getWindowManager().getDefaultDisplay();
 					Point size = new Point();
 					display.getSize(size);
-					int width = size.x;
-					int height = size.y;
 
 					int x = (int) Math.abs((double) event.getX() * 1000
 							/ (v.getMeasuredWidth()));

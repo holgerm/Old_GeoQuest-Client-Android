@@ -20,7 +20,8 @@ public class GameDescription {
 	private String id;
 	private String zipURL = "none";
 	private String portalID;
-	private long lastUpdate;
+
+	// private long lastUpdate;
 
 	public String getZipURL() {
 		return zipURL;

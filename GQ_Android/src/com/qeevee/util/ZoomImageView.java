@@ -2,17 +2,15 @@ package com.qeevee.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.FullScreenImage;
 
 public class ZoomImageView extends ImageView {
 
+	@SuppressWarnings("unused")
 	private static final String TAG = ZoomImageView.class.getCanonicalName();
 	private String bitmapRelPath;
 
