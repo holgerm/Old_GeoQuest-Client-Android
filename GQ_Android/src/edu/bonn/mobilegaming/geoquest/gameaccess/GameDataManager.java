@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 
@@ -16,7 +17,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 /**
  * This class is responsible for loading, updating and persisting the

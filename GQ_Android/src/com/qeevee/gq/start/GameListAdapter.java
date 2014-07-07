@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.R;
 
 public class GameListAdapter extends ArrayAdapter<GameDescription> {
 

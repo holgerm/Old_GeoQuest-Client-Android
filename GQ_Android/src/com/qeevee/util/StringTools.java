@@ -4,8 +4,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.qeevee.gq.Variables;
+
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class StringTools {
 

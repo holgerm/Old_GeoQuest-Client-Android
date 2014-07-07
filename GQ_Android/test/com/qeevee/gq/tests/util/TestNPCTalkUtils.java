@@ -4,10 +4,11 @@ import static com.qeevee.gq.tests.util.TestUtils.getFieldValue;
 
 import java.util.Iterator;
 
+import com.qeevee.gq.mission.NPCTalk;
+import com.qeevee.gq.mission.NPCTalk.DialogItem;
+
 import android.os.CountDownTimer;
 import android.widget.Button;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
 
 public class TestNPCTalkUtils {
 

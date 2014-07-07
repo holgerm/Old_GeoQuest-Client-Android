@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 import android.content.res.AssetManager;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class Configuration {
 

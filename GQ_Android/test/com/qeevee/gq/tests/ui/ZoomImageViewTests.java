@@ -9,13 +9,13 @@ import org.junit.runner.RunWith;
 
 import android.view.View;
 
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
 import com.qeevee.ui.ZoomImageView;
 
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @Ignore
 @RunWith(GQTestRunner.class)

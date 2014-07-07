@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.qeevee.util.FileOperations;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 

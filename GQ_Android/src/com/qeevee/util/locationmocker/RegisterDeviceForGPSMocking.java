@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.os.AsyncTask;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class RegisterDeviceForGPSMocking extends
 		AsyncTask<String, Void, Boolean> {

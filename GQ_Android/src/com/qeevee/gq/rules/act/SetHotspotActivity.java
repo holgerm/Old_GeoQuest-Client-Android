@@ -1,9 +1,9 @@
 package com.qeevee.gq.rules.act;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class SetHotspotActivity extends Action {
 

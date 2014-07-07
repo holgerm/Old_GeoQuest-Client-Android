@@ -22,14 +22,15 @@ import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.MultipleChoiceQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.xtremelabs.robolectric.Robolectric;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionMissionTests {

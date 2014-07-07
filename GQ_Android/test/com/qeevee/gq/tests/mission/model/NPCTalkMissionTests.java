@@ -14,19 +14,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.qeevee.gq.Variables;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
 import com.qeevee.gq.history.TransitionItem;
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkMissionTests {

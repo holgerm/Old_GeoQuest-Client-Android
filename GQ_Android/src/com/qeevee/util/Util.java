@@ -1,9 +1,10 @@
 package com.qeevee.util;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class Util {
 

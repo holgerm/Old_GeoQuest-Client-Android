@@ -15,11 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
+import com.qeevee.gq.mission.QRTagReading;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.QRTagReading;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 @RunWith(GQTestRunner.class)
 public class QRTagReadingModeTreasureTests {

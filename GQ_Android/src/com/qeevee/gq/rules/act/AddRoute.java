@@ -6,13 +6,13 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.LocationUtilities;
 import com.qeevee.gq.loc.Route;
 import com.qeevee.gq.loc.RouteManager;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class AddRoute extends Action {
 

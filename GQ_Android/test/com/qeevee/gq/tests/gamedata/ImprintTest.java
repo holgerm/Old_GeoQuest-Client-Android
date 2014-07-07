@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.qeevee.gq.Imprint;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
-import edu.bonn.mobilegaming.geoquest.Imprint;
 
 @RunWith(GQTestRunner.class)
 public class ImprintTest {

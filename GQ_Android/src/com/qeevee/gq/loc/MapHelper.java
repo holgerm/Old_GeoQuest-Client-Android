@@ -6,10 +6,11 @@ import java.util.List;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 
+import com.qeevee.gq.GeoQuestLocationListener;
+import com.qeevee.gq.Variables;
+import com.qeevee.gq.mission.MapMissionActivity;
+
 import android.location.Location;
-import edu.bonn.mobilegaming.geoquest.GeoQuestLocationListener;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MapMissionActivity;
 
 public class MapHelper {
 

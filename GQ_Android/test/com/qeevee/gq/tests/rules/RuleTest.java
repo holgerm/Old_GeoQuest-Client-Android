@@ -18,10 +18,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.qeevee.gq.Variables;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 @RunWith(GQTestRunner.class)
 public class RuleTest {

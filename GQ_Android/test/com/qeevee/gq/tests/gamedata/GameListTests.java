@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 
 import android.widget.ListView;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.host.ConnectionStrategy;
 import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.start.GamesInCloud;
@@ -15,7 +16,6 @@ import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 @RunWith(GQTestRunner.class)
 public class GameListTests {

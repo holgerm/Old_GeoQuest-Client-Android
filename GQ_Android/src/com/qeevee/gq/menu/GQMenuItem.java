@@ -4,8 +4,8 @@ import org.dom4j.Element;
 
 import com.qeevee.gq.xml.XMLUtilities;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class GQMenuItem {
 

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Element;
+
+import com.qeevee.gq.Variables;
 import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class If extends Action {
 

@@ -1,9 +1,10 @@
 package com.qeevee.gq.rules.act;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Variables;
+import com.qeevee.gq.mission.MapOSM;
+
 import android.app.Activity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
 
 public class CenterMap extends Action {
 

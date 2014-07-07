@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.bonn.mobilegaming.geoquest"
+    package="com.qeevee.gq"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -78,72 +78,72 @@
         </receiver>
 
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.StartAndExitScreen"
+            android:name="com.qeevee.gq.mission.StartAndExitScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.MapGoogle"
+            android:name="com.qeevee.gq.mission.MapGoogle"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.MapOSM"
+            android:name="com.qeevee.gq.mission.MapOSM"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.NPCTalk"
+            android:name="com.qeevee.gq.mission.NPCTalk"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.WebPage"
-            android:label="@string/app_name"
-            android:screenOrientation="sensor" />
-        <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.WebTech"
+            android:name="com.qeevee.gq.mission.WebPage"
             android:label="@string/app_name"
             android:screenOrientation="sensor" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.QRTagReading"
+            android:name="com.qeevee.gq.mission.WebTech"
+            android:label="@string/app_name"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name="com.qeevee.gq.mission.QRTagReading"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.NFCTag"
+            android:name="com.qeevee.gq.mission.NFCTag"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.ImageCapture"
+            android:name="com.qeevee.gq.mission.ImageCapture"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.AudioRecord"
+            android:name="com.qeevee.gq.mission.AudioRecord"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.VideoRecord"
+            android:name="com.qeevee.gq.mission.VideoRecord"
             android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.PhotoPuzzle"
+            android:name="com.qeevee.gq.mission.PhotoPuzzle"
             android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.VideoPlay"
+            android:name="com.qeevee.gq.mission.VideoPlay"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion"
+            android:name="com.qeevee.gq.mission.MultipleChoiceQuestion"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.TextQuestion"
+            android:name="com.qeevee.gq.mission.TextQuestion"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.Preferences"
+            android:name="com.qeevee.gq.Preferences"
             android:label="@string/preferencesTitle"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="edu.bonn.mobilegaming.geoquest.mission.ExternalMission"
+            android:name="com.qeevee.gq.mission.ExternalMission"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>

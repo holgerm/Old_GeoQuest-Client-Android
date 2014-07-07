@@ -9,8 +9,9 @@ import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.util.GeoPoint;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.mission.MapOSM;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.mission.MapOSM;
+
 
 import android.app.Activity;
 import android.location.Location;

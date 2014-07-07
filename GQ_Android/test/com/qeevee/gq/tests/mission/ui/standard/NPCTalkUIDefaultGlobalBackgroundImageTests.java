@@ -11,12 +11,12 @@ import org.junit.runner.RunWith;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.MissionUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
 
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultGlobalBackgroundImageTests {

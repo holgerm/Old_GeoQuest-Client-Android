@@ -58,7 +58,7 @@ public class GQMenuManager {
 	/**
 	 * Updates the visible menu items in the app which holds for all in quest
 	 * activities, i.e. all types that implement
-	 * {@link edu.bonn.mobilegaming.geoquest.MissionOrToolActivity}.
+	 * {@link com.qeevee.gq.MissionOrToolActivity}.
 	 */
 	private void updateMenuView() {
 		// TODO Auto-generated method stub

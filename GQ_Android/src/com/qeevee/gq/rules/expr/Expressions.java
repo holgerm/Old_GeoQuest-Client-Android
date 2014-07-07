@@ -11,9 +11,9 @@ import android.util.Log;
 
 import com.qeevee.gq.xml.XMLUtilities;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
 
 public class Expressions {
 	private static final String TAG = "Expressions";

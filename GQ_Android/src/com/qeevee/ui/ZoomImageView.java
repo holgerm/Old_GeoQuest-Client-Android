@@ -11,8 +11,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class ZoomImageView extends ImageView {
 

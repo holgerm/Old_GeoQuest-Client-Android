@@ -13,11 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
 import android.content.Context;
 import android.location.Location;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextListener;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextListenerType;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;

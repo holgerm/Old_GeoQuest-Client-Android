@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.qeevee.gq.Configuration;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Mission;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Mission;
 
 public class InvisibleStart extends Activity {
 

@@ -2,14 +2,14 @@ package com.qeevee.gq.rules.act;
 
 import android.util.Log;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Globals;
+import com.qeevee.gq.Mission;
+import com.qeevee.gq.MissionOrToolActivity;
+import com.qeevee.gq.mission.MapMissionActivity;
+import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.util.StringTools;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.MissionOrToolActivity;
-import edu.bonn.mobilegaming.geoquest.mission.MapMissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
 
 public class StartMission extends Action implements LeavesMission {
 

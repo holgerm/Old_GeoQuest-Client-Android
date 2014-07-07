@@ -6,10 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class ExtractGamesFromAssets extends AsyncTask<Void, Integer, Void> {
 

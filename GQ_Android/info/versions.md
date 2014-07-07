@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.8.3.12* ##
+
+- Packages renamed and unnecessary code removed
+
 ## 0.8.3.11 ##
 
 - many Attributes (e.g. question texts) can now use variables which are automatically replaced

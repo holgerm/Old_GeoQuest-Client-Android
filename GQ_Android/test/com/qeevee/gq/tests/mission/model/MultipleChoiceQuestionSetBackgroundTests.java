@@ -12,13 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.MultipleChoiceQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
+import com.qeevee.gq.R;
 
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionSetBackgroundTests {

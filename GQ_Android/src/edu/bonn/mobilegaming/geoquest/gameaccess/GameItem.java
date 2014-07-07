@@ -10,8 +10,8 @@ import android.util.Log;
 
 import com.qeevee.gq.loc.Distance;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class GameItem implements Comparable<GameItem>{
 	

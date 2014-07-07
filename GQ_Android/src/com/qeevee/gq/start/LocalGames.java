@@ -22,9 +22,9 @@ import android.widget.TextView;
 import com.qeevee.util.Dialogs;
 import com.qeevee.util.FileOperations;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+import com.qeevee.gq.ui.UIFactory;
 
 public class LocalGames extends Activity {
 

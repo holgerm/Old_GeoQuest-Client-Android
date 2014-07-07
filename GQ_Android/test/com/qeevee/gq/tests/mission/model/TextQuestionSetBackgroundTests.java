@@ -12,14 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Util;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.Question;
+import com.qeevee.gq.R;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionSetBackgroundTests {

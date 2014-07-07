@@ -12,15 +12,15 @@ import org.junit.runner.RunWith;
 import android.graphics.Color;
 import android.widget.TextView;
 
+import com.qeevee.gq.Variables;
 import com.qeevee.gq.history.History;
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.MissionUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
 import com.xtremelabs.robolectric.Robolectric;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @RunWith(GQTestRunner.class)
 @Ignore

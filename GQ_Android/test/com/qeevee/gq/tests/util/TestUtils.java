@@ -18,21 +18,21 @@ import org.dom4j.io.SAXReader;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.qeevee.gq.GameLoader;
+import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.GeoQuestMapActivity;
+import com.qeevee.gq.Mission;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.HistoryItem;
 import com.qeevee.gq.history.HistoryItemModifier;
+import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
 import com.qeevee.gq.tests.ui.mock.UseGameSpecUIFactory;
+import com.qeevee.gq.ui.UIFactory;
 import com.xtremelabs.robolectric.Robolectric;
 
-import edu.bonn.mobilegaming.geoquest.GameLoader;
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class TestUtils {
 

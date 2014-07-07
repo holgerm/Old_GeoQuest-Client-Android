@@ -5,12 +5,13 @@ import java.util.List;
 import android.app.Activity;
 
 import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.mission.MissionActivity;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Mission;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 public class EndGame extends GQCommand {
 

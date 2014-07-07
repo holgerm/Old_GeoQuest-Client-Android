@@ -6,8 +6,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class Dialogs {
 

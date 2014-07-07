@@ -9,16 +9,16 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.qeevee.gq.GameSessionManager;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Imprint;
+import com.qeevee.gq.Mission;
 import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.ui.UIFactory;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import edu.bonn.mobilegaming.geoquest.GameSessionManager;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Imprint;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class StartLocalGame extends
 		AsyncTask<GameDescription, Integer, Boolean> {

@@ -21,9 +21,9 @@ import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
 
 /**
  * Hotspots are interaction points on a mapmission map. They have a image and a

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+
+import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 /**
  * @author muegge

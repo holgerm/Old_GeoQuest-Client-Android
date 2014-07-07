@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.qeevee.gq.host.HostConnector;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class GamesInCloud extends Activity {
 

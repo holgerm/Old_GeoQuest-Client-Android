@@ -12,9 +12,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.Context;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 /**
  * This class gives access to the locally stored games.

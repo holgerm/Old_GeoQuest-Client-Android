@@ -1,6 +1,6 @@
 package com.qeevee.gq.rules.act;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
+import com.qeevee.gq.Variables;
 
 public class Break extends Action {
 

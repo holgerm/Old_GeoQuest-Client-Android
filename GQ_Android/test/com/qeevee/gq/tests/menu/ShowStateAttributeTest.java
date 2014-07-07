@@ -10,8 +10,8 @@ import com.qeevee.gq.menu.GQMenuItem;
 import com.qeevee.gq.menu.GQMenuItem.ShowState;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 @RunWith(GQTestRunner.class)
 public class ShowStateAttributeTest {

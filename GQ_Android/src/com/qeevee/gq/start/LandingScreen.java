@@ -16,10 +16,10 @@ import android.widget.Button;
 
 import com.qeevee.util.Dialogs;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Mission;
+import com.qeevee.gq.R;
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 
 public class LandingScreen extends GeoQuestActivity {

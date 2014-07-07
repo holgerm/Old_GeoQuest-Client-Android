@@ -13,9 +13,10 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.res.AssetManager;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class StaticRepository extends RepositoryItem {
 	protected boolean initialized = false;

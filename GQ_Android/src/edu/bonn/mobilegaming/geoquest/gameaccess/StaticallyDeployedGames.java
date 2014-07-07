@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.res.AssetManager;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class StaticallyDeployedGames {
 

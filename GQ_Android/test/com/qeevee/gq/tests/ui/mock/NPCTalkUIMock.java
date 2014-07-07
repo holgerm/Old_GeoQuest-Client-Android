@@ -1,9 +1,10 @@
 package com.qeevee.gq.tests.ui.mock;
 
+import com.qeevee.gq.mission.NPCTalk;
+import com.qeevee.gq.mission.NPCTalk.DialogItem;
+import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
+
 import android.view.View;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk.DialogItem;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 public class NPCTalkUIMock extends NPCTalkUI {
 

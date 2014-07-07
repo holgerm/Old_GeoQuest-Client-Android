@@ -1,7 +1,7 @@
 package com.qeevee.gq.rules.act;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Globals;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.Globals;
 
 public class StopMission extends Action {
 

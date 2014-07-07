@@ -1,9 +1,10 @@
 package com.qeevee.gq.history;
 
+import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.GeoQuestApp;
+
 import android.view.View;
 import android.widget.TextView;
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 /**
  * A TransitionItem is inserted into the history list between missions. It

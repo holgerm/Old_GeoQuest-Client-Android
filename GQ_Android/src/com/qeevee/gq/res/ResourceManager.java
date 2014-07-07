@@ -5,8 +5,9 @@ import java.io.IOException;
 
 import android.os.Environment;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class ResourceManager {
 

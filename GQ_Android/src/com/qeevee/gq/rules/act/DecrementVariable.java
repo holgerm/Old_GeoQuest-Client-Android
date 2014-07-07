@@ -1,7 +1,8 @@
 package com.qeevee.gq.rules.act;
 
+import com.qeevee.gq.Variables;
+
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class DecrementVariable extends Action {
 

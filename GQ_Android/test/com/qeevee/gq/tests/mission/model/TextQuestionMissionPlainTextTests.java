@@ -16,12 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.Question;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionMissionPlainTextTests {

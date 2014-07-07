@@ -16,17 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.MissionUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
+import com.qeevee.gq.ui.standard.NPCTalkUIDefault.WordTicker;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
-import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault.WordTicker;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultTests {
