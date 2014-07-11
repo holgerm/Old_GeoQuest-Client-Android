@@ -46,7 +46,7 @@ cp -r ${baseDir}products/$1/  $baseDir || {
 
 # Renaming package:
 tmpFile=/tmp/out.tmp.$$
-stdPck="com.qeevee.gq.DRKOpaEnkel.DRKOpaEnkel"
+stdPck="com.qeevee.gq"
 
 echo "Renaming package ..."
 
