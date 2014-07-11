@@ -33,7 +33,6 @@ import com.qeevee.gq.tests.ui.mock.UseGameSpecUIFactory;
 import com.qeevee.gq.ui.UIFactory;
 import com.xtremelabs.robolectric.Robolectric;
 
-
 public class TestUtils {
 
 	public static final float DELTA_4_FLOAT_COMPARISON = 0.0001f;
@@ -71,7 +70,12 @@ public class TestUtils {
 	}
 
 	public static File getFile(String path) {
-		return new File(TestUtils.class.getResource(path).getFile());
+		URL fileURL = TestUtils.class.getResource(path);
+		if (fileURL == null) {
+			fail("Test failed. File not found: " + path);
+			return null;
+		} else
+			return new File(fileURL.getFile());
 	}
 
 	/**
@@ -84,7 +88,7 @@ public class TestUtils {
 		if (fileURL == null)
 			fail("Resource file not found: " + fileName);
 		File f = new File(fileURL.getFile());
-		if (!f.exists())
+		if (!f.exists()) 
 			fail("File " + fileName + " not found.");
 		if (!f.canRead())
 			fail("File " + fileName + " cann not be read.");
