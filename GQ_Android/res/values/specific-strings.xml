@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Opa Enkel App</string>
-    <string name="quest_name">DRK Opa Enkel App</string>
+    <string name="app_name">PH KA Quests</string>
+    <string name="quest_name">GeoQuest an der PH Karlsruhe</string>
     <string name="imprint_authorName">TODO</string>
-    <string name="imprint_city">Remscheid</string>
+    <string name="imprint_city">Karlsruhe</string>
     <string name="imprint_email">TODO</string>
     <string name="imprint_fax">TODO</string>
     <string name="imprint_legalForm">TODO</string>
