@@ -33,7 +33,8 @@ import com.uni.bonn.nfc4mg.nfctag.TagHandler;
 public class HomeActivity extends Activity implements ParseTagListener,
 		android.view.View.OnClickListener {
 
-	private static final String TAG = "HomeActivity";
+	@SuppressWarnings("unused")
+	private static final String TAG = HomeActivity.class.getCanonicalName();
 	private static final int MSG_PAUSE = 1;
 	private static final int MSG_PLAY = 2;
 
@@ -72,9 +73,9 @@ public class HomeActivity extends Activity implements ParseTagListener,
 
 		mVideoView = (VideoView) findViewById(R.id.video_view);
 
-		String path = "android.resource://" + getPackageName() + "/"
-				+ R.raw.intro;
-//		setnPlayVideo(path); TEST
+		// String path = "android.resource://" + getPackageName() + "/"
+		// + R.raw.intro;
+		// setnPlayVideo(path); TEST
 
 		hidePinLyt();
 	}

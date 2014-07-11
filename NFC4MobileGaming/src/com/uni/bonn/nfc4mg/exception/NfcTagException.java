@@ -8,6 +8,10 @@ package com.uni.bonn.nfc4mg.exception;
  */
 public class NfcTagException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1486318836577456230L;
 	private String message = null;
 
 	public NfcTagException() {
