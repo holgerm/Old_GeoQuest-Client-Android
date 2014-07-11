@@ -28,7 +28,7 @@
             android:layout_marginLeft="@dimen/button_padding_large"
             android:layout_marginRight="@dimen/button_padding_large"
             android:contentDescription="@string/description_geoQuestLogo"
-            android:src="@drawable/geoquestlogo" />
+            android:src="@drawable/applogo" />
     </RelativeLayout>
 
     <RelativeLayout
