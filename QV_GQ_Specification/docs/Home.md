@@ -42,9 +42,9 @@ The set of actions is large and continuously growing. Examples are:
 
 ## Missions ##
 
-Missions are coherent interactions that the user performs with the device, often on screen, sometimes involving other device features such as the camera. The whole quest can be perceived as a flow of activities.
+Missions are coherent interactions that the user performs with the device, often on screen, sometimes involving other device features such as the camera. The whole quest can be perceived as a flow of missions.
 
-Examples for activities are:
+Examples for missions are:
 
 - Display a start screen together with optional sound
 - Play a video and offer controls
