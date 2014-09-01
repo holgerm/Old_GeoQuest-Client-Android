@@ -8,9 +8,10 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Set basic variables:
+${PROJECT_BASE_DIR:?"Need to set PROJECT_BASE_DIR environment variable!"}
 
-baseDir=/Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/
-testDir=/Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android_Tests_Robolectric/
+baseDir=${PROJECT_BASE_DIR}/GQ_Android/
+testDir=${PROJECT_BASE_DIR}/GQ_Android_Tests_Robolectric/
 productDir=${baseDir}products/$1/
 
 if ! [[ -d $baseDir && -r  $baseDir && -w  $baseDir && -x $baseDir ]]; then
