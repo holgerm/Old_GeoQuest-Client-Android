@@ -3,6 +3,8 @@
 ## 0.8.3.12* ##
 
 - Packages renamed and unnecessary code removed
+- Mission results are now stored in $_mission_ID.result instead of $_ID.result wich is conform to the editor again
+- script for product setting (cf. script/gq_set_product)
 
 ## 0.8.3.11 ##
 
