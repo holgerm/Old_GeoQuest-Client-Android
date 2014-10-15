@@ -38,20 +38,20 @@ public class TextQuestionSetBackgroundTests {
 		initTestMission("Defaults");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -92,14 +92,14 @@ public class TextQuestionSetBackgroundTests {
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class TextQuestionSetBackgroundTests {
 		initTestMission("UseBGReply");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();

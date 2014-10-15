@@ -20,7 +20,7 @@ public abstract class Question extends InteractiveMission {
 		String bg = (String) getMissionAttribute("bgQuestion",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, "bg");
 		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_question);
+			outerView.setBackgroundResource(R.drawable.mcq_background_question);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
 					.loadBitmap(bg, Util.getDisplayWidth(),
@@ -32,7 +32,7 @@ public abstract class Question extends InteractiveMission {
 		String bg = (String) getMissionAttribute("bgOnWrongReply",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
 		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_wrong);
+			outerView.setBackgroundResource(R.drawable.mcq_background_wrong);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
 					.loadBitmap(bg, Util.getDisplayWidth(),
@@ -44,7 +44,7 @@ public abstract class Question extends InteractiveMission {
 		String bg = (String) getMissionAttribute("bgOnCorrectReply",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, "bgOnReply", "bg");
 		if (bg == null)
-			outerView.setBackgroundResource(R.drawable.background_correct);
+			outerView.setBackgroundResource(R.drawable.mcq_background_right);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
 					.loadBitmap(bg, Util.getDisplayWidth(),

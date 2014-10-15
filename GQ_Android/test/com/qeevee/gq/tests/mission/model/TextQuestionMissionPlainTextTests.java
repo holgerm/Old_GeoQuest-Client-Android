@@ -194,10 +194,10 @@ public class TextQuestionMissionPlainTextTests {
 		et.setText("Answer One");
 		bt.performClick();
 		assertTrue("Variable for storing answer should have been registered",
-				Variables.isDefined("$_With_Defaults.result"));
+				Variables.isDefined("$_mission_With_Defaults.result"));
 		assertEquals(
 				"Correct answer should be stored in result variable for this mission",
-				"Answer One", Variables.getValue("$_With_Defaults.result"));
+				"Answer One", Variables.getValue("$_mission_With_Defaults.result"));
 	}
 
 	@Test
@@ -206,10 +206,10 @@ public class TextQuestionMissionPlainTextTests {
 		et.setText("Something wrong");
 		bt.performClick();
 		assertTrue("Variable for storing answer should have been registered",
-				Variables.isDefined("$_With_Defaults.result"));
+				Variables.isDefined("$_mission_With_Defaults.result"));
 		assertEquals(
 				"Wrong answer should be stored in result variable for this mission",
-				"Something wrong", Variables.getValue("$_With_Defaults.result"));
+				"Something wrong", Variables.getValue("$_mission_With_Defaults.result"));
 	}
 
 	@Test
