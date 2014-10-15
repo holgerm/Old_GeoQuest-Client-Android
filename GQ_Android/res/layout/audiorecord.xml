@@ -18,9 +18,9 @@
         android:layout_weight="1"
         android:background="@drawable/background_text"
         android:gravity="center"
+        android:textColor="@color/text"
         android:textSize="20sp"
-        android:typeface="sans"
-        android:textColor="@color/text"  />
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/audioRecordActivityIndicator"
@@ -33,9 +33,9 @@
         android:enabled="false"
         android:gravity="center"
         android:text="@string/audiorecord_activityIndicator_initial"
-        android:textSize="20sp"
-        android:typeface="sans"
-        android:textColor="@color/text"  />
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_size"
+        android:typeface="sans" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp"
+            android:textSize="@dimen/caption_text_size"
             android:typeface="sans" />
 
         <Button
@@ -59,14 +59,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp" />
+            android:textSize="@dimen/caption_text_size" />
 
         <Button
             android:id="@+id/audioRecordPlayButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp" />
+            android:textSize="@dimen/caption_text_size" />
     </LinearLayout>
 
 </LinearLayout>

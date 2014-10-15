@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
-        android:textSize="30sp" />
+        android:textSize="@dimen/text_size" />
 
     <Button
         android:id="@+id/textquestion_acceptBT"
