@@ -28,6 +28,7 @@
         android:layout_weight="1"
         android:background="@drawable/background_text"
         android:gravity="center"
+        android:textColor="@color/text"
         android:textSize="20sp" />
 
     <Button
@@ -41,6 +42,6 @@
         android:background="@drawable/button"
         android:gravity="center"
         android:padding="@dimen/button_padding"
-        android:textColor="@color/foreground" />
+        android:textColor="@color/text" />
 
 </LinearLayout>

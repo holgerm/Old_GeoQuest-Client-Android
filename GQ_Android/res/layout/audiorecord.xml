@@ -19,7 +19,8 @@
         android:background="@drawable/background_text"
         android:gravity="center"
         android:textSize="20sp"
-        android:typeface="sans" />
+        android:typeface="sans"
+        android:textColor="@color/text"  />
 
     <TextView
         android:id="@+id/audioRecordActivityIndicator"
@@ -33,7 +34,8 @@
         android:gravity="center"
         android:text="@string/audiorecord_activityIndicator_initial"
         android:textSize="20sp"
-        android:typeface="sans" />
+        android:typeface="sans"
+        android:textColor="@color/text"  />
 
     <LinearLayout
         android:layout_width="fill_parent"

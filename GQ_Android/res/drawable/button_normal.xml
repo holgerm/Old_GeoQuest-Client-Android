@@ -4,7 +4,7 @@
     android:shape="rectangle" >
 
     <!-- you can use any color you want I used here gray color -->
-    <solid android:color="#99000000" />
+    <solid android:color="@color/middleground" />
 
     <padding
         android:bottom="@dimen/button_padding"

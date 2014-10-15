@@ -51,6 +51,6 @@
         android:layout_marginTop="0dip"
         android:background="@drawable/button"
         android:padding="@dimen/button_padding"
-        android:textColor="@color/foreground" />
+        android:textColor="@color/text" />
 
 </LinearLayout>

@@ -4,7 +4,7 @@
     android:shape="rectangle" >
 
     <!-- you can use any color you want I used here gray color -->
-    <solid android:color="#55000000" />
+    <solid android:color="@color/middleground" />
 
     <corners android:radius="@dimen/button_corner_radius" />
 

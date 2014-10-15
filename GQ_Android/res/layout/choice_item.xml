@@ -26,6 +26,7 @@
         android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="false"
+        android:textColor="@color/text"
         android:textSize="@dimen/title_size" />
 
 </RelativeLayout>
