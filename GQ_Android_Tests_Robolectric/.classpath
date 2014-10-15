@@ -11,7 +11,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GQ_Android"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="var" path="ANDROID_SDK_HOME/add-ons/addon_google_apis_google_inc_8/libs/maps.jar"/>
 	<classpathentry kind="var" path="ANDROID_SDK_HOME/platforms/android-17/android.jar" sourcepath="/ANDROID_SDK_HOME/sources/android-17"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
@@ -26,5 +25,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/reflections/xml-apis-1.0.b2.jar"/>
+	<classpathentry kind="lib" path="/Users/muegge/bin/junit/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/robolectric-2.3-jar-with-dependencies.jar" sourcepath="lib/robolectric-2.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/GQ_Android_Tests_Robolectric/lib/robolectric-2.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
