@@ -24,7 +24,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="libs/osmbonuspack/osmbonuspack_v4.5.jar" sourcepath="libs/osmbonuspack/osmbonuspackdoc_v4.5.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/osmbonuspack/osmbonuspack_v4.5.jar" sourcepath="libs/osmbonuspack/osmbonuspackdoc_v4.5.zip"/>
 	<classpathentry kind="lib" path="libs/osmdroid-android-4.2.jar" sourcepath="libs/osmdroid/osmdroid-android-4.2-sources.jar"/>
 	<classpathentry kind="lib" path="libs/osmdroid-third-party-4.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
