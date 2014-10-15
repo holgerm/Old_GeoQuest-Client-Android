@@ -51,6 +51,7 @@ public class Variables {
 	public static final String LOCATION_SUFFIX = ".location";
 
 	public static final String SYSTEM_PREFIX = "$_";
+	public static final String MISSION_PREFIX = "$_mission_";
 	public static final String LOCATION_LAT = SYSTEM_PREFIX + "location.lat";
 	public static final String LOCATION_LONG = SYSTEM_PREFIX + "location.long";
 
@@ -206,7 +207,7 @@ public class Variables {
 	 * @param result
 	 */
 	public static void registerMissionResult(String missionID, String result) {
-		Variables.setValue(SYSTEM_PREFIX + missionID + RESULT_SUFFIX, result);
+		Variables.setValue(MISSION_PREFIX + missionID + RESULT_SUFFIX, result);
 	}
 
 }
