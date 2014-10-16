@@ -50,7 +50,7 @@ public class MapGoogle extends MapMissionActivity {
 		if (mission == null || mission.xmlMissionNode == null)
 			finish();
 
-		setContentView(R.layout.main);
+		setContentView(R.layout.map_google);
 
 		// Setup Google MapView
 		myMapView = (MapView) findViewById(R.id.mapview);
