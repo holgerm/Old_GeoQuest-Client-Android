@@ -31,11 +31,10 @@ import com.xtremelabs.robolectric.Robolectric;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
 
-
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionMissionTests {
 
-	private static final String GAME_NAME = "MultipleChoiceQuestion/FunctionTest";
+	protected String gameName = "MultipleChoiceQuestion/FunctionTest";
 	protected static final int MODE_QUESTION = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_QUESTION");
 	protected static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
@@ -55,18 +54,23 @@ public class MultipleChoiceQuestionMissionTests {
 	protected Button bottomButton;
 	private ListView cl;
 
+	protected void setGameName() {
+		gameName = "MultipleChoiceQuestion/FunctionTest";
+	}
+
 	@Before
-	public void cleanUp() {
+	public void beforeEachTest() {
 		// get rid of all variables that have been set, e.g. for checking
 		// actions.
 		Variables.clean();
 		History.getInstance().clear();
+		setGameName();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void initTestMission(String missionID) {
 		mcqM = (MissionActivity) prepareMission("MultipleChoiceQuestion",
-				missionID, startGameForTest(GAME_NAME));
+				missionID, startGameForTest(gameName));
 		try {
 			mcqM.onCreate(null);
 		} catch (NullPointerException npe) {
