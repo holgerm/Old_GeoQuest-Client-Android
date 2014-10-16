@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST GAME SPEC for TextQuestion Mission Type -->
+<game name="TextQuestionTest" xmlformat="5">
+	<mission id="With_Defaults" type="TextQuestion" question="Text of the question.">
+		<onStart>
+			<rule>
+				<action type="SetVariable" var="onStart">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onStart>
+		<onSuccess>
+			<rule>
+				<action type="SetVariable" var="onSuccess">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onSuccess>
+		<onFail>
+			<rule>
+				<action type="SetVariable" var="onFail">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action type="SetVariable" var="onEnd">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+				<action type="StartMission" id="With_Hint_Replies" />
+			</rule>
+		</onEnd>
+		<answers>
+			<answer>Answer One</answer>
+			<answer>Answer Two</answer>
+		</answers>
+		<answers>
+			<answer>Answer Three</answer>
+					</answers>
+	</mission>
+	<mission id="With_Hint_Replies" type="TextQuestion"
+		prompt="This is my personal hint for you ..." question="Text of the question."
+		replyOnCorrect="You have chosen the right answer." replyOnWrong="Sorry, but this was a wrong answer.">
+		<onEnd>
+			<rule>
+				<action type="StartMission" id="With_Loop" />
+			</rule>
+		</onEnd>
+		<answers>
+			<answer>Answer One</answer>
+		</answers>
+		<answers>
+			<answer>Answer Two</answer>
+		</answers>
+		<answers>
+			<answer>Answer Three</answer>
+		</answers>
+	</mission>
+	<mission id="With_Loop" type="TextQuestion" loopUntilSuccess="true"
+		question="Text of the question.">
+		<onFail>
+			<rule>
+				<action type="SetVariable" var="onFail">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action type="SetVariable" var="onEnd">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+				<action type="StartMission" id="Without_AcceptedAnswers" />
+			</rule>
+		</onEnd>
+		<answers>
+		</answers>
+		<answers>
+			<answer>Answer One</answer>
+			<answer>Answer Two</answer>
+			<answer>Answer Three</answer>
+		</answers>
+		<answers>
+		</answers>
+	</mission>
+	<mission id="Without_AcceptedAnswers" type="TextQuestion"
+		loopUntilSuccess="true" prompt="This is my personal hint for you ..."
+		question="Text of the question.">
+		<onFail>
+			<rule>
+				<action type="SetVariable" var="onFail">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action type="SetVariable" var="onEnd">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onEnd>
+	</mission>
+	<mission id="RexExp_WordsAccepted" type="TextQuestion"
+		loopUntilSuccess="true" prompt="This is my personal hint for you ..."
+		question="Text of the question." storeAcceptedAnswerInVariable="testVariable">
+		<onFail>
+			<rule>
+				<action type="SetVariable" var="onFail">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+		<onEnd>
+			<rule>
+				<action type="SetVariable" var="onEnd">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</rule>
+		</onEnd>
+		<answers>
+			<answer>(\w+\s*)+</answer>
+		</answers>
+	</mission>
+</game>
