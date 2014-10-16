@@ -73,7 +73,7 @@ public class GamesInCloud extends Activity {
 					R.string.dialogGetGameListTitle));
 			progressDialog.setMessage(GeoQuestApp.getContext().getText(
 					R.string.wait));
-			progressDialog.setIcon(R.drawable.gqlogo_solo_trans);
+			progressDialog.setIcon(R.drawable.app_item_icon);
 
 			for (HostConnector connector : params) {
 				curHostGames = connector.getGameList();

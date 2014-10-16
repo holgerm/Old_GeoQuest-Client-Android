@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/margin_small"
         android:contentDescription="@string/description_questIcon"
         android:gravity="center"
-        android:src="@drawable/gqlogo_solo_trans" />
+        android:src="@drawable/app_item_icon" />
 
     <TextView
         android:id="@+id/choiceTitle"

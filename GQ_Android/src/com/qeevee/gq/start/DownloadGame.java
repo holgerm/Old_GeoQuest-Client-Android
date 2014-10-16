@@ -43,7 +43,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 						R.string.downloadDialogTitleSuffix));
 		progressDialog.setMessage(GeoQuestApp.getContext().getText(
 				R.string.downloadDialogMessage));
-		progressDialog.setIcon(R.drawable.gqlogo_solo_trans); // TODO use game
+		progressDialog.setIcon(R.drawable.app_item_icon); // TODO use game
 																// icon instead.
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
