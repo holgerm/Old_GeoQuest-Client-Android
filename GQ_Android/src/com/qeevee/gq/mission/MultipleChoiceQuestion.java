@@ -27,7 +27,6 @@ import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
 
-
 /**
  * Simple multiple choice question and answer mission.
  * 
@@ -173,9 +172,13 @@ public class MultipleChoiceQuestion extends Question {
 
 	@SuppressWarnings("unchecked")
 	private void initQuestionAndAnswers() {
-		questionText = mission.xmlMissionNode
-				.selectSingleNode(".//questiontext").getText()
-				.replaceAll("\\s+", " ").trim();
+		questionText = mission.xmlMissionNode.attributeValue("question");
+		if (questionText == null) {
+			questionText = mission.xmlMissionNode
+					.selectSingleNode(".//questiontext").getText()
+					.replaceAll("\\s+", " ").trim();
+		}
+
 		questionText = StringTools.replaceVariables(questionText);
 		List<Element> xmlAnswers = mission.xmlMissionNode
 				.selectNodes(".//answer");

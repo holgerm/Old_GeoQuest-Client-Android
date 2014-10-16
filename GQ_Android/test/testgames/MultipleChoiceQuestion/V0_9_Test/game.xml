@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game name="MultipleChoiceQuestionTest" xmlformat="5">
 
-	<mission id="No_Loop__No_onChoose" type="MultipleChoiceQuestion" question="Text of the question.WRONG">
+	<mission id="No_Loop__No_onChoose" type="MultipleChoiceQuestion" question="Text of the question.">
 
 		<onStart>
 
