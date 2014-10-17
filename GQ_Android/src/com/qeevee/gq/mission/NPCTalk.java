@@ -1,6 +1,6 @@
 package com.qeevee.gq.mission;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -9,6 +9,8 @@ import org.dom4j.Element;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.qeevee.gq.Globals;
+import com.qeevee.gq.R;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TransitionItem;
@@ -17,9 +19,6 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
-
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.R;
 
 /**
  * Just a talking NPC. The NPC has a Image and text is based on dialogItems. The
@@ -34,14 +33,10 @@ import com.qeevee.gq.R;
 public class NPCTalk extends MissionActivity {
 	private static final String TAG = "NPCTalk";
 
-	private Iterator<Element> dialogItemIterator;
-
 	private NPCTalkUI ui;
-
+	List<DialogItem> dialogItems;
 	private int nrOfDialogItems;
-
-	private int indexOfCurrentDialogItem;
-
+	private int indexOfNextDialogItem;
 	private CharSequence nextDialogButtonTextDefault;
 
 	/**
@@ -59,12 +54,23 @@ public class NPCTalk extends MissionActivity {
 			return;
 		}
 
+		dialogItems = new ArrayList<DialogItem>();
 		// take only non-empty dialogItems:
-		List<Element> dialogItemList = mission.xmlMissionNode
+		List<Element> dialogItemElementList = mission.xmlMissionNode
 				.selectNodes("./dialogitem[text()!=\"\"]");
-		dialogItemIterator = dialogItemList.iterator();
-		nrOfDialogItems = dialogItemList.size();
-		indexOfCurrentDialogItem = 0;
+		if (dialogItemElementList == null || dialogItemElementList.size() == 0) {
+			CharSequence text = XMLUtilities.getStringAttribute("text",
+					XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+			CharSequence soundFile = XMLUtilities.getStringAttribute("sound",
+					XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+			if (text != null)
+				dialogItems.add(new DialogItem(text, soundFile));
+		} else
+			for (Element dialogItemElement : dialogItemElementList) {
+				dialogItems.add(new DialogItem(dialogItemElement));
+			}
+		nrOfDialogItems = dialogItems.size();
+		indexOfNextDialogItem = 0;
 		setNextDialogButtonText(getMissionAttribute("nextdialogbuttontext",
 				R.string.button_text_next));
 		ui = UIFactory.getInstance().createUI(this);
@@ -83,7 +89,7 @@ public class NPCTalk extends MissionActivity {
 	 *         show.
 	 */
 	public boolean hasMoreDialogItems() {
-		return dialogItemIterator.hasNext();
+		return indexOfNextDialogItem < nrOfDialogItems;
 	}
 
 	/**
@@ -93,7 +99,7 @@ public class NPCTalk extends MissionActivity {
 	 *         {@link #getNextDialogItem()} too often.
 	 */
 	public int getIndexOfCurrentDialogItem() {
-		return indexOfCurrentDialogItem;
+		return indexOfNextDialogItem;
 	}
 
 	public int getNumberOfDialogItems() {
@@ -101,10 +107,11 @@ public class NPCTalk extends MissionActivity {
 	}
 
 	public DialogItem getNextDialogItem() {
-		DialogItem result = new DialogItem(dialogItemIterator.next());
-		if (result != null)
-			indexOfCurrentDialogItem++;
-		return result;
+		if (indexOfNextDialogItem >= nrOfDialogItems) {
+			throw new IndexOutOfBoundsException(
+					"No more Dialog Items in NPCTalk page (id:" + this.id + ")");
+		}
+		return dialogItems.get(indexOfNextDialogItem++);
 	}
 
 	public void hasShownDialogItem(DialogItem shownDialogItem) {
@@ -148,7 +155,7 @@ public class NPCTalk extends MissionActivity {
 		private String audioFilePath;
 		public boolean blocking;
 
-		private Element xml = null;
+		// private Element xml = null;
 
 		/**
 		 * Constructor gets the information from the passed xmlElement
@@ -157,7 +164,7 @@ public class NPCTalk extends MissionActivity {
 		 *            the dialogItem element from the XML file
 		 */
 		public DialogItem(Element xmlElement) {
-			xml = xmlElement;
+			Element xml = xmlElement;
 			speaker = xml.attributeValue("speaker");
 
 			// read nextdialogbuttontext:
@@ -178,15 +185,33 @@ public class NPCTalk extends MissionActivity {
 			else
 				blocking = true;
 
-			// text = xml.getText().replaceAll("\\s+", " ").trim();
 			text = XMLUtilities.getXMLContent(xml).replaceAll("\\s+", " ")
 					.trim();
+			processText();
+		}
+
+		private void processText() {
 			text = StringTools.replaceVariables(text);
 			if (text.startsWith(" ")) {
 				text = text.substring(1);
 			}
 
 			textElements = text.split("\\s+"); // Split anhand der Whitespaces
+		}
+
+		/**
+		 * Alternative constructor for TextWithImage variant, which does not
+		 * have dialogItem elemnts but only text and sound attribute in the
+		 * mission tag.
+		 * 
+		 * @param text
+		 * @param soundFile
+		 */
+		public DialogItem(CharSequence text, CharSequence soundFile) {
+			speaker = null;
+			audioFilePath = soundFile.toString();
+			this.text = text.toString();
+			processText();
 		}
 
 		/**
