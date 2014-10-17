@@ -1,9 +1,10 @@
 package com.qeevee.gq.rules.act;
 
+import static com.qeevee.gq.xml.XMLUtilities.stringToBool;
+
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
-
 
 public class SetHotspotVisibility extends Action {
 
@@ -18,14 +19,7 @@ public class SetHotspotVisibility extends Action {
 				params.get("id"));
 		if (hotspot == null)
 			return;
-		if (params.get("visible").equals("true")
-				|| params.get("visible").equals("1")) {
-			hotspot.setVisible(true);
-		}
-		if (params.get("visible").equals("false")
-				|| params.get("visible").equals("0")) {
-			hotspot.setVisible(false);
-		}
+		hotspot.setVisible(stringToBool(params.get("mode")));
 
 		GeoQuestApp.getInstance().refreshMapDisplay();
 	}

@@ -1,5 +1,7 @@
 package com.qeevee.gq.rules.act;
 
+import static com.qeevee.gq.xml.XMLUtilities.stringToBool;
+
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
@@ -18,13 +20,7 @@ public class SetHotspotActivity extends Action {
 				params.get("id"));
 		if (hotspot == null)
 			return;
-		if (params.get("mode").equals("true") || params.get("mode").equals("1")) {
-			hotspot.setActive(true);
-		}
-		if (params.get("mode").equals("false")
-				|| params.get("mode").equals("0")) {
-			hotspot.setActive(false);
-		}
+		hotspot.setActive(stringToBool(params.get("mode")));
 
 		GeoQuestApp.getInstance().refreshMapDisplay();
 	}

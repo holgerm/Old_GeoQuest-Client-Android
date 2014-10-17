@@ -26,6 +26,9 @@ public class HotspotManager {
 	 */
 	private Hashtable<String, Hotspot> allHotspots = new Hashtable<String, Hotspot>();
 
+	/**
+	 * @return list of all hotspots regardless in which state they are.
+	 */
 	public List<Hotspot> getListOfHotspots() {
 		List<Hotspot> list = new ArrayList<Hotspot>();
 		list.addAll(allHotspots.values());

@@ -13,7 +13,6 @@ import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.ui.WebViewUtil;
 import com.qeevee.util.StringTools;
 
-
 public class XMLUtilities {
 
 	@SuppressWarnings("rawtypes")
@@ -170,6 +169,8 @@ public class XMLUtilities {
 	 * @return true if the given string either is "true" or zero.
 	 */
 	public static boolean stringToBool(String string) {
+		if (string == null)
+			return false;
 		String trimmed = textify(string);
 		return ("true".equalsIgnoreCase(trimmed) || "1".equals(trimmed));
 	}
