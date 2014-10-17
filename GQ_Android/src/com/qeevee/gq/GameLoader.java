@@ -23,6 +23,7 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
+import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.ui.UIFactory;
 
 import android.content.res.AssetManager;
@@ -209,10 +210,11 @@ public class GameLoader {
 
 			sendMsgExpandingGame(handler);
 
-			Mission firstMission = createMissions(handler);
-			// TODO initHotspots(document.getRootElement());
 			GeoQuestApp.setRunningGameDir(getGameDirectory(gameXMLFile));
 			// Only from now on we can access game ressources.
+
+			Mission firstMission = createMissions(handler);
+			createHotspots(Mission.documentRoot);
 
 			GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
 					.element("imprint")));
@@ -239,6 +241,28 @@ public class GameLoader {
 				handler.sendMessage(msg);
 			}
 			return;
+		}
+	}
+
+	/**
+	 * Gets the Hotspots data from the XML file.
+	 * 
+	 * TODO move into a new HotspotFactory class.
+	 * 
+	 * TODO Copied from StartLocalGame class. Fix this!
+	 */
+	@SuppressWarnings("unchecked")
+	static private void createHotspots(Element document)
+			throws DocumentException {
+		List<Element> list = document.selectNodes("//hotspot");
+
+		for (Iterator<Element> i = list.iterator(); i.hasNext();) {
+			Element hotspot = i.next();
+			try {
+				new Hotspot(hotspot);
+			} catch (Hotspot.IllegalHotspotNodeException exception) {
+				Log.e(TAG, exception.toString());
+			}
 		}
 	}
 

@@ -651,6 +651,10 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	}
 
 	public static File getGameRessourceFile(String ressourceFilePath) {
+		File runningGamedDir = getRunningGameDir();
+		if (runningGamedDir == null)
+			throw new IllegalArgumentException(
+					"Running game is null.");
 		String resourcePath = getRunningGameDir().getAbsolutePath() + "/"
 				+ ressourceFilePath;
 		File file = new File(resourcePath);
