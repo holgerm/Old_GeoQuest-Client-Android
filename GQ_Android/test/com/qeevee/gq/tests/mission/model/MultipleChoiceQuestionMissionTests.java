@@ -34,7 +34,7 @@ import com.qeevee.gq.Variables;
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionMissionTests {
 
-	protected String gameName = "MultipleChoiceQuestion/FunctionTest";
+	protected String gameName;
 	protected static final int MODE_QUESTION = (Integer) getStaticFieldValue(
 			MultipleChoiceQuestion.class, "MODE_QUESTION");
 	protected static final int MODE_REPLY_TO_CORRECT_ANSWER = (Integer) getStaticFieldValue(
