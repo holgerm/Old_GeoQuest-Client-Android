@@ -4,5 +4,5 @@
     <integer name="randomExpression_defaultMin">1</integer>
     <integer name="randomExpression_defaultMax">10</integer>
     <integer name="menuItem_defaultPriority">50</integer>
-    
+
 </resources>
