@@ -7,6 +7,7 @@
 ## 0.9.0-p3 ##
 
 - Webpage Page: endButtonText Attribute works now
+- Spinner shown while page loads
 
 ## 0.9.0-p2 ##
 
