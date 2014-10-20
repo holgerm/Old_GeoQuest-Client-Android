@@ -5,11 +5,16 @@ import static com.qeevee.gq.tests.util.TestUtils.prepareMission;
 import static com.qeevee.gq.tests.util.TestUtils.startGameForTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import android.text.Html;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.qeevee.gq.Variables;
 import com.qeevee.gq.history.History;
@@ -19,6 +24,8 @@ import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
+import com.qeevee.gq.ui.standard.NPCTalkUIDefault;
 
 @RunWith(GQTestRunner.class)
 public class NPCTalk_TextWithImage_Tests {
@@ -75,7 +82,54 @@ public class NPCTalk_TextWithImage_Tests {
 		// TODO check button enabled and pressing triggers onEnd
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test
+	public void checkUI() {
+		// GIVEN:
+		start = startGameForTest(gameName, DefaultUIFactory.class);
+		npcTalk = (NPCTalk) prepareMission("NPCTalk", "TextWithImageInNPCTalk",
+				start);
+
+		// WHEN:
+		startMission(npcTalk);
+
+		// THEN:
+		shouldShowText("The text is now in an attribute named text.");
+		shouldProceedButtonBeEnabled(true);
+
+	}
+
 	// === HELPER METHODS FOLLOW =============================================
+
+	/**
+	 * You MUST use the DefaultUIFactory in your test before you can call this
+	 * check method.
+	 * 
+	 * @param b
+	 */
+	private void shouldProceedButtonBeEnabled(boolean expectedButtonState) {
+		if (!(ui instanceof NPCTalkUIDefault)) {
+			fail("You MUST use the DefaultUIFactory for this test.");
+		}
+
+		Button b = (Button) getFieldValue(ui, "button");
+		assertEquals(expectedButtonState, b.isEnabled());
+	}
+
+	/**
+	 * You MUST use the DefaultUIFactory in your test before you can call this
+	 * check method.
+	 * 
+	 * @param string
+	 */
+	private void shouldShowText(String expectedText) {
+		if (!(ui instanceof NPCTalkUIDefault)) {
+			fail("You MUST use the DefaultUIFactory for this test.");
+		}
+
+		TextView tv = (TextView) getFieldValue(ui, "dialogText");
+		assertEquals(Html.fromHtml(expectedText) + "\n", tv.getText());
+	}
 
 	private void startMission(MissionActivity mission) {
 		mission.onCreate(null);

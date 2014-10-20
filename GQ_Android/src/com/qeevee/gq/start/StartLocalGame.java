@@ -44,28 +44,32 @@ public class StartLocalGame extends
 		File gameXMLFile = new File(gameDir, GameDataManager.GAME_XML_FILENAME);
 		GeoQuestApp.getInstance().clean();
 
-		SAXReader reader = new SAXReader();
 		try {
-			Document document = reader.read(gameXMLFile);
-			Mission.documentRoot = document.getRootElement();
-			setGlobalMissionLayout();
-			GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
-			GeoQuestApp.setRunningGameID(Mission.documentRoot
-					.attributeValue("id"));
-
-			firstMission = createMissions();
-			createHotspots(Mission.documentRoot);
-
-			// Only from now on we can access game ressources.
-
-			GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
-					.element("imprint")));
-			return true;
+			return readGameFromFile(gameXMLFile);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	private Boolean readGameFromFile(File gameXMLFile) throws DocumentException {
+		SAXReader reader = new SAXReader();
+		Document document = reader.read(gameXMLFile);
+		Mission.documentRoot = document.getRootElement();
+		setGlobalMissionLayout();
+		GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
+		GeoQuestApp.setRunningGameID(Mission.documentRoot
+				.attributeValue("id"));
+
+		firstMission = createMissions();
+		createHotspots(Mission.documentRoot);
+
+		// Only from now on we can access game ressources.
+
+		GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
+				.element("imprint")));
+		return true;
 	}
 
 	private void setGlobalMissionLayout() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game name="TextWithImageTest" xmlformat="5">
 	<mission type="NPCTalk" id="TextWithImageInNPCTalk" image="drawable/ploppschutz.png"
-		text="The text is now in an attribute named text." sound="files/audio.mp4">
+		text="The text is now in an attribute named text." sound="files/audio.mp4" mode="chunk">
 		<onStart>
 			<rule>
 				<action type="SetVariable" var="onStart">

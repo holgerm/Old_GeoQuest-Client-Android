@@ -8,14 +8,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.mission.NPCTalk.DialogItem;
 import com.qeevee.gq.ui.InteractionBlocker;
@@ -24,9 +26,6 @@ import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Util;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.R;
 
 public class NPCTalkUIDefault extends NPCTalkUI {
 
@@ -98,7 +97,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
 			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImageFile.toString(),
-					Util.getDisplayWidth() - (2 * margin), 0, true);
+					Util.getDisplayWidth() - (2 * margin),
+					Util.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
 				charImage.setImageBitmap(bitmap);
 			} else {
@@ -247,9 +247,10 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	}
 
 	public void release() {
-		charImage.destroyDrawingCache();
-		charImage.setImageBitmap(null);
-		contentView.destroyDrawingCache();
+		// charImage.destroyDrawingCache();
+		// ((BitmapDrawable) charImage.getDrawable()).getBitmap().recycle();
+		// charImage.setImageBitmap(null);
+		// contentView.destroyDrawingCache();
 		if (contentView instanceof ViewGroup) {
 			((ViewGroup) contentView).removeAllViews();
 		}
