@@ -4,6 +4,10 @@
 
 - features for a customer release on 24.10.2014, cf. Redmine for details
 
+## 0.9.0-p3 ##
+
+- Webpage Page: endButtonText Attribute works now
+
 ## 0.9.0-p2 ##
 
 - VideoPlay Page: controllable Attribute works now
