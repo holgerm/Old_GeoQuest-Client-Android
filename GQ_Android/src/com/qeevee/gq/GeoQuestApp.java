@@ -31,8 +31,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -42,9 +40,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
@@ -158,6 +153,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 
 		missingBitmap = BitmapUtil.loadBitmapFromResource(
 				R.drawable.missingbitmap, 100, 100, false);
+		BitmapUtil.initializePools();
 
 		// read configs from assets file:
 		Configuration.initialize();
@@ -446,7 +442,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		repositoryItems.clear();
 		// boolean result = loadRepoDataFromServer(handler);
 		boolean result = false;
-		// result |= GameLoader.loadIncludedQuests();
+		result |= GameLoader.loadIncludedQuests();
 		result |= loadRepoDataFromClient(handler);
 
 		if (handler != null)
@@ -655,7 +651,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		if (runningGamedDir == null)
 			throw new IllegalArgumentException(
 					"Running game is null.");
-		String resourcePath = getRunningGameDir().getAbsolutePath() + "/"
+		String resourcePath = runningGamedDir.getAbsolutePath() + "/"
 				+ ressourceFilePath;
 		File file = new File(resourcePath);
 		if (file.exists() && file.canRead())
@@ -902,24 +898,24 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		GeoQuestApp.showMessage(infotext);
 	}
 
-	public static void recycleImagesFromView(View view) {
-		if (view instanceof ImageView) {
-			Drawable drawable = ((ImageView) view).getDrawable();
-			if (drawable instanceof BitmapDrawable) {
-				BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-				BitmapUtil
-						.addBitmapToSetOfReusables(bitmapDrawable.getBitmap());
-				// bitmapDrawable.getBitmap().recycle();
-				// bitmapDrawable = null;
-			}
-		} else if (view instanceof ViewGroup) {
-			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-				recycleImagesFromView(((ViewGroup) view).getChildAt(i));
-			}
-		}
-
-	}
-
+	// public static void recycleImagesFromView(View view) {
+	// if (view instanceof ImageView) {
+	// Drawable drawable = ((ImageView) view).getDrawable();
+	// if (drawable instanceof BitmapDrawable) {
+	// BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+	// BitmapUtil
+	// .addBitmapToSetOfReusables(bitmapDrawable.getBitmap());
+	// // bitmapDrawable.getBitmap().recycle();
+	// // bitmapDrawable = null;
+	// }
+	// } else if (view instanceof ViewGroup) {
+	// for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+	// recycleImagesFromView(((ViewGroup) view).getChildAt(i));
+	// }
+	// }
+	//
+	// }
+	//
 	public static HostConnector getHostConnector(String portalID) {
 		HostConnector[] connectors = getHostConnectors();
 		for (int i = 0; i < connectors.length; i++) {

@@ -11,7 +11,7 @@ import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.Mission;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
-
+import com.qeevee.ui.BitmapUtil;
 
 public class EndGame extends GQCommand {
 
@@ -29,6 +29,7 @@ public class EndGame extends GQCommand {
 		Mission.clean();
 		Hotspot.clean();
 		Variables.clean();
+		BitmapUtil.clearBitmapCache();
 		GeoQuestApp gqApp = GeoQuestApp.getInstance();
 		List<Activity> gqActivities = gqApp.getActivities();
 		Activity[] allActivities = new Activity[gqActivities.size()];

@@ -45,7 +45,7 @@ public abstract class GQCommand {
 					}
 				});
 		// Set the Icon for the Dialog
-		alertDialog.setIcon(R.drawable.gqlogo_solo_trans);
+		alertDialog.setIcon(R.drawable.app_item_icon);
 		alertDialog.show();
 		return true;
 	}

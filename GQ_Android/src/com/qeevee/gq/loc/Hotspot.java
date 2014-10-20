@@ -36,6 +36,10 @@ import com.qeevee.gq.Variables;
  */
 public class Hotspot {
 
+	private static final int MARKER_WIDTH = 60;
+
+	private static final int MARKER_HEIGHT = 60;
+
 	private static HotspotManager hm = HotspotManager.getInstance();
 
 	public Hotspot(Element hotspotXML) {
@@ -191,11 +195,11 @@ public class Hotspot {
 		// image
 		markerPath = _hotspotNode.attributeValue("img");
 		if (markerPath != null) {
-			setBitmap(BitmapUtil.loadBitmap(markerPath, 0, 0, false));
+			setBitmap(BitmapUtil.loadBitmap(markerPath, MARKER_HEIGHT, MARKER_WIDTH, false));
 		} else {
 			setBitmap(((BitmapDrawable) GeoQuestApp.getInstance()
 					.getResources()
-					.getDrawable(R.drawable.default_hotspot_icon)).getBitmap());
+					.getDrawable(R.drawable.marker)).getBitmap());
 		}
 
 		// Default for initialVisibility attribute is "true"

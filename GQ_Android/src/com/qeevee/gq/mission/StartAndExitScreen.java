@@ -141,7 +141,8 @@ public class StartAndExitScreen extends MissionActivity {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
 			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImage,
-					Util.getDisplayWidth() - (2 * margin), 0, true);
+					Util.getDisplayWidth() - (2 * margin),
+					Util.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
 				imageView.setImageBitmap(bitmap);
 			} else {
@@ -204,7 +205,7 @@ public class StartAndExitScreen extends MissionActivity {
 
 	@Override
 	public void finish() {
-		GeoQuestApp.recycleImagesFromView(imageView);
+		//		GeoQuestApp.recycleImagesFromView(imageView);
 		super.finish();
 	}
 

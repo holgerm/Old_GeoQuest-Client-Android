@@ -1,61 +1,68 @@
 package com.qeevee.ui;
 
 import java.io.File;
-import java.lang.ref.SoftReference;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.Log;
-
-import com.qeevee.gq.res.ResourceManager;
-import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 public class BitmapUtil {
 
 	private static final String TAG = BitmapUtil.class.getCanonicalName();
 
-	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
-		Bitmap output = null;
-		output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
-				Config.ARGB_8888);
-		Canvas canvas = new Canvas(output);
+	private static Map<BitmapType, BitmapPool> pools;
 
-		final int color = 0xff424242;
-		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-		final RectF rectF = new RectF(rect);
-		final float roundPx = pixels;
-
-		paint.setAntiAlias(true);
-		canvas.drawARGB(0, 0, 0, 0);
-		paint.setColor(color);
-		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-		canvas.drawBitmap(bitmap, rect, rect, paint);
-		// bitmap.recycle();
-		// bitmap = null;
-
-		return output;
+	public static void initializePools() {
+		pools = new HashMap<BitmapType, BitmapPool>(BitmapType.values().length);
+		pools.put(BitmapType.FULLSCREEN, new BitmapPool(
+				BitmapType.FULLSCREEN.capacity, 405, 688));
 	}
 
-	public static Bitmap loadBitmap(String relativeResourcePath, int reqWidth,
-			int reqHeight, boolean rounded) {
+	public static BitmapPool getPool(BitmapType bitmapType) {
+		return pools.get(bitmapType);
+	}
+
+	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+		// Bitmap output = null;
+		// output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
+		// Config.ARGB_8888);
+		// Canvas canvas = new Canvas(output);
+		//
+		// final int color = 0xff424242;
+		// final Paint paint = new Paint();
+		// final Rect rect = new Rect(0, 0, bitmap.getWidth(),
+		// bitmap.getHeight());
+		// final RectF rectF = new RectF(rect);
+		// final float roundPx = pixels;
+		//
+		// paint.setAntiAlias(true);
+		// canvas.drawARGB(0, 0, 0, 0);
+		// paint.setColor(color);
+		// canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+		//
+		// paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		// canvas.drawBitmap(bitmap, rect, rect, paint);
+		//
+		// return output;
+		return bitmap;
+	}
+
+	public static Bitmap loadBitmap(String relativeResourcePath, int width,
+			int height, boolean rounded) {
 		Bitmap bmp;
 		String path = completeImageFileSuffix(ResourceManager.getResourcePath(
 				relativeResourcePath, ResourceType.IMAGE));
@@ -66,15 +73,10 @@ public class BitmapUtil {
 				return GeoQuestApp.getInstance().getMissingBitmap();
 			} else {
 				final BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inJustDecodeBounds = true;
-				BitmapFactory.decodeFile(path, options);
-
-				options.inSampleSize = calculateInSampleSize(options, reqWidth,
-						reqHeight);
-
-				// Decode bitmap with inSampleSize set
-				options.inJustDecodeBounds = false;
-				addInBitmapOptions(options);
+				options.inSampleSize = 1;
+				options.inMutable = true;
+//				options.inBitmap = lookupBitmap(width, height);
+				// addInBitmapOptions(options);
 				bmp = BitmapFactory.decodeFile(path, options);
 				if (bmp == null) {
 					Log.e(TAG, "Bitmap could not be decoded (path: " + path);
@@ -119,72 +121,74 @@ public class BitmapUtil {
 		return bmp;
 	}
 
-	private static Set<SoftReference<Bitmap>> reusableBitmaps = Collections
-			.synchronizedSet(new HashSet<SoftReference<Bitmap>>());
-
-	private static void addInBitmapOptions(BitmapFactory.Options options) {
-		// inBitmap only works with mutable bitmaps, so force the decoder to
-		// return mutable bitmaps.
-		options.inMutable = true;
-
-		// Try to find a bitmap to use for inBitmap.
-		Bitmap inBitmap = getBitmapFromReusableSet(options);
-
-		if (inBitmap != null) {
-			// If a suitable bitmap has been found, set it as the value of
-			// inBitmap.
-			options.inBitmap = inBitmap;
-		}
-	}
-
-	public static void addBitmapToSetOfReusables(Bitmap bmp) {
-		reusableBitmaps.add(new SoftReference<Bitmap>(bmp));
-	}
-
-	// This method iterates through the reusable bitmaps, looking for one
-	// to use for inBitmap:
-	private static Bitmap getBitmapFromReusableSet(BitmapFactory.Options options) {
-		Bitmap bitmap = null;
-
-		if (reusableBitmaps != null && !reusableBitmaps.isEmpty()) {
-			synchronized (reusableBitmaps) {
-				final Iterator<SoftReference<Bitmap>> iterator = reusableBitmaps
-						.iterator();
-				Bitmap item;
-
-				while (iterator.hasNext()) {
-					item = iterator.next().get();
-
-					if (null != item && item.isMutable()) {
-						// Check to see it the item can be used for inBitmap.
-						if (canUseForInBitmap(item, options)) {
-							bitmap = item;
-
-							// Remove from reusable set so it can't be used
-							// again.
-							iterator.remove();
-							break;
-						}
-					} else {
-						// Remove from the set if the reference has been
-						// cleared.
-						iterator.remove();
-					}
-				}
-			}
-		}
-		return bitmap;
-	}
-
-	static boolean canUseForInBitmap(Bitmap candidate,
-			BitmapFactory.Options targetOptions) {
-
-		// On earlier versions than 4.4 (Kitkat), the dimensions must match
-		// exactly and the inSampleSize must be 1
-		return candidate.getWidth() == targetOptions.outWidth
-				&& candidate.getHeight() == targetOptions.outHeight
-				&& targetOptions.inSampleSize == 1;
-	}
+	// private static Set<SoftReference<Bitmap>> reusableBitmaps = Collections
+	// .synchronizedSet(new HashSet<SoftReference<Bitmap>>());
+	//
+	// @SuppressWarnings("unused")
+	// private static void addInBitmapOptions(BitmapFactory.Options options) {
+	// // inBitmap only works with mutable bitmaps, so force the decoder to
+	// // return mutable bitmaps.
+	// options.inMutable = true;
+	//
+	// // Try to find a bitmap to use for inBitmap.
+	// Bitmap inBitmap = getBitmapFromReusableSet(options);
+	//
+	// if (inBitmap != null) {
+	// // If a suitable bitmap has been found, set it as the value of
+	// // inBitmap.
+	// options.inBitmap = inBitmap;
+	// }
+	// }
+	//
+	// public static void addBitmapToSetOfReusables(Bitmap bmp) {
+	// reusableBitmaps.add(new SoftReference<Bitmap>(bmp));
+	// }
+	//
+	// // This method iterates through the reusable bitmaps, looking for one
+	// // to use for inBitmap:
+	// private static Bitmap getBitmapFromReusableSet(BitmapFactory.Options
+	// options) {
+	// Bitmap bitmap = null;
+	//
+	// if (reusableBitmaps != null && !reusableBitmaps.isEmpty()) {
+	// synchronized (reusableBitmaps) {
+	// final Iterator<SoftReference<Bitmap>> iterator = reusableBitmaps
+	// .iterator();
+	// Bitmap item;
+	//
+	// while (iterator.hasNext()) {
+	// item = iterator.next().get();
+	//
+	// if (null != item && item.isMutable()) {
+	// // Check to see it the item can be used for inBitmap.
+	// if (canUseForInBitmap(item, options)) {
+	// bitmap = item;
+	//
+	// // Remove from reusable set so it can't be used
+	// // again.
+	// iterator.remove();
+	// break;
+	// }
+	// } else {
+	// // Remove from the set if the reference has been
+	// // cleared.
+	// iterator.remove();
+	// }
+	// }
+	// }
+	// }
+	// return bitmap;
+	// }
+	//
+	// static boolean canUseForInBitmap(Bitmap candidate,
+	// BitmapFactory.Options targetOptions) {
+	//
+	// // On earlier versions than 4.4 (Kitkat), the dimensions must match
+	// // exactly and the inSampleSize must be 1
+	// return candidate.getWidth() == targetOptions.outWidth
+	// && candidate.getHeight() == targetOptions.outHeight
+	// && targetOptions.inSampleSize == 1;
+	// }
 
 	/**
 	 * A helper function to return the byte usage per pixel of a bitmap based on
@@ -265,4 +269,32 @@ public class BitmapUtil {
 			return KNOWN_BITMAP_SUFFIXES.contains(suffix);
 		}
 	}
+
+	private static Map<String, Bitmap> bitmapCache = new HashMap<String, Bitmap>();
+
+	private static Bitmap lookupBitmap(int width, int height) {
+		String key = generateKey(width, height);
+		Bitmap reusableBitmap = bitmapCache.get(key);
+		if (reusableBitmap == null) {
+			reusableBitmap = Bitmap.createBitmap(width, height,
+					Config.ARGB_8888);
+			bitmapCache.put(generateKey(width, height), reusableBitmap);
+		}
+		return reusableBitmap;
+	}
+
+	@SuppressLint("DefaultLocale")
+	private static String generateKey(int width, int height) {
+		return String.format("%05d.%05d", width, height);
+	}
+
+	public static void clearBitmapCache() {
+		for (Iterator<Entry<String, Bitmap>> iterator = bitmapCache.entrySet()
+				.iterator(); iterator.hasNext();) {
+			Entry<String, Bitmap> entry = iterator.next();
+			entry.getValue().recycle();
+		}
+		bitmapCache.clear();
+	}
+
 }
