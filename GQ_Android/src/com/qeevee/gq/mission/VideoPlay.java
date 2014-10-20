@@ -24,6 +24,7 @@ public class VideoPlay extends InteractiveMission {
 	private static final String TAG = "VideoPlay";
 
 	CharSequence videoUriCharSequence = null;
+	AlertDialog exitDialog;
 
 	private VideoView videoView;
 
@@ -45,16 +46,29 @@ public class VideoPlay extends InteractiveMission {
 
 		videoView = (VideoView) this.findViewById(R.id.video);
 		videoView.setVideoURI(initVideoUri());
-		MediaController mc = new MediaController(this);
-		mc.setPrevNextListeners(finishButtonClickListener, null);
-		videoView.setMediaController(mc);
+		boolean isControllable = XMLUtilities
+				.getBooleanAttribute("controllable",
+						R.bool.videoplay_controllable_default, getXML());
+		setControllers(isControllable);
+
+		if (bundle != null && bundle.containsKey("position")) {
+			videoView.seekTo(bundle.getInt("position"));
+		}
 		videoView.requestFocus();
 		videoView.setVisibility(View.VISIBLE);
+		videoView.start();
+	}
+
+	private void setControllers(final boolean controllable) {
+		MediaController mc = new MediaController(this);
+		mc.setPrevNextListeners(finishButtonClickListener, null);
+		if (controllable)
+			videoView.setMediaController(mc);
 		videoView
 				.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
 					public void onCompletion(MediaPlayer mp) {
-						showExitAlertDialog();
+						showExitAlertDialog(controllable);
 					}
 
 				});
@@ -67,11 +81,12 @@ public class VideoPlay extends InteractiveMission {
 				return true;
 			}
 		});
+		finishButtonClickListener = new View.OnClickListener() {
 
-		if (bundle != null && bundle.containsKey("position")) {
-			videoView.seekTo(bundle.getInt("position"));
-		}
-		videoView.start();
+			public void onClick(View v) {
+				showExitAlertDialog(controllable);
+			}
+		};
 	}
 
 	public Uri initVideoUri() {
@@ -98,7 +113,7 @@ public class VideoPlay extends InteractiveMission {
 	}
 
 	private void showErrorAlertDialog() {
-		AlertDialog exitDialog = new AlertDialog.Builder(VideoPlay.this)
+		AlertDialog errorDialog = new AlertDialog.Builder(VideoPlay.this)
 				.setTitle(R.string.error_dialog_title)
 				.setMessage(R.string.videoplay_errordialog_message)
 				.setNegativeButton(R.string.button_text_proceed,
@@ -108,33 +123,50 @@ public class VideoPlay extends InteractiveMission {
 								finish(Globals.STATUS_SUCCEEDED);
 							}
 						}).show();
-		exitDialog
+		errorDialog
 				.getButton(AlertDialog.BUTTON_NEGATIVE)
 				.setCompoundDrawablesWithIntrinsicBounds(null, null,
 						getResources().getDrawable(R.drawable.icon_leave), null);
 	}
 
-	private void showExitAlertDialog() {
-		AlertDialog exitDialog = new AlertDialog.Builder(VideoPlay.this)
-				.setTitle(R.string.videoplay_finishdialog_title)
-				.setMessage(R.string.videoplay_finishdialog_message)
-				.setNegativeButton(
-						R.string.videoplay_finishdialog_keepwatching, null)
-				.setPositiveButton(R.string.videoplay_finishdialog_leave,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								finishMission();
-							}
-						}).show();
-		exitDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-				.setCompoundDrawablesWithIntrinsicBounds(
-						getResources().getDrawable(R.drawable.icon_again),
-						null, null, null);
-		exitDialog
-				.getButton(AlertDialog.BUTTON_POSITIVE)
-				.setCompoundDrawablesWithIntrinsicBounds(null, null,
-						getResources().getDrawable(R.drawable.icon_leave), null);
+	private void showExitAlertDialog(boolean controllable) {
+		if (controllable) {
+			exitDialog = new AlertDialog.Builder(VideoPlay.this)
+					.setTitle(R.string.videoplay_finishdialog_title)
+					.setMessage(R.string.videoplay_finishdialog_message)
+					.setNegativeButton(
+							R.string.videoplay_finishdialog_keepwatching, null)
+					.setPositiveButton(R.string.videoplay_finishdialog_leave,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									finishMission();
+								}
+							}).show();
+			exitDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+					.setCompoundDrawablesWithIntrinsicBounds(
+							getResources().getDrawable(R.drawable.icon_again),
+							null, null, null);
+			exitDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+					.setCompoundDrawablesWithIntrinsicBounds(null, null,
+							getResources().getDrawable(R.drawable.icon_leave),
+							null);
+		} else {
+			exitDialog = new AlertDialog.Builder(VideoPlay.this)
+					.setTitle(R.string.videoplay_finishdialog_title)
+					.setMessage(R.string.videoplay_finishdialog_message)
+					.setPositiveButton(R.string.videoplay_finishdialog_leave,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									finishMission();
+								}
+							}).show();
+			exitDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+					.setCompoundDrawablesWithIntrinsicBounds(null, null,
+							getResources().getDrawable(R.drawable.icon_leave),
+							null);
+		}
 	}
 
 	public void onBlockingStateUpdated(boolean blocking) {
@@ -142,12 +174,7 @@ public class VideoPlay extends InteractiveMission {
 
 	}
 
-	private View.OnClickListener finishButtonClickListener = new View.OnClickListener() {
-
-		public void onClick(View v) {
-			showExitAlertDialog();
-		}
-	};
+	private View.OnClickListener finishButtonClickListener;
 
 	@Override
 	protected void onPause() {
@@ -165,8 +192,10 @@ public class VideoPlay extends InteractiveMission {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt("position", videoView.getCurrentPosition());
-		super.onSaveInstanceState(outState);
+		if (videoView != null) {
+			outState.putInt("position", videoView.getCurrentPosition());
+			super.onSaveInstanceState(outState);
+		}
 	}
 
 	public MissionOrToolUI getUI() {

@@ -1,11 +1,19 @@
 # Versioning #
 
+## towards: 0.9.0 ##
+
+- features for a customer release on 24.10.2014, cf. Redmine for details
+
+## 0.9.0-p2 ##
+
+- VideoPlay Page: controllable Attribute works now
+
 ## 0.9.0-p1 ##
 
 - Packages renamed and unnecessary code removed
 - Mission results are now stored in $_mission_ID.result instead of $_ID.result wich is conform to the editor again
 - script for product setting (cf. script/gq_set_product)
-- features for a customer release on 24.10.2014, cf. Redmine for details
+- New page type TextWithImage (based on NPCTalk) is tested and should work.
 
 ## 0.8.3.11 ##
 

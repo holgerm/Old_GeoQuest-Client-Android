@@ -28,6 +28,9 @@
     <!-- Variable Defaults -->
     <string name="varDefaultUserID">0</string>
 
+    <!-- VideoPlay PAGE -->
+    <bool name="videoplay_controllable_default">true</bool>
+
     <!-- HOTSPOTS -->
     <string name="hotspot_default_activity">true</string>
 
