@@ -139,7 +139,10 @@
     <string name="videoplay_finishdialog_watchagain">Watch again</string>
     <string name="videoplay_finishdialog_leave">Yes</string>
     <string name="videoplay_errordialog_message">I can not play that video.</string>
-
+    
+    <!-- WebPage PAGE -->
+    <string name="webpage_loading_message">Web page is loading ...</string>
+    
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
 

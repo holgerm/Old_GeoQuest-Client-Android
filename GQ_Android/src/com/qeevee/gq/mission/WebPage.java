@@ -1,6 +1,7 @@
 package com.qeevee.gq.mission;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Xml.Encoding;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -56,6 +58,7 @@ public class WebPage extends MissionActivity implements OnClickListener {
 		// .setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120427 Firefox/15.0a1");
 		webview.setInitialScale(20);
 		webview.setWebViewClient(new HelloWebViewClient());
+		webview.setWebChromeClient(new GQWebViewClient());
 
 		okButton = (Button) findViewById(R.id.proceedButton);
 		CharSequence buttonText = XMLUtilities.getStringAttribute(
@@ -114,6 +117,48 @@ public class WebPage extends MissionActivity implements OnClickListener {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	private ProgressDialog progress;
+
+	public void showProgressDialog(final String msg) {
+
+		runOnUiThread(new Runnable() {
+			public void run() {
+				if (progress == null || !progress.isShowing()) {
+					progress = ProgressDialog.show(WebPage.this, "", msg);
+				}
+			}
+		});
+	}
+
+	public void hideProgressDialog() {
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					if (progress.isShowing())
+						progress.dismiss();
+				} catch (Throwable e) {
+
+				}
+			}
+		});
+	}
+
+	private class GQWebViewClient extends WebChromeClient {
+		@Override
+		public void onProgressChanged(WebView view, int newProgress) {
+			super.onProgressChanged(view, newProgress);
+			if (newProgress >= 0) {
+				showProgressDialog(WebPage.this.getText(
+						R.string.webpage_loading_message).toString());
+			}
+			if (newProgress >= 100) {
+				hideProgressDialog();
+			}
+		}
 	}
 
 	private class HelloWebViewClient extends WebViewClient {
