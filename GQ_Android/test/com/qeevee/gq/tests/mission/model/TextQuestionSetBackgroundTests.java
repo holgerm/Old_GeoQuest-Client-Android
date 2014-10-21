@@ -17,7 +17,7 @@ import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.R;
 
@@ -170,7 +170,7 @@ public class TextQuestionSetBackgroundTests {
 	private void shouldShowBackground(String relPath) {
 		assertEquals(
 				new BitmapDrawable(BitmapUtil.loadBitmap(relPath,
-						Util.getDisplayWidth(), 0, false)), ov.getBackground());
+						Device.getDisplayWidth(), 0, false)), ov.getBackground());
 	}
 
 	private void giveCorrectAnswer() {

@@ -19,7 +19,7 @@ import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.Globals;
@@ -141,8 +141,8 @@ public class StartAndExitScreen extends MissionActivity {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
 			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImage,
-					Util.getDisplayWidth() - (2 * margin),
-					Util.getDisplayHeight() - (2 * margin), true);
+					Device.getDisplayWidth() - (2 * margin),
+					Device.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
 				imageView.setImageBitmap(bitmap);
 			} else {

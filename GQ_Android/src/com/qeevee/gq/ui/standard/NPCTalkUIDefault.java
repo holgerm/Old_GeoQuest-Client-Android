@@ -25,7 +25,7 @@ import com.qeevee.gq.ui.abstrakt.GeoQuestUI;
 import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 public class NPCTalkUIDefault extends NPCTalkUI {
 
@@ -97,8 +97,8 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
 			Bitmap bitmap = BitmapUtil.loadBitmap(pathToImageFile.toString(),
-					Util.getDisplayWidth() - (2 * margin),
-					Util.getDisplayHeight() - (2 * margin), true);
+					Device.getDisplayWidth() - (2 * margin),
+					Device.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
 				charImage.setImageBitmap(bitmap);
 			} else {

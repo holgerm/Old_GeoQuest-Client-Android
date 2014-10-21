@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.R;
 import com.qeevee.gq.mission.NFCScanMission;
@@ -147,7 +147,7 @@ public class NFCScanMissionUIDefault extends NFCScanMissionUI {
 			this.imageView.setVisibility(View.VISIBLE);
 			this.imageView.setImageBitmap(BitmapUtil.loadBitmap(
 					imagePath.toString(),
-					Math.round(Util.getDisplayWidth() * 0.8f), 0, true));
+					Math.round(Device.getDisplayWidth() * 0.8f), 0, true));
 		} else {
 			// unset imageview:
 			this.imageView.setVisibility(View.GONE);

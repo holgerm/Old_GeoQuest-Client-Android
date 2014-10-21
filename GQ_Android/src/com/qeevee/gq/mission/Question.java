@@ -5,7 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.R;
 
@@ -23,8 +23,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.mcq_background_question);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, Util.getDisplayWidth(),
-							Util.getDisplayHeight(), false)));
+					.loadBitmap(bg, Device.getDisplayWidth(),
+							Device.getDisplayHeight(), false)));
 		}
 	}
 
@@ -35,8 +35,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.mcq_background_wrong);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, Util.getDisplayWidth(),
-							Util.getDisplayHeight(), false)));
+					.loadBitmap(bg, Device.getDisplayWidth(),
+							Device.getDisplayHeight(), false)));
 		}
 	}
 
@@ -47,8 +47,8 @@ public abstract class Question extends InteractiveMission {
 			outerView.setBackgroundResource(R.drawable.mcq_background_right);
 		else {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, Util.getDisplayWidth(),
-							Util.getDisplayHeight(), false)));
+					.loadBitmap(bg, Device.getDisplayWidth(),
+							Device.getDisplayHeight(), false)));
 		}
 	}
 

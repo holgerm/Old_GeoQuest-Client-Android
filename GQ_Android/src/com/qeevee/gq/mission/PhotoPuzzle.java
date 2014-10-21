@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.Globals;
@@ -225,7 +225,7 @@ public class PhotoPuzzle extends Question {
 				XMLUtilities.NECESSARY_ATTRIBUTE, mission.xmlMissionNode);
 		if (imgsrc != null)
 			photopuzzleImage.setBackgroundDrawable(new BitmapDrawable(
-					BitmapUtil.loadBitmap(imgsrc, Util.getDisplayWidth(), 0,
+					BitmapUtil.loadBitmap(imgsrc, Device.getDisplayWidth(), 0,
 							true)));
 	}
 

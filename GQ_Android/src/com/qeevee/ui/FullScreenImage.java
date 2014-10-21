@@ -1,6 +1,6 @@
 package com.qeevee.ui;
 
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,7 +25,7 @@ public class FullScreenImage extends Activity {
 		if (intent.hasExtra("bitmapPath")) {
 			String bitmapPath = intent.getStringExtra("bitmapPath");
 			Bitmap bitmap = BitmapUtil.loadBitmap(bitmapPath,
-					Util.getDisplayHeight(), 0, true);
+					Device.getDisplayHeight(), 0, true);
 			imageView.setImageBitmap(bitmap);
 		} else {
 			if (intent.hasExtra("resId")) {

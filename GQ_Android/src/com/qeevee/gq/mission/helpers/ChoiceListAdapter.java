@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.R;
 import com.qeevee.gq.mission.MultipleChoiceQuestion.Answer;
@@ -62,7 +62,7 @@ public class ChoiceListAdapter extends ArrayAdapter<Answer> {
 			holder.image.setImageResource(R.drawable.ic_launcher);
 		else
 			holder.image.setImageBitmap(BitmapUtil.loadBitmap(
-					imagePath.toString(), Util.getDisplayWidth() / 4, 0, true));
+					imagePath.toString(), Device.getDisplayWidth() / 4, 0, true));
 
 		return rowView;
 	}

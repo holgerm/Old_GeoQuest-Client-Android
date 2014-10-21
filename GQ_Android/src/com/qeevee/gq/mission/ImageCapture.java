@@ -40,7 +40,7 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.ui.ZoomImageView;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 /**
  * Photo Taking Mission.
@@ -117,7 +117,7 @@ public class ImageCapture extends MissionActivity implements OnClickListener {
 			this.imageView.setVisibility(View.VISIBLE);
 			this.imageView.setImageBitmap(BitmapUtil.loadBitmap(
 					imagePath.toString(),
-					Math.round(Util.getDisplayWidth() * 0.8f), 0, true));
+					Math.round(Device.getDisplayWidth() * 0.8f), 0, true));
 			this.imageView.setImageByRelativePathToBitmap(imagePath.toString());
 		} else {
 			// unset imageview:

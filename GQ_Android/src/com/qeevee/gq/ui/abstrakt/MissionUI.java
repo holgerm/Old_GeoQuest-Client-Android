@@ -13,7 +13,7 @@ import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.BlockableAndReleasable;
 import com.qeevee.gq.GeoQuestApp;
@@ -88,7 +88,7 @@ public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 				XMLUtilities.OPTIONAL_ATTRIBUTE, xmlMissionNode);
 		if (bg != null) {
 			outerView.setBackgroundDrawable(new BitmapDrawable(BitmapUtil
-					.loadBitmap(bg, Util.getDisplayWidth(), 0, true)));
+					.loadBitmap(bg, Device.getDisplayWidth(), 0, true)));
 			return true;
 		}
 		// IF NO BACKGROUND PICTURE IS GIVEN, TRY COLOR:

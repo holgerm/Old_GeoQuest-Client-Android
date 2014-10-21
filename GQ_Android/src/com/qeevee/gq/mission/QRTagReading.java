@@ -19,7 +19,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
@@ -151,7 +151,7 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 			this.imageView.setVisibility(View.VISIBLE);
 			this.imageView.setImageBitmap(BitmapUtil.loadBitmap(
 					imagePath.toString(),
-					Math.round(Util.getDisplayWidth() * 0.8f), 0, true));
+					Math.round(Device.getDisplayWidth() * 0.8f), 0, true));
 		} else {
 			// unset imageview:
 			this.imageView.setVisibility(View.GONE);

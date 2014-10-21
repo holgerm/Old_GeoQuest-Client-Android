@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
-import com.qeevee.util.Util;
+import com.qeevee.util.Device;
 
 public class ZoomImageView extends ImageView {
 
@@ -49,7 +49,7 @@ public class ZoomImageView extends ImageView {
 		int margin = GeoQuestApp.getContext().getResources()
 				.getDimensionPixelSize(R.dimen.margin);
 		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath,
-				Util.getDisplayWidth() - (2 * margin), 0, true);
+				Device.getDisplayWidth() - (2 * margin), 0, true);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {

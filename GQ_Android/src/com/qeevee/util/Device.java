@@ -6,7 +6,7 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
-public class Util {
+public class Device {
 
 	public static int getDisplayWidth() {
 		return getDisplay().getWidth();
