@@ -33,7 +33,7 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 
 	public String getGamesJSONString() {
 		try {
-			String result = new RetrieveGameListAsJSONTask().execute(this)
+			String result = new RetrieveJSONforPublicGames().execute(this)
 					.get();
 			return result;
 		} catch (InterruptedException e) {
@@ -48,7 +48,7 @@ public class DefaultConnectionStrategy implements ConnectionStrategy {
 		return GQ_HOST_BASE_URL + GQ_HOST_GAMEPATH + gameID;
 	}
 
-	private class RetrieveGameListAsJSONTask extends
+	private class RetrieveJSONforPublicGames extends
 			AsyncTask<ConnectionStrategy, Void, String> {
 
 		protected String doInBackground(ConnectionStrategy... params) {
