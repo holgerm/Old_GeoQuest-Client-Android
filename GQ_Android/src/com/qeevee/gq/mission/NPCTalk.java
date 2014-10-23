@@ -209,8 +209,12 @@ public class NPCTalk extends MissionActivity {
 		 */
 		public DialogItem(CharSequence text, CharSequence soundFile) {
 			speaker = null;
-			audioFilePath = soundFile.toString();
-			this.text = text.toString();
+			if (soundFile != null)
+				audioFilePath = soundFile.toString();
+			if (text != null)
+				this.text = text.toString();
+			else
+				this.text = "";
 			processText();
 		}
 

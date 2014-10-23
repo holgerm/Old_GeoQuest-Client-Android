@@ -125,16 +125,15 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	}
 
 	private void initDialogItemPresenter() {
-		if (this.mode.equals("chunk")) {
-			// display formatted text as a complete chunk:
-			dialogText.append(Html.fromHtml(currentDialogItem.getText()));
-			dialogText.append("\n");
-			scrollView.fullScroll(View.FOCUS_DOWN);
-		}
 		if (this.mode.equals("wordticker")) {
 			// show dialog item text word by word via ticker
 			ticker = new WordTicker();
 			ticker.start();
+		} else {
+			// display formatted text as a complete chunk:
+			dialogText.append(Html.fromHtml(currentDialogItem.getText()));
+			dialogText.append("\n");
+			scrollView.fullScroll(View.FOCUS_DOWN);
 		}
 	}
 

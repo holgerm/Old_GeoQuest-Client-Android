@@ -25,7 +25,6 @@ import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
 
-
 /**
  * QR Tag Reading Mission.
  * 
@@ -129,11 +128,15 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 
 		// init mode and dependent attributes:
 		String modeAsString = mission.xmlMissionNode.attributeValue("mode");
-		if (modeAsString == null || modeAsString.equals("treasure")) {
+		if (modeAsString == null
+				|| modeAsString
+						.equals("beliebiger Tag (mit Wenn-Dann-Bedingung)")
+				|| modeAsString.equals("treasure")) {
 			this.missionMode = TREASURE;
 			this.feedbackText = getMissionAttribute("feedbacktext",
 					R.string.qrtagreader_treasure_feedback);
-		} else if (modeAsString.equals("product")) {
+		} else if (modeAsString.equals("bestimmter Tag (mit onSuccess)")
+				|| modeAsString.equals("product")) {
 			this.missionMode = PRODUCT;
 			this.expectedContent = getMissionAttribute("expected_content",
 					XMLUtilities.NECESSARY_ATTRIBUTE);
