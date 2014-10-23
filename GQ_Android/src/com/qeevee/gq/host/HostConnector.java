@@ -1,6 +1,10 @@
 package com.qeevee.gq.host;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,37 +12,46 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.qeevee.gq.Configuration;
 import com.qeevee.gq.start.GameDescription;
 
 public class HostConnector {
 
 	private static final String TAG = HostConnector.class.getCanonicalName();
 
-	private ConnectionStrategy connectionStrategy;
-
-	public void setConnectionStrategy(ConnectionStrategy connectionStrategy) {
-		this.connectionStrategy = connectionStrategy;
+	public static Collection<GameDescription> getGamesList() {
+		List<ConnectionStrategy> connStrats = new ArrayList<ConnectionStrategy>();
+		int[] hostIDs = Configuration.getPortalIDs();
+		if (hostIDs.length == 0) {
+			connStrats.add(new PublicGamesConnectionStrategy(
+					Host.GEOQUEST_PUBLIC_PORTAL_ID));
+			connStrats.add(new PersonalGamesConnectionStrategy(
+					Host.GEOQUEST_PUBLIC_PORTAL_ID));
+		}
+		for (int i = 0; i < hostIDs.length; i++) {
+			connStrats.add(new PublicGamesConnectionStrategy(hostIDs[i]));
+			connStrats.add(new PersonalGamesConnectionStrategy(hostIDs[i]));
+		}
+		Map<String, GameDescription> gameMap = getGamesMap(connStrats);
+		return gameMap.values();
 	}
 
-	public ConnectionStrategy getConnectionStrategy() {
-		return connectionStrategy;
+	private static Map<String, GameDescription> getGamesMap(
+			List<ConnectionStrategy> connectionStrategies) {
+		Map<String, GameDescription> gameMap = new HashMap<String, GameDescription>();
+		for (ConnectionStrategy curConnStrat : connectionStrategies) {
+			List<GameDescription> curGameDescList = createList(curConnStrat
+					.getGamesJSONString());
+			for (GameDescription curGameDesc : curGameDescList) {
+				if (!gameMap.containsKey(curGameDesc.getID())) {
+					gameMap.put(curGameDesc.getID(), curGameDesc);
+				}
+			}
+		}
+		return gameMap;
 	}
 
-	public HostConnector() {
-		setConnectionStrategy(new PublicGamesConnectionStrategy(
-				Host.GEOQUEST_PUBLIC_PORTAL_ID));
-	}
-
-	public HostConnector(int portalID) {
-		setConnectionStrategy(new PublicGamesConnectionStrategy(portalID));
-	}
-
-	public ArrayList<GameDescription> getGameList() {
-		String gamesJSONString = connectionStrategy.getGamesJSONString();
-		return createList(gamesJSONString);
-	}
-
-	private ArrayList<GameDescription> createList(String gamesJSONString) {
+	private static ArrayList<GameDescription> createList(String gamesJSONString) {
 		ArrayList<GameDescription> gameList = new ArrayList<GameDescription>();
 		if (gamesJSONString == null)
 			return gameList;
@@ -48,8 +61,7 @@ public class HostConnector {
 				JSONObject jsonObj = jsonArray.getJSONObject(i);
 				if (!jsonObj.isNull("zip")
 						&& !jsonObj.get("zip").equals("none"))
-					gameList.add(new GameDescription(jsonObj,
-							connectionStrategy.getPortalID()));
+					gameList.add(new GameDescription(jsonObj));
 			}
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
@@ -57,7 +69,4 @@ public class HostConnector {
 		return gameList;
 	}
 
-	public String getDownloadURL(String id) {
-		return connectionStrategy.getDownloadURL(id);
-	}
 }

@@ -9,13 +9,11 @@ import android.widget.ListView;
 
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.host.ConnectionStrategy;
-import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.start.GamesInCloud;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.host.MockConnectionStrategy;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-
 
 @RunWith(GQTestRunner.class)
 public class GameListTests {
@@ -31,7 +29,6 @@ public class GameListTests {
 		// WHEN:
 		startGameList();
 
-		// THEN:
 		// shouldShowGames(1);
 		// shouldShowGameWithName("TestGame");
 
@@ -63,8 +60,8 @@ public class GameListTests {
 		app.onCreate();
 		ConnectionStrategy testConnectionStrategy = new MockConnectionStrategy(
 				mockResponseFile);
-		HostConnector connector = new HostConnector();
-		connector.setConnectionStrategy(testConnectionStrategy);
-		app.setHostConnectors(new HostConnector[] { connector });
+		// HostConnector
+		// .getHostConnector(new ConnectionStrategy[] { testConnectionStrategy
+		// });
 	}
 }

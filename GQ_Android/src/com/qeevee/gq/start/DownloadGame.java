@@ -15,10 +15,10 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.qeevee.util.FileOperations;
-
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.host.Host;
+import com.qeevee.util.FileOperations;
 
 public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
@@ -44,7 +44,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		progressDialog.setMessage(GeoQuestApp.getContext().getText(
 				R.string.downloadDialogMessage));
 		progressDialog.setIcon(R.drawable.app_item_icon); // TODO use game
-																// icon instead.
+															// icon instead.
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
 			deleteDir(gameDir);
@@ -76,8 +76,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		FileOutputStream fOutLocal = null;
 		fOutLocal = new FileOutputStream(gameZipFile);
 
-		URL url = new URL(GeoQuestApp.getHostConnector(game.getPortalID())
-				.getDownloadURL(game.getID()));
+		URL url = new URL(Host.getDownloadURL(game.getID()));
 
 		Log.d(TAG, "starting download: " + url);
 		in = new BufferedInputStream(url.openStream(), BYTE_SIZE);

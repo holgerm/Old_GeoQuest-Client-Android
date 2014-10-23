@@ -44,7 +44,6 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 import com.qeevee.gq.commands.EndGame;
-import com.qeevee.gq.host.HostConnector;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.LandingScreen;
@@ -61,22 +60,22 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
 
-	private static HostConnector[] hostConnectors;
+//	private static HostConnector[] hostConnectorsOLD;
 
-	public static HostConnector[] getHostConnectors() {
-		if (hostConnectors == null) {
-			int[] hostIDs = Configuration.getPortalIDs();
-			hostConnectors = new HostConnector[hostIDs.length];
-			for (int i = 0; i < hostIDs.length; i++) {
-				hostConnectors[i] = new HostConnector(hostIDs[i]);
-			}
-		}
-		return hostConnectors;
-	}
-
-	public void setHostConnectors(HostConnector[] connectors) {
-		hostConnectors = connectors;
-	}
+	// public static HostConnector[] getHostConnectorsOLD() {
+	// if (hostConnectorsOLD == null) {
+	// int[] hostIDs = Configuration.getPortalIDs();
+	// hostConnectorsOLD = new HostConnector[hostIDs.length];
+	// for (int i = 0; i < hostIDs.length; i++) {
+	// hostConnectorsOLD[i] = new HostConnector(hostIDs[i]);
+	// }
+	// }
+	// return hostConnectorsOLD;
+	// }
+	//
+	// public void setHostConnectorsOLD(HostConnector[] connectors) {
+	// hostConnectorsOLD = connectors;
+	// }
 
 	private MapView googleMap;
 	private boolean isInGame = false;
@@ -649,8 +648,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static File getGameRessourceFile(String ressourceFilePath) {
 		File runningGamedDir = getRunningGameDir();
 		if (runningGamedDir == null)
-			throw new IllegalArgumentException(
-					"Running game is null.");
+			throw new IllegalArgumentException("Running game is null.");
 		String resourcePath = runningGamedDir.getAbsolutePath() + "/"
 				+ ressourceFilePath;
 		File file = new File(resourcePath);
@@ -915,15 +913,5 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	// }
 	//
 	// }
-	//
-	public static HostConnector getHostConnector(String portalID) {
-		HostConnector[] connectors = getHostConnectors();
-		for (int i = 0; i < connectors.length; i++) {
-			if (portalID.equals(connectors[i].getConnectionStrategy()
-					.getPortalID()))
-				return connectors[i];
-		}
-		return null;
-	}
 
 }

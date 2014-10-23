@@ -15,13 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.qeevee.gq.host.HostConnector;
-
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.host.HostConnector;
 
 public class GamesInCloud extends Activity {
 
+	public static final String TAG = GamesInCloud.class.getCanonicalName();
 	private ListView listView;
 	private TextView titleView;
 
@@ -34,17 +34,16 @@ public class GamesInCloud extends Activity {
 		titleView = (TextView) findViewById(R.id.titleGamesList);
 		titleView.setText(R.string.titleGamesInCloud);
 
-		AsyncTask<HostConnector, Integer, List<GameDescription>> loadGameList = new GetGameList();
+		AsyncTask<Void, Integer, List<GameDescription>> loadGameList = new GetGameList();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			loadGameList.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-					GeoQuestApp.getHostConnectors());
+			loadGameList.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		else
-			loadGameList.execute(GeoQuestApp.getHostConnectors());
+			loadGameList.execute();
 
 	}
 
 	private class GetGameList extends
-			AsyncTask<HostConnector, Integer, List<GameDescription>> {
+			AsyncTask<Void, Integer, List<GameDescription>> {
 
 		private ProgressDialog progressDialog;
 
@@ -66,31 +65,16 @@ public class GamesInCloud extends Activity {
 		}
 
 		@Override
-		protected List<GameDescription> doInBackground(HostConnector... params) {
-			List<GameDescription> collectedGames = new ArrayList<GameDescription>();
-			List<GameDescription> curHostGames;
+		protected List<GameDescription> doInBackground(Void... params) {
 			progressDialog.setTitle(GeoQuestApp.getContext().getText(
 					R.string.dialogGetGameListTitle));
 			progressDialog.setMessage(GeoQuestApp.getContext().getText(
 					R.string.wait));
 			progressDialog.setIcon(R.drawable.app_item_icon);
 
-			for (HostConnector connector : params) {
-				curHostGames = connector.getGameList();
-				for (GameDescription curOtherGameDescription : curHostGames) {
-					boolean alreadyInList = false;
-					for (GameDescription existingGameDescription : collectedGames) {
-						if (existingGameDescription.getID().equals(
-								curOtherGameDescription.getID())) {
-							alreadyInList = true;
-							break;
-						}
-					}
-					if (!alreadyInList)
-						collectedGames.add(curOtherGameDescription);
-				}
-			}
-			return collectedGames;
+			List<GameDescription> gamesList = new ArrayList<GameDescription>();
+			gamesList.addAll(HostConnector.getGamesList());
+			return gamesList;
 		}
 
 		@Override

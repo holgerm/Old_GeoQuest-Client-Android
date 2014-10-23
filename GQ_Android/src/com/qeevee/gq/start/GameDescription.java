@@ -19,7 +19,8 @@ public class GameDescription {
 	private String name;
 	private String id;
 	private String zipURL = "none";
-	private String portalID;
+
+	// private String portalID;
 
 	// private long lastUpdate;
 
@@ -27,13 +28,12 @@ public class GameDescription {
 		return zipURL;
 	}
 
-	public GameDescription(JSONObject jsonObject, String portalID)
-			throws JSONException {
+	public GameDescription(JSONObject jsonObject) throws JSONException {
 		name = (String) jsonObject.get("name");
 		id = ((Integer) jsonObject.get("id")).toString();
-//		lastUpdate = Long.parseLong((String) jsonObject.get("lastUpdate"));
+		// lastUpdate = Long.parseLong((String) jsonObject.get("lastUpdate"));
 		zipURL = (String) jsonObject.get("zip");
-		this.setPortalID(portalID);
+		// this.setPortalID(portalID);
 	}
 
 	/**
@@ -74,12 +74,12 @@ public class GameDescription {
 		return name;
 	}
 
-	public String getPortalID() {
-		return portalID;
-	}
-
-	private void setPortalID(String portalID) {
-		this.portalID = portalID;
-	}
+	// public String getPortalID() {
+	// return portalID;
+	// }
+	//
+	// private void setPortalID(String portalID) {
+	// this.portalID = portalID;
+	// }
 
 }

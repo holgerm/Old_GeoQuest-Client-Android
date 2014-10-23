@@ -31,6 +31,10 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 	static final String TAG = PersonalGamesConnectionStrategy.class
 			.getCanonicalName();
 
+	public PersonalGamesConnectionStrategy(int portalID) {
+		this.portalID = portalID;
+	}
+
 	@Override
 	public String getGamesJSONString() {
 		try {
@@ -50,7 +54,7 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 		protected String doInBackground(Void... unusedParams) {
 			String responseString = null;
 
-			// Input:
+			// Input: TODO get stored user credentials from preferences
 			String email = "mail@holgermuegge.de";
 			String password = "!mactop!";
 			List<String> cookieStrings = null;
@@ -59,7 +63,7 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 
 			URL url;
 			try {
-				url = new URL("http://geo.quest-mill.com:9000/61/login");
+				url = new URL(Host.getURLForLoginOnPortal(portalID));
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
 				conn.setReadTimeout(10000);
@@ -89,7 +93,7 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 					}
 				}
 
-				url = new URL("http://geo.quest-mill.com/json/61/privategames");
+				url = new URL(Host.getURLForPersonalGamesOnPortal(portalID));
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				conn.setDoInput(true);

@@ -24,10 +24,6 @@ public class MockConnectionStrategy implements ConnectionStrategy {
 		return mockresponse;
 	}
 
-	public String getDownloadURL(String id) {
-		return null;
-	}
-
 	@Override
 	public String getPortalID() {
 		// TODO Auto-generated method stub
