@@ -15,11 +15,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.qeevee.util.Dialogs;
-
 import com.qeevee.gq.GeoQuestActivity;
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.Mission;
+import com.qeevee.gq.Preferences;
 import com.qeevee.gq.R;
+
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 
 public class LandingScreen extends GeoQuestActivity {
@@ -96,9 +97,17 @@ public class LandingScreen extends GeoQuestActivity {
 		} else if (itemId == R.id.menu_showCloudGames) {
 			showCloudGames();
 			return true;
+		} else if (itemId == R.id.menu_preferences) {
+			showPreferences();
+			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void showPreferences() {
+		Intent i = new Intent(this, Preferences.class);
+		startActivity(i);
 	}
 
 	private void showCloudGames() {

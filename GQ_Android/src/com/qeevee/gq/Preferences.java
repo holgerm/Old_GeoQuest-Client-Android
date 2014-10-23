@@ -98,9 +98,9 @@ public class Preferences extends PreferenceActivity implements
 
 	@Override
 	protected void onResume() {
-		if (!mainPrefs.contains(Preferences.PREF_KEY_PASSWORD)) {
-			promptForPassword();
-		}
+//		if (!mainPrefs.contains(Preferences.PREF_KEY_PASSWORD)) {
+//			promptForPassword();
+//		}
 		super.onResume();
 	}
 
