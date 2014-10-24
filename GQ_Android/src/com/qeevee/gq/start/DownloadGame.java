@@ -138,6 +138,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 						AsyncTask.THREAD_POOL_EXECUTOR, game);
 			else
 				startLocalGame.execute(game);
+			callBackToReenable.finish();
 		} else {
 			toastText = GeoQuestApp.getContext().getText(
 					R.string.messageDownloadErrorPrefix)
