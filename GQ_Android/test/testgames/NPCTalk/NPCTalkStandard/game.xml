@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<game
-	name="NPCTalkStandard"
-	xmlformat="5"
->
-	<mission
-		type="NPCTalk"
-		id="m1"
-		image="drawable/ploppschutz.png"
-	>
+<game name="NPCTalkStandard" xmlformat="5">
+	<mission type="NPCTalk" id="m1" image="drawable/ploppschutz.png"
+		mode="wordticker">
 		<onEnd>
 			<rule>
-				<action
-					type="StartMission"
-					id="m2" />
+				<action type="StartMission" id="m2" />
 			</rule>
 		</onEnd>
 		<dialogitem>
-	This NPCTalk mission offers just three only text dialog items.</dialogitem>
+			This NPCTalk mission offers just three only text dialog
+			items.
+		</dialogitem>
 		<dialogitem>This is the second dialog item.
 		</dialogitem>
 		<dialogitem> This is the third and last dialog item.
 		</dialogitem>
 	</mission>
-	<mission
-		type="NPCTalk"
-		id="m2"
-		image="drawable/ploppschutz.png"
-	>
+	<mission type="NPCTalk" id="m2" image="drawable/ploppschutz.png"
+		mode="wordticker">
 		<onEnd>
 			<rule>
 				<action type="EndGame" />

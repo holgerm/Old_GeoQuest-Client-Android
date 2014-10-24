@@ -69,7 +69,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		init();
 	}
 
-	@Override
+	@Override 
 	public View createContentView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
