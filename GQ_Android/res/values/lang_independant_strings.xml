@@ -36,5 +36,10 @@
 
     <!-- Menu Items -->
     <string name="menuItem_showState_default">if_room</string>
+    
+    <!-- Preference Keys -->
+    <string name="pref_server_email_key">pref_server_email</string>
+    <string name="pref_server_password_key">pref_server_password</string>
+    
 
 </resources>

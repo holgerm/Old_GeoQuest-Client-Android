@@ -166,6 +166,10 @@
 
     <!-- Server PREFERENCES -->
     <string name="pref_cat_server_settings">Server-Einstellungen</string>
+    <string name="pref_server_email_title">Email</string>
+    <string name="pref_server_email_summary">Email Ihres Accounts.</string>
+    <string name="pref_server_password_title">Passwort</string>
+    <string name="pref_server_password_summary">Passwort Ihres Accounts.</string>
     <string name="pref_server_url_title">Server URL</string>
     <string name="pref_server_url_summary">Die URL des Spiele-Servers. Ändere diese nicht, außer du möchtest einen eigenen Server nutzen.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>

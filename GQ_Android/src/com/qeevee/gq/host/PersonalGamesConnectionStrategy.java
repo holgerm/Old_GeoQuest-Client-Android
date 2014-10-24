@@ -23,7 +23,12 @@ import java.util.concurrent.ExecutionException;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy {
@@ -33,6 +38,28 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 
 	public PersonalGamesConnectionStrategy(int portalID) {
 		this.portalID = portalID;
+	}
+
+	private static String userEmail;
+
+	static public void setUserEmail(String email) {
+		userEmail = email;
+	}
+
+	private static String userPassword;
+
+	static public void setUserPassword(String password) {
+		userPassword = password;
+	}
+
+	static {
+		// read email and password from sharedPrefs when this class is loaded:
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(GeoQuestApp.getContext());
+		userEmail = sharedPrefs.getString((String) GeoQuestApp.getContext()
+				.getText(R.string.pref_server_email_key), null);
+		userPassword = sharedPrefs.getString((String) GeoQuestApp.getContext()
+				.getText(R.string.pref_server_password_key), null);
 	}
 
 	@Override
@@ -52,11 +79,12 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 	private class RetrieveJSONforPersonalGames extends
 			AsyncTask<Void, Integer, String> {
 		protected String doInBackground(Void... unusedParams) {
+			if (userEmail == null || userPassword == null)
+				return null;
+
 			String responseString = null;
 
 			// Input: TODO get stored user credentials from preferences
-			String email = "mail@holgermuegge.de";
-			String password = "!mactop!";
 			List<String> cookieStrings = null;
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
@@ -73,8 +101,8 @@ public class PersonalGamesConnectionStrategy extends AbstractConnectionStrategy 
 				conn.setDoOutput(true);
 
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair("email", email));
-				params.add(new BasicNameValuePair("password", password));
+				params.add(new BasicNameValuePair("email", userEmail));
+				params.add(new BasicNameValuePair("password", userPassword));
 
 				OutputStream os = conn.getOutputStream();
 				BufferedWriter writer = new BufferedWriter(

@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.qeevee.gq.host.PersonalGamesConnectionStrategy;
 import com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference;
 import com.qeevee.gq.pwprefs.PasswordProtectedListPreference;
 import com.qeevee.util.FileOperations;
@@ -98,9 +99,9 @@ public class Preferences extends PreferenceActivity implements
 
 	@Override
 	protected void onResume() {
-//		if (!mainPrefs.contains(Preferences.PREF_KEY_PASSWORD)) {
-//			promptForPassword();
-//		}
+		// if (!mainPrefs.contains(Preferences.PREF_KEY_PASSWORD)) {
+		// promptForPassword();
+		// }
 		super.onResume();
 	}
 
@@ -226,6 +227,19 @@ public class Preferences extends PreferenceActivity implements
 
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			final String key) {
+		if (key.equals(getText(R.string.pref_server_email_key))) {
+			PersonalGamesConnectionStrategy.setUserEmail(sharedPreferences
+					.getString(
+							(String) getText(R.string.pref_server_email_key),
+							null));
+		}
+		if (key.equals(getText(R.string.pref_server_password_key))) {
+			PersonalGamesConnectionStrategy
+					.setUserPassword(sharedPreferences
+							.getString(
+									(String) getText(R.string.pref_server_password_key),
+									null));
+		}
 		if (key.equals("isGPSMocking")) {
 			if (sharedPreferences.getBoolean(key, false) == true) {
 				String deviceName = sharedPreferences.getString(
