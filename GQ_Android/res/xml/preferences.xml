@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="Location Mocking">
-		<EditTextPreference android:name="Devices Name"
-			android:summary="This name is displayed on GeoControl map when you simulate location"
-			android:defaultValue="" android:title="Device Name" android:key="deviceNameForGPSMocking" />
-		<CheckBoxPreference android:title="GPS Mocking"
-			android:defaultValue="false"
-			android:summary="Enable or disable position simulation. Device name is required."
-			android:key="isGPSMocking" android:dependency="deviceNameForGPSMocking" />
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/pref_cat_server_settings" android:key="pref_cat_server_settings">
-		<com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference android:key="pref_server_url"
-			android:title="@string/pref_server_url_title" android:summary="@string/pref_server_url_summary"
-			android:dialogTitle="@string/pref_server_url_dialog_title" android:dialogMessage="@string/pref_server_url_dialog_message">
-		</com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/pref_cat_game_start" android:key="pref_cat_game_start">
-		<com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference android:key="pref_auto_start_game_check"
-			android:title="@string/pref_auto_start_game_check_title" android:summary="@string/pref_auto_start_game_check_summary"
-			android:defaultValue="false">
-		</com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference>
-		<com.qeevee.gq.pwprefs.PasswordProtectedListPreference android:key="pref_auto_start_game"
-			android:title="@string/pref_auto_start_game_title" android:summary="@string/pref_auto_start_game_summary"
-			android:dialogTitle="@string/pref_auto_start_game_dialog_title" android:dependency="pref_auto_start_game_check">
-		</com.qeevee.gq.pwprefs.PasswordProtectedListPreference>
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/pref_cat_security">
-		<com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference android:key="pref_password"
-			android:title="@string/pref_password_title" android:summary="@string/pref_password_summary"
-			android:dialogTitle="@string/pref_password_dialog_title" android:dialogMessage="@string/pref_password_dialog_message">
-		</com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/pref_cat_misc">
-		<com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference android:key="pref_clean_sdcard"
-			android:title="@string/pref_clean_sdcard_title" android:summary="@string/pref_clean_sdcard_summary"
-			android:dialogTitle="@string/pref_clean_sdcard_dlg_title" android:dialogMessage="@string/pref_clean_sdcard_dlg_msg">
-		</com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference>
-	</PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Location Mocking" >
+        <EditTextPreference
+            android:name="Devices Name"
+            android:defaultValue=""
+            android:key="deviceNameForGPSMocking"
+            android:summary="This name is displayed on GeoControl map when you simulate location"
+            android:title="Device Name" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:dependency="deviceNameForGPSMocking"
+            android:key="isGPSMocking"
+            android:summary="Enable or disable position simulation. Device name is required."
+            android:title="GPS Mocking" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_cat_server_settings"
+        android:title="@string/pref_cat_server_settings" >
+        <com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference
+            android:dialogMessage="@string/pref_server_url_dialog_message"
+            android:dialogTitle="@string/pref_server_url_dialog_title"
+            android:key="pref_server_url"
+            android:summary="@string/pref_server_url_summary"
+            android:title="@string/pref_server_url_title" >
+        </com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_cat_game_start"
+        android:title="@string/pref_cat_game_start" >
+        <com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_auto_start_game_check"
+            android:summary="@string/pref_auto_start_game_check_summary"
+            android:title="@string/pref_auto_start_game_check_title" >
+        </com.qeevee.gq.pwprefs.PasswordProtectedCheckBoxPreference>
+
+        <com.qeevee.gq.pwprefs.PasswordProtectedListPreference
+            android:dependency="pref_auto_start_game_check"
+            android:dialogTitle="@string/pref_auto_start_game_dialog_title"
+            android:key="pref_auto_start_game"
+            android:summary="@string/pref_auto_start_game_summary"
+            android:title="@string/pref_auto_start_game_title" >
+        </com.qeevee.gq.pwprefs.PasswordProtectedListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_security" >
+        <com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference
+            android:dialogMessage="@string/pref_password_dialog_message"
+            android:dialogTitle="@string/pref_password_dialog_title"
+            android:key="pref_password"
+            android:summary="@string/pref_password_summary"
+            android:title="@string/pref_password_title" >
+        </com.qeevee.gq.pwprefs.PasswordProtectedEditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_misc" >
+        <com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference
+            android:dialogMessage="@string/pref_clean_sdcard_dlg_msg"
+            android:dialogTitle="@string/pref_clean_sdcard_dlg_title"
+            android:key="pref_clean_sdcard"
+            android:summary="@string/pref_clean_sdcard_summary"
+            android:title="@string/pref_clean_sdcard_title" >
+        </com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference>
+    </PreferenceCategory>
+
 </PreferenceScreen>
