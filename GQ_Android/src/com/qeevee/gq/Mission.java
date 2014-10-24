@@ -246,7 +246,6 @@ public class Mission implements Serializable {
 		} else
 			Log.e(this.getClass().getName(),
 					"Mission can NOT be started since Intent is null.");
-
 	}
 
 	public void startMission() {
