@@ -1,6 +1,6 @@
 # Versioning #
 
-## towards: 0.9.0 ##
+## 0.9.0 ##
 
 - features for a customer release on 24.10.2014, cf. Redmine for details
 
@@ -8,6 +8,7 @@
 
 - Webpage Page: endButtonText Attribute works now
 - Spinner shown while page loads
+- Login in Prefs enabled to load personal non-public games
 
 ## 0.9.0-p2 ##
 
