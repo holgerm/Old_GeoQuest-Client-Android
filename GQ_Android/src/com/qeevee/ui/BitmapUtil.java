@@ -75,7 +75,9 @@ public class BitmapUtil {
 				final BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inSampleSize = 1;
 				options.inMutable = true;
-//				options.inBitmap = lookupBitmap(width, height);
+				options.inPurgeable = true;
+				options.inInputShareable = true;
+				// options.inBitmap = lookupBitmap(width, height);
 				// addInBitmapOptions(options);
 				bmp = BitmapFactory.decodeFile(path, options);
 				if (bmp == null) {
