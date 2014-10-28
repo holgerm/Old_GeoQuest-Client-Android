@@ -178,7 +178,7 @@
     <!-- Game startup PREFERENCES -->
     <string name="pref_cat_game_start">Spielstart</string>
     <string name="pref_auto_start_game_check_title">Lade ein Quest beim Anwendungsstart</string>
-    <string name="pref_auto_start_game_check_summary">Soll ein bestimmtes Quest beim Anwedungstart geladen werden?</string>
+    <string name="pref_auto_start_game_check_summary">Soll ein bestimmtes Quest beim Anwendungsstart geladen werden?</string>
     <string name="pref_auto_start_game_title">Start-Quest</string>
     <string name="pref_auto_start_game_summary">Wähle ein Quest, welches beim Anwendungsstart geladen werden soll.</string>
     <string name="pref_auto_start_game_dialog_title">Wähle ein Quest</string>
