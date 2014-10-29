@@ -35,6 +35,7 @@ public class GamesInCloud extends Activity {
 		titleView.setText(R.string.titleGamesInCloud);
 
 		AsyncTask<Void, Integer, List<GameDescription>> loadGameList = new GetGameList();
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			loadGameList.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		else
@@ -62,16 +63,15 @@ public class GamesInCloud extends Activity {
 						}
 
 					});
-		}
-
-		@Override
-		protected List<GameDescription> doInBackground(Void... params) {
 			progressDialog.setTitle(GeoQuestApp.getContext().getText(
 					R.string.dialogGetGameListTitle));
 			progressDialog.setMessage(GeoQuestApp.getContext().getText(
 					R.string.wait));
 			progressDialog.setIcon(R.drawable.app_item_icon);
+		}
 
+		@Override
+		protected List<GameDescription> doInBackground(Void... params) {
 			List<GameDescription> gamesList = new ArrayList<GameDescription>();
 			gamesList.addAll(HostConnector.getGamesList());
 			return gamesList;
