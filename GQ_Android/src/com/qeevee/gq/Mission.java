@@ -334,8 +334,24 @@ public class Mission implements Serializable {
 	}
 
 	private void createRules() {
-		addRulesToList(onStartRules, "onStart/rule");
+		addStartRulesToList();
 		addRulesToList(onEndRules, "onEnd/rule");
+	}
+
+	/**
+	 * This version ignores all actions that leave the current mission, i.e.
+	 * StartMission or EndGame. These actions are not allowed to be used in
+	 * onStart events.
+	 */
+	@SuppressWarnings("unchecked")
+	private void addStartRulesToList() {
+		List<Element> xmlRuleNodes;
+		xmlRuleNodes = xmlMissionNode.selectNodes("onStart/rule");
+		for (Element xmlRule : xmlRuleNodes) {
+			Rule rule = Rule.createFromXMLElement(xmlRule);
+			if (!rule.leavesMission())
+				onStartRules.add(rule);
+		}
 	}
 
 	/**
