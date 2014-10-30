@@ -1,5 +1,14 @@
 # Versioning #
 
+## 0.9.2* ##
+
+- wordticker bug fixed
+
+## 0.9.1 ##
+
+- bug in GetGameList fixed (had called UI from background thread)
+- bug in onStart event fixed: now actions that would leave the mission are ignored in onStart.
+
 ## 0.9.0 ##
 
 - features for a customer release on 24.10.2014, cf. Redmine for details
