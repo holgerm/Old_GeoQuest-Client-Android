@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.9.2* ##
+
+- wordticker bug fixed
+
 ## 0.9.1 ##
 
 - bug in GetGameList fixed (had called UI from background thread)
