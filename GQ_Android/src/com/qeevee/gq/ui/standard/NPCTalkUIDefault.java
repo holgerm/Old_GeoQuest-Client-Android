@@ -69,7 +69,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 		init();
 	}
 
-	@Override 
+	@Override
 	public View createContentView() {
 		LayoutInflater inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -125,7 +125,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 	}
 
 	private void initDialogItemPresenter() {
-		if (this.mode.equals("wordticker")) {
+		if (mode != null && mode.toString().toLowerCase().equals("wordticker")) {
 			// show dialog item text word by word via ticker
 			ticker = new WordTicker();
 			ticker.start();
