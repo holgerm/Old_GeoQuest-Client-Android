@@ -3,3 +3,4 @@ GQ_Android/bin/
 # GQ_Android/bin/jarlist.cache
 /bin/
 /assets/
+/notincluded/

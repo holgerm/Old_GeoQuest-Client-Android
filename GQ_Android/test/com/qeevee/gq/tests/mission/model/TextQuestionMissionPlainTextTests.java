@@ -8,6 +8,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,29 +17,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.qeevee.gq.mission.Question;
+import com.qeevee.gq.mission.TextQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.Question;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionMissionPlainTextTests {
-	private static final String GAME_NAME = "TextQuestion/FunctionTest";
+	protected String gameName;
 	Question tq;
 	TextView tv;
 	EditText et;
 	Button bt;
 
+	protected void initGameName() {
+		gameName = "TextQuestion/FunctionTest";
+	}
+
 	@SuppressWarnings("unchecked")
 	public void initTestMission(String missionID) {
 		tq = (Question) TestUtils.prepareMission("TextQuestion", missionID,
-				startGameForTest(GAME_NAME));
+				startGameForTest(gameName));
 		tq.onCreate(null);
 		tv = (TextView) getFieldValue(tq, "textView");
 		et = (EditText) getFieldValue(tq, "answerEditText");
 		bt = (Button) getFieldValue(tq, "button");
+	}
+
+	@Before
+	public void initTest() {
+		initGameName();
 	}
 
 	@After
@@ -46,6 +56,18 @@ public class TextQuestionMissionPlainTextTests {
 		// get rid of all variables that have been set, e.g. for checking
 		// actions.
 		Variables.clean();
+	}
+
+	@Test
+	public void checkMIssionInitialization() {
+		// GIVEN:
+
+		// WHEN:
+		initTestMission("With_Defaults");
+
+		// THEN:
+		shouldContainAnswers(3);
+		shouldHaveQuestionText("Text of the question.");
 	}
 
 	@Test
@@ -78,7 +100,7 @@ public class TextQuestionMissionPlainTextTests {
 	}
 
 	@Test
-	public void acceptButtonOnlyEnabledWhenAnswerTextNotEmpty() { 
+	public void acceptButtonOnlyEnabledWhenAnswerTextNotEmpty() {
 		initTestMission("With_Defaults");
 		assertFalse("Button should be disabled initially", bt.isEnabled());
 		assertEquals("Button label should be accept",
@@ -193,10 +215,11 @@ public class TextQuestionMissionPlainTextTests {
 		et.setText("Answer One");
 		bt.performClick();
 		assertTrue("Variable for storing answer should have been registered",
-				Variables.isDefined("$_With_Defaults.result"));
+				Variables.isDefined("$_mission_With_Defaults.result"));
 		assertEquals(
 				"Correct answer should be stored in result variable for this mission",
-				"Answer One", Variables.getValue("$_With_Defaults.result"));
+				"Answer One",
+				Variables.getValue("$_mission_With_Defaults.result"));
 	}
 
 	@Test
@@ -205,10 +228,11 @@ public class TextQuestionMissionPlainTextTests {
 		et.setText("Something wrong");
 		bt.performClick();
 		assertTrue("Variable for storing answer should have been registered",
-				Variables.isDefined("$_With_Defaults.result"));
+				Variables.isDefined("$_mission_With_Defaults.result"));
 		assertEquals(
 				"Wrong answer should be stored in result variable for this mission",
-				"Something wrong", Variables.getValue("$_With_Defaults.result"));
+				"Something wrong",
+				Variables.getValue("$_mission_With_Defaults.result"));
 	}
 
 	@Test
@@ -299,7 +323,15 @@ public class TextQuestionMissionPlainTextTests {
 				1.0, Variables.getValue("onEnd"));
 	}
 
-
 	// === HELPER METHODS FOLLOW =============================================
+
+	private void shouldContainAnswers(int expectedNumber) {
+		assertEquals(expectedNumber, ((TextQuestion) tq).answers.size());
+	}
+
+	private void shouldHaveQuestionText(String expectedQuestionText) {
+		String questionText = (String) getFieldValue(tq, "questionText");
+		assertEquals(expectedQuestionText, questionText);
+	}
 
 }

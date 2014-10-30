@@ -6,45 +6,40 @@ import android.app.Activity;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import com.uni.bonn.nfc4mg.NFCEventManager;
 
 public class BluetoothTagActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "GPSTagActivity";
 
-	private EditText id, macId, passKey;
+	// private EditText id, macId, passKey;
 	private Button read, write;
-	private TextView nfcStatus;
 
-	private Context ctx;
+	// private TextView nfcStatus;
 
-	private NFCEventManager mNFCEventManager = null;
+	// private Context ctx;
+
+	// private NFCEventManager mNFCEventManager = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.bt_tag);
-		this.ctx = this;
+		// this.ctx = this;
 
-		id = (EditText) findViewById(R.id.id);
-		macId = (EditText) findViewById(R.id.macId);
-		passKey = (EditText) findViewById(R.id.passKey);
+		// id = (EditText) findViewById(R.id.id);
+		// macId = (EditText) findViewById(R.id.macId);
+		// passKey = (EditText) findViewById(R.id.passKey);
 		read = (Button) findViewById(R.id.read);
 		write = (Button) findViewById(R.id.write);
-		nfcStatus = (TextView) findViewById(R.id.nfcStatus);
+		// nfcStatus = (TextView) findViewById(R.id.nfcStatus);
 
 		read.setOnClickListener(this);
 		write.setOnClickListener(this);
@@ -88,14 +83,14 @@ public class BluetoothTagActivity extends Activity implements OnClickListener {
 				if (proxy instanceof BluetoothA2dp) {
 					Log.d(TAG, "Instance of BluetoothA2dp class");
 					headset = ((BluetoothA2dp) proxy);
-					
+
 					List<BluetoothDevice> connectedDevices = proxy
 							.getConnectedDevices();
-					
+
 					for (BluetoothDevice device : connectedDevices) {
 						bluetoothDevice = device;
-						Log.d(TAG, "Address = "  +device.getAddress());
-						Log.d(TAG, "Name = "  +device.getName());
+						Log.d(TAG, "Address = " + device.getAddress());
+						Log.d(TAG, "Name = " + device.getName());
 					}
 				} else {
 					Log.d(TAG, "Not an Instance of BluetoothA2dp class");

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game name="MultipleChoiceQuestionTest" xmlformat="5">
+
+	<mission id="No_Loop__No_onChoose" type="MultipleChoiceQuestion" question="Text of the question.">
+
+		<onStart>
+
+			<rule>
+
+				<action type="SetVariable" var="onStart">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onStart>
+
+		<onSuccess>
+
+			<rule>
+
+				<action type="SetVariable" var="onSuccess">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onSuccess>
+
+		<onFail>
+
+			<rule>
+
+				<action type="SetVariable" var="onFail">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+
+		<onEnd>
+
+			<rule>
+
+				<action type="SetVariable" var="onEnd">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onEnd>
+
+		<answer correct="0">
+			Answer One
+		</answer>
+
+		<answer correct="1">
+			Answer Two
+		</answer>
+
+		<answer correct="0">
+			Answer Three
+		</answer>
+	</mission>
+
+	<mission id="Loop_onChoose" loopUntilSuccess="true"
+		type="MultipleChoiceQuestion" question="Text of the question.">
+
+		<onFail>
+
+			<rule>
+
+				<action type="SetVariable" var="onFail">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+
+		<answer correct="0" onChoose="Answer one is wrong.">
+			Answer One
+		</answer>
+
+		<answer correct="1" onChoose="Right!">
+			Answer Two
+		</answer>
+
+		<answer correct="0" onChoose="Answer three is wrong.">
+			Answer Three
+		</answer>
+
+		<answer correct="1" onChoose="Also right!">
+			Answer Four
+		</answer>
+	</mission>
+
+	<mission id="V 0.9 Version with Questiontext as Attribute"
+		loopUntilSuccess="true" type="MultipleChoiceQuestion" question="Text of the question.">
+
+		<onFail>
+
+			<rule>
+
+				<action type="SetVariable" var="onFail">
+
+					<value>
+
+						<num>
+							1
+						</num>
+					</value>
+				</action>
+			</rule>
+		</onFail>
+
+		<answer correct="0" onChoose="Answer one is wrong.">
+			Answer One
+		</answer>
+
+		<answer correct="1" onChoose="Right!">
+			Answer Two
+		</answer>
+
+		<answer correct="0" onChoose="Answer three is wrong.">
+			Answer Three
+		</answer>
+
+		<answer correct="1" onChoose="Also right!">
+			Answer Four
+		</answer>
+	</mission>
+
+</game>

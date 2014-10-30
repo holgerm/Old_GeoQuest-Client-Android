@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.uni.bonn.nfc4mg.NFCEventManager;
 import com.uni.bonn.nfc4mg.constants.TagConstants;
 import com.uni.bonn.nfc4mg.exception.NfcTagException;
-import com.uni.bonn.nfc4mg.exception.TagModelException;
 import com.uni.bonn.nfc4mg.nfctag.ParseTagListener;
 import com.uni.bonn.nfc4mg.nfctag.TagHandler;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
@@ -45,7 +44,7 @@ public class AutoTagDetectionActivity extends Activity implements
 
 		try {
 
-			mNFCEventManager = new NFCEventManager(this.ctx);
+			mNFCEventManager = NFCEventManager.getInstance(this.ctx);
 			mNFCEventManager
 					.initialize(this.ctx, AutoTagDetectionActivity.this);
 		} catch (Exception e) {
@@ -54,7 +53,7 @@ public class AutoTagDetectionActivity extends Activity implements
 		}
 
 		try {
-			mHandler = new TagHandler(this);
+			mHandler = new TagHandler(this, this);
 		} catch (NfcTagException e) {
 			e.printStackTrace();
 		}
@@ -87,11 +86,6 @@ public class AutoTagDetectionActivity extends Activity implements
 
 				mHandler.processIntent(intent);
 
-			} catch (TagModelException e) {
-
-				Toast.makeText(AutoTagDetectionActivity.this, e.getMessage(),
-						Toast.LENGTH_SHORT).show();
-
 			} catch (IOException e) {
 
 				Toast.makeText(AutoTagDetectionActivity.this, e.getMessage(),
@@ -102,7 +96,7 @@ public class AutoTagDetectionActivity extends Activity implements
 				Toast.makeText(AutoTagDetectionActivity.this, e.getMessage(),
 						Toast.LENGTH_SHORT).show();
 
-			}catch (Exception e) {
+			} catch (Exception e) {
 
 				Toast.makeText(AutoTagDetectionActivity.this, e.getMessage(),
 						Toast.LENGTH_SHORT).show();
@@ -140,7 +134,7 @@ public class AutoTagDetectionActivity extends Activity implements
 
 			InfoTagModel iModel = mHandler.getmInfoTagModel();
 
-			String data = iModel.getId() + "\n" + iModel.getMime() + "\n"
+			String data = iModel.getId() + "\n" + iModel.getId() + "\n"
 					+ iModel.getData();
 
 			Toast.makeText(AutoTagDetectionActivity.this, data,

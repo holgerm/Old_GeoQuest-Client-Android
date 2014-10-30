@@ -2,7 +2,6 @@ package com.uni.bonn.nfc4mg.utility;
 
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.Tag;
@@ -18,8 +17,7 @@ import com.uni.bonn.nfc4mg.exception.NfcTagException;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
-public final class NfcReadWrite {
+public class NfcReadWrite {
 
 	// Supported TAG Technology. In case of other tag technology Exception will
 	// be thrown.
@@ -153,7 +151,7 @@ public final class NfcReadWrite {
 	 * 
 	 * @param tag
 	 *            : current tag instance
-	 * @return
+	 * @return maybe null if tag not recognized
 	 * @throws IOException
 	 * @throws FormatException
 	 */
@@ -161,6 +159,8 @@ public final class NfcReadWrite {
 			FormatException {
 
 		Ndef ndef = Ndef.get(tag);
+		if (ndef == null)
+			return null;
 		ndef.connect();
 		NdefMessage msg = ndef.getNdefMessage();
 		ndef.close();

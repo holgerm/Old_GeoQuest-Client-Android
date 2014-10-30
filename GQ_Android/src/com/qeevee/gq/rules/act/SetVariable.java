@@ -2,9 +2,9 @@ package com.qeevee.gq.rules.act;
 
 import org.dom4j.Element;
 
+import com.qeevee.gq.Variables;
 import com.qeevee.gq.rules.expr.Expressions;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class SetVariable extends Action {
 

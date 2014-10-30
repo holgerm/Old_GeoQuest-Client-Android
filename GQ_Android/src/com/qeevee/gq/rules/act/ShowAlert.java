@@ -1,6 +1,7 @@
 package com.qeevee.gq.rules.act;
 
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Device;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,8 +9,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class ShowAlert extends Action {
 
@@ -29,7 +31,8 @@ public class ShowAlert extends Action {
 					}
 				});
 		if (params.containsKey("image")) {
-			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("image"), false);
+			Bitmap bitmap = BitmapUtil.loadBitmap(params.get("image"),
+					Math.round(Device.getDisplayWidth() * 0.7f), 0, true);
 			builder.setIcon(new BitmapDrawable(bitmap));
 		}
 		builder.show();

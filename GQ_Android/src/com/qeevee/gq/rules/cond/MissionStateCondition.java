@@ -5,8 +5,9 @@ import java.util.Map;
 
 import org.dom4j.Element;
 
-import edu.bonn.mobilegaming.geoquest.Globals;
-import edu.bonn.mobilegaming.geoquest.Variables;
+import com.qeevee.gq.Globals;
+import com.qeevee.gq.Variables;
+
 
 public class MissionStateCondition extends Condition { 
 

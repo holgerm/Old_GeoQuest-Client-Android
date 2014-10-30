@@ -12,35 +12,36 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qeevee.gq.history.History;
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.NPCTalk;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-import com.qeevee.ui.ZoomImageView;
+import com.qeevee.gq.ui.abstrakt.MissionUI;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
+import com.qeevee.gq.ui.standard.NPCTalkUIDefault.WordTicker;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Start;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.MissionUI;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
-import edu.bonn.mobilegaming.geoquest.ui.standard.NPCTalkUIDefault.WordTicker;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
+
 
 @RunWith(GQTestRunner.class)
 public class NPCTalkUIDefaultTests {
 	MissionUI ui;
-	ZoomImageView imageView;
+	ImageView imageView;
 	TextView textView;
 	Button proceedBT;
-	private Start start;
+	private LandingScreen start;
 	private NPCTalk npcTalk;
 	private WordTicker ticker;
 
 	public void initUIFields() {
 		ui = (MissionUI) getFieldValue(npcTalk, "ui");
-		imageView = (ZoomImageView) getFieldValue(ui, "charImage");
+		imageView = (ImageView) getFieldValue(ui, "charImage");
 		textView = (TextView) getFieldValue(ui, "dialogText");
 		proceedBT = (Button) getFieldValue(ui, "button");
 		ticker = (WordTicker) getFieldValue(ui, "ticker");
@@ -138,6 +139,7 @@ public class NPCTalkUIDefaultTests {
 
 		// THEN:
 		buttonShouldBeDisabled();
+		shouldStillHaveMoreDialogItemsToShow();
 
 		// WHEN:
 		ticker.onFinish();
@@ -145,6 +147,7 @@ public class NPCTalkUIDefaultTests {
 		// THEN:
 		npcTextShouldShowAtEnd("Just two\n");
 		buttonShouldBeEnabled();
+		shouldStillHaveMoreDialogItemsToShow();
 
 		// WHEN:
 		proceedBT.performClick();
@@ -153,17 +156,21 @@ public class NPCTalkUIDefaultTests {
 		// THEN:
 		npcTextShouldShowAtEnd("Emptyfollows\n");
 		buttonShouldBeEnabled();
-
-		// WHEN:
-		proceedBT.performClick();
-		ticker.onFinish();
-
-		// THEN:
-		npcTextShouldShowAtEnd("Emptyfollows\n\n");
-		buttonShouldBeEnabled();
+		shouldHaveShownAllDialogItems();
 	}
 
 	// === HELPER METHODS FOLLOW =============================================
+
+	private void shouldStillHaveMoreDialogItemsToShow() {
+		assertTrue(npcTalk.getNumberOfDialogItems() > npcTalk
+				.getIndexOfCurrentDialogItem());
+
+	}
+
+	private void shouldHaveShownAllDialogItems() {
+		assertEquals(npcTalk.getNumberOfDialogItems(),
+				npcTalk.getIndexOfCurrentDialogItem());
+	}
 
 	private void startMission(MissionActivity mission) {
 		mission.onCreate(null);

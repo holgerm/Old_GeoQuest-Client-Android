@@ -3,31 +3,45 @@
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
     android:keepScreenOn="true"
     android:orientation="vertical" >
 
     <com.qeevee.ui.ZoomImageView
         android:id="@+id/imageCaptureImageView"
-        android:layout_width="fill_parent"
-        android:layout_height="140dip"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
         android:gravity="center_horizontal"
         android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/imageCaptureTextView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
         android:layout_weight="1"
+        android:background="@drawable/background_text"
         android:gravity="center"
-        android:textSize="30sp"
-        android:typeface="serif" />
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_size" />
 
     <Button
         android:id="@+id/imageCaptureStartButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:padding="@dimen/button_padding"
+        android:textColor="@color/text" />
 
 </LinearLayout>

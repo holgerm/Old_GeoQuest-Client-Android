@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="SetVariable" var="counter" value="0" />
+		<action type="IncrementVariable" var="counter" />
+		<action type="IncrementVariable" var="counter" />
+		<action type="IncrementVariable" var="counter" />
+		<action type="IncrementVariable" var="counter" />
+		<action type="IncrementVariable" var="counter" />
+		<action type="Break" />
+		<action type="IncrementVariable" var="counter" />
+	</rule>
+</test>

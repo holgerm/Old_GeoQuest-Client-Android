@@ -12,4 +12,10 @@ public class LtCondition extends ComparisonCondition {
 	protected boolean compare(String object, String object2) {
 		return (object.compareTo(object2) < 0);
 	}
+
+
+	@Override
+	public String getComparisonName() {
+		return "LT";
+	}
 }

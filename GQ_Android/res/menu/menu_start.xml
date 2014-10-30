@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_quit"
+        android:checkable="false"
+        android:icon="@drawable/icon_quit"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_quit">
+    </item>
+    <item
+        android:id="@+id/menu_showLocalGames"
+        android:checkable="false"
+        android:icon="@drawable/icon_reload"
+        android:showAsAction="never"
+        android:title="@string/menu_localGames">
+    </item>
+    <item
+        android:id="@+id/menu_showCloudGames"
+        android:checkable="false"
+        android:icon="@drawable/icon_reload"
+        android:showAsAction="never"
+        android:title="@string/menu_gamesInCloud">
+    </item>
+    <item
+        android:id="@+id/menu_preferences"
+        android:checkable="false"
+        android:icon="@drawable/icon_prefs"
+        android:title="@string/menu_preferences">
+    </item>
+
+</menu>

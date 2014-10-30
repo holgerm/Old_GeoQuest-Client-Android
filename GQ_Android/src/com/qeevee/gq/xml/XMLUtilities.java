@@ -1,9 +1,7 @@
 package com.qeevee.gq.xml;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -11,67 +9,11 @@ import org.dom4j.Node;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.ui.WebViewUtil;
 import com.qeevee.util.StringTools;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.ubonn.gq.extmissionhelper.ExternalMissionHelper;
-
 public class XMLUtilities {
-
-	/**
-	 * Used to extract the parameters for external missions.
-	 * 
-	 * Reads the given XML node element, which must represent the
-	 * <code>parameters</code> tag. All found arguments (i.e. input parameters
-	 * as well as result declarations with their default values which are send
-	 * to the Mission) are stored in the map returned.
-	 * 
-	 * @param parametersElement
-	 *            a <code>parameters</code> xml tag from the game specification
-	 *            (e.g. in a StartExternelMission action or in an
-	 *            ExternalMission itself.
-	 * @return a map containing all arguments (aka input parameters) with
-	 *         <code>name</code> (preceded by "arg:") as key and
-	 *         <code>value</code> as value and all result declarations with with
-	 *         <code>name</code> (preceded by "res:") as key and
-	 *         <code>default</code> as value.
-	 */
-	@SuppressWarnings("unchecked")
-	public static Map<String, String> extractParameters(
-			Element parametersElement) {
-		Map<String, String> inputParameters = null;
-		// Arguments:
-		List<Element> paramElements = parametersElement.selectNodes("argument");
-		if (paramElements != null && paramElements.size() > 0) {
-			inputParameters = new HashMap<String, String>();
-			for (Iterator<Element> iterator = paramElements.iterator(); iterator
-					.hasNext();) {
-				Element currentParamElement = iterator.next();
-				String attributeValue = currentParamElement
-						.attributeValue("value");
-				if (attributeValue.startsWith("$")) {
-					attributeValue = (String) Variables
-							.getValue(attributeValue).toString();
-				}
-				inputParameters.put(ExternalMissionHelper.ARG_PREFIX
-						+ currentParamElement.attributeValue("name"),
-						attributeValue);
-			}
-		}
-		paramElements = parametersElement.selectNodes("result");
-		if (paramElements != null && paramElements.size() > 0) {
-			for (Iterator<Element> iterator = paramElements.iterator(); iterator
-					.hasNext();) {
-				Element currentParamElement = iterator.next();
-				inputParameters.put(ExternalMissionHelper.RES_PREFIX
-						+ currentParamElement.attributeValue("name"),
-						currentParamElement.attributeValue("default"));
-			}
-		}
-		return inputParameters;
-	}
 
 	@SuppressWarnings("rawtypes")
 	public static String getXMLContent(Element element) {
@@ -84,7 +26,7 @@ public class XMLUtilities {
 		return textify(builder.toString());
 	}
 
-	private static String textify(String rawText) {
+	public static String textify(String rawText) {
 		String cleanText;
 		cleanText = rawText.replaceAll("\\s+", " ").trim();
 		cleanText = StringTools.replaceVariables(cleanText);
@@ -94,7 +36,7 @@ public class XMLUtilities {
 		return cleanText;
 	}
 
-	private static CharSequence textify(CharSequence rawText) {
+	public static CharSequence textify(CharSequence rawText) {
 		return (CharSequence) textify(rawText.toString());
 	}
 
@@ -140,6 +82,97 @@ public class XMLUtilities {
 		else
 			return (CharSequence) textify(xmlElement
 					.attributeValue(attributeName));
+	}
+
+	/**
+	 * 
+	 * @param attributeName
+	 * @param defaultAsResourceID
+	 *            either NECESSARY_ATTRIBUTE, OPTIONAL_ATTRIBUTE or a valid
+	 *            resource ID which points to the default value for this
+	 *            attribute as a string resource.
+	 * @param xmlElement
+	 *            the XML element which defines the attribute, e.g. representing
+	 *            a mission or an item in game.xml
+	 * 
+	 * @return the corresponding attribute value as specified in the game.xml or
+	 *         null if the attribute is optional and not specified
+	 * @throws IllegalArgumentException
+	 *             if the attribute is necessary but not given in the game.xml
+	 */
+	public static Integer getIntegerAttribute(String attributeName,
+			int defaultAsResourceID, Element xmlElement) {
+		if (xmlElement == null
+				|| xmlElement.attributeValue(attributeName) == null)
+			if (defaultAsResourceID == NECESSARY_ATTRIBUTE) {
+				// attribute needed but not found => error in game.xml:
+				IllegalArgumentException e = new IllegalArgumentException(
+						"Necessary attribute \"" + attributeName
+								+ "\" missing. Rework game specification.");
+				Log.e(TAG, e.toString());
+				throw e;
+			} else if (defaultAsResourceID == OPTIONAL_ATTRIBUTE) {
+				// optional attribute not set in game.xml => return null:
+				return null;
+			} else
+				// attribute not set in game.xml but given as parameter => use
+				// referenced resource as default and return its value:
+				return GeoQuestApp.getInstance().getResources()
+						.getInteger(defaultAsResourceID);
+		else
+			return Integer.valueOf(xmlElement.attributeValue(attributeName));
+	}
+
+	/**
+	 * 
+	 * @param attributeName
+	 * @param defaultAsResourceID
+	 *            either NECESSARY_ATTRIBUTE, OPTIONAL_ATTRIBUTE or a valid
+	 *            resource ID which points to the default value for this
+	 *            attribute as a string resource.
+	 * @param xmlElement
+	 *            the XML element which defines the attribute, e.g. representing
+	 *            a mission or an item in game.xml
+	 * 
+	 * @return the corresponding attribute value as specified in the game.xml or
+	 *         null if the attribute is optional and not specified
+	 * @throws IllegalArgumentException
+	 *             if the attribute is necessary but not given in the game.xml
+	 */
+	public static Boolean getBooleanAttribute(String attributeName,
+			int defaultAsResourceID, Element xmlElement) {
+		if (xmlElement == null
+				|| xmlElement.attributeValue(attributeName) == null)
+			if (defaultAsResourceID == NECESSARY_ATTRIBUTE) {
+				// attribute needed but not found => error in game.xml:
+				IllegalArgumentException e = new IllegalArgumentException(
+						"Necessary attribute \"" + attributeName
+								+ "\" missing. Rework game specification.");
+				Log.e(TAG, e.toString());
+				throw e;
+			} else if (defaultAsResourceID == OPTIONAL_ATTRIBUTE) {
+				// optional attribute not set in game.xml => return null:
+				return null;
+			} else
+				// attribute not set in game.xml but given as parameter => use
+				// referenced resource as default and return its value:
+				return GeoQuestApp.getInstance().getResources()
+						.getBoolean(defaultAsResourceID);
+		else
+			return stringToBool(xmlElement.attributeValue(attributeName));
+	}
+
+	/**
+	 * TODO use it anywhere in our code where we interpret boolean attributes.
+	 * 
+	 * @param string
+	 * @return true if the given string either is "true" or zero.
+	 */
+	public static boolean stringToBool(String string) {
+		if (string == null)
+			return false;
+		String trimmed = textify(string);
+		return ("true".equalsIgnoreCase(trimmed) || "1".equals(trimmed));
 	}
 
 	/**

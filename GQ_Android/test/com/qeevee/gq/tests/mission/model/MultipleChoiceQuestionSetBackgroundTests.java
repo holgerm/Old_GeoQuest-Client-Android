@@ -10,15 +10,15 @@ import org.junit.runner.RunWith;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.MultipleChoiceQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.MultipleChoiceQuestion;
+import com.qeevee.gq.R;
 
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionSetBackgroundTests {
@@ -27,8 +27,7 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 	private MultipleChoiceQuestion mpcq;
 	private Button bt;
 	private View ov;
-	private Button correctAnswerButton;
-	private Button wrongAnswerButton;
+	private ListView cl;
 
 	@Test
 	public void useDefaultBackground() {
@@ -38,20 +37,20 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 		initTestMission("Defaults");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -92,14 +91,14 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -110,7 +109,7 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 		initTestMission("UseBGReply");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();
@@ -160,10 +159,7 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 		mpcq.onCreate(null);
 		bt = (Button) getFieldValue(mpcq, "bottomButton");
 		ov = (View) getFieldValue((MissionActivity) mpcq, "outerView");
-		LinearLayout mcButtonPanel = (LinearLayout) getFieldValue(mpcq,
-				"mcButtonPanel");
-		correctAnswerButton = (Button) mcButtonPanel.getChildAt(0);
-		wrongAnswerButton = (Button) mcButtonPanel.getChildAt(1);
+		cl = (ListView) getFieldValue(mpcq, "choiceList");
 	}
 
 	private void shouldShowBackground(int backgroundQuestion) {
@@ -172,16 +168,17 @@ public class MultipleChoiceQuestionSetBackgroundTests {
 	}
 
 	private void shouldShowBackground(String relPath) {
-		assertEquals(new BitmapDrawable(BitmapUtil.loadBitmap(relPath, false)),
+		assertEquals(
+				new BitmapDrawable(BitmapUtil.loadBitmap(relPath, 0, 0, false)),
 				ov.getBackground());
 	}
 
 	private void giveCorrectAnswer() {
-		correctAnswerButton.performClick();
+		cl.performItemClick(cl.getChildAt(0), 0, 0);
 	}
 
 	private void giveWrongAnswer() {
-		wrongAnswerButton.performClick();
+		cl.performItemClick(cl.getChildAt(1), 1, 1);
 	}
 
 	private void goBackToQuestion() {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight" >
+
+    <ImageView
+        android:id="@+id/choiceIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/margin_small"
+        android:contentDescription="@string/description_questIcon"
+        android:gravity="center"
+        android:src="@drawable/app_item_icon" />
+
+    <TextView
+        android:id="@+id/choiceTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/choiceIcon"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="false"
+        android:textColor="@color/text"
+        android:textSize="@dimen/title_size" />
+
+</RelativeLayout>

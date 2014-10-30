@@ -1,6 +1,6 @@
 package com.qeevee.gq.rules.act;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+import com.qeevee.gq.GeoQuestApp;
 
 public class PlayAudio extends Action {
 

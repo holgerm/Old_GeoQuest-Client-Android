@@ -9,6 +9,8 @@ We are using eclipse IDE for development. After checkout you can import the foll
 - GQ_Android - the main implementation code for the android client
 - GQ_Android_ExternalMissionHelper - an android library for conveniently integrating external apps as missions into GeoQuest
 - GQ_Android_Utilities - an android library used by the client
+- NFC4MobileGaming - a library used for including NFC Tags in GeoQuest
+	- wheel (a UI library used within the NFC library)
 
 These are all Eclipse android projects, hence import them appropriately in the eclipse import wizard.
 

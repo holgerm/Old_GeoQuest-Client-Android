@@ -1,8 +1,9 @@
 package com.qeevee.gq.rules.act;
 
+import com.qeevee.gq.GeoQuestApp;
+
 import android.content.Context;
 import android.os.Vibrator;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 
 public class Vibrate extends Action {
 

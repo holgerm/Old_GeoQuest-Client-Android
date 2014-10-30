@@ -3,7 +3,7 @@
     android:id="@+id/outerview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_question"
+    android:background="@drawable/mcq_bg_image_question"
     android:keepScreenOn="true" >
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
-        android:textSize="30sp" />
+        android:textSize="@dimen/text_size" />
 
     <Button
         android:id="@+id/textquestion_acceptBT"
@@ -27,7 +27,9 @@
         android:layout_above="@id/textquestion_acceptBT"
         android:ems="10"
         android:hint="@string/textquestion_answerET_hint_default"
-        android:inputType="text" >
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@null" >
 
         <requestFocus />
     </EditText>

@@ -2,30 +2,29 @@
 <resources>
 
     <!-- Generic Values -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="ok">OK</string>
+    <string name="wait">Please wait ...</string>
     <string name="cancel">Cancel</string>
+    <string name="npcimage_description">An image illustrating the current activity.</string>
+    <string name="info_text">GeoQuest by Qeevee GmbH. App version is</string>
+
+    <!-- User Alerts -->
+    <string name="alert_endGameTitel">End this game</string>
+    <string name="alert_endGameMessage">Do you really want to end this game?</string>
+    <string name="alert_endGameButtonOK">Yes, end</string>
+    <string name="alert_endGameButtonCancel">No, keep playing</string>
 
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventory</string>
 
-    <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Loading repositories</string>
-    <string name="start_text_game_list_progress_process_text">Processing repository data</string>
-    <string name="start_button_game_list_text">Select a new Quest</string>
-    <string name="start_welcome">Welcome to GeoQuest!</string>
-    <string name="start_text_last_game_text">Last played Quest:</string>
-    <string name="start_text_last_game_text_no_game">You haven\'t played a Quest recently</string>
-    <string name="start_gameNotFound">Game not found</string>
-    <string name="start_toast_download_failed">Repo list download failed - check your internet connection and try again by choosing "Reload repo data" from menu or restarting the app!</string>
-    <string name="start_downloadGame">Downloading game from GeoQuest server</string>
-    <string name="start_startGame">Starting locally stored game</string>
+    <!-- Start Activity -->
     <string name="start_fetchingDataFromServer">Fetching game information from server</string>
     <string name="start_initializeGame">Loading Missions</string>
     <string name="start_gameFileCouldNotBeParsed">Sorry, this game file could not be parsed.</string>
-    <string name="start_gameList_headerPart">Games in</string>
-    <string name="start_gameList_headerPartNoLoc">no Location</string>
-    <string name="start_gameList_headerPartLoc">with Location</string>
-    <string name="start_repoList_header">Accessible Repositories</string>
+    <string name="startShowLocalQuestsButtonText">Your quests</string>
+    <string name="startShowCloudQuestsButtonText">Find more quests</string>
 
     <!-- Repository -->
     <string name="predefinedRepoName">Preinstalled quests</string>
@@ -37,6 +36,19 @@
     <string name="sortByDistance">Distance</string>
     <string name="sortByLastPlayed">Last played</string>
     <string name="game_list_sort">Sort...</string>
+
+    <!-- Generic DIALOG Labels -->
+    <string name="dialogGetGameListTitle">Gathering List of Quests</string>
+    <string name="downloadDialogTitleSuffix">is downloading</string>
+    <string name="downloadDialogMessage">Please wait ...</string>
+    <string name="deleteAllDialogTitle">Really remove all quest from this device?</string>
+    <string name="dialogTerminateAppTitle">Really terminate this app?</string>
+    <string name="dialogEndGameTitle">Really leave this quest?</string>
+
+    <!-- Generic MESSAGE Labels -->
+    <string name="messageDownloadFinishedPrefix">Quest</string>
+    <string name="messageDownloadFinishedSuffix">dowloaded and is starting ...</string>
+    <string name="messageDownloadErrorPrefix">Error downloading quest</string>
 
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">Accept</string>
@@ -51,13 +63,17 @@
     <string name="default_endButtonText">Continue with next mission</string>
 
     <!-- Generic MENU Entries -->
-    <string name="quitMenu">Quit</string>
-    <string name="endGameMenu">End game</string>
-    <string name="prefsMenu">Prefs</string>
-    <string name="historyMenu">History</string>
-    <string name="reloadGamesMenu">Reload quests</string>
-    <string name="imprintMenu">Imprint</string>
-    <string name="inventoryMenu">Inventory</string>
+    <string name="menu_quit">Quit app</string>
+    <string name="menu_endGame">End game</string>
+    <string name="menu_preferences">Prefs</string>
+    <string name="menu_history">History</string>
+    <string name="menu_localGames">Start quests</string>
+    <string name="menu_gamesInCloud">Load quests</string>
+    <string name="menu_imprint">Imprint</string>
+    <string name="menu_inventory">Inventory</string>
+    <string name="menu_deleteAllQuests">Delete All</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_debugMode">Debug Mode</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Your task: record a piece of audio!</string>
@@ -65,7 +81,6 @@
     <string name="audiorecord_activityIndicator_recording">Recording ...</string>
     <string name="audiorecord_activityIndicator_ready">You made an audio record!\nRecord again? Use it? Replay?</string>
     <string name="audiorecord_activityIndicator_playing">Playing your recorded audio ...</string>
-    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
     <string name="startingARView">Starting AR View ...</string>
@@ -78,17 +93,17 @@
     <string name="imageCapture_task_default">Your task: take a picture!</string>
     <string name="imageCapture_UploadOK">OK, your photo has been uploaded.</string>
     <string name="imageCapture_UploadERROR">Error while uploading your picture.</string>
-    <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Take an impressive image ...</string>
+    <string name="imageCapture_button_takePicture">Start camera ...</string>
     <string name="imageCapture_replyDone_default">OK, your photo has been stored.</string>
 
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Loading Map</string>
-    <string name="map_menu_centerMap">Center Map</string>
-    <string name="map_menu_mockGPS">Switch to mocked location</string>
-    <string name="map_menu_realGPS">Switch to real location</string>
+    <string name="menu_center">Center Map</string>
+    <string name="menu_mockGPS">Switch to mocked location</string>
+    <string name="menu_unmockGPS">Switch to real location</string>
     <string name="map_mockGPSTimeInterval">2000</string>
-    <string name="map_menu_bounding_box">Zoom in Game Area</string>
+    <string name="menu_zoomToQuestArea">Zoom in Game Area</string>
 
     <!-- MultipleChoiceQuestion MISSION -->
     <string name="multipleChoiceQuestion_default_shuffle_mode">false</string>
@@ -118,12 +133,15 @@
     <string name="textquestion_answerET_hint_default">Enter your answer here ...</string>
 
     <!-- VideoPlay MISSION -->
-    <string name="videoplay_finishdialog_title">Terminate this mission?</string>
-    <string name="videoplay_finishdialog_message">Leave the video?</string>
-    <string name="videoplay_finishdialog_keepwatching">Keep watching</string>
+    <string name="videoplay_finishdialog_title">Stop watching?</string>
+    <string name="videoplay_finishdialog_message"></string>
+    <string name="videoplay_finishdialog_keepwatching">No</string>
     <string name="videoplay_finishdialog_watchagain">Watch again</string>
-    <string name="videoplay_finishdialog_leave">Leave it!</string>
+    <string name="videoplay_finishdialog_leave">Yes</string>
     <string name="videoplay_errordialog_message">I can not play that video.</string>
+
+    <!-- WebPage PAGE -->
+    <string name="webpage_loading_message">Web page is loading ...</string>
 
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">No description for this hotspot availbale. Sorry.</string>
@@ -137,6 +155,10 @@
 
     <!-- Server preferences -->
     <string name="pref_cat_server_settings">Server settings</string>
+    <string name="pref_server_email_title">Email</string>
+    <string name="pref_server_email_summary">Email of your account.</string>
+    <string name="pref_server_password_title">Password</string>
+    <string name="pref_server_password_summary">Password for your account.</string>
     <string name="pref_server_url_title">Server URL</string>
     <string name="pref_server_url_summary">Defines the game server URL. Don\'t change this unless you want to use your own server.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>
@@ -202,6 +224,11 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unnamed Player</string>
-    <string name="startGameListHeadline">Games found:</string>
+    <string name="titleGamesInCloud">Games found in cloud:</string>
+    <string name="titleLocalGames">Games on this device:</string>
+
+    <!-- DESCRIPTIONS for Accessibility -->
+    <string name="description_questIcon">Icon for a quest</string>
+    <string name="description_geoQuestLogo">The GeoQuest Logo</string>
 
 </resources>

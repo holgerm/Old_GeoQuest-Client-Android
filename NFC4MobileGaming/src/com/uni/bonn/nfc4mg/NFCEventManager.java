@@ -1,6 +1,5 @@
 package com.uni.bonn.nfc4mg;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,8 +15,9 @@ import android.nfc.NfcAdapter;
  * @author shubham
  * 
  */
-@SuppressLint("NewApi")
 public class NFCEventManager {
+
+	private static NFCEventManager INSTANCE = null;
 
 	// NFC adapter instance
 	public NfcAdapter mNfcAdapter = null;
@@ -32,12 +32,18 @@ public class NFCEventManager {
 	private boolean writeMode;
 
 	/**
-	 * Constructor //TODO later change it to Factory Class
+	 * NFC Event Manager Singelton class
+	 */
+	private NFCEventManager() {
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param ctx
 	 * @throws Exception
 	 */
-	public NFCEventManager(Context ctx) throws Exception {
+	private NFCEventManager(Context ctx) throws Exception {
 
 		// reference to system NFC manager object.
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(ctx.getApplicationContext());
@@ -46,6 +52,25 @@ public class NFCEventManager {
 		if (null == mNfcAdapter) {
 			throw new Exception("Client doesn't support NFC feature!");
 		}
+	}
+
+	/**
+	 * Caller of this API must pass the Current Activity instance in order to
+	 * listen to NFC events.
+	 * 
+	 * @param ctx
+	 * @return
+	 * @throws Exception
+	 *             : In case mobile does not support NFC feature or NFC
+	 *             permission is not defined in application manifest file
+	 */
+	public static NFCEventManager getInstance(Context ctx) throws Exception {
+
+		if (null == INSTANCE) {
+
+			INSTANCE = new NFCEventManager(ctx);
+		}
+		return INSTANCE;
 	}
 
 	/**
@@ -124,7 +149,7 @@ public class NFCEventManager {
 	 * 
 	 * @param instance
 	 */
-	protected void startNfcSettingsActivity(Activity instance) {
+	public void startNfcSettingsActivity(Activity instance) {
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
 			instance.startActivity(new Intent(
 					android.provider.Settings.ACTION_NFCSHARING_SETTINGS));

@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.nfc.NdefRecord;
 import android.util.Log;
@@ -19,8 +18,11 @@ import com.uni.bonn.nfc4mg.utility.NfcTagUtility;
  * 
  * @author shubham
  * 
+ * 
+ *         This class is not currently used in the framework, but can be later
+ *         used for creating URI records.
+ * 
  */
-@SuppressLint("NewApi")
 public class UriRecord {
 
 	// class log identifier, help debugging at class level

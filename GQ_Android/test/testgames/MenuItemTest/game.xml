@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game name="MenuItemTest" xmlformat="5">
+	<menuItem activity="true" priority="50" icon="some/path/or/URI"
+		title="TestItem" showText="false" id="1234" show="always">
+		<rule>
+			<onSelect>
+				<action>...</action>
+			</onSelect>
+		</rule>
+	</menuItem>
+</game>

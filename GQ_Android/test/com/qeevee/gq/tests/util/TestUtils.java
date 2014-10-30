@@ -18,21 +18,20 @@ import org.dom4j.io.SAXReader;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.qeevee.gq.GameLoader;
+import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.GeoQuestMapActivity;
+import com.qeevee.gq.Mission;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.HistoryItem;
 import com.qeevee.gq.history.HistoryItemModifier;
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
 import com.qeevee.gq.tests.ui.mock.UseGameSpecUIFactory;
+import com.qeevee.gq.ui.UIFactory;
 import com.xtremelabs.robolectric.Robolectric;
-
-import edu.bonn.mobilegaming.geoquest.GameLoader;
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.GeoQuestMapActivity;
-import edu.bonn.mobilegaming.geoquest.Mission;
-import edu.bonn.mobilegaming.geoquest.Start;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
 
 public class TestUtils {
 
@@ -70,6 +69,15 @@ public class TestUtils {
 		return new File(xmlFileURL.getFile());
 	}
 
+	public static File getFile(String path) {
+		URL fileURL = TestUtils.class.getResource(path);
+		if (fileURL == null) {
+			fail("Test failed. File not found: " + path);
+			return null;
+		} else
+			return new File(fileURL.getFile());
+	}
+
 	/**
 	 * @param fileName
 	 *            the relative path to the file containing the text.
@@ -80,7 +88,7 @@ public class TestUtils {
 		if (fileURL == null)
 			fail("Resource file not found: " + fileName);
 		File f = new File(fileURL.getFile());
-		if (!f.exists())
+		if (!f.exists()) 
 			fail("File " + fileName + " not found.");
 		if (!f.canRead())
 			fail("File " + fileName + " cann not be read.");
@@ -126,7 +134,7 @@ public class TestUtils {
 	 * @throws ClassNotFoundException
 	 */
 	public static GeoQuestActivity prepareMission(String missionType,
-			String missionID, Start start) {
+			String missionID, LandingScreen start) {
 		Class<?> missionClass = null;
 		GeoQuestActivity missionActivity = null;
 
@@ -151,7 +159,7 @@ public class TestUtils {
 	// Does the same as prepareMission() but handles GeoQuestMapActivity instead
 	// of GeoAuestActivity
 	public static GeoQuestMapActivity prepareMapMission(String missionType,
-			String missionID, Start start) {
+			String missionID, LandingScreen start) {
 		Class<?> missionClass = null;
 		GeoQuestMapActivity missionActivity = null;
 
@@ -197,9 +205,9 @@ public class TestUtils {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Start startGameForTest(String gameFileName,
+	public static LandingScreen startGameForTest(String gameFileName,
 			Class<? extends UIFactory>... uistyles) {
-		Start start = startApp();
+		LandingScreen start = startApp();
 		if (uistyles.length == 0)
 			GameLoader.startGame(null, TestUtils.getGameFile(gameFileName),
 					MockUIFactory.class);
@@ -211,8 +219,8 @@ public class TestUtils {
 		return start;
 	}
 
-	public static Start startApp() {
-		Start start = new Start();
+	public static LandingScreen startApp() {
+		LandingScreen start = new LandingScreen();
 		GeoQuestApp app = (GeoQuestApp) start.getApplication();
 		app.onCreate();
 		Mission.setMainActivity(start);
@@ -365,7 +373,7 @@ public class TestUtils {
 	public static GeoQuestActivity startMissionInGame(String game,
 			String missionType, String missionID,
 			Class<? extends UIFactory>... uiFactoryClass) {
-		Start start = TestUtils.startGameForTest(game, uiFactoryClass);
+		LandingScreen start = TestUtils.startGameForTest(game, uiFactoryClass);
 		GeoQuestActivity mission = TestUtils.prepareMission(missionType,
 				missionID, start);
 		TestUtils.callMethod(mission, "onCreate",
@@ -376,7 +384,7 @@ public class TestUtils {
 	public static GeoQuestMapActivity startMapMissionInGame(String game,
 			String missionType, String missionID,
 			Class<? extends UIFactory>... uiFactoryClass) {
-		Start start = TestUtils.startGameForTest(game, uiFactoryClass);
+		LandingScreen start = TestUtils.startGameForTest(game, uiFactoryClass);
 		GeoQuestMapActivity mission = TestUtils.prepareMapMission(missionType,
 				missionID, start);
 		TestUtils.callMethod(mission, "onCreate",

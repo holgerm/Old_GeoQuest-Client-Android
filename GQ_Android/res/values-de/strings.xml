@@ -4,30 +4,29 @@
 <resources>
 
     <!-- Generic Values -->
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
     <string name="ok">OK</string>
+    <string name="wait">Bitte warten ...</string>
     <string name="cancel">Abbrechen</string>
+    <string name="npcimage_description">Ein Bild passend zur aktuellen Aktivität.</string>
+    <string name="info_text">GeoQuest. Ein Produkt der Qeevee GmbH. App Version ist</string>
+
+    <!-- User Alerts -->
+    <string name="alert_endGameTitel">Spiel Beenden</string>
+    <string name="alert_endGameMessage">Möchtest du dieses Spiel wirklich beenden?</string>
+    <string name="alert_endGameButtonOK">Ja, beenden</string>
+    <string name="alert_endGameButtonCancel">Nein, weiter spielen</string>
 
     <!-- INVENTORIES -->
     <string name="default_inventory_name">Inventar</string>
 
-    <!-- Start Activities -->
-    <string name="start_text_game_list_progress_download_text">Lade Repository-Daten</string>
-    <string name="start_text_game_list_progress_process_text">Verarbeite Repository-Daten</string>
-    <string name="start_button_game_list_text">Wähle ein neues Quest</string>
-    <string name="start_welcome">Willkommen zu GeoQuest!</string>
-    <string name="start_text_last_game_text">Zuletzt gespieltes Quest:</string>
-    <string name="start_text_last_game_text_no_game">Du hast zuletzt kein Quest gespielt</string>
-    <string name="start_gameNotFound">Spiel konnte nicht gefunden werden</string>
-    <string name="start_toast_download_failed">Herunterladen der Repository-Daten fehlgeschlagen - überprüfe Deine Internetverbindung und versuche es erneut, indem du "Repository-Daten neu laden" aus dem Menü auswählst oder die App neu startest!</string>
-    <string name="start_downloadGame">Lade Quest vom Server</string>
-    <string name="start_startGame">Spiel wird gestartet</string>
+    <!-- Start Activity -->
     <string name="start_fetchingDataFromServer">Spielinfos werden vom Server geladen</string>
     <string name="start_initializeGame">Spiel wird initialisiert</string>
     <string name="start_gameFileCouldNotBeParsed">Quest Datei ist fehlerhaft!</string>
-    <string name="start_gameList_headerPart">Quests in</string>
-    <string name="start_gameList_headerPartNoLoc">ohne Location</string>
-    <string name="start_gameList_headerPartLoc">mit Location</string>
-    <string name="start_repoList_header">Verfügbare Repositories</string>
+    <string name="startShowLocalQuestsButtonText">Deine Quests</string>
+    <string name="startShowCloudQuestsButtonText">Finde mehr Quests</string>
 
     <!-- Repository -->
     <string name="predefinedRepoName">Vorinstallierte Quests</string>
@@ -40,9 +39,22 @@
     <string name="sortByLastPlayed">Zuletzt gespielt</string>
     <string name="game_list_sort">Sortieren...</string>
 
+    <!-- Generic DIALOG Labels -->
+    <string name="dialogGetGameListTitle">Lade Liste aller Quests</string>
+    <string name="downloadDialogTitleSuffix"> wird geladen</string>
+    <string name="downloadDialogMessage">Bitte warten ...</string>
+    <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>
+    <string name="dialogTerminateAppTitle">Wirklich die App beenden?</string>
+    <string name="dialogEndGameTitle">Wirklich das Quest abbrechen?</string>
+
+    <!-- Generic MESSAGE Labels -->
+    <string name="messageDownloadFinishedPrefix">Quest</string>
+    <string name="messageDownloadFinishedSuffix">ist geladen und startet ...</string>
+    <string name="messageDownloadErrorPrefix">Fehler beim Laden des Quests</string>
+
     <!-- Generic BUTTON Labels -->
     <string name="button_text_accept">OK</string>
-    <string name="button_text_play">Wiedergeben</string>
+    <string name="button_text_play">Abspielen</string>
     <string name="button_text_next">Weiter</string>
     <string name="button_text_proceed">Weiter</string>
     <string name="button_text_record">Aufnehmen</string>
@@ -53,13 +65,17 @@
     <string name="default_endButtonText">Spiel fortsetzen</string>
 
     <!-- Generic MENU Entries -->
-    <string name="quitMenu">App beenden</string>
-    <string name="endGameMenu">Quest beenden</string>
-    <string name="prefsMenu">Einstellungen</string>
-    <string name="historyMenu">Verlauf</string>
-    <string name="reloadGamesMenu">Spiele neu laden</string>
-    <string name="imprintMenu">Impressum</string>
-    <string name="inventoryMenu">Inventar</string>
+    <string name="menu_quit">App beenden</string>
+    <string name="menu_endGame">Quest beenden</string>
+    <string name="menu_preferences">Einstellungen</string>
+    <string name="menu_history">Verlauf</string>
+    <string name="menu_localGames">Spiele starten</string>
+    <string name="menu_gamesInCloud">Spiele finden</string>
+    <string name="menu_imprint">Impressum</string>
+    <string name="menu_inventory">Inventar</string>
+    <string name="menu_deleteAllQuests">Alle Löschen</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_debugMode">Debug Modus</string>
 
     <!-- AudioRecord MISSION -->
     <string name="audiorecord_task_default">Eure Aufgabe: Nehmt eine Audiodatei auf!</string>
@@ -67,7 +83,14 @@
     <string name="audiorecord_activityIndicator_recording">Aufnahme läuft ...</string>
     <string name="audiorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Hören?</string>
     <string name="audiorecord_activityIndicator_playing">Aufnahme wird vorgespielt ...</string>
-    <string name="audiorecord_file_default">gqAudiorecord.3gp</string>
+
+    <!-- VideoRecord MISSION -->
+    <string name="videorecord_task_default">Eure Aufgabe: Nehmt ein Video auf!</string>
+    <string name="videorecord_activityIndicator_initial">Noch keine Aufnahme gemacht!</string>
+    <string name="videorecord_activityIndicator_recording">Aufnahme läuft ...</string>
+    <string name="videorecord_activityIndicator_ready">Aufnahme fertig.\nNeu aufnehmen? Benutzen? Ansehen?</string>
+    <string name="videorecord_activityIndicator_playing">Aufnahme wird abgespielt ...</string>
+    <string name="videorecord_file_default">gqVideorecord.3gp</string>
 
     <!-- AugmentedRealityView TOOL -->
     <string name="startingARView">Starte AR View</string>
@@ -80,17 +103,17 @@
     <string name="imageCapture_task_default">Eure Aufgabe: Nehmt ein Foto auf!</string>
     <string name="imageCapture_UploadOK">OK, das Foto wird auf den Server geladen.</string>
     <string name="imageCapture_UploadERROR">Fehler beim Upload!.</string>
-    <string name="imageCapture_file_default">gqImage.jpg</string>
     <string name="imageCapture_taskdescription_default">Mache ein eindrucksvolles Foto ...</string>
+    <string name="imageCapture_button_takePicture">Kamera starten ...</string>
     <string name="imageCapture_replyDone_default">OK, das Foto ist gespeichert.</string>
 
     <!-- Map MISSION and TOOL -->
     <string name="map_loading">Karte wird geladen</string>
-    <string name="map_menu_centerMap">Center Map</string>
-    <string name="map_menu_mockGPS">GPS simulieren</string>
-    <string name="map_menu_realGPS">Reales GPS nutzen</string>
+    <string name="menu_center">Center Map</string>
+    <string name="menu_mockGPS">GPS simulieren</string>
+    <string name="menu_unmockGPS">Reales GPS nutzen</string>
     <string name="map_mockGPSTimeInterval">2000</string>
-    <string name="map_menu_bounding_box">Zoom auf Quest</string>
+    <string name="menu_zoomToQuestArea">Zoom auf Quest</string>
 
     <!-- NPCTalk MISSION -->
     <string name="npctalk_endButtonText">Spiel fortsetzen</string>
@@ -120,13 +143,16 @@
     <string name="textquestion_answerET_hint_default">Antwort hier eingeben ...</string>
 
     <!-- VideoPlay MISSION -->
-    <string name="videoplay_finishdialog_title">Diese Mission beenden?</string>
-    <string name="videoplay_finishdialog_message">Video abbrechen?</string>
-    <string name="videoplay_finishdialog_keepwatching">Noch ansehen</string>
-    <string name="videoplay_finishdialog_watchagain">Noch einmal</string>
-    <string name="videoplay_finishdialog_leave">Weiter!</string>
+    <string name="videoplay_finishdialog_title">Video beenden?</string>
+    <string name="videoplay_finishdialog_message"></string>
+    <string name="videoplay_finishdialog_keepwatching">Nein</string>
+    <string name="videoplay_finishdialog_watchagain">Nochmal</string>
+    <string name="videoplay_finishdialog_leave">Ja</string>
     <string name="videoplay_errordialog_message">Das Video kann nicht abgespielt werden.</string>
-
+    
+    <!-- WebPage PAGE -->
+    <string name="webpage_loading_message">Webseite lädt ...</string>
+    
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">Für diesen Hotspot ist leider keine Beschreibung verfügbar.</string>
 
@@ -140,6 +166,10 @@
 
     <!-- Server PREFERENCES -->
     <string name="pref_cat_server_settings">Server-Einstellungen</string>
+    <string name="pref_server_email_title">Email</string>
+    <string name="pref_server_email_summary">Email Ihres Accounts.</string>
+    <string name="pref_server_password_title">Passwort</string>
+    <string name="pref_server_password_summary">Passwort Ihres Accounts.</string>
     <string name="pref_server_url_title">Server URL</string>
     <string name="pref_server_url_summary">Die URL des Spiele-Servers. Ändere diese nicht, außer du möchtest einen eigenen Server nutzen.</string>
     <string name="pref_server_url_dialog_title">Server URL</string>
@@ -148,7 +178,7 @@
     <!-- Game startup PREFERENCES -->
     <string name="pref_cat_game_start">Spielstart</string>
     <string name="pref_auto_start_game_check_title">Lade ein Quest beim Anwendungsstart</string>
-    <string name="pref_auto_start_game_check_summary">Soll ein bestimmtes Quest beim Anwedungstart geladen werden?</string>
+    <string name="pref_auto_start_game_check_summary">Soll ein bestimmtes Quest beim Anwendungsstart geladen werden?</string>
     <string name="pref_auto_start_game_title">Start-Quest</string>
     <string name="pref_auto_start_game_summary">Wähle ein Quest, welches beim Anwendungsstart geladen werden soll.</string>
     <string name="pref_auto_start_game_dialog_title">Wähle ein Quest</string>
@@ -205,5 +235,11 @@
 
     <!-- Variable Defaults -->
     <string name="varDefaultUserName">Unbenannter Spieler</string>
+    <string name="titleGamesInCloud">Spiele auf dem Server:</string>
+    <string name="titleLocalGames">Spiele auf diesem Gerät:</string>
+
+    <!-- DESCRIPTIONS for Accessibility -->
+    <string name="description_questIcon">Bild für ein Quest</string>
+    <string name="description_geoQuestLogo">Das GeoQuest Logo</string>
 
 </resources>

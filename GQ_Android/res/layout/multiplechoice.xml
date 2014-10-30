@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outerview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background_question"
-    android:keepScreenOn="true" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/mcq_background_question"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/mcTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:textSize="30sp" />
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_weight="10"
+        android:background="@drawable/background_text"
+        android:gravity="center"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_size" />
 
-    <LinearLayout
-        android:id="@+id/mcButtonPanel"
-        android:layout_width="fill_parent"
+    <ListView
+        android:id="@+id/choiceList"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" />
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_weight="80"
+        android:background="@drawable/background_text"
+        android:cacheColorHint="@color/semitransparent"
+        android:textColor="@color/text" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/bottomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/button"
+        android:padding="@dimen/button_padding"
+        android:textColor="@color/text" />
+
+</LinearLayout>

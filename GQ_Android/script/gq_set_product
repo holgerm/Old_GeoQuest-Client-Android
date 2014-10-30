@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Switch to other GeoQuest Variant
+
+if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters - just specify product name."
+	exit 1
+fi
+
+# Set basic variables:
+${PROJECT_BASE_DIR:?"Need to set PROJECT_BASE_DIR environment variable!"}
+
+baseDir=${PROJECT_BASE_DIR}/GQ_Android/
+testDir=${PROJECT_BASE_DIR}/GQ_Android_Tests_Robolectric/
+productDir=${baseDir}products/$1/
+
+if ! [[ -d $baseDir && -r  $baseDir && -w  $baseDir && -x $baseDir ]]; then
+    echo "Base directory not usable."
+	exit 1
+else
+	echo "Base directory ok"
+fi
+
+
+if ! [[ -d $productDir && -r  $productDir && -w  $productDir && -x $productDir ]]; then
+    echo "Product directory not usable."
+	exit 1
+else
+	echo "Product found"
+fi
+	
+
+# Delete included directory in assets first, sinde this should not be kept:
+
+rm -rf ${baseDir}assets/included/ || {
+	echo "Could not remove include directory."
+	exit 1
+}
+
+
+# Copy resources in place, i.e. logos, name etc.
+
+cp -r ${baseDir}products/$1/  $baseDir || {
+	echo "Could not put product assets in place."
+	exit 1
+}
+
+# Renaming package:
+tmpFile=/tmp/out.tmp.$$
+stdPck="com.qeevee.gq"
+
+echo "Renaming package ..."
+
+LC_CLANG=C
+for f in $(find ${baseDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
+	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+done
+for f in $(find ${testDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
+	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+done
+
+echo "Done."
+echo "You are using" $1 "as product now."

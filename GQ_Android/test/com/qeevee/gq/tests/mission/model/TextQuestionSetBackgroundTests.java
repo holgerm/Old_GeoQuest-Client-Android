@@ -8,17 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.graphics.drawable.BitmapDrawable;
-import android.view.View; 
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.qeevee.gq.mission.MissionActivity;
+import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
+import com.qeevee.util.Device;
 
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.mission.Question;
+import com.qeevee.gq.R;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionSetBackgroundTests {
@@ -37,20 +38,20 @@ public class TextQuestionSetBackgroundTests {
 		initTestMission("Defaults");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -91,14 +92,14 @@ public class TextQuestionSetBackgroundTests {
 		giveWrongAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_wrong);
+		shouldShowBackground(R.drawable.mcq_background_wrong);
 
 		// WHEN:
 		goBackToQuestion();
 		giveCorrectAnswer();
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_correct);
+		shouldShowBackground(R.drawable.mcq_background_right);
 	}
 
 	@Test
@@ -109,7 +110,7 @@ public class TextQuestionSetBackgroundTests {
 		initTestMission("UseBGReply");
 
 		// THEN:
-		shouldShowBackground(R.drawable.background_question);
+		shouldShowBackground(R.drawable.mcq_background_question);
 
 		// WHEN:
 		giveWrongAnswer();
@@ -167,8 +168,9 @@ public class TextQuestionSetBackgroundTests {
 	}
 
 	private void shouldShowBackground(String relPath) {
-		assertEquals(new BitmapDrawable(BitmapUtil.loadBitmap(relPath, false)),
-				ov.getBackground());
+		assertEquals(
+				new BitmapDrawable(BitmapUtil.loadBitmap(relPath,
+						Device.getDisplayWidth(), 0, false)), ov.getBackground());
 	}
 
 	private void giveCorrectAnswer() {

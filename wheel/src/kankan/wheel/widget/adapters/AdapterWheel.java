@@ -48,12 +48,12 @@ public class AdapterWheel extends AbstractWheelTextAdapter {
         return adapter;
     }
     
-    @Override
+    
     public int getItemsCount() {
         return adapter.getItemsCount();
     }
 
-    @Override
+   
     protected CharSequence getItemText(int index) {
         return adapter.getItem(index);
     }

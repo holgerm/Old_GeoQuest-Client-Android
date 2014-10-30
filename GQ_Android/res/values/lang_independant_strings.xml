@@ -3,10 +3,18 @@
 
     <string name="xmlformat">5</string>
     <string name="local_default_repository">default</string>
+    <string name="album_base_name">GeoQuest</string>
+    <string name="album_prefix">GQ</string>
+
+    <!-- AudioRecord MISSION -->
+    <string name="audiorecord_file_default">gqAudiorecord</string>
+
+    <!-- ImageCapture MISSION -->
+    <string name="imageCapture_file_default">gqImage</string>
 
     <!-- NPCTalk MISSION -->
-    <string name="npctalk_mode_default">wordticker</string>
-    
+    <string name="npctalk_mode_default">chunk</string>
+
     <!-- StartAndExitScreen MISSION -->
     <string name="startAndExitScreen_duration_default">interactive</string>
 
@@ -20,7 +28,18 @@
     <!-- Variable Defaults -->
     <string name="varDefaultUserID">0</string>
 
+    <!-- VideoPlay PAGE -->
+    <bool name="videoplay_controllable_default">true</bool>
+
     <!-- HOTSPOTS -->
     <string name="hotspot_default_activity">true</string>
+
+    <!-- Menu Items -->
+    <string name="menuItem_showState_default">if_room</string>
+    
+    <!-- Preference Keys -->
+    <string name="pref_server_email_key">pref_server_email</string>
+    <string name="pref_server_password_key">pref_server_password</string>
+    
 
 </resources>

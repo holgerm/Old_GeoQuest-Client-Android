@@ -1,0 +1,6 @@
+* [Standard Layouts](https://github.com/qeevee/GQ_Specification/wiki/Standard-Layouts)
+* [Template Seite](https://github.com/qeevee/GQ_Specification/wiki/Template-Seite)
+* [Mapping Datei](https://github.com/qeevee/GQ_Specification/wiki/Mapping-Datei)
+* [Frame Script](https://github.com/qeevee/GQ_Specification/wiki/Frame-Script)
+* [Blog Connector](https://github.com/qeevee/GQ_Specification/wiki/Blog-Connector)
+* [User Management in Portalen](https://github.com/qeevee/GQ_Specification/wiki/User-Management-in-Portalen)

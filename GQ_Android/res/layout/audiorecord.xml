@@ -3,6 +3,7 @@
     android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
     android:keepScreenOn="true"
     android:orientation="vertical" >
 
@@ -10,25 +11,39 @@
         android:id="@+id/audioRecordTextView"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
         android:layout_weight="1"
+        android:background="@drawable/background_text"
         android:gravity="center"
-        android:textSize="30sp"
+        android:textColor="@color/text"
+        android:textSize="20sp"
         android:typeface="sans" />
 
     <TextView
         android:id="@+id/audioRecordActivityIndicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/background_text"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/audiorecord_activityIndicator_initial"
-        android:textSize="30sp"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_size"
         android:typeface="sans" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/background_text"
         android:orientation="horizontal" >
 
         <Button
@@ -36,19 +51,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/caption_text_size"
             android:typeface="sans" />
 
         <Button
             android:id="@+id/audioRecordUseButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="@dimen/caption_text_size" />
 
         <Button
             android:id="@+id/audioRecordPlayButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="@dimen/caption_text_size" />
     </LinearLayout>
 
 </LinearLayout>

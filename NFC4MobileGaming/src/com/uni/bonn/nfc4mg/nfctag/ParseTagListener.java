@@ -9,7 +9,7 @@ package com.uni.bonn.nfc4mg.nfctag;
  */
 public interface ParseTagListener {
 
-	
+	// callback function when tag parsing started.
 	public void onStartParsing(String msg);
 	
 	// Callback when NFC tag parsing is complete

@@ -3,8 +3,12 @@
 
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin">8dp</dimen>
-    <dimen name="text_size">12sp</dimen>
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="caption_text_size">15sp</dimen>
+    <dimen name="textView_minHeight">72dp</dimen>
+    <dimen name="title_size">24dp</dimen>
     <dimen name="button_padding">10dp</dimen>
+    <dimen name="button_padding_large">30dp</dimen>
     <dimen name="button_stroke_width">5dp</dimen>
     <dimen name="button_corner_radius">10dp</dimen>
 

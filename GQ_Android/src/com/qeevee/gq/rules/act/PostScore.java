@@ -20,9 +20,10 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
-import edu.bonn.mobilegaming.geoquest.Variables;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+import com.qeevee.gq.Variables;
 
 /**
  * @author muegge
@@ -60,7 +61,7 @@ public class PostScore extends Action {
 				ctx.getText(R.string.varDefaultUserName));
 		Variables.setValueIfUndefined(USER_ID_VARIABLE,
 				ctx.getText(R.string.varDefaultUserID));
-		Variables.setValueIfUndefined(Score.SCORE_VARIABLE, 0);
+		Variables.setValueIfUndefined(AddToScore.SCORE_VARIABLE, 0);
 		postScore();
 	}
 
@@ -71,7 +72,7 @@ public class PostScore extends Action {
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
 			nameValuePairs.add(new BasicNameValuePair("ehs_score", Variables
-					.getValue(Score.SCORE_VARIABLE).toString()));
+					.getValue(AddToScore.SCORE_VARIABLE).toString()));
 			nameValuePairs.add(new BasicNameValuePair("ehs_name", Variables
 					.getValue(USER_NAME_VARIABLE).toString()));
 			nameValuePairs.add(new BasicNameValuePair("ehs_old_id", Variables

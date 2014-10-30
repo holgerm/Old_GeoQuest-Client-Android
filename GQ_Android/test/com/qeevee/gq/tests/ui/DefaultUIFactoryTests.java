@@ -15,12 +15,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.reflections.Reflections;
 
+import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.ui.mock.MockUIFactory;
+import com.qeevee.gq.ui.UIFactory;
+import com.qeevee.gq.ui.standard.DefaultUIFactory;
 
-import edu.bonn.mobilegaming.geoquest.mission.MissionActivity;
-import edu.bonn.mobilegaming.geoquest.ui.UIFactory;
-import edu.bonn.mobilegaming.geoquest.ui.standard.DefaultUIFactory;
 
 @Ignore
 @RunWith(GQTestRunner.class)

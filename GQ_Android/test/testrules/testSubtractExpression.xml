@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="SetVariable" var="numbers">
+			<value>
+				<subtract>
+					<num>100</num>
+					<num>50</num>
+					<num>30</num>
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="empty">
+			<value>
+				<subtract></subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="strings">
+			<value>
+				<subtract>
+					<string>Does </string>
+					<string>not </string>
+					<string>work.</string>
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="mixedStartingWithNum">
+			<value>
+				<subtract>
+					<num>3</num>
+					<string>Does not work.</string>
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="mixedStartingWithString">
+			<value>
+				<subtract>
+					<string>Does not work.</string>
+					<num>1</num>
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="var1">
+			<value>
+				<num>100</num>
+			</value>
+		</action>
+		<action type="SetVariable" var="var2">
+			<value>
+				<num>50</num>
+			</value>
+		</action>
+		<action type="SetVariable" var="var3">
+			<value>
+				<num>20</num>
+			</value>
+		</action>
+
+		<action type="SetVariable" var="vars">
+			<value>
+				<subtract>
+					<var>
+						var1
+					</var>
+					<var>
+						var2
+					</var>
+					<var>
+						var3
+					</var>
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="randoms">
+			<value>
+				<subtract>
+					<random min="100" max="120" />
+					<random min="10" max="20" />
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+	<rule>
+		<action type="SetVariable" var="varInMix">
+			<value>
+				<num>500</num>
+			</value>
+		</action>
+
+		<action type="SetVariable" var="mixedNumVarRandom">
+			<value>
+				<subtract>
+					<num>1000</num>
+					<var>varInMix</var>
+					<random min="100" max="120" />
+				</subtract>
+			</value>
+		</action>
+	</rule>
+
+</test>

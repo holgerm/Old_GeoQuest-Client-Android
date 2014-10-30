@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
-import edu.bonn.mobilegaming.geoquest.R;
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
 
 public class Inventory {
 

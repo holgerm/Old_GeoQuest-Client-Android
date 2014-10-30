@@ -7,6 +7,7 @@ import org.dom4j.Element;
 
 import com.qeevee.gq.rules.act.Action;
 import com.qeevee.gq.rules.act.ActionFactory;
+import com.qeevee.gq.rules.act.LeavesMission;
 import com.qeevee.gq.rules.cond.Condition;
 import com.qeevee.gq.rules.cond.ConditionFactory;
 import com.qeevee.gq.rules.cond.True;
@@ -37,12 +38,23 @@ public class Rule {
 	public final boolean apply() {
 		if (precondition.isFulfilled()) {
 			for (Action currentAction : actions) {
-				currentAction.execute();
+				currentAction.executeSavely();
 			}
 			Rule.ruleFired = true;
 			return true;
 		} else
 			return false;
+	}
+
+	public boolean leavesMission() {
+		boolean leavesMission = false;
+		for (Action action : actions) {
+			if (action instanceof LeavesMission) {
+				leavesMission = true;
+				break;
+			}
+		}
+		return leavesMission;
 	}
 
 	// //////////////// STATIC FACTORY STUFF FOLLOWS: ///////////////////
@@ -51,40 +63,6 @@ public class Rule {
 		this.actions = new ArrayList<Action>();
 	}
 
-	/**
-	 * An example of a rule xml element is:
-	 * 
-	 * <pre>
-	 * {@code
-	 * <rule>
-	 *  <if>
-	 *   <and>
-	 *    <geq>
-	 *     <num>5</num>
-	 *     <var>points</var>
-	 *    </geq>
-	 *    <geq>
-	 *     <var>points</var>
-	 *     <num>9</num>
-	 *    </geq>
-	 *   </and>
-	 *  </if>
-	 *  <action type="Vibrate"/>
-	 *  <action type="StartMission" id="medium_winner_info"/>
-	 * </rule>
-	 * }
-	 * </pre>
-	 * 
-	 * This rule checks whether the {@code points} variable is between 5 and 9
-	 * (incl.) and if so the mobile device vibrates and the specified mission is
-	 * started.
-	 * 
-	 * @param xmlRuleContent
-	 *            the content of the xml element {@code<rule>} which typically
-	 *            is {@code<if>...</if><then>...</then>}.
-	 * @param id
-	 * @return
-	 */
 	@SuppressWarnings("unchecked")
 	public static Rule createFromXMLElement(Element xmlRuleContent) {
 		Rule rule = new Rule();
@@ -113,7 +91,9 @@ public class Rule {
 
 	private void addActionsToList(List<Element> xmlActionNodes) {
 		for (Element xmlAction : xmlActionNodes) {
-			actions.add(ActionFactory.create(xmlAction));
+			Action newAction = ActionFactory.create(xmlAction);
+			if (newAction != null)
+				actions.add(newAction);
 		}
 	}
 

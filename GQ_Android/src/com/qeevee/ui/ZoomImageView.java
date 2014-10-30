@@ -1,15 +1,19 @@
 package com.qeevee.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.R;
+import com.qeevee.util.Device;
+
 public class ZoomImageView extends ImageView {
 
+	private static final String TAG = ZoomImageView.class.getCanonicalName();
 	private String bitmapRelPath;
 
 	public ZoomImageView(Context context) {
@@ -21,10 +25,10 @@ public class ZoomImageView extends ImageView {
 		setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent fullScreenIntent = new Intent(v.getContext(),
-						FullScreenImage.class);
-				fullScreenIntent.putExtra("bitmapPath", bitmapRelPath);
-				context.startActivity(fullScreenIntent);
+				// Intent fullScreenIntent = new Intent(v.getContext(),
+				// FullScreenImage.class);
+				// fullScreenIntent.putExtra("bitmapPath", bitmapRelPath);
+				// context.startActivity(fullScreenIntent);
 			}
 		});
 	}
@@ -40,17 +44,16 @@ public class ZoomImageView extends ImageView {
 		addZoomListener(context);
 	}
 
-	public void setRelativePathToImageBitmap(String relativePath) {
-
+	public void setImageByRelativePathToBitmap(String relativePath) {
 		bitmapRelPath = relativePath;
-		Bitmap bitmap = BitmapUtil.getRoundedCornerBitmap(
-				BitmapUtil.loadBitmap(bitmapRelPath), 15);
+		int margin = GeoQuestApp.getContext().getResources()
+				.getDimensionPixelSize(R.dimen.margin);
+		Bitmap bitmap = BitmapUtil.loadBitmap(bitmapRelPath,
+				Device.getDisplayWidth() - (2 * margin), 0, true);
 		if (bitmap != null) {
 			setImageBitmap(bitmap);
 		} else {
-			throw new IllegalArgumentException("Bitmap file invalid: "
-					+ bitmapRelPath);
+			Log.e(TAG, "Bitmap file invalid: " + bitmapRelPath);
 		}
 	}
-
 }

@@ -17,38 +17,34 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 @RunWith(GQTestRunner.class)
 public class ReadGameXML {
 
-    Element root;
+	Element root;
 
-    private void loadGameXML(String gameName) {
-	SAXReader reader = new SAXReader();
-	URL xmlFileURL = this.getClass().getResource("/testgames/" + gameName
-		+ "/game.xml");
-	Document document;
-	try {
-	    document = reader.read(new File(xmlFileURL.getFile()));
-	    root = document.getRootElement();
-	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	private void loadGameXML(String gameName) {
+		SAXReader reader = new SAXReader();
+		URL xmlFileURL = this.getClass().getResource(
+				"/testgames/" + gameName + "/game.xml");
+		Document document;
+		try {
+			document = reader.read(new File(xmlFileURL.getFile()));
+			root = document.getRootElement();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-    }
 
-    @Test
-    public void testQRTag_Treasure_Demo_NoSchema() {
-	loadGameXML("QRTag_Treasure_Demo_NoSchema");
-	assertEquals("QRTag Treasure Demo",
-		     root.attributeValue("name"));
-	assertEquals(2,
-		     root.selectNodes("//mission").size());
-    }
+	@Test
+	public void testQRTag_Treasure_Demo_NoSchema() {
+		loadGameXML("QRTag_Treasure_Demo_NoSchema");
+		assertEquals("QRTag Treasure Demo", root.attributeValue("name"));
+		assertEquals(2, root.selectNodes("//mission").size());
+	}
 
-    @Test
-    public void testQRTag_Treasure_Demo() {
-	loadGameXML("QRTag_Treasure_Demo");
-	assertEquals("QRTag Treasure Demo",
-		     root.attributeValue("name"));
-	assertEquals(2,
-		     root.selectNodes("//mission").size());
-    }
+	@Test
+	public void testQRTag_Treasure_Demo() {
+		loadGameXML("QRTag_Treasure_Demo");
+		assertEquals("QRTag Treasure Demo", root.attributeValue("name"));
+		assertEquals(2, root.selectNodes("//mission").size());
+	}
 
 }

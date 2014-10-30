@@ -19,11 +19,11 @@ import org.junit.runner.RunWith;
 import android.content.Context;
 import android.os.SystemClock;
 
+import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.ShadowSystemClock;
 import com.xtremelabs.robolectric.Robolectric;
 
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManagerException;
 import edu.bonn.mobilegaming.geoquest.contextmanager.GameContext;

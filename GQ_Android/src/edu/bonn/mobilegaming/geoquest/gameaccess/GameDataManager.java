@@ -5,16 +5,15 @@ package edu.bonn.mobilegaming.geoquest.gameaccess;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-import com.qeevee.gq.res.ResourceManager;
-
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.GeoQuestApp;
+
+import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.res.ResourceManager;
+import com.qeevee.gq.res.ResourceManager.ResourceType;
 
 /**
  * This class is responsible for loading, updating and persisting the
@@ -67,35 +66,6 @@ public class GameDataManager {
 	}
 
 	/**
-	 * This method collects all accessible repositories, including those
-	 * delivered statically with the app, those that the user has downloaded and
-	 * which are locally stored on the device as well as those that are
-	 * available from the server.
-	 * 
-	 * @return a list of all accessible repositories.
-	 */
-	public static List<RepositoryItem> getRepositories() {
-		List<RepositoryItem> repositories = new ArrayList<RepositoryItem>();
-		repositories.addAll(StaticallyDeployedGames.getRepositories());
-		return repositories;
-	}
-
-	/**
-	 * @param repoName
-	 * @return null iff no repository with given name repoName found.
-	 */
-	public static RepositoryItem getRepository(String repoName) {
-		List<RepositoryItem> repositories = getRepositories();
-		for (Iterator<RepositoryItem> iterator = repositories.iterator(); iterator
-				.hasNext();) {
-			RepositoryItem repositoryItem = (RepositoryItem) iterator.next();
-			if (repoName.equals(repositoryItem.getName()))
-				return repositoryItem;
-		}
-		return null;
-	}
-
-	/**
 	 * Plays a resource sound file either blocking or non-blocking regarding the
 	 * user interaction options on the currently active mission or tool.
 	 * 
@@ -110,8 +80,10 @@ public class GameDataManager {
 	public static boolean playAudio(String path, boolean blocking) {
 		GameDataManager.stopAudio();
 		GameDataManager.mPlayer = new MediaPlayer();
+		GameDataManager.mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
-			GameDataManager.mPlayer.setDataSource(ResourceManager.getResourcePath(path));
+			GameDataManager.mPlayer.setDataSource(ResourceManager
+					.getResourcePath(path, ResourceType.AUDIO));
 			GameDataManager.mPlayer.prepare();
 			GameDataManager.mPlayer.start();
 			if (blocking)
@@ -130,15 +102,18 @@ public class GameDataManager {
 	}
 
 	public static void cleanMediaPlayer() {
-		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isLooping()) {
+		if (GameDataManager.mPlayer != null
+				&& GameDataManager.mPlayer.isLooping()) {
 			Log.d(TAG, "MediaPlayer Resources were cleaned");
 			GameDataManager.mPlayer.stop();
+			GameDataManager.mPlayer.reset();
 			GameDataManager.mPlayer.release();
 		}
 	}
 
 	public static void stopMediaPlayer() {
-		if (GameDataManager.mPlayer != null && GameDataManager.mPlayer.isPlaying()) {
+		if (GameDataManager.mPlayer != null
+				&& GameDataManager.mPlayer.isPlaying()) {
 			Log.d(TAG, "MediaPlayer was stoped");
 			GameDataManager.mPlayer.stop();
 		}

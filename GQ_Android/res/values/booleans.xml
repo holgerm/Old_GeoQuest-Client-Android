@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="menuItem_default_initialActivity">true</bool>
+    <bool name="menuItem_default_showText">true</bool>
+    <bool name="mission_MultipleChoiceQuestion_default_answerCorrectness">false</bool>
+
+</resources>

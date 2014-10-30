@@ -12,4 +12,9 @@ public class GeqCondition extends ComparisonCondition {
 		return (object.compareTo(object2) >= 0);
 	}
 
+	@Override
+	public String getComparisonName() {
+		return "GEQ";
+	}
+
 }

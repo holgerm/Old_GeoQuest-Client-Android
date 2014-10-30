@@ -3,8 +3,9 @@ package com.qeevee.gq.history;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.qeevee.gq.GeoQuestActivity;
+
 import android.view.View;
-import edu.bonn.mobilegaming.geoquest.GeoQuestActivity;
 
 /**
  * @author muegge

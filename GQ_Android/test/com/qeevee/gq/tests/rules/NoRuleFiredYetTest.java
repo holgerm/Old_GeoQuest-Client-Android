@@ -7,12 +7,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.qeevee.gq.Variables;
+import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
+import com.qeevee.gq.ui.abstrakt.NPCTalkUI;
 
-import edu.bonn.mobilegaming.geoquest.Variables;
-import edu.bonn.mobilegaming.geoquest.mission.NPCTalk;
-import edu.bonn.mobilegaming.geoquest.ui.abstrakt.NPCTalkUI;
 
 @RunWith(GQTestRunner.class)
 public class NoRuleFiredYetTest {

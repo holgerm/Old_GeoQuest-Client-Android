@@ -1,7 +1,8 @@
 package com.qeevee.gq.rules.act;
 
+import com.qeevee.gq.Variables;
+
 import android.util.Log;
-import edu.bonn.mobilegaming.geoquest.Variables;
 
 public class IncrementVariable extends Action {
 
@@ -10,20 +11,6 @@ public class IncrementVariable extends Action {
 		boolean initOK = true;
 		initOK &= params.containsKey("var");
 		initOK &= (Variables.getValue(params.get("var")) instanceof Double);
-		// TODO:
-		// Problematic
-		// since
-		// this
-		// is
-		// a
-		// static
-		// check
-		// at
-		// loadtime
-		// of
-		// mission
-		// xml
-		// element.
 		return initOK;
 	}
 

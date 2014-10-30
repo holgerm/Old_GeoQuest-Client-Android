@@ -4,7 +4,11 @@ import java.util.Map;
 
 import org.dom4j.Element;
 
+import android.util.Log;
+
 public abstract class Action {
+
+	boolean executable = false;
 
 	Action() {
 	}
@@ -24,11 +28,21 @@ public abstract class Action {
 			Map<String, Element> elements) {
 		this.params = params;
 		this.elements = elements;
-		return checkInitialization();
+		executable = checkInitialization();
+		return executable;
 	}
 
 	protected abstract boolean checkInitialization();
 
-	public abstract void execute();
+	public void executeSavely() {
+		if (executable)
+			execute();
+		else {
+			Log.w(this.getClass().getCanonicalName(),
+					"tried to execute incorrectly initialized action");
+		}
+	}
+
+	protected abstract void execute();
 
 }

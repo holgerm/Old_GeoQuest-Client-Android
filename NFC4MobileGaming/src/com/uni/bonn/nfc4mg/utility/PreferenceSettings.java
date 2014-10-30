@@ -2,6 +2,9 @@ package com.uni.bonn.nfc4mg.utility;
 
 import java.util.HashMap;
 
+import android.content.Context;
+import android.provider.Settings;
+
 /**
  * <title> Dynamic Project Settings class </title> <body>
  * <tr id="TAG_MIME">
@@ -38,4 +41,20 @@ public class PreferenceSettings {
 	public static void addTagMime(String tagMime, String value) {
 		TAG_TYPE.put(tagMime, value);
 	}
+	
+	/**
+	 * To get device specific id.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getDeviceMacId(Context context) {
+
+		String deviceId = Settings.Secure.getString(
+				context.getContentResolver(), Settings.System.ANDROID_ID);
+
+		return deviceId;
+
+	}
+	
 }

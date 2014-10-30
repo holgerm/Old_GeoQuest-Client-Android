@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+	<rule>
+		<action type="If">
+			<condition>
+				<Eq>
+					<num>1</num>
+					<num>1</num>
+				</Eq>
+			</condition>
+			<then>
+				<action type="SetVariable" var="then">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</then>
+			<else>
+				<action type="SetVariable" var="else">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</else>
+		</action>
+	</rule>
+	<rule>
+		<action type="If">
+			<condition>
+				<Eq>
+					<num>1</num>
+					<num>1000</num>
+				</Eq>
+			</condition>
+			<then>
+				<action type="SetVariable" var="then">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</then>
+			<else>
+				<action type="SetVariable" var="else">
+					<value>
+						<num>1</num>
+					</value>
+				</action>
+			</else>
+		</action>
+	</rule>
+</test>

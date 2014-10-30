@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outerview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
     android:keepScreenOn="true"
     android:orientation="vertical" >
 
+    <ScrollView
+        android:id="@+id/npc_scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        android:layout_marginBottom="0dip"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_weight="1"
+        android:padding="0dip"
+        android:background="@drawable/background_text"
+        android:fillViewport="true" >
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
+
     <Button
-        android:id="@+id/webviewbutton"
-        android:layout_width="fill_parent"
+        android:id="@+id/proceedButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin"
+        android:layout_marginTop="0dip"
+        android:background="@drawable/button"
+        android:padding="@dimen/button_padding"
+        android:textColor="@color/text" />
 
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/webviewbutton" />
-
-</RelativeLayout>
+</LinearLayout>

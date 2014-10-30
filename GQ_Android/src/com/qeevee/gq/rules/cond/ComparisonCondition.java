@@ -1,6 +1,7 @@
 package com.qeevee.gq.rules.cond;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Element;
@@ -66,6 +67,7 @@ public abstract class ComparisonCondition extends Condition {
 		boolean fulfilled = true;
 		for (int i = 0; fulfilled && i <= values.size() - 2; i++) {
 			fulfilled &= compare(values.get(i), values.get(i + 1));
+
 			/*
 			 * Using doubleValue() here is not reliable when it comes to
 			 * calculations. Since we do not intend calculation for now, it is
@@ -83,12 +85,28 @@ public abstract class ComparisonCondition extends Condition {
 	protected abstract boolean compare(String object, String object2);
 
 	private final boolean compare(Object opA, Object opB) {
-		if (opA instanceof Double && opB instanceof Double)
+		if (opA instanceof Double && opB instanceof Double) {
 			return (compare((Double) opA, (Double) opB));
-		else if (opA instanceof String && opB instanceof String)
+		} else if (opA instanceof String && opB instanceof String)
 			return (compare((String) opA, (String) opB));
 		else
 			return false;
 	}
 
+	public abstract String getComparisonName();
+
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append(getComparisonName() + "(");
+		for (Iterator<Element> expressionsIter = xmlExpressions.iterator(); expressionsIter
+				.hasNext();) {
+			Element curExpr = (Element) expressionsIter.next();
+			buf.append(Expressions.toString(curExpr));
+			if (expressionsIter.hasNext())
+				buf.append(", ");
+			else
+				buf.append(")");
+		}
+		return buf.toString();
+	}
 }

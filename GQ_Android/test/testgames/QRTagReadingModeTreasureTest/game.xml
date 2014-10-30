@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+	name="QRTag Treasure Demo"
+	xmlformat="5"
+>
+	<mission
+		type="QRTagReading"
+		id="With_Explicit_Attribute_Values"
+		buttontext="Start demo scan ..."
+		taskdescription="This is a demo task description."
+		mode="treasure"
+		initial_image="drawable/chest_closed.jpg"
+	>
+		<onEnd>
+			<rule>
+				<action
+					type="StartMission"
+					id="QR_Treasure_2" />
+			</rule>
+		</onEnd>
+	</mission>
+</game>
