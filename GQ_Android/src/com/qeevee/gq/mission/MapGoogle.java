@@ -15,8 +15,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
-
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 
@@ -78,8 +78,8 @@ public class MapGoogle extends MapMissionActivity {
 		myLocationOverlay.enableMyLocation();
 		mapOverlays.add(myLocationOverlay);
 
-		for (Iterator<Hotspot> iterator = getHotspots().iterator(); iterator
-				.hasNext();) {
+		for (Iterator<Hotspot> iterator = HotspotManager.getInstance()
+				.getListOfHotspots().iterator(); iterator.hasNext();) {
 			Hotspot hotspot = (Hotspot) iterator.next();
 			mapOverlays.add(hotspot.getGoogleOverlay());
 		}

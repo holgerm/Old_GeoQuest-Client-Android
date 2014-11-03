@@ -1,7 +1,5 @@
 package com.qeevee.gq.mission;
 
-import java.util.List;
-
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
 
@@ -16,16 +14,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.qeevee.gq.loc.Hotspot;
-import com.qeevee.gq.loc.HotspotManager;
-import com.qeevee.gq.loc.MapHelper;
-import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
-import com.qeevee.util.locationmocker.LocationSource;
-
 import com.qeevee.gq.GeoQuestMapActivity;
 import com.qeevee.gq.Globals;
 import com.qeevee.gq.Mission;
 import com.qeevee.gq.R;
+import com.qeevee.gq.loc.MapHelper;
+import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
+import com.qeevee.util.locationmocker.LocationSource;
 
 public abstract class MapMissionActivity extends GeoQuestMapActivity {
 
@@ -94,10 +89,6 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 		mission.setStatus(Globals.STATUS_RUNNING);
 	}
 
-	public List<Hotspot> getHotspots() {
-		return HotspotManager.getInstance().getListOfHotspots();
-	}
-
 	protected void initZoom() {
 		getMapController().setZoom(18);
 		String zoomLevel = mission.xmlMissionNode.attributeValue("zoomlevel");
@@ -105,7 +96,7 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 			zoomLevelInt = Integer.parseInt(zoomLevel);
 			if (zoomLevelInt > 0 && zoomLevelInt < 24)
 				getMapController().setZoom(zoomLevelInt);
-		} 
+		}
 
 		// Setup Zoom Controls:
 		Button zoomIn = (Button) findViewById(R.id.zoom_in);
