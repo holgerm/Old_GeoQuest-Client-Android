@@ -33,10 +33,17 @@ public class MapHelper {
 			public void onRelevantLocationChanged(Location location) {
 				super.onRelevantLocationChanged(location);
 				GeoPoint point = location2GP(location);
-				
-				//update routes that are connected to the players position
-				RouteManager.getInstance().updateRoutesConnectedToPlayer(location);
-				
+
+				// update global variables:
+				Variables.setValue(Variables.LOCATION_LAT,
+						Math.round(location.getLatitude() * 1E6));
+				Variables.setValue(Variables.LOCATION_LONG,
+						Math.round(location.getLongitude() * 1E6));
+
+				// update routes that are connected to the players position
+				RouteManager.getInstance().updateRoutesConnectedToPlayer(
+						location);
+
 				if (!locatingIsManual())
 					mapController.animateTo(point);
 
