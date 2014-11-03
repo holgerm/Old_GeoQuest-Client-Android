@@ -1,74 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<game id="5021" name="Münsterplatz" xmlformat="5">
-	<mission id="12244" type="MapOSM" zoomlevel="18" />
-	<mission endbuttontext="Weiter" id="SetAllHotspotsActive" mode="wordticker"
-		nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action id="12525" keepActivity="1" type="SetHotspotState"
-					applyToAll="true" activity="aktiv" />
-			</rule>
-		</onStart>
-	</mission>
-	<mission endbuttontext="Weiter" id="SetFirstHotspotActive"
-		mode="wordticker" nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action id="12525" keepActivity="1" type="SetHotspotState"
-					hotspot="hotspot_1" activity="aktiv" />
-			</rule>
-		</onStart>
-	</mission>
-	<mission endbuttontext="Weiter" id="SetAllHotspotsVisible"
-		mode="wordticker" nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action keepActivity="1" type="SetHotspotState" applyToAll="true"
-					visibility="sichtbar" />
-			</rule>
-		</onStart>
-	</mission>
-	<mission endbuttontext="Weiter" id="SetAllHotspotsInvisible"
-		mode="wordticker" nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action keepActivity="1" type="SetHotspotState" applyToAll="true"
-					visibility="unsichtbar" />
-			</rule>
-		</onStart>
-	</mission>
-	<mission endbuttontext="Weiter" id="SetFirstHotspotVisible"
-		mode="wordticker" nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action id="12525" keepActivity="1" type="SetHotspotState"
-					hotspot="hotspot_1" visibility="sichtbar" />
-			</rule>
-		</onStart>
-	</mission>
-	<mission endbuttontext="Weiter" id="SetAllHotspotsInvisibleAndInactive"
-		mode="wordticker" nextdialogbuttontext="Weiter" textsize="30sp" type="NPCTalk">
-		<dialogitem blocking="true" id="12687">Die Beethoven Skulptur.
-		</dialogitem>
-		<onStart>
-			<rule>
-				<action keepActivity="1" type="SetHotspotState" applyToAll="true"
-					visibility="unsichtbar" />
-			</rule>
-		</onStart>
-	</mission>
-		<hotspot id="hotspot_1" img="files/marker.png" initialActivity="false"
-		initialVisibility="false" latlong="50.72222,7.090556" radius="30" />
-	<hotspot id="hotspot_2" img="files/marker.png" initialActivity="false"
-		initialVisibility="false" latlong="50.740726,7.1036963" radius="30" />
+<game
+    id="5021"
+    name="Münsterplatz"
+    xmlformat="5" >
+
+    <mission
+        id="12244"
+        type="MapOSM"
+        zoomlevel="18" />
+
+    <mission
+        id="SetAllHotspotsActive"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    id="12525"
+                    activity="aktiv"
+                    applyToAll="true"
+                    keepActivity="1"
+                    type="SetHotspotState" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <mission
+        id="SetFirstHotspotActive"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    id="12525"
+                    activity="aktiv"
+                    hotspot="hotspot_1"
+                    keepActivity="1"
+                    type="SetHotspotState" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <mission
+        id="SetAllHotspotsVisible"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    applyToAll="true"
+                    keepActivity="1"
+                    type="SetHotspotState"
+                    visibility="sichtbar" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <mission
+        id="SetAllHotspotsInvisible"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    applyToAll="true"
+                    keepActivity="1"
+                    type="SetHotspotState"
+                    visibility="unsichtbar" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <mission
+        id="SetFirstHotspotVisible"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    id="12525"
+                    hotspot="hotspot_1"
+                    keepActivity="1"
+                    type="SetHotspotState"
+                    visibility="sichtbar" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <mission
+        id="SetAllHotspotsInvisibleAndInactive"
+        endbuttontext="Weiter"
+        mode="wordticker"
+        nextdialogbuttontext="Weiter"
+        textsize="30sp"
+        type="NPCTalk" >
+
+        <dialogitem
+            id="12687"
+            blocking="true" >
+Die Beethoven Skulptur.
+        </dialogitem>
+
+        <onStart>
+
+            <rule>
+
+                <action
+                    applyToAll="true"
+                    keepActivity="1"
+                    type="SetHotspotState"
+                    visibility="unsichtbar" />
+            </rule>
+        </onStart>
+    </mission>
+
+    <hotspot
+        id="hotspot_1"
+        img="files/marker.png"
+        initialActivity="false"
+        initialVisibility="false"
+        latlong="50.72222,7.090556"
+        radius="30" />
+
+    <hotspot
+        id="hotspot_2"
+        img="files/marker.png"
+        initialActivity="false"
+        initialVisibility="false"
+        latlong="50.740726,7.1036963"
+        radius="30" />
+
 </game>
