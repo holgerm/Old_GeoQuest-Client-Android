@@ -1,0 +1,39 @@
+	.clearfix:before,
+	.clearfix:after {
+		content: " ";
+		display: table;
+	}
+	.clearfix:after {
+		clear: both;
+	}
+	.clearfix {
+		*zoom: 1;
+	}
+	.rem {
+		text-align: justify;
+		margin-bottom: 15px;
+		margin-right: 7%;
+		margin-left: 7%;
+	}
+	.keyvalue_list {
+		margin-bottom: 40px;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+	.key {
+		float: left;
+		text-align: right;
+		clear:left;
+	}
+	.value {
+		float: left;
+		clear: right;
+	}
+	.logo {
+		width: 90%;
+		margin: 0 auto;
+		text-align: center;
+		margin-top: 40px;
+		margin-bottom: 30px;
+	}
+	

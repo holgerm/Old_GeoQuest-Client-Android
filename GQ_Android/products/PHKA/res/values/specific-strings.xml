@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">PH KA Quests</string>
+    <string name="app_name">EduQuest</string>
     <string name="quest_name">GeoQuest an der PH Karlsruhe</string>
     <string name="imprint_authorName">TODO</string>
     <string name="imprint_city">Karlsruhe</string>
