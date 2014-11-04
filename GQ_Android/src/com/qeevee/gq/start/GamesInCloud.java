@@ -3,7 +3,6 @@ package com.qeevee.gq.start;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -15,11 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.qeevee.gq.GeoQuestActivity;
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 import com.qeevee.gq.host.HostConnector;
 
-public class GamesInCloud extends Activity {
+public class GamesInCloud extends GeoQuestActivity {
 
 	public static final String TAG = GamesInCloud.class.getCanonicalName();
 	private ListView listView;

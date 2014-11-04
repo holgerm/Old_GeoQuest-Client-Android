@@ -3,7 +3,6 @@ package com.qeevee.gq.start;
 import java.io.File;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -19,14 +18,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.qeevee.util.Dialogs;
-import com.qeevee.util.FileOperations;
-
+import com.qeevee.gq.GeoQuestActivity;
 import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 import com.qeevee.gq.ui.UIFactory;
+import com.qeevee.util.Dialogs;
+import com.qeevee.util.FileOperations;
 
-public class LocalGames extends Activity {
+public class LocalGames extends GeoQuestActivity {
 
 	private ListView listView;
 	private GameListAdapter listAdapter;
