@@ -11,7 +11,7 @@ import android.util.Log;
 public class StringTools {
 
 	private static final Pattern varReplacePattern = Pattern
-			.compile("@(\\$_)?[\\w.]+@");
+			.compile("@(\\$_)?[A-Za-z0-9_.]+@");
 
 	public static String caseUp(String original) {
 		return original.substring(0, 1).toUpperCase(Locale.ENGLISH)

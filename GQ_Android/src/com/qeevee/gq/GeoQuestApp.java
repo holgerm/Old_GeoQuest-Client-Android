@@ -44,6 +44,8 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 import com.qeevee.gq.commands.EndGame;
+import com.qeevee.gq.loc.Hotspot;
+import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.LandingScreen;
@@ -60,7 +62,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
 
-//	private static HostConnector[] hostConnectorsOLD;
+	// private static HostConnector[] hostConnectorsOLD;
 
 	// public static HostConnector[] getHostConnectorsOLD() {
 	// if (hostConnectorsOLD == null) {
@@ -145,6 +147,8 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		return theApp;
 	}
 
+	GeoQuestLocationListener locationListener;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -168,6 +172,27 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 		}
 		currentSortMode = getRecentSortingMode();
 		setImprint(new Imprint(null));
+
+		// register location changed listener:
+		locationListener = new GeoQuestLocationListener(this) {
+			public void onRelevantLocationChanged(Location location) {
+				super.onRelevantLocationChanged(location);
+
+				// update global variables:
+				Variables.setValue(Variables.LOCATION_LAT,
+						Math.round(location.getLatitude() * 1E6));
+				Variables.setValue(Variables.LOCATION_LONG,
+						Math.round(location.getLongitude() * 1E6));
+
+				// calculate distance to hotspots
+				for (Iterator<Hotspot> i = HotspotManager.getInstance()
+						.getListOfHotspots().listIterator(); i.hasNext();) {
+					Hotspot hotspot = i.next();
+					if (hotspot.isActive())
+						hotspot.inRange(location);
+				}
+			}
+		};
 	}
 
 	public void addActivity(Activity newActivityOfThisApp) {
@@ -239,6 +264,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			allActivities[i].finish();
 		}
 		GameDataManager.cleanMediaPlayer();
+		locationListener.disconnect();
 		System.exit(0);
 	}
 
@@ -913,5 +939,4 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	// }
 	//
 	// }
-
 }

@@ -3,11 +3,9 @@ package com.qeevee.gq;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.location.Location;
 import android.util.Log;
 
 import com.qeevee.gq.loc.HotspotManager;
-import com.qeevee.gq.loc.LocationUtilities;
 
 public class Variables {
 
@@ -38,22 +36,25 @@ public class Variables {
 	/**
 	 * use this constant for defining the key of hotspot related variables, e.g.
 	 * <code>getValue(Variables.HOTSPOT_PREFIX + 1234 + VISIBLE_SUFFIX);</code>
-	 * 
-	 * TODO add '$_' before, so that all system variables start with '$_'.
 	 */
-	public static final String HOTSPOT_PREFIX = "_hotspot-";
+	private static final String HOTSPOT_PREFIX = "$_hotspot_";
 
 	/**
 	 * use this constant for defining the key of the hotspot location variable,
 	 * e.g.
 	 * <code>setValue(Variables.HOTSPOT_PREFIX + 1234 + LOCATION_SUFFIX, new GeoPoint(50,3)));
 	 */
-	public static final String LOCATION_SUFFIX = ".location";
+	public static final String LOCATION_SUFFIX = "location";
 
 	public static final String SYSTEM_PREFIX = "$_";
-	public static final String MISSION_PREFIX = "$_mission_";
-	public static final String LOCATION_LAT = SYSTEM_PREFIX + "location.lat";
-	public static final String LOCATION_LONG = SYSTEM_PREFIX + "location.long";
+	private static final String MISSION_PREFIX = "$_mission_";
+	private static final String LONG = ".long";
+	private static final String LAT = ".lat";
+
+	public static final String LOCATION_LAT = SYSTEM_PREFIX + LOCATION_SUFFIX
+			+ LAT;
+	public static final String LOCATION_LONG = SYSTEM_PREFIX + LOCATION_SUFFIX
+			+ LONG;
 
 	public static final String CENTER_MAP_POSITION = SYSTEM_PREFIX
 			+ "centerToPosition";
@@ -130,31 +131,7 @@ public class Variables {
 					.getExisting(hotspotID).isVisible());
 		}
 		if (varName.startsWith("$")) {
-			if (varName.equals(LOCATION_LAT)) {
-				// Location lastKnownLocation =
-				// GeoQuestApp.getInstance().getLastKnownLocation();
-				Location lastKnownLocation = GeoQuestActivity.contextManager
-						.getActLocation();
-				if (lastKnownLocation != null) {
-					return lastKnownLocation.getLatitude();
-				} else {
-					return LocationUtilities.getCurrentLocation(
-							GeoQuestApp.getInstance().getApplicationContext())
-							.getLatitude();
-				}
-			} else if (varName.equals(LOCATION_LONG)) {
-				// Location lastKnownLocation =
-				// GeoQuestApp.getInstance().getLastKnownLocation();
-				Location lastKnownLocation = GeoQuestActivity.contextManager
-						.getActLocation();
-				if (lastKnownLocation != null) {
-					return lastKnownLocation.getLongitude();
-				} else {
-					return LocationUtilities.getCurrentLocation(
-							GeoQuestApp.getInstance().getApplicationContext())
-							.getLongitude();
-				}
-			} else if (variables.containsKey(varName)) {
+			if (variables.containsKey(varName)) {
 				return variables.get(varName);
 			} else {
 				Log.e(TAG, "dynamic system variable " + varName + " undefined");
@@ -208,6 +185,18 @@ public class Variables {
 	 */
 	public static void registerMissionResult(String missionID, String result) {
 		Variables.setValue(MISSION_PREFIX + missionID + RESULT_SUFFIX, result);
+	}
+
+	public static String getMissionStateVarName(String id) {
+		return Variables.MISSION_PREFIX + id + Variables.STATUS_SUFFIX;
+	}
+
+	public static String getHotspotLongitudeVarName(String id) {
+		return Variables.HOTSPOT_PREFIX + id + LONG;
+	}
+
+	public static String getHotspotLatitudeVarName(String id) {
+		return Variables.HOTSPOT_PREFIX + id + LAT;
 	}
 
 }

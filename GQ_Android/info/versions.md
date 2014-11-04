@@ -3,6 +3,9 @@
 ## 0.9.2* ##
 
 - wordticker bug fixed
+- Mission State Variables work now correctly
+- Hotpot variables work now
+- Current Location variables work 
 
 ## 0.9.1 ##
 

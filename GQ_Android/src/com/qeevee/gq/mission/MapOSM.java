@@ -46,7 +46,6 @@ import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 import com.qeevee.gq.Variables;
 
-
 /**
  * OpenStreetMap-based Map Navigation.
  */
@@ -277,8 +276,10 @@ public class MapOSM extends MapMissionActivity {
 	private void zoomToQuestArea() {
 		ArrayList<GeoPoint> hotspotPoints = new ArrayList<GeoPoint>();
 		com.google.android.maps.GeoPoint curHotspotGP;
-		for (int i = 0; i < getHotspots().size(); i++) {
-			curHotspotGP = getHotspots().get(i).getGeoPoint();
+		List<Hotspot> hotspots = HotspotManager.getInstance()
+				.getListOfHotspots();
+		for (int i = 0; i < hotspots.size(); i++) {
+			curHotspotGP = hotspots.get(i).getGeoPoint();
 			hotspotPoints.add(new GeoPoint(curHotspotGP.getLatitudeE6(),
 					curHotspotGP.getLongitudeE6()));
 		}

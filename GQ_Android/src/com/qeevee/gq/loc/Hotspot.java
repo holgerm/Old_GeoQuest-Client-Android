@@ -189,17 +189,20 @@ public class Hotspot {
 
 		}
 		geoPoint = new GeoPoint((int) (latitude), (int) (longitude));
-		Variables.setValue(Variables.HOTSPOT_PREFIX + id
-				+ Variables.LOCATION_SUFFIX, geoPoint);
+
+		Variables.setValue(Variables.getHotspotLongitudeVarName(id),
+				(int) (longitude));
+		Variables.setValue(Variables.getHotspotLatitudeVarName(id),
+				(int) (latitude));
 
 		// image
 		markerPath = _hotspotNode.attributeValue("img");
 		if (markerPath != null) {
-			setBitmap(BitmapUtil.loadBitmap(markerPath, MARKER_HEIGHT, MARKER_WIDTH, false));
+			setBitmap(BitmapUtil.loadBitmap(markerPath, MARKER_HEIGHT,
+					MARKER_WIDTH, false));
 		} else {
 			setBitmap(((BitmapDrawable) GeoQuestApp.getInstance()
-					.getResources()
-					.getDrawable(R.drawable.marker)).getBitmap());
+					.getResources().getDrawable(R.drawable.marker)).getBitmap());
 		}
 
 		// Default for initialVisibility attribute is "true"

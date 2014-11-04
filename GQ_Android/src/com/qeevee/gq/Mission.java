@@ -123,13 +123,13 @@ public class Mission implements Serializable {
 	}
 
 	public void setStatus(Double status) {
-		Variables.setValue(Variables.SYSTEM_PREFIX + id
-				+ Variables.STATUS_SUFFIX, status);
+		Variables.setValue(Variables.getMissionStateVarName(id), status);
 	}
 
 	public Double getStatus() throws IllegalStateException {
-		if (Variables.isDefined(id + Variables.STATUS_SUFFIX)) {
-			return (Double) Variables.getValue(id + Variables.STATUS_SUFFIX);
+		if (Variables.isDefined(Variables.getMissionStateVarName(id))) {
+			return (Double) Variables.getValue(Variables
+					.getMissionStateVarName(id));
 		}
 		throw new IllegalStateException("Mission state of mission " + id
 				+ " not defined!");

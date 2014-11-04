@@ -1,16 +1,16 @@
 package com.qeevee.gq.loc;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 
+import android.location.Location;
+
 import com.qeevee.gq.GeoQuestLocationListener;
 import com.qeevee.gq.Variables;
 import com.qeevee.gq.mission.MapMissionActivity;
-
-import android.location.Location;
+import com.qeevee.util.Geo;
 
 public class MapHelper {
 
@@ -32,24 +32,14 @@ public class MapHelper {
 		locationListener = new GeoQuestLocationListener(mapMission) {
 			public void onRelevantLocationChanged(Location location) {
 				super.onRelevantLocationChanged(location);
-				GeoPoint point = location2GP(location);
-				
-				//update routes that are connected to the players position
-				RouteManager.getInstance().updateRoutesConnectedToPlayer(location);
-				
+				GeoPoint point = Geo.location2GP(location);
+
+				// update routes that are connected to the players position
+				RouteManager.getInstance().updateRoutesConnectedToPlayer(
+						location);
+
 				if (!locatingIsManual())
 					mapController.animateTo(point);
-
-				// calculate distance to hotspots
-				for (Iterator<Hotspot> i = mapMission.getHotspots()
-						.listIterator(); i.hasNext();) {
-					Hotspot hotspot = i.next();
-					// TODO: throws a
-					// ConcurrentModificationException
-					// sometimes (hm)
-					if (hotspot.isActive())
-						hotspot.inRange(location);
-				}
 			}
 		};
 	}
@@ -61,7 +51,7 @@ public class MapHelper {
 	public void centerMap() {
 		Location lastLoc = locationListener.getLastLocation();
 		if (lastLoc != null)
-			mapController.animateTo(location2GP(locationListener
+			mapController.animateTo(Geo.location2GP(locationListener
 					.getLastLocation()));
 	}
 
@@ -70,12 +60,13 @@ public class MapHelper {
 			return;
 		Location lastLoc = locationListener.getLastLocation();
 		if (lastLoc != null) {
-			mapController.setCenter(location2GP(locationListener
+			mapController.setCenter(Geo.location2GP(locationListener
 					.getLastLocation()));
-			mapController.animateTo(location2GP(locationListener
+			mapController.animateTo(Geo.location2GP(locationListener
 					.getLastLocation()));
 		} else {
-			List<Hotspot> hotspots = this.mapMission.getHotspots();
+			List<Hotspot> hotspots = HotspotManager.getInstance()
+					.getListOfHotspots();
 			if (hotspots.size() > 0) {
 				com.google.android.maps.GeoPoint firstAGP = hotspots.get(0)
 						.getGeoPoint();
@@ -104,14 +95,6 @@ public class MapHelper {
 						.equals("true") || Variables.getValue(
 						Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals("1"));
 		return positionDefined || visbileHSDefined || activeHSDefined;
-	}
-
-	private GeoPoint location2GP(Location location) {
-		if (location == null)
-			return null;
-		GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
-				(int) (location.getLongitude() * 1E6));
-		return point;
 	}
 
 	public GeoQuestLocationListener getLocationListener() {
