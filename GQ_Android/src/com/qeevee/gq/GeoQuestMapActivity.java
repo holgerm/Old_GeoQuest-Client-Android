@@ -3,6 +3,7 @@ package com.qeevee.gq;
 import org.dom4j.Element;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -91,6 +92,9 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		int itemId = item.getItemId();
 		if (itemId == R.id.menu_info) {
 			GeoQuestApp.getInstance().showInfo();
+			return true;
+		} else if (itemId == R.id.menu_imprint) {
+			startActivity(new Intent(this, ImprintActivity.class));
 			return true;
 		} else if (itemId == R.id.menu_endGame) {
 			showDialog(Dialogs.DIALOG_END_GAME);

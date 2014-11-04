@@ -1,6 +1,7 @@
 package com.qeevee.gq;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,9 @@ public abstract class GeoQuestListActivity extends ListActivity {
 		int itemId = item.getItemId();
 		if (itemId == R.id.menu_info) {
 			GeoQuestApp.getInstance().showInfo();
+			return true;
+		} else if (itemId == R.id.menu_imprint) {
+			startActivity(new Intent(this, ImprintActivity.class));
 			return true;
 		} else if (itemId == R.id.menu_debugMode) {
 			item.setChecked(!item.isChecked());

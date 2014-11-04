@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">WCC</string>
+    <string name="app_name">WCC Demo</string>
     <string name="quest_name">Wiki Culture City</string>
     <string name="imprint_authorName">TODO</string>
     <string name="imprint_city">Bonn</string>

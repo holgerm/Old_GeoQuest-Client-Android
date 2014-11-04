@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!--
-        <item
-        android:id="@+id/menu_imprint"
-        android:checkable="false"
-        android:icon="@drawable/icon_imprint"
-        android:title="@string/menu_imprint">
-    </item>
     <item
         android:id="@+id/menu_preferences"
         android:checkable="false"
@@ -19,6 +13,12 @@
         android:id="@+id/menu_info"
         android:checkable="false"
         android:title="@string/menu_info">
+    </item>
+    <item
+        android:id="@+id/menu_imprint"
+        android:checkable="false"
+        android:icon="@drawable/icon_imprint"
+        android:title="@string/menu_imprint">
     </item>
     <item
         android:id="@+id/menu_debugMode"
