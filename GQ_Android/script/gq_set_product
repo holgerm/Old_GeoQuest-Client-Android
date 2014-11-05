@@ -85,6 +85,11 @@ findFiles() {
       	-not -path "*/libs/*")
 }
 
+findFiles2() {
+	echo $(find $1 -type f \
+		-name '*.java')
+}
+
 LC_CLANG=C
 
 # cope with spaces in file names: 
@@ -92,9 +97,9 @@ LC_CLANG=C
 SAVEIFS=$IFS
 IFS=$(echo -en "\b")
 echo "Source files:"
-for f in $(findFiles $baseDir) ; do
+for f in $(findFiles2 $baseDir) ; do
 	echo $f;
-	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+	sed "s/${stdPck}.R/${stdPck}$1.R/g" $f > $tmpFile && mv $tmpFile $f
 done
 
 echo "Test files:"
