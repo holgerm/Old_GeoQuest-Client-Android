@@ -8,7 +8,11 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Set basic variables:
-${PROJECT_BASE_DIR:?"Need to set PROJECT_BASE_DIR environment variable!"}
+if [ ! -d "$PROJECT_BASE_DIR" ]; then
+  echo "Need to set PROJECT_BASE_DIR environment variable to your GQ Android project!"
+fi
+
+# ${PROJECT_BASE_DIR:?"Need to set PROJECT_BASE_DIR environment variable!"}
 
 baseDir=${PROJECT_BASE_DIR}/GQ_Android/
 testDir=${PROJECT_BASE_DIR}/GQ_Android_Tests_Robolectric/
@@ -40,6 +44,15 @@ rm -rf ${baseDir}assets/included/ || {
 
 # Copy resources in place, i.e. logos, name etc.
 
+# first we copy from the product defaults:
+
+cp -r ${baseDir}product-defaults/  $baseDir || {
+	echo "Could not put product defaults in place."
+	exit 1
+}
+
+# then we coverwrite that with the real product specific files:
+
 cp -r ${baseDir}products/$1/  $baseDir || {
 	echo "Could not put product assets in place."
 	exit 1
@@ -51,13 +64,44 @@ stdPck="com.qeevee.gq"
 
 echo "Renaming package ..."
 
+findFiles() {
+	echo $(find $1 -type f \
+		-not -name '*.class' \
+		-not -name '*.png' \
+      	-not -name '*.jpg' \
+       	-not -name '*.gif' \
+      	-not -name '*.mp3' \
+      	-not -name '*.mp4' \
+      	-not -name '*.3gp' \
+      	-not -name '*.ogg' \
+     	-not -name '*.zip' \
+      	-not -name '*.jar' \
+      	-not -name '*.DS_Store' \
+      	-not -name '*.dex' \
+      	-not -name '*.apk' \
+      	-not -name '*.ap_' \
+      	-not -name 'out.tmp.*' \
+      	-not -path "*/script/*" \
+      	-not -path "*/libs/*")
+}
+
 LC_CLANG=C
-for f in $(find ${baseDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
-	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
-done
-for f in $(find ${testDir} -type f -not -name '*.class' -not -name '*.png' -not -name '*.jpg' -not -name '*.zip' -not -name '*.jar' -print0) ; do
-	sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+
+# cope with spaces in file names: 
+#   therefore set IFS var to different value and back afterwards:
+SAVEIFS=$IFS
+IFS=$(echo -en "\b")
+echo "Source files:"
+for f in $(findFiles $baseDir) ; do
+	echo $f;
+	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
 done
 
+echo "Test files:"
+for f in $(findFiles $testDir) ; do
+	echo $f;
+	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+done
+IFS=$SAVEIFS
 echo "Done."
 echo "You are using" $1 "as product now."
