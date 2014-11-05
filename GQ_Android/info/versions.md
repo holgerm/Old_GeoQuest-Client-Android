@@ -6,6 +6,7 @@
 - Mission State Variables work now correctly
 - Hotpot variables work now
 - Current Location variables work 
+- Imprint is included now and reachable from everywhere in the app via the menu
 
 ## 0.9.1 ##
 
