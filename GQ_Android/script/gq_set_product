@@ -1,42 +1,75 @@
 #!/bin/bash
 
+# usage gq_set_product product-name path-to-project-base-dir
+
 # Switch to other GeoQuest Variant
 
-if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters - just specify product name."
+if [ "$#" -eq 1 ]; then
+	if [ ! -d "$PROJECT_BASE_DIR" ]; then
+		echo "Either you have to set PROJECT_BASE_DIR environment variable or give project dir as second argument."
+		exit 1
+	else
+		baseDir=${PROJECT_BASE_DIR}/GQ_Android/
+		# testDir=${PROJECT_BASE_DIR}/GQ_Android_Tests_Robolectric/
+	fi
+else
+	if [ "$#" -eq 2 ]; then
+		baseDir=$2
+		# testDir=$2/GQ_Android_Tests_Robolectric/
+	else
+		echo "Illegal number of parameters - just specify product name and (optionally) project base directory."
+		exit 1
+	fi
+fi
+
+# check that new product name is valid:
+if ! [[ "$1" =~ ^[a-z][a-z0-9]*$ ]] ; then 
+	echo "Invalid product name ("$1"). Use only lower case or numbers and start with a character."
 	exit 1
 fi
 
-# Set basic variables:
-if [ ! -d "$PROJECT_BASE_DIR" ]; then
-  echo "Need to set PROJECT_BASE_DIR environment variable to your GQ Android project!"
-fi
 
-# ${PROJECT_BASE_DIR:?"Need to set PROJECT_BASE_DIR environment variable!"}
-
-baseDir=${PROJECT_BASE_DIR}/GQ_Android/
-testDir=${PROJECT_BASE_DIR}/GQ_Android_Tests_Robolectric/
-productDir=${baseDir}products/$1/
+productsDir=${baseDir}/products/
+defaultProductDir=${productsDir}/default/
+newProductDir=${productsDir}/$1/
+productFile=${productsDir}/.product
 
 if ! [[ -d $baseDir && -r  $baseDir && -w  $baseDir && -x $baseDir ]]; then
-    echo "Base directory not usable."
+	echo "Base directory not usable."
 	exit 1
-else
-	echo "Base directory ok"
 fi
 
 
-if ! [[ -d $productDir && -r  $productDir && -w  $productDir && -x $productDir ]]; then
-    echo "Product directory not usable."
+if ! [[ -d $newProductDir && -r  $newProductDir && -w  $newProductDir && -x $newProductDir ]]; then
+	echo "Product directory not usable."
 	exit 1
-else
-	echo "Product found"
 fi
-	
 
-# Delete included directory in assets first, sinde this should not be kept:
 
-rm -rf ${baseDir}assets/included/ || {
+# Determine current product variant:
+
+
+if [[ ! -f $productFile && -r $productFile ]]; then
+	currentVariant="default"
+else
+	currentVariant="`cat ${productFile}`"
+fi
+
+if [[ "$1" = "$currentVariant" ]]; then
+	echo "Current and target product are the same ("$1"). Nothing to do."
+	exit 0
+else
+	echo "Switching product:"
+	echo "  from \""$currentVariant"\""
+	echo "  to \""$1"\":"
+fi
+
+
+
+
+# Delete included directory in assets first, since these should not be kept:
+
+rm -rf ${baseDir}/assets/included/ || {
 	echo "Could not remove include directory."
 	exit 1
 }
@@ -46,14 +79,14 @@ rm -rf ${baseDir}assets/included/ || {
 
 # first we copy from the product defaults:
 
-cp -r ${baseDir}product-defaults/  $baseDir || {
+cp -r ${defaultProductDir}  $baseDir || {
 	echo "Could not put product defaults in place."
 	exit 1
 }
 
 # then we coverwrite that with the real product specific files:
 
-cp -r ${baseDir}products/$1/  $baseDir || {
+cp -r ${newProductDir}  $baseDir || {
 	echo "Could not put product assets in place."
 	exit 1
 }
@@ -62,51 +95,68 @@ cp -r ${baseDir}products/$1/  $baseDir || {
 tmpFile=/tmp/out.tmp.$$
 stdPck="com.qeevee.gq"
 
-echo "Renaming package ..."
-
-findFiles() {
+findFilesOld() {
 	echo $(find $1 -type f \
 		-not -name '*.class' \
 		-not -name '*.png' \
-      	-not -name '*.jpg' \
-       	-not -name '*.gif' \
-      	-not -name '*.mp3' \
-      	-not -name '*.mp4' \
-      	-not -name '*.3gp' \
-      	-not -name '*.ogg' \
-     	-not -name '*.zip' \
-      	-not -name '*.jar' \
-      	-not -name '*.DS_Store' \
-      	-not -name '*.dex' \
-      	-not -name '*.apk' \
-      	-not -name '*.ap_' \
-      	-not -name 'out.tmp.*' \
-      	-not -path "*/script/*" \
-      	-not -path "*/libs/*")
+		-not -name '*.jpg' \
+		-not -name '*.gif' \
+		-not -name '*.mp3' \
+		-not -name '*.mp4' \
+		-not -name '*.3gp' \
+		-not -name '*.ogg' \
+		-not -name '*.zip' \
+		-not -name '*.jar' \
+		-not -name '*.DS_Store' \
+		-not -name '*.dex' \
+		-not -name '*.apk' \
+		-not -name '*.ap_' \
+		-not -name 'out.tmp.*' \
+		-not -path "*/script/*" \
+		-not -path "*/libs/*")
 }
 
-findFiles2() {
+findFiles() {
 	echo $(find $1 -type f \
 		-name '*.java')
 }
 
+currentVariant=""
+
 LC_CLANG=C
+
+# change package in manifest:
+manifestFile=${baseDir}/AndroidManifest.xml
+echo "Renaming package in manifest file ..."
+echo "  "$manifestFile "   " $currentVariant " -> " $1
+sed "s/package=\"${stdPck}${currentVariant}\"/package=\"com.qeevee.gq${1}\"/g" $manifestFile > $tmpFile && mv $tmpFile $manifestFile
+echo "  done"
 
 # cope with spaces in file names: 
 #   therefore set IFS var to different value and back afterwards:
 SAVEIFS=$IFS
 IFS=$(echo -en "\b")
-echo "Source files:"
-for f in $(findFiles2 $baseDir) ; do
-	echo $f;
-	sed "s/${stdPck}.R/${stdPck}$1.R/g" $f > $tmpFile && mv $tmpFile $f
+echo "Adapting source files:"
+echo -n "  "
+for f in $(findFiles $baseDir) ; do
+	echo -n "."
+	sed "s/${stdPck}${currentVariant}.R/${stdPck}$1.R/g" $f > $tmpFile && mv $tmpFile $f
 done
+echo
+echo "  done"
 
-echo "Test files:"
-for f in $(findFiles $testDir) ; do
-	echo $f;
-	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
-done
+# echo "Test files:"
+# for f in $(findFiles $testDir) ; do
+# 	echo $f;
+# 	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
+# done
 IFS=$SAVEIFS
-echo "Done."
-echo "You are using" $1 "as product now."
+
+# store new current version:
+echo $1 > $productFile
+
+if [[ -f $tmpFile ]]; then
+	rm $tmpFile
+fi
+
+echo "You are using \""$1"\" as product now."
