@@ -1,8 +1,8 @@
 package com.qeevee.gq.base;
 
-import com.qeevee.gq.R;
-import com.qeevee.gq.R.id;
-import com.qeevee.gq.R.layout;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.id;
+import com.qeevee.gqdefault.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;

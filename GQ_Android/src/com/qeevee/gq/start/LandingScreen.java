@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.qeevee.util.Dialogs;
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestActivity;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Mission;

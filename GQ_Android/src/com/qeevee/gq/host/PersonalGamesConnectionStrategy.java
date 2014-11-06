@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestApp;
 
 import android.content.SharedPreferences;

@@ -19,7 +19,7 @@ import com.qeevee.gq.loc.HotspotVisbilityListener;
 import com.qeevee.gq.loc.map.OSMItemizedOverlay;
 import com.qeevee.gq.mission.MapOSM;
 import com.qeevee.gq.ui.abstrakt.MapOSM_UI;
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 
 public class MapOSM_UIDefault extends MapOSM_UI implements
 		HotspotVisbilityListener {

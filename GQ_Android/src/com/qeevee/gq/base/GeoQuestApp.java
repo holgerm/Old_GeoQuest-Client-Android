@@ -43,9 +43,9 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
-import com.qeevee.gq.R;
-import com.qeevee.gq.R.drawable;
-import com.qeevee.gq.R.string;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.drawable;
+import com.qeevee.gqdefault.R.string;
 import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;

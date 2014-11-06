@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 
 public class PasswordProtectedDialogPreference extends DialogPreference {
 	

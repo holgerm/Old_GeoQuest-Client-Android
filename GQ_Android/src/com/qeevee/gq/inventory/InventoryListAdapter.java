@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 
 public class InventoryListAdapter extends ArrayAdapter<String> {
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestApp;
 
 public class Inventory {

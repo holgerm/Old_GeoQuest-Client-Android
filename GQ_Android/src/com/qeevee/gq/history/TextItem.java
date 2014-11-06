@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestActivity;
 import com.qeevee.gq.base.GeoQuestApp;
 

@@ -2,7 +2,7 @@ package com.qeevee.gq.rules.act;
 
 import android.content.Context;
 
-import com.qeevee.gq.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Variables;
 

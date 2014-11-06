@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qeevee.gq"
+    package="com.qeevee.gqdefault"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -22,7 +22,7 @@
         android:targetSdkVersion="14" />
 
     <application
-        android:name="GeoQuestApp"
+        android:name="com.qeevee.gq.base.GeoQuestApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
