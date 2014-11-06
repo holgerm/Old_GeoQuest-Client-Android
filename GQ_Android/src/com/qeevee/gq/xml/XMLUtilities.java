@@ -9,7 +9,7 @@ import org.dom4j.Node;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.ui.WebViewUtil;
 import com.qeevee.util.StringTools;
 

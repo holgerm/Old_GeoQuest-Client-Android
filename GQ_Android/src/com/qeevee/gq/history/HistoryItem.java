@@ -3,7 +3,7 @@ package com.qeevee.gq.history;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.qeevee.gq.GeoQuestActivity;
+import com.qeevee.gq.base.GeoQuestActivity;
 
 import android.view.View;
 

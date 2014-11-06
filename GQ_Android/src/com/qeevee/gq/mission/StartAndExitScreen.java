@@ -15,16 +15,15 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 public class StartAndExitScreen extends MissionActivity {
 

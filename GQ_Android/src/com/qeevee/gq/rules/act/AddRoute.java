@@ -4,7 +4,7 @@ import org.osmdroid.util.GeoPoint;
 
 import android.location.Location;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.LocationUtilities;

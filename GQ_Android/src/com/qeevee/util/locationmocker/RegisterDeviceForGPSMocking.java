@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 
 import android.os.AsyncTask;
 

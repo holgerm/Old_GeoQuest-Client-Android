@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 
 import android.content.res.AssetManager;
 import android.os.AsyncTask;

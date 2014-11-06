@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.dom4j.Element;
 
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 
 
 public class MissionStateCondition extends Condition { 

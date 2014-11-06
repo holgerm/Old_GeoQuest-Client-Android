@@ -1,10 +1,12 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.dom4j.Element;
 
+import com.qeevee.gq.R;
+import com.qeevee.gq.R.string;
 import com.qeevee.gq.xml.XMLUtilities;
 
 public class Imprint {

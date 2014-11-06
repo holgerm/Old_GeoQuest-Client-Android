@@ -2,7 +2,7 @@ package com.qeevee.gq.rules.act;
 
 import static com.qeevee.gq.xml.XMLUtilities.stringToBool;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 

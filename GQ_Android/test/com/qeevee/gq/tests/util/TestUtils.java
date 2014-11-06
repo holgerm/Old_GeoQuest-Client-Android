@@ -18,11 +18,11 @@ import org.dom4j.io.SAXReader;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.qeevee.gq.GameLoader;
-import com.qeevee.gq.GeoQuestActivity;
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.GeoQuestMapActivity;
-import com.qeevee.gq.Mission;
+import com.qeevee.gq.base.GameLoaderoader;
+import com.qeevee.gq.base.GeoQuestActivityivity;
+import com.qeevee.gq.base.GeoQuestAppstApp;
+import com.qeevee.gq.base.GeoQuestMapActivityivity;
+import com.qeevee.gq.base.Missionssion;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.HistoryItem;
 import com.qeevee.gq.history.HistoryItemModifier;

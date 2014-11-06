@@ -16,10 +16,9 @@ import com.uni.bonn.nfc4mg.nfctag.ParseTagListener;
 import com.uni.bonn.nfc4mg.nfctag.TagHandler;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
-
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.capability.NeedsNFCCapability;
 import com.qeevee.gq.ui.UIFactory;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;

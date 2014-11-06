@@ -9,10 +9,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.qeevee.gq.GameSessionManager;
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Imprint;
-import com.qeevee.gq.Mission;
+import com.qeevee.gq.base.GameSessionManager;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Imprint;
+import com.qeevee.gq.base.Mission;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.ui.UIFactory;
 

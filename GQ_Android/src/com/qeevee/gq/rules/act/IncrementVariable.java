@@ -1,6 +1,6 @@
 package com.qeevee.gq.rules.act;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variables;
 
 import android.util.Log;
 

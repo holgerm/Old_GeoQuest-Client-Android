@@ -15,8 +15,8 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.Host;
 import com.qeevee.util.FileOperations;
 

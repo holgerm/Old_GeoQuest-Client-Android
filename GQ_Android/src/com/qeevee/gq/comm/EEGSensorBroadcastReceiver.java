@@ -1,6 +1,6 @@
 package com.qeevee.gq.comm;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

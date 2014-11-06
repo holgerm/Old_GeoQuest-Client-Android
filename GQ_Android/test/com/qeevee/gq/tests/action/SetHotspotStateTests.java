@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variablesables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;

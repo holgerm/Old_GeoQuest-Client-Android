@@ -1,6 +1,6 @@
 package com.qeevee.gq.mission;
 
-import static com.qeevee.gq.Variables.registerMissionResult;
+import static com.qeevee.gq.base.Variables.registerMissionResult;
 import static com.qeevee.util.StringTools.trim;
 
 import java.util.ArrayList;
@@ -20,12 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
-
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 
 /**

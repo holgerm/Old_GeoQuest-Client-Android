@@ -14,12 +14,10 @@ import org.junit.runner.RunWith;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.QRTagReading;
-import com.qeevee.gq.tests.robolectric.GQTestRunner;
-
-import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.tests.robolectric.GQTestRuncom.qeevee.gq.base.Variablesgq.R;
 
 
 @RunWith(GQTestRunner.class)

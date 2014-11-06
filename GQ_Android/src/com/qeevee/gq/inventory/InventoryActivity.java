@@ -3,8 +3,8 @@ package com.qeevee.gq.inventory;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.qeevee.gq.GeoQuestActivity;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestActivity;
 
 public class InventoryActivity extends GeoQuestActivity {
 

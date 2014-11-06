@@ -16,7 +16,7 @@ import android.text.Html;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variablesables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.mission.NPCTalk;

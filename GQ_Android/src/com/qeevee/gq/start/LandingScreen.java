@@ -15,11 +15,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.qeevee.util.Dialogs;
-import com.qeevee.gq.GeoQuestActivity;
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Mission;
-import com.qeevee.gq.Preferences;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestActivity;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Mission;
+import com.qeevee.gq.base.Preferences;
 
 import edu.bonn.mobilegaming.geoquest.gameaccess.GameItem;
 

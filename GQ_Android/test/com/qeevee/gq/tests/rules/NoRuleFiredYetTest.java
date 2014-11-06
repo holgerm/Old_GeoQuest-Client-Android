@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variablesables;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;

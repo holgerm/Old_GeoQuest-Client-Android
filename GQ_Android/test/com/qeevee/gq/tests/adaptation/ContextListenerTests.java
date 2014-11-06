@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestAppstApp;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
 import android.content.Context;

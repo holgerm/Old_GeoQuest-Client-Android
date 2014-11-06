@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -43,6 +43,9 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
+import com.qeevee.gq.R;
+import com.qeevee.gq.R.drawable;
+import com.qeevee.gq.R.string;
 import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;

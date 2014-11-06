@@ -14,10 +14,10 @@ import android.view.View.OnClickListener;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 
 /**

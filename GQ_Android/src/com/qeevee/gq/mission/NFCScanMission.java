@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.capability.NeedsNFCCapability;
 import com.qeevee.gq.ui.UIFactory;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;

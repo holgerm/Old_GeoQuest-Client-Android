@@ -1,6 +1,6 @@
 package com.qeevee.gq.rules.act;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 
 
 public class ShowMessage extends Action {

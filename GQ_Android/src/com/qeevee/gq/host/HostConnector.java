@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.qeevee.gq.Configuration;
+import com.qeevee.gq.base.Configuration;
 import com.qeevee.gq.start.GameDescription;
 
 public class HostConnector {

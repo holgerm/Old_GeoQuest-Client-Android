@@ -17,9 +17,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 
 public class VideoRecord extends InteractiveMission implements

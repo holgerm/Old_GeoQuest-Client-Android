@@ -15,8 +15,8 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 

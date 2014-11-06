@@ -11,7 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 

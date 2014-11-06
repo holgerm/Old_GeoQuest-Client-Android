@@ -1,6 +1,6 @@
 package com.qeevee.gq.ui.abstrakt;
 
-import com.qeevee.gq.MissionOrToolActivity;
+import com.qeevee.gq.base.MissionOrToolActivity;
 
 public class MultipleChoiceQuestionUI {
 

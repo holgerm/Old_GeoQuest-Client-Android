@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 public class Globals {
 

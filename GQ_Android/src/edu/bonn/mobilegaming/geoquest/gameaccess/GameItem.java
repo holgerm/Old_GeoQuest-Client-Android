@@ -8,9 +8,8 @@ import org.dom4j.Element;
 import android.location.Location;
 import android.util.Log;
 
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Distance;
-
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 
 public class GameItem implements Comparable<GameItem>{

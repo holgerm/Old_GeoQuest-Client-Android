@@ -1,7 +1,7 @@
 package com.qeevee.gq.history;
 
-import com.qeevee.gq.GeoQuestActivity;
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestActivity;
+import com.qeevee.gq.base.GeoQuestApp;
 
 import android.view.View;
 import android.widget.TextView;

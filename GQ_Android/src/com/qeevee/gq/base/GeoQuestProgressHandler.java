@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import android.app.ProgressDialog;
 import android.os.Handler;

@@ -17,11 +17,9 @@ import android.media.MediaRecorder;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.mission.AudioRecord;
-import com.qeevee.gq.tests.robolectric.GQTestRunner;
-
-import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.tests.robolectric.GQTestRuncom.qeevee.gq.base.Variablesgq.R;
 
 @RunWith(GQTestRunner.class)
 public class AudioRecordMissionTests {

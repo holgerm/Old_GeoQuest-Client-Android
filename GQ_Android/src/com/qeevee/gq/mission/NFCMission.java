@@ -11,7 +11,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.qeevee.gq.Globals;
+import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.capability.NeedsNFCCapability;
 import com.qeevee.gq.history.TransitionItem;
 import com.qeevee.gq.ui.UIFactory;

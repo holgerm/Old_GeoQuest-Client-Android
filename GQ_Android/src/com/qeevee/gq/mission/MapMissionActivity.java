@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.qeevee.gq.GeoQuestMapActivity;
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.Mission;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestMapActivity;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Mission;
 import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.util.locationmocker.LocationSource;

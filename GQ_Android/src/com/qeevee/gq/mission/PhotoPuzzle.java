@@ -27,13 +27,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
 
 public class PhotoPuzzle extends Question {

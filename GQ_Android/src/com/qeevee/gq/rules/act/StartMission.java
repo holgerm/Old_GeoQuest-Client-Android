@@ -2,10 +2,10 @@ package com.qeevee.gq.rules.act;
 
 import android.util.Log;
 
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.Mission;
-import com.qeevee.gq.MissionOrToolActivity;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Mission;
+import com.qeevee.gq.base.MissionOrToolActivity;
 import com.qeevee.gq.mission.MapMissionActivity;
 import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.util.StringTools;

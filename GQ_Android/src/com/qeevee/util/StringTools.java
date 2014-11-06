@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variables;
 
 import android.util.Log;
 

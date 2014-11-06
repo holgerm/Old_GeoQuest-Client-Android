@@ -8,17 +8,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.View;
 
+import com.qeevee.gq.base.BlockableAndReleasable;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestMapActivity;
+import com.qeevee.gq.base.Mission;
 import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-
-import com.qeevee.gq.BlockableAndReleasable;
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.GeoQuestMapActivity;
-import com.qeevee.gq.Mission;
 import com.qeevee.gq.R;
 
 public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {

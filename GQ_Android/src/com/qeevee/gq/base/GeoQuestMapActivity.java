@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import org.dom4j.Element;
 
@@ -10,6 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
+import com.qeevee.gq.R;
+import com.qeevee.gq.R.id;
+import com.qeevee.gq.R.menu;
+import com.qeevee.gq.R.string;
 import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.util.Dialogs;

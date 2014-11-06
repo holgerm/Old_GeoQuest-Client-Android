@@ -14,9 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.qeevee.gq.GeoQuestActivity;
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestActivity;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.HostConnector;
 
 public class GamesInCloud extends GeoQuestActivity {

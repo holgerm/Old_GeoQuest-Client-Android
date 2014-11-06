@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.util.Device;
 
 public class ZoomImageView extends ImageView {

@@ -3,7 +3,7 @@ package com.qeevee.gq.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qeevee.gq.BlockableAndReleasable;
+import com.qeevee.gq.base.BlockableAndReleasable;
 
 import android.util.Log;
 

@@ -15,15 +15,14 @@ import android.location.Location;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Overlay;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.loc.map.GoogleHotspotOverlay;
 import com.qeevee.gq.loc.map.OSMOverlayItem;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 /**
  * Hotspots are interaction points on a mapmission map. They have a image and a

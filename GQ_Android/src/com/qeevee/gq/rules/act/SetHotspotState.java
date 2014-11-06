@@ -5,7 +5,7 @@ import static com.qeevee.gq.xml.XMLUtilities.stringToBool;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qeevee.gq.GeoQuestApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 

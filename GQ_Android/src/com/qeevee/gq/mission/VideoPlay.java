@@ -12,11 +12,10 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
-
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
 
 public class VideoPlay extends InteractiveMission {

@@ -16,16 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.TextItem;
 import com.qeevee.gq.history.TextType;
 import com.qeevee.gq.mission.helpers.ChoiceListAdapter;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
-
-import com.qeevee.gq.Globals;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 /**
  * Simple multiple choice question and answer mission.

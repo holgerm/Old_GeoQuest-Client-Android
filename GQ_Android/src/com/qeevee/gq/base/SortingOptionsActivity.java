@@ -1,7 +1,12 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.qeevee.gq.R;
+import com.qeevee.gq.R.id;
+import com.qeevee.gq.R.layout;
+import com.qeevee.gq.R.string;
 
 import android.app.ListActivity;
 import android.content.Context;

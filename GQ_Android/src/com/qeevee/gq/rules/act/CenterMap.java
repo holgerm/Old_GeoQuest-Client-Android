@@ -1,7 +1,7 @@
 package com.qeevee.gq.rules.act;
 
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.mission.MapOSM;
 
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;

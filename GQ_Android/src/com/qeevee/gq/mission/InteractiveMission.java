@@ -3,10 +3,9 @@ package com.qeevee.gq.mission;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.os.Bundle;
 
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 

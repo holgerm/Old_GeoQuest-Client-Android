@@ -3,8 +3,8 @@ package com.qeevee.gq.commands;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
+import com.qeevee.gq.base.GeoQuestApp;
 
 public abstract class GQCommand {
 

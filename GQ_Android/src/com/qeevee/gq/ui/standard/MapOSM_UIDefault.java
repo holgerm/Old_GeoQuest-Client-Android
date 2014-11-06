@@ -12,14 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.HotspotVisbilityListener;
 import com.qeevee.gq.loc.map.OSMItemizedOverlay;
 import com.qeevee.gq.mission.MapOSM;
 import com.qeevee.gq.ui.abstrakt.MapOSM_UI;
-
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
 
 public class MapOSM_UIDefault extends MapOSM_UI implements

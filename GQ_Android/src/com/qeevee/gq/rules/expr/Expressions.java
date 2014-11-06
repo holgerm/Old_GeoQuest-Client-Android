@@ -9,11 +9,10 @@ import org.dom4j.Element;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.xml.XMLUtilities;
-
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 public class Expressions {
 	private static final String TAG = "Expressions";

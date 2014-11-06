@@ -35,16 +35,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.gq.loc.Route;
 import com.qeevee.gq.loc.RouteManager;
 import com.qeevee.gq.ui.UIFactory;
-
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
 
 /**
  * OpenStreetMap-based Map Navigation.

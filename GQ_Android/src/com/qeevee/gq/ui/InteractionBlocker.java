@@ -1,7 +1,7 @@
 package com.qeevee.gq.ui;
 
-import com.qeevee.gq.BlockableAndReleasable;
-import com.qeevee.gq.MissionOrToolActivity;
+import com.qeevee.gq.base.BlockableAndReleasable;
+import com.qeevee.gq.base.MissionOrToolActivity;
 
 /**
  * Instances of InteractionBlocker are responsible for blocking and releasing

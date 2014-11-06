@@ -2,9 +2,9 @@ package com.qeevee.gq.rules.act;
 
 import android.content.Context;
 
-import com.qeevee.gq.GeoQuestApp;
 import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Variables;
 
 public class AddToScore extends Action {
 

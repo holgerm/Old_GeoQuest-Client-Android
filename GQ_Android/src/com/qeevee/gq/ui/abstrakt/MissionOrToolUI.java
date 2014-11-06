@@ -1,6 +1,6 @@
 package com.qeevee.gq.ui.abstrakt;
 
-import com.qeevee.gq.BlockableAndReleasable;
+import com.qeevee.gq.base.BlockableAndReleasable;
 
 public interface MissionOrToolUI extends BlockableAndReleasable {
 

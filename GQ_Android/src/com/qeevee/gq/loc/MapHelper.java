@@ -7,8 +7,8 @@ import org.osmdroid.util.GeoPoint;
 
 import android.location.Location;
 
-import com.qeevee.gq.GeoQuestLocationListener;
-import com.qeevee.gq.Variables;
+import com.qeevee.gq.base.GeoQuestLocationListener;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.mission.MapMissionActivity;
 import com.qeevee.util.Geo;
 

@@ -14,6 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.qeevee.gq.base.BlockableAndReleasable;
+import com.qeevee.gq.base.GeoQuestActivity;
+import com.qeevee.gq.base.GeoQuestApp;
+import com.qeevee.gq.base.Globals;
+import com.qeevee.gq.base.Mission;
+import com.qeevee.gq.base.MissionOrToolActivity;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
@@ -21,14 +27,8 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.Dialogs;
 import com.qeevee.util.StringTools;
-
-import com.qeevee.gq.BlockableAndReleasable;
-import com.qeevee.gq.GeoQuestActivity;
-import com.qeevee.gq.GeoQuestApp;
-import com.qeevee.gq.Globals;
-import com.qeevee.gq.Mission;
-import com.qeevee.gq.MissionOrToolActivity;
 import com.qeevee.gq.R;
+
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 
 public abstract class MissionActivity extends GeoQuestActivity implements

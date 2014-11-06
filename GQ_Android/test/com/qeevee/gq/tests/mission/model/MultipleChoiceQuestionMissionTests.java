@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.history.TextItem;
@@ -26,10 +27,7 @@ import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.mission.MultipleChoiceQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-import com.xtremelabs.robolectric.Robolectric;
-
-import com.qeevee.gq.R;
-import com.qeevee.gq.Variables;
+import com.xtremelabs.robolectric.Robolectcom.qeevee.gq.base.Variablesgq.R;
 
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionMissionTests {

@@ -1,4 +1,4 @@
-package com.qeevee.gq;
+package com.qeevee.gq.base;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,6 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.qeevee.gq.R;
+import com.qeevee.gq.R.string;
+import com.qeevee.gq.R.xml;
 import com.qeevee.gq.host.PersonalGamesConnectionStrategy;
 import com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference;
 import com.qeevee.gq.pwprefs.PasswordProtectedListPreference;
