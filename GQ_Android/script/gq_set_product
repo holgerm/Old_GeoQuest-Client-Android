@@ -121,7 +121,7 @@ findFiles() {
 		-name '*.java')
 }
 
-currentVariant=""
+# currentVariant=""
 
 LC_CLANG=C
 
@@ -134,12 +134,15 @@ echo "  done"
 
 # cope with spaces in file names: 
 #   therefore set IFS var to different value and back afterwards:
-SAVEIFS=$IFS
-IFS=$(echo -en "\b")
-echo "Adapting source files:"
+# SAVEIFS=$IFS
+#IFS=$(echo -en "\b")
+
+filesList=( $(find $baseDir -type f  -name '*.java') )
+echo "Adapting" ${#filesList[@]} "source files:"
 echo -n "  "
-for f in $(findFiles $baseDir) ; do
+for f in ${filesList[@]} ; do
 	echo -n "."
+# 	echo $f
 	sed "s/${stdPck}${currentVariant}.R/${stdPck}$1.R/g" $f > $tmpFile && mv $tmpFile $f
 done
 echo
@@ -150,7 +153,7 @@ echo "  done"
 # 	echo $f;
 # 	# sed "s/${stdPck}/${stdPck}.$1/g" $f > $tmpFile && mv $tmpFile $f
 # done
-IFS=$SAVEIFS
+#IFS=$SAVEIFS
 
 # store new current version:
 echo $1 > $productFile
