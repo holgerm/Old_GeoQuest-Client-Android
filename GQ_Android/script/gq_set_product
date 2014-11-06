@@ -121,7 +121,7 @@ findFiles() {
 		-name '*.java')
 }
 
-# currentVariant=""
+currentVariant=""
 
 LC_CLANG=C
 
