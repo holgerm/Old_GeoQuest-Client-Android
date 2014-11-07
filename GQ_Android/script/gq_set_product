@@ -142,8 +142,9 @@ echo "Adapting" ${#filesList[@]} "source files:"
 echo -n "  "
 for f in ${filesList[@]} ; do
 	echo -n "."
-# 	echo $f
 	sed "s/${stdPck}${currentVariant}.R/${stdPck}$1.R/g" $f > $tmpFile && mv $tmpFile $f
+#	echo $f
+#	sed "s/${stdPck}.\([A-Z]\)/${stdPck}.base.\1/g" $f > $tmpFile && mv $tmpFile $f
 done
 echo
 echo "  done"
