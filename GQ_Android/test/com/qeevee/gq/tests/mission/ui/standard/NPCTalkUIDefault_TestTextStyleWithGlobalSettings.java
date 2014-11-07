@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import android.graphics.Color;
 import android.widget.TextView;
 
-import com.qeevee.gq.base.Variablesables;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;

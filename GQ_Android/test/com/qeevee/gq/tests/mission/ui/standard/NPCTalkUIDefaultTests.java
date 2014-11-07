@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.mission.NPCTalk;
@@ -24,7 +23,10 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.gq.ui.abstrakt.MissionUI;
 import com.qeevee.gq.ui.standard.DefaultUIFactory;
-import com.qeevee.gq.ui.standard.NPCTalkUIDefault.WordTiccom.qeevee.gq.base.Variablesgq.R;
+import com.qeevee.gq.ui.standard.NPCTalkUIDefault.WordTicker;
+
+import com.qeevee.gqphka.R;
+import com.qeevee.gq.base.Variables;
 
 
 @RunWith(GQTestRunner.class)

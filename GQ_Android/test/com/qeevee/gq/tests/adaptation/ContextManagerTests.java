@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 import android.content.Context;
 import android.os.SystemClock;
 
-import com.qeevee.gq.base.GeoQuestAppstApp;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.robolectric.ShadowSystemClock;
 import com.xtremelabs.robolectric.Robolectric;

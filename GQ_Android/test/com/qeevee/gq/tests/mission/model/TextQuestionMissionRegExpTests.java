@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.qeevee.gq.base.Variablesables;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;

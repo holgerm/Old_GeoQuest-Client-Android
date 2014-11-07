@@ -15,7 +15,7 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.qeevee.gq.base.Variablesables;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.MissionActivity;
 import com.qeevee.gq.mission.StartAndExitScreen;
