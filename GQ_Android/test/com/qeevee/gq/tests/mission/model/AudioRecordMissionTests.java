@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.qeevee.gq.mission.AudioRecord;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.Variables;
 
 @RunWith(GQTestRunner.class)

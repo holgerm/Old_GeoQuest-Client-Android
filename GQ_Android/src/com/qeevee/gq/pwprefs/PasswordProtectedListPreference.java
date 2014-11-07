@@ -10,7 +10,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 
 public class PasswordProtectedListPreference extends ListPreference {
 	

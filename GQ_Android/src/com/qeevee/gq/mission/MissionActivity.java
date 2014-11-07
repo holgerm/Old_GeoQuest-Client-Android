@@ -27,7 +27,7 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.Dialogs;
 import com.qeevee.util.StringTools;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 
 import edu.bonn.mobilegaming.geoquest.contextmanager.ContextManager;
 

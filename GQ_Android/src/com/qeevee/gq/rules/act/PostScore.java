@@ -21,7 +21,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Variables;
 

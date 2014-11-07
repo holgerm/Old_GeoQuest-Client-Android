@@ -23,7 +23,7 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 
 public class StartAndExitScreen extends MissionActivity {
 

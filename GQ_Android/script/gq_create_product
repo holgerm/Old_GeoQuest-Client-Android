@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# we assume that current product is "default" - check it
+
+echo "Setting product to $1 ..."
+pushd /Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android
+gq_set_product $1
+echo "done"
+
+echo "Creating debug build ..."
+ant debug
+echo "done"
+
+echo "copying apk file in place"
+cp /Users/muegge/projects/qv-geoquest/QV_GQ_Player_Android/GQ_Android/bin/Start-debug.apk ~/Desktop/GQ$1.apk
+echo "done"
+
+echo "Setting product back to default."
+gq_set_product 'default' 
+popd
+echo "done"

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.mission.NPCTalk.DialogItem;
 import com.qeevee.gq.res.ResourceManager;

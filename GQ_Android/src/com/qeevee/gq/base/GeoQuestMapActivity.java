@@ -10,10 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
-import com.qeevee.gqphka.R;
-import com.qeevee.gqphka.R.id;
-import com.qeevee.gqphka.R.menu;
-import com.qeevee.gqphka.R.string;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.id;
+import com.qeevee.gqdefault.R.menu;
+import com.qeevee.gqdefault.R.string;
 import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.util.Dialogs;

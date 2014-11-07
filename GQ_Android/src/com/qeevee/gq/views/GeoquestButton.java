@@ -6,7 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.Button;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 
 public class GeoquestButton extends Button {
 

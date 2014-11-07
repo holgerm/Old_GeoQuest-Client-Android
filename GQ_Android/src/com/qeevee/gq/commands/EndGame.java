@@ -9,7 +9,7 @@ import com.qeevee.gq.base.Mission;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.mission.MissionActivity;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 
 public class EndGame extends GQCommand {

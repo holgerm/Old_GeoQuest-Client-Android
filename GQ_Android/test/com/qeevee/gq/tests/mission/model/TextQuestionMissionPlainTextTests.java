@@ -21,7 +21,7 @@ import com.qeevee.gq.mission.Question;
 import com.qeevee.gq.mission.TextQuestion;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-import com.qeevee.gqphka.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.Variables;
 
 @RunWith(GQTestRunner.class)
