@@ -9,7 +9,7 @@ import org.dom4j.Element;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.history.Actor;
 import com.qeevee.gq.history.TextItem;

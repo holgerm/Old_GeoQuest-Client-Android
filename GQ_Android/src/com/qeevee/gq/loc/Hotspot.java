@@ -22,7 +22,7 @@ import com.qeevee.gq.loc.map.OSMOverlayItem;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 
 /**
  * Hotspots are interaction points on a mapmission map. They have a image and a

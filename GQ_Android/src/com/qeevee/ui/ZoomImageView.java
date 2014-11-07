@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.util.Device;
 

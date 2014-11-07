@@ -16,7 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;

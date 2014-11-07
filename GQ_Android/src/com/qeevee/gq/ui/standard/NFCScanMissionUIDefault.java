@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 import com.qeevee.gq.mission.NFCScanMission;
 import com.qeevee.gq.ui.abstrakt.NFCScanMissionUI;
 

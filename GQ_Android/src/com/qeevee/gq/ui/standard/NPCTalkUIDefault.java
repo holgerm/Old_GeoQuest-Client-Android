@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.mission.NPCTalk;
 import com.qeevee.gq.mission.NPCTalk.DialogItem;

@@ -12,7 +12,7 @@ import android.util.Log;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 
 public class Expressions {
 	private static final String TAG = "Expressions";

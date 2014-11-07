@@ -1,8 +1,8 @@
 package com.qeevee.gq.base;
 
-import com.qeevee.gqdefault.R;
-import com.qeevee.gqdefault.R.id;
-import com.qeevee.gqdefault.R.menu;
+import com.qeevee.gqphka.R;
+import com.qeevee.gqphka.R.id;
+import com.qeevee.gqphka.R.menu;
 
 import android.app.ListActivity;
 import android.content.Intent;

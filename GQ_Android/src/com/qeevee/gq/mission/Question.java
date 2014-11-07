@@ -7,7 +7,7 @@ import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 
 public abstract class Question extends InteractiveMission {
 

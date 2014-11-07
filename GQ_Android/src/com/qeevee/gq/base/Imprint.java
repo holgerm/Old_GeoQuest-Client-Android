@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.dom4j.Element;
 
-import com.qeevee.gqdefault.R;
-import com.qeevee.gqdefault.R.string;
+import com.qeevee.gqphka.R;
+import com.qeevee.gqphka.R.string;
 import com.qeevee.gq.xml.XMLUtilities;
 
 public class Imprint {

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 
 public class PasswordProtectedCheckBoxPreference extends CheckBoxPreference {
 

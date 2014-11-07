@@ -18,7 +18,7 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqphka.R;
 
 @RunWith(GQTestRunner.class)
 public class MultipleChoiceQuestionSetBackgroundTests {
