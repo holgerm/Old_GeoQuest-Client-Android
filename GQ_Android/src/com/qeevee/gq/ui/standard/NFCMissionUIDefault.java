@@ -24,7 +24,7 @@ import com.uni.bonn.nfc4mg.nfctag.TagIntializer;
 import com.uni.bonn.nfc4mg.tagmodels.GPSTagModel;
 import com.uni.bonn.nfc4mg.tagmodels.InfoTagModel;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 import com.qeevee.gq.mission.NFCMission;
 import com.qeevee.gq.ui.abstrakt.NFCMissionUI;
 

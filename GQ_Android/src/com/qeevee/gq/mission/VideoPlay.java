@@ -16,7 +16,7 @@ import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 public class VideoPlay extends InteractiveMission {
 

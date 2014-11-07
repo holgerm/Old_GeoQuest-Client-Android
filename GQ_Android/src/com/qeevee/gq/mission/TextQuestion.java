@@ -24,7 +24,7 @@ import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 
 /**

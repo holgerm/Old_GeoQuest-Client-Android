@@ -10,7 +10,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 import com.qeevee.gq.base.GeoQuestApp;
 
 public class ShowAlert extends Action {

@@ -19,7 +19,7 @@ import com.qeevee.gq.tests.util.TestUtils;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 @RunWith(GQTestRunner.class)
 public class TextQuestionSetBackgroundTests {

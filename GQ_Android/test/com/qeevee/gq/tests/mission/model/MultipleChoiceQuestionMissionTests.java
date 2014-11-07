@@ -28,7 +28,7 @@ import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
 import com.xtremelabs.robolectric.Robolectric;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 import com.qeevee.gq.base.Variables;
 
 @RunWith(GQTestRunner.class)

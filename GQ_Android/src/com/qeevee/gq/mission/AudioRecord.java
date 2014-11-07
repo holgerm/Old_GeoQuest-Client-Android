@@ -17,7 +17,7 @@ import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 
 public class AudioRecord extends InteractiveMission {

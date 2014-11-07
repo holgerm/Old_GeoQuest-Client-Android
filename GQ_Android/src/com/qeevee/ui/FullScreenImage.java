@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 public class FullScreenImage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {

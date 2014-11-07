@@ -6,7 +6,7 @@ import java.io.IOException;
 import android.os.Environment;
 import android.util.Log;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 import com.qeevee.gq.base.GeoQuestApp;
 
 public class ResourceManager {

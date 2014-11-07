@@ -8,9 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.qeevee.gqdefault.R;
-import com.qeevee.gqdefault.R.id;
-import com.qeevee.gqdefault.R.menu;
+import com.qeevee.gqtours.R;
+import com.qeevee.gqtours.R.id;
+import com.qeevee.gqtours.R.menu;
 import com.qeevee.gq.capability.NeedsNFCCapability;
 import com.uni.bonn.nfc4mg.NFCEventManager;
 

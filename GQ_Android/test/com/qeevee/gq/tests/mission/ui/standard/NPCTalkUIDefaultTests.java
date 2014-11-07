@@ -25,7 +25,7 @@ import com.qeevee.gq.ui.abstrakt.MissionUI;
 import com.qeevee.gq.ui.standard.DefaultUIFactory;
 import com.qeevee.gq.ui.standard.NPCTalkUIDefault.WordTicker;
 
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 import com.qeevee.gq.base.Variables;
 
 

@@ -24,7 +24,7 @@ import com.qeevee.gq.mission.helpers.ChoiceListAdapter;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.util.StringTools;
-import com.qeevee.gqdefault.R;
+import com.qeevee.gqtours.R;
 
 /**
  * Simple multiple choice question and answer mission.
