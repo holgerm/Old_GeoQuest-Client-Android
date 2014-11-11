@@ -4,3 +4,5 @@ GQ_Android/bin/
 /bin/
 /assets/
 /notincluded/
+*.DS_Store
+/.DS_Store
