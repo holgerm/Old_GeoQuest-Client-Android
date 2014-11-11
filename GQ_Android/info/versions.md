@@ -1,6 +1,6 @@
 # Versioning #
 
-## 0.9.2* ##
+## 0.9.2 ##
 
 - wordticker bug fixed
 - Mission State Variables work now correctly
