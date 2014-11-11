@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
 
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.mission.MultipleChoiceQuestion.Answer;
 
 public class ChoiceListAdapter extends ArrayAdapter<Answer> {

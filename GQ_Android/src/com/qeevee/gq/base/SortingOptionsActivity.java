@@ -3,10 +3,10 @@ package com.qeevee.gq.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qeevee.gqtours.R;
-import com.qeevee.gqtours.R.id;
-import com.qeevee.gqtours.R.layout;
-import com.qeevee.gqtours.R.string;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.id;
+import com.qeevee.gqdefault.R.layout;
+import com.qeevee.gqdefault.R.string;
 
 import android.app.ListActivity;
 import android.content.Context;

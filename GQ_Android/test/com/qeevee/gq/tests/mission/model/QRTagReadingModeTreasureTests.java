@@ -18,7 +18,7 @@ import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.QRTagReading;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.Variables;
 
 

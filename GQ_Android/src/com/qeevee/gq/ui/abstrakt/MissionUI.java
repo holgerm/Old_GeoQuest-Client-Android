@@ -18,7 +18,7 @@ import com.qeevee.gq.ui.InteractionBlockingManager;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 
 public abstract class MissionUI extends GeoQuestUI implements MissionOrToolUI {
 

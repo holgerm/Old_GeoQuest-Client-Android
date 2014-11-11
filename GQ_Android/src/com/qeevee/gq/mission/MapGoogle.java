@@ -18,7 +18,7 @@ import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
 import com.qeevee.gq.loc.MapHelper;
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 
 /**
  * MapOverview mission. Based on the google map view a map view is shown in the

@@ -23,8 +23,8 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
-import com.qeevee.gqtours.R;
-import com.qeevee.gqtours.R.string;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.string;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.ui.UIFactory;
 

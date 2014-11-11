@@ -21,9 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import com.qeevee.gqtours.R;
-import com.qeevee.gqtours.R.string;
-import com.qeevee.gqtours.R.xml;
+import com.qeevee.gqdefault.R;
+import com.qeevee.gqdefault.R.string;
+import com.qeevee.gqdefault.R.xml;
 import com.qeevee.gq.host.PersonalGamesConnectionStrategy;
 import com.qeevee.gq.pwprefs.PasswordProtectedDialogPreference;
 import com.qeevee.gq.pwprefs.PasswordProtectedListPreference;

@@ -33,7 +33,7 @@ import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 
 public class PhotoPuzzle extends Question {
 

@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestActivity;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.HostConnector;

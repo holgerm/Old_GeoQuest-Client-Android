@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#dec4a4</color>
+    <color name="semitransparent">#99000000</color>
+    <color name="middleground">#c18e4f</color>
+    <color name="foreground">#303030</color>
+    <color name="text">#303030</color>
+ 
+</resources>

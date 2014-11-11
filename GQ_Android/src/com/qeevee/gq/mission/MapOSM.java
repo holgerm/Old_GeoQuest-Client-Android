@@ -43,7 +43,7 @@ import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.gq.loc.Route;
 import com.qeevee.gq.loc.RouteManager;
 import com.qeevee.gq.ui.UIFactory;
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 
 /**
  * OpenStreetMap-based Map Navigation.

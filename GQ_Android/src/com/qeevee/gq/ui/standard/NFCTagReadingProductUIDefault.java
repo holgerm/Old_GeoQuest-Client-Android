@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.qeevee.gqtours.R;
+import com.qeevee.gqdefault.R;
 import com.qeevee.gq.mission.NFCTagReadingProduct;
 import com.qeevee.gq.ui.abstrakt.NFCTagReadingProductUI;
 
