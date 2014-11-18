@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<game name="Test TagScanner QR No Expectation" xmlformat="5">
+
+	<mission type="TagScanner" id="NFC_Code_Scan_No_Expectations"
+		buttontext="Scannen" taskdescription="Scanne einen QR Code" mode="qr">
+		<onEnd>
+			<rule>
+				<action type="ShowMessage"
+					message="Scanned code is: @$_mission_NFC_Code_Scan_No_Expectations.result@" />
+			</rule>
+		</onEnd>
+	</mission>
+
+</game>
