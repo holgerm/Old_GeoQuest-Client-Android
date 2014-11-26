@@ -16,4 +16,9 @@ public class LeqCondition extends ComparisonCondition {
 	public String getComparisonName() {
 		return "LEQ";
 	}
+
+	@Override
+	protected boolean compare(Boolean operandA, Boolean operandB) {
+		return operandA == false || operandB == true;
+	}
 }

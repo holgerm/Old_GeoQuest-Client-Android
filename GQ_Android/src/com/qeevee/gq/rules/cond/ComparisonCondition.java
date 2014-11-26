@@ -84,11 +84,15 @@ public abstract class ComparisonCondition extends Condition {
 
 	protected abstract boolean compare(String object, String object2);
 
+	protected abstract boolean compare(Boolean object, Boolean object2);
+
 	private final boolean compare(Object opA, Object opB) {
 		if (opA instanceof Double && opB instanceof Double) {
 			return (compare((Double) opA, (Double) opB));
 		} else if (opA instanceof String && opB instanceof String)
 			return (compare((String) opA, (String) opB));
+		else if (opA instanceof Boolean && opB instanceof Boolean)
+			return (compare((Boolean) opA, (Boolean) opB));
 		else
 			return false;
 	}
