@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Variables;
+import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.gqdefault.R;
 
@@ -200,6 +201,9 @@ public class Expressions {
 
 	private static Object evaluateVar(Element xmlVarExpression) {
 		String varName = xmlVarExpression.getText().trim();
+		if (varName.startsWith("ScreenArea(") && varName.endsWith(")")) {
+			return new ScreenArea(varName);
+		}
 		if (Variables.isDefined(varName))
 			return Variables.getValue(varName);
 		else {

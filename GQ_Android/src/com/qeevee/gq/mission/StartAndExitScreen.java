@@ -19,6 +19,7 @@ import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
+import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.ui.BitmapUtil;
@@ -46,6 +47,7 @@ public class StartAndExitScreen extends MissionActivity {
 	/** runs the GQEvents when the user taps on the screen */
 	public void applyOnTapRules() {
 		Rule.resetRuleFiredTracker();
+		ScreenArea.updateScreenAreaTappedVars();
 		for (Rule rule : onTapRules) {
 			rule.apply();
 		}
@@ -204,7 +206,7 @@ public class StartAndExitScreen extends MissionActivity {
 
 	@Override
 	public void finish() {
-		//		GeoQuestApp.recycleImagesFromView(imageView);
+		// GeoQuestApp.recycleImagesFromView(imageView);
 		super.finish();
 	}
 

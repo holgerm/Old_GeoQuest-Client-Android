@@ -10,7 +10,6 @@ import com.qeevee.gq.loc.HotspotManager;
 public class Variables {
 
 	private static Map<String, Object> variables;
-
 	/**
 	 * use this constant for defining the key of the mission status variable,
 	 * e.g.
