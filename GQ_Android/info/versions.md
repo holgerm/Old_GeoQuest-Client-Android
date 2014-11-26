@@ -1,5 +1,10 @@
 # Versioning #
 
+## 0.9.3 ##
+
+- ScreenArea added, enables easier definition ans using of tappable screen areas in variables.
+- boolean values now supported. true >= false etc.
+
 ## 0.9.2 ##
 
 - wordticker bug fixed
