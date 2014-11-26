@@ -1,6 +1,9 @@
 package com.qeevee.gq.mission;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.dom4j.Element;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
@@ -48,13 +52,12 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 
 	private static final int QRCODE = 1;
 	private static final int NFCCODE = 2;
-	private int scanMode;
+	private int mode;
 
-	private static final int TREASURE = 1; // OLD
-	private static final int PRODUCT = 2; // OLD
-	private int expectationMode = TREASURE; // OLD
+	private static final int TREASURE = 1;
+	private static final int PRODUCT = 2;
+	private int expectationMode = TREASURE;
 
-	private CharSequence expectedContent; // OLD
 	private List<CharSequence> expectedCodes;
 
 	private CharSequence ifWrongText;
@@ -67,18 +70,12 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.qrtagreading); // TODO TagScanner Layout machen
+		setContentView(R.layout.tag_scanner); // TODO TagScanner Layout machen
 
 		// init Start Scan Button at bottom:
-		okButton = (Button) findViewById(R.id.qrtagreaderstartbutton);// TODO
-																		// TagScanner
-																		// Layout
-																		// machen
+		okButton = (Button) findViewById(R.id.tagscanner_startbutton);
 		scanButtonText = getMissionAttribute("buttontext",
-				R.string.qrtagreading_startscanbutton_default);// TODO
-																// TagScanner
-																// defaults
-																// definieren
+				R.string.tagscanner_startscanbutton_default);
 		okButton.setText(scanButtonText);
 		okButton.setOnClickListener(this);
 		// init endbuttontext:
@@ -87,36 +84,33 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 		buttonMode = START_SCAN;
 
 		// init task description text:
-		taskTextView = (TextView) findViewById(R.id.qrTextView);// TODO
-																// TagScanner
-																// Layout machen
+		taskTextView = (TextView) findViewById(R.id.tsTextView);
 		taskTextView.setText(getMissionAttribute("taskdescription",
-				R.string.qrtagreading_taskdescription_default));// TODO
-																// TagScanner
-																// defaults
-																// definieren
+				R.string.tagscanner_taskdescription_default));
 
 		// initial image:
 		imageView = (ImageView) findViewById(R.id.qrImageView);
 		setImage("initial_image");
 
-		// init mode and dependent attributes:
-		String modeAsString = mission.xmlMissionNode.attributeValue("mode");
-		if (modeAsString == null || modeAsString.equals("qr")) {
-			this.scanMode = QRCODE;
-			this.expectationMode = TREASURE;
-			this.feedbackText = getMissionAttribute("feedbacktext",
-					R.string.qrtagreader_treasure_feedback);
-		} else if (modeAsString.equals("bestimmter Tag (mit onSuccess)")
-				|| modeAsString.equals("product")) {
-			this.expectationMode = PRODUCT;
-			this.expectedContent = getMissionAttribute("expected_content",
-					XMLUtilities.NECESSARY_ATTRIBUTE);
-			this.ifRightText = getMissionAttribute("if_right",
-					R.string.qrtagreader_product_ifright);
-			this.ifWrongText = getMissionAttribute("if_wrong",
-					R.string.qrtagreader_product_ifwrong);
+		// init scan mode:
+		String modeS = mission.xmlMissionNode.attributeValue("mode");
+		this.mode = (modeS == null || modeS.equals("QR-Code")) ? QRCODE
+				: NFCCODE;
+
+		// init expectations:
+		expectedCodes = new ArrayList<CharSequence>();
+		for (Element elem : this.getMissionElements("expectedCode")) {
+			expectedCodes.add(elem.getText());
 		}
+		this.expectationMode = (expectedCodes.size() == 0) ? TREASURE : PRODUCT;
+
+		// init feedback:
+		this.feedbackText = getMissionAttribute("feedbacktext",
+				R.string.qrtagreader_treasure_feedback);
+		this.ifRightText = getMissionAttribute("if_right",
+				R.string.qrtagreader_product_ifright);
+		this.ifWrongText = getMissionAttribute("if_wrong",
+				R.string.qrtagreader_product_ifwrong);
 	}
 
 	private void setImage(String attributeName) {
@@ -149,14 +143,32 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 			finish(Globals.STATUS_SUCCEEDED);
 			break;
 		case START_SCAN:
-			Intent intentScan = new Intent(
-					"com.google.zxing.client.android.SCAN");
-			intentScan.addCategory(Intent.CATEGORY_DEFAULT);
-			try {
-				startActivityForResult(intentScan, 0x0ba7c0de);
-			} catch (ActivityNotFoundException e) {
-				showDownloadDialog(this, DEFAULT_TITLE, DEFAULT_MESSAGE,
-						DEFAULT_YES, DEFAULT_NO);
+			if (mode == QRCODE) {
+				// Start QR Code Reader:
+				Intent intentScan = new Intent(
+						"com.google.zxing.client.android.SCAN");
+				intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+				try {
+					startActivityForResult(intentScan, 0x0ba7c0de);
+				} catch (ActivityNotFoundException e) {
+					showDownloadDialog(this, DEFAULT_TITLE, DEFAULT_MESSAGE,
+							DEFAULT_YES, DEFAULT_NO);
+				}
+			} else {
+				// TODO Start NFC Scan:
+				Intent intentScan = null;
+				try {
+					intentScan = new Intent(GeoQuestApp.getContext(),
+							Class.forName(MissionActivity.getPackageBaseName()
+									+ "NFCScanMission"));
+				} catch (ClassNotFoundException e1) {
+					Log.e(TAG,
+							"Unable to start intent for class "
+									+ e1.getMessage());
+					return;
+				}
+				intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+				startActivityForResult(intentScan, 2);
 			}
 			break;
 		default:
@@ -221,7 +233,14 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 				break;
 			case PRODUCT:
 				// check content:
-				if (this.expectedContent.toString().equals(scannedResult)) {
+				boolean asExpected = false;
+				for (CharSequence curExpect : expectedCodes) {
+					if (scannedResult.equals(curExpect)) {
+						asExpected = true;
+						break;
+					}
+				}
+				if (asExpected) {
 					taskTextView.setText(this.ifRightText);
 					setImage("if_right_image");
 					buttonMode = END_MISSION;
@@ -244,7 +263,7 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 			okButton.setText(scanButtonText);
 			setImage("initial_image");
 			taskTextView.setText(getMissionAttribute("taskdescription",
-					R.string.qrtagreading_taskdescription_default));
+					R.string.tagscanner_taskdescription_default));
 
 			// taskTextView.setText(R.string.error_qrtagreader_noresult);
 			// Log.e(TAG, "scanning rsulted in null");
@@ -253,7 +272,6 @@ public class TagScanner extends InteractiveMission implements OnClickListener {
 
 	public void onBlockingStateUpdated(boolean blocking) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public MissionOrToolUI getUI() {

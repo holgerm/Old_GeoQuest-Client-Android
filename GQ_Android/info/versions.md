@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.9.3* ##
+
+- TagScanner mission introduced: covers QR Code and NFC Code Reading
+
 ## 0.9.2 ##
 
 - wordticker bug fixed

@@ -57,8 +57,8 @@ public class TagScannerModeQR {
 	private void loadFieldsOfObjectUnderTest() {
 		taskTextView = (TextView) getFieldValue(mission, "taskTextView");
 		getResString(R.string.button_text_proceed);
-		DEFAULT_SCANBUTTONTEXT = getResString(R.string.qrtagreading_startscanbutton_default);
-		DEFAULT_TASKDESCRIPTION = getResString(R.string.qrtagreading_taskdescription_default);
+		DEFAULT_SCANBUTTONTEXT = getResString(R.string.tagscanner_startscanbutton_default);
+		DEFAULT_TASKDESCRIPTION = getResString(R.string.tagscanner_taskdescription_default);
 		buttonMode = (Integer) getFieldValue(mission, "buttonMode");
 		button = (Button) getFieldValue(mission, "okButton");
 		START_SCAN = (Integer) getFieldValue(mission, "START_SCAN");
@@ -73,7 +73,7 @@ public class TagScannerModeQR {
 		// nothing
 
 		// WHEN:
-		initTestMission("QR_Code_Scan_Without_Expectations");
+		initTestMission("QR_Code_Scan_No_Expectations");
 
 		// THEN:
 		shouldBeInMode(START_SCAN);

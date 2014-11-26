@@ -103,12 +103,12 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.qrtagreading);
+		setContentView(R.layout.tag_scanner);
 
 		// init Start Scan Button at bottom:
-		okButton = (Button) findViewById(R.id.qrtagreaderstartbutton);
+		okButton = (Button) findViewById(R.id.tagscanner_startbutton);
 		scanButtonText = getMissionAttribute("buttontext",
-				R.string.qrtagreading_startscanbutton_default);
+				R.string.tagscanner_startscanbutton_default);
 		okButton.setText(scanButtonText);
 		okButton.setOnClickListener(this);
 		// init endbuttontext:
@@ -117,9 +117,9 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 		buttonMode = START_SCAN;
 
 		// init task description text:
-		taskTextView = (TextView) findViewById(R.id.qrTextView);
+		taskTextView = (TextView) findViewById(R.id.tsTextView);
 		taskTextView.setText(getMissionAttribute("taskdescription",
-				R.string.qrtagreading_taskdescription_default));
+				R.string.tagscanner_taskdescription_default));
 
 		// initial image:
 		imageView = (ImageView) findViewById(R.id.qrImageView);
@@ -271,7 +271,7 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 			okButton.setText(scanButtonText);
 			setImage("initial_image");
 			taskTextView.setText(getMissionAttribute("taskdescription",
-					R.string.qrtagreading_taskdescription_default));
+					R.string.tagscanner_taskdescription_default));
 
 			// taskTextView.setText(R.string.error_qrtagreader_noresult);
 			// Log.e(TAG, "scanning rsulted in null");

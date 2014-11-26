@@ -71,10 +71,6 @@
             android:name="com.qeevee.gq.base.ImprintActivity"
             android:label="@string/app_name"
             android:screenOrientation="sensor" />
-        <activity
-            android:name="com.qeevee.ui.FullScreenImage"
-            android:label="@string/app_name"
-            android:screenOrientation="sensor" />
 
         <receiver android:name="com.qeevee.gq.comm.EEGSensorBroadcastReceiver" >
             <intent-filter>
@@ -87,6 +83,22 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.qeevee.gq.mission.AudioRecord"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.ExternalMission"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.ui.FullScreenImage"
+            android:label="@string/app_name"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name="com.qeevee.gq.mission.ImageCapture"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.qeevee.gq.mission.MapGoogle"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
@@ -95,8 +107,45 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.qeevee.gq.mission.MultipleChoiceQuestion"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.NFCTag"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.qeevee.gq.mission.NPCTalk"
             android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.PhotoPuzzle"
+            android:label="@string/quest_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.base.Preferences"
+            android:label="@string/preferencesTitle"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.qeevee.gq.mission.QRTagReading"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.TagScanner"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.TextQuestion"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qeevee.gq.mission.VideoPlay"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.qeevee.gq.mission.VideoRecord"
+            android:label="@string/quest_name"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qeevee.gq.mission.WebPage"
@@ -106,51 +155,6 @@
             android:name="com.qeevee.gq.mission.WebTech"
             android:label="@string/app_name"
             android:screenOrientation="sensor" />
-        <activity
-            android:name="com.qeevee.gq.mission.QRTagReading"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.NFCTag"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.ImageCapture"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.AudioRecord"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.VideoRecord"
-            android:label="@string/quest_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.PhotoPuzzle"
-            android:label="@string/quest_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.VideoPlay"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="com.qeevee.gq.mission.MultipleChoiceQuestion"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.mission.TextQuestion"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qeevee.gq.base.Preferences"
-            android:label="@string/preferencesTitle"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.qeevee.gq.mission.ExternalMission"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

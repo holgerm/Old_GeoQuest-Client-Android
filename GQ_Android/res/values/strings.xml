@@ -124,8 +124,8 @@
     <string name="questionandanswer_wrongAnswer">Wrong Answer :(</string>
 
     <!-- QRTagReading MISSION -->
-    <string name="qrtagreading_startscanbutton_default">Start Scanning ...</string>
-    <string name="qrtagreading_taskdescription_default">Search for the QR code and scan it ...</string>
+    <string name="tagscanner_startscanbutton_default">Start Scanning ...</string>
+    <string name="tagscanner_taskdescription_default">Search for the QR code and scan it ...</string>
     <string name="qrtagreader_product_ifright">You found it.\nCongratulations!</string>
     <string name="qrtagreader_product_ifwrong">Sorry, but this is not what you are looking for.\nGo on to find it!</string>
 

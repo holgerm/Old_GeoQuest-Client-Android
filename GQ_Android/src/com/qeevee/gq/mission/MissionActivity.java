@@ -185,6 +185,12 @@ public abstract class MissionActivity extends GeoQuestActivity implements
 		else
 			return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Element> getMissionElements(String xpath) {
+		if (getMission() == null || getMission().xmlMissionNode == null) return null;
+		return getXML().selectNodes(xpath);
+	}
 
 	/**
 	 * Same as {@link #getMissionAttribute(String, int)} but assuming an
