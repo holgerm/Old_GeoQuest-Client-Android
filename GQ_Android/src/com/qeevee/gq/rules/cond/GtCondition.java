@@ -16,4 +16,9 @@ public class GtCondition extends ComparisonCondition {
 	public String getComparisonName() {
 		return "GT";
 	}
+
+	@Override
+	protected boolean compare(Boolean object, Boolean object2) {
+		return object == true && object2 == false;
+	}
 }

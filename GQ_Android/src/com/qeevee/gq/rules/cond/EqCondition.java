@@ -14,4 +14,9 @@ public class EqCondition extends ComparisonCondition {
 	public String getComparisonName() {
 		return "EQ";
 	}
+
+	@Override
+	protected boolean compare(Boolean operandA, Boolean operandB) {
+		return operandA.equals(operandB);
+	}
 }

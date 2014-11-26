@@ -17,4 +17,8 @@ public class GeqCondition extends ComparisonCondition {
 		return "GEQ";
 	}
 
+	@Override
+	protected boolean compare(Boolean operandA, Boolean operandB) {
+		return operandA == true || operandB == false;
+	}
 }

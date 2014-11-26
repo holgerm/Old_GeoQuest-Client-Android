@@ -4,7 +4,7 @@ import org.dom4j.Element;
 
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.expr.Expressions;
-
+import com.qeevee.gq.ui.ScreenArea;
 
 public class SetVariable extends Action {
 
@@ -18,9 +18,12 @@ public class SetVariable extends Action {
 
 	@Override
 	public void execute() {
-		Variables.setValue(params.get("var"),
-				Expressions.evaluate((Element) elements.get("value")
-						.selectSingleNode("*")));
+		Object value = Expressions.evaluate((Element) elements.get("value")
+				.selectSingleNode("*"));
+		if (value instanceof ScreenArea)
+			ScreenArea.setValue(params.get("var"), (ScreenArea) value);
+		else
+			Variables.setValue(params.get("var"), value);
 	}
 
 }
