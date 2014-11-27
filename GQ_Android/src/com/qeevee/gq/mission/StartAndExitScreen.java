@@ -1,5 +1,6 @@
 package com.qeevee.gq.mission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,14 @@ import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
+import com.qeevee.gq.start.GameDataManager;
 import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqdefault.R;
+import com.qeevee.util.FileOperations;
 
 public class StartAndExitScreen extends MissionActivity {
 
@@ -66,11 +69,11 @@ public class StartAndExitScreen extends MissionActivity {
 		outerView = (View) findViewById(R.id.outerview);
 
 		readDurationAttribute();
-		setImage();
+		handleImageAttribute();
 
 		initOnTap();
 
-		if (!endByTouch)
+		if (!endByTouch && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
@@ -78,7 +81,9 @@ public class StartAndExitScreen extends MissionActivity {
 		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
-		if (duration != null && duration.equals("interactive")) {
+		if (duration == null)
+			duration = "5000";
+		if (duration.equals("interactive")) {
 			endByTouch = true;
 			imageView.setOnClickListener(new OnClickListener() {
 
@@ -88,15 +93,13 @@ public class StartAndExitScreen extends MissionActivity {
 			});
 			return;
 		}
-		if (duration != null && duration.equals("infinite"))
-			return;
+		if (duration.equals("infinite"))
+			return; // TODO: weg oder feature?
+		if (duration.equals("animation"))
+			return; // TODO: implement
 
 		// else:
-		long durationLong;
-		if (duration == null)
-			durationLong = 5000;
-		else
-			durationLong = Long.parseLong(duration);
+		long durationLong = Long.parseLong(duration);
 		myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
 	}
 
@@ -135,9 +138,35 @@ public class StartAndExitScreen extends MissionActivity {
 		}
 	}
 
-	private void setImage() {
-		String pathToImage = (String) XMLUtilities.getStringAttribute("image",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+	private void handleImageAttribute() {
+		String pathToImage = ((String) XMLUtilities.getStringAttribute("image",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
+				.trim();
+		if (pathToImage.endsWith(".zip")) {
+			setupAnimation(pathToImage);
+		} else {
+			setupImage(pathToImage);
+		}
+	}
+
+	/**
+	 * Erases all files in the cache dir.
+	 * 
+	 * @param pathToAnimationArchive
+	 */
+	private void setupAnimation(String pathToAnimationArchive) {
+		File animationArchiveFile = new File(GeoQuestApp.getRunningGameDir(),
+				pathToAnimationArchive);
+		File animationCacheDir = new File(getCacheDir(), "anim");
+		if (animationCacheDir.exists())
+			FileOperations.cleanDirectory(animationCacheDir);
+		String cacheDirPath = animationCacheDir.getAbsolutePath();
+		GameDataManager.unzipFile(animationArchiveFile, cacheDirPath);
+
+		// TODO setup animation drawable and start the animation
+	}
+
+	private void setupImage(String pathToImage) {
 		try {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
@@ -167,8 +196,8 @@ public class StartAndExitScreen extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-		setImage();
-		if (!endByTouch)
+		handleImageAttribute();
+		if (!endByTouch && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
