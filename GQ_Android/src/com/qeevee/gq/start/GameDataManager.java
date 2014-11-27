@@ -123,7 +123,7 @@ public class GameDataManager {
 		unzipFile(gameZipFile, newGameDirName);
 	}
 
-	private static void unzipFile(File archiveFile, String targetDir) {
+	public static void unzipFile(File archiveFile, String targetDir) {
 		try {
 			ZipFile zipFile = new ZipFile(archiveFile);
 			ZipEntry zipEntry;
