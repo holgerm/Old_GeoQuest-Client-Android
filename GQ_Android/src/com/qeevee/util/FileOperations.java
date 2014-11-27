@@ -11,6 +11,12 @@ import java.io.OutputStream;
 public class FileOperations {
 
 	public static boolean deleteDirectory(File path) {
+		boolean deleted = cleanDirectory(path);
+		deleted &= path.delete();
+		return deleted;
+	}
+
+	public static boolean cleanDirectory(File path) {
 		if (path.exists()) {
 			File[] files = path.listFiles();
 			if (files == null) {
@@ -24,7 +30,7 @@ public class FileOperations {
 				}
 			}
 		}
-		return (path.delete());
+		return true;
 	}
 
 	public static boolean copyFileOrDir(File origin, File targetContainerDir) {
