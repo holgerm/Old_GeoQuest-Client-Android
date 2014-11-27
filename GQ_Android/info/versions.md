@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.9.4* ##
+
+- Animation support for FullScreenImage page type (at work)
+
 ## 0.9.3 ##
 
 - ScreenArea added, enables easier definition ans using of tappable screen areas in variables.
