@@ -1,11 +1,14 @@
 package com.qeevee.gq.mission;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -69,7 +72,7 @@ public class StartAndExitScreen extends MissionActivity {
 		outerView = (View) findViewById(R.id.outerview);
 
 		readDurationAttribute();
-		handleImageAttribute();
+		handleImageAttributes();
 
 		initOnTap();
 
@@ -138,12 +141,17 @@ public class StartAndExitScreen extends MissionActivity {
 		}
 	}
 
-	private void handleImageAttribute() {
+	private void handleImageAttributes() {
 		String pathToImage = ((String) XMLUtilities.getStringAttribute("image",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
 				.trim();
 		if (pathToImage.endsWith(".zip")) {
-			setupAnimation(pathToImage);
+			boolean loop = (Boolean) XMLUtilities.getBooleanAttribute("loop",
+					R.string.animation_loop_default, mission.xmlMissionNode);
+			int framerate = (Integer) XMLUtilities.getIntegerAttribute("fps",
+					R.string.animation_fps_default, mission.xmlMissionNode);
+			// TODO framerate
+			setupAnimation(pathToImage, framerate, loop);
 		} else {
 			setupImage(pathToImage);
 		}
@@ -154,7 +162,8 @@ public class StartAndExitScreen extends MissionActivity {
 	 * 
 	 * @param pathToAnimationArchive
 	 */
-	private void setupAnimation(String pathToAnimationArchive) {
+	private void setupAnimation(String pathToAnimationArchive, int framerate,
+			boolean loop) {
 		File animationArchiveFile = new File(GeoQuestApp.getRunningGameDir(),
 				pathToAnimationArchive);
 		File animationCacheDir = new File(getCacheDir(), "anim");
@@ -163,7 +172,31 @@ public class StartAndExitScreen extends MissionActivity {
 		String cacheDirPath = animationCacheDir.getAbsolutePath();
 		GameDataManager.unzipFile(animationArchiveFile, cacheDirPath);
 
+		// prepare image files for iteration:
+		String[] frameFileNames = animationCacheDir.list(new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String filename) {
+				return (filename.endsWith(".jpg") || filename.endsWith(".png") || filename
+						.endsWith(".gif"));
+				// TODO extract as boolean function to some util class
+			}
+		});
+
 		// TODO setup animation drawable and start the animation
+		AnimationDrawable animD = new AnimationDrawable();
+		String frameFile;
+		for (int i = 0; i < frameFileNames.length; i++) {
+			frameFile = animationCacheDir.getAbsolutePath() + "/"
+					+ frameFileNames[i];
+			animD.addFrame(new BitmapDrawable(frameFile), 1000 / framerate);
+		}
+
+		imageView.setBackgroundDrawable(animD);
+
+		animD.setOneShot(!loop);
+		animD.stop();
+		animD.start();
 	}
 
 	private void setupImage(String pathToImage) {
@@ -196,7 +229,7 @@ public class StartAndExitScreen extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-		handleImageAttribute();
+		handleImageAttributes();
 		if (!endByTouch && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
