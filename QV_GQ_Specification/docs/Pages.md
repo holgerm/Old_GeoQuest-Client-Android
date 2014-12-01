@@ -16,11 +16,11 @@ The outer most xml element (game) contains global attributes.
 | uistyle | [UI style](UIStyles.md) that should be used throughout the game |"Web" | "Default" - the standard native UI for each activity type |
 
 
-# Missions and their Attributes #
+# Pages and their Attributes #
 
 ## Media Presentation, Story Telling ##
 
-| Mission Type | Short Description |  
+| Page Type | Short Description |  
 |:--|:-- |  
 | [NPCTalk] (./missions/NPCTalk.md)| A dialog scene, where an image is shown at the top and a sequence of text paragraphs which are revealed one by one after clicking a proceed button. This can be used to mimic dialogs or monologues or simply deiplay illustrated textual information. There is build in audio support for the text paragraphs. |  
 | [StartAndExitScreen](./missions/StartAndExitScreen.md) | Shows an image (covering the full screen). Useful as Start Screen or to show media embedded narration, e.g. comics. |
