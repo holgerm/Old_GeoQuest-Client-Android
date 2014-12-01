@@ -96,8 +96,6 @@ public class StartAndExitScreen extends MissionActivity {
 			});
 			return;
 		}
-		if (duration.equals("infinite"))
-			return; // TODO: weg oder feature?
 		if (duration.equals("animation"))
 			return; // TODO: implement
 
