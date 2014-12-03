@@ -117,7 +117,7 @@ public class NPCTalkUIDefault extends NPCTalkUI {
 			currentDialogItem = getNPCTalk().getNextDialogItem();
 			displaySpeaker();
 			if (currentDialogItem.getAudioFilePath() != null)
-				GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(),
+				GeoQuestApp.playAudio(currentDialogItem.getAudioFilePath(), false, 
 						currentDialogItem.blocking);
 			initDialogItemPresenter();
 		}

@@ -43,9 +43,6 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
-import com.qeevee.gqdefault.R;
-import com.qeevee.gqdefault.R.drawable;
-import com.qeevee.gqdefault.R.string;
 import com.qeevee.gq.commands.EndGame;
 import com.qeevee.gq.loc.Hotspot;
 import com.qeevee.gq.loc.HotspotManager;
@@ -53,6 +50,7 @@ import com.qeevee.gq.res.ResourceManager;
 import com.qeevee.gq.res.ResourceManager.ResourceType;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.ui.InteractionBlocker;
+import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.StringTools;
 
@@ -734,7 +732,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	 *            file has been played completely.
 	 * @return false if player could not start for some reason.
 	 */
-	public static boolean playAudio(String path, boolean blocking) {
+	public static boolean playAudio(String path, boolean loop, boolean blocking) {
 		stopAudio();
 		mPlayer = new MediaPlayer();
 		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -742,6 +740,7 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 			mPlayer.setDataSource(ResourceManager.getResourcePath(path,
 					ResourceType.AUDIO));
 			mPlayer.prepare();
+			mPlayer.setLooping(loop);
 			mPlayer.start();
 			if (blocking)
 				blockInteractionOnCurrentActivityByMediaPlayer();
