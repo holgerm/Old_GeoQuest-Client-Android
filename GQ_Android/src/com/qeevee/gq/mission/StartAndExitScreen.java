@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class StartAndExitScreen extends MissionActivity {
 	private static final String TAG = StartAndExitScreen.class
 			.getCanonicalName();
 	private ImageView imageView;
-	private boolean endByTouch = false;
+	private boolean endByTimer = true;
 
 	private List<Rule> onTapRules = new ArrayList<Rule>();
 	private boolean onTapRulesLeaveMission = false;
@@ -68,40 +69,82 @@ public class StartAndExitScreen extends MissionActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.m_default_startscreen);
 
-		imageView = (ImageView) findViewById(R.id.startimage);
+		imageView = (ImageView) findViewById(R.id.canvas);
 		outerView = (View) findViewById(R.id.outerview);
 
-		readDurationAttribute();
-		handleImageAttributes();
+		int animationDuration = handleImageAttributes();
+		handleDurationAttribute(animationDuration);
 
 		initOnTap();
 
-		if (!endByTouch && myCountDownTimer != null)
+		if (endByTimer && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
-	private void readDurationAttribute() {
+	private void handleDurationAttribute(int animationDuration) {
+		long durationLong;
 		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
-		if (duration == null)
-			duration = "5000";
-		if (duration.equals("interactive")) {
-			endByTouch = true;
-			imageView.setOnClickListener(new OnClickListener() {
 
-				public void onClick(View v) {
-					finish(Globals.STATUS_SUCCEEDED);
+		// Is it a number?
+		try {
+			durationLong = Long.parseLong(duration);
+			// CASE 1: number was explicitly given or by default.
+			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+			return;
+		} catch (NumberFormatException nfe) {
+			if (!duration.equals("interactive")
+					&& !duration.equals("animation")) {
+				// if attribute does NOT contain a valid value we rescue to
+				// default:
+				duration = getString(R.string.startAndExitScreen_duration_default);
+				Log.w(TAG, "Specified value for duration is not set correct: "
+						+ duration + ". We rescue to default value.");
+				try {
+					durationLong = Long.parseLong(duration);
+					// CASE 2: we rescued to default value and got a number:
+					myCountDownTimer = new MyCountDownTimer(durationLong,
+							durationLong);
+					return;
+				} catch (NumberFormatException nfe2) {
+					// we rescued to default value and got a string - we assume
+					// it is correct (checked by tests).
 				}
-			});
+			}
+		}
+
+		if (duration.equals("interactive")) {
+			// CASE 3: interactive set either in attribute or default:
+			setEndInteractive();
 			return;
 		}
-		if (duration.equals("animation"))
-			return; // TODO: implement
 
-		// else:
-		long durationLong = Long.parseLong(duration);
-		myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+		if (duration.equals("animation")) {
+			boolean loop = (Boolean) XMLUtilities.getBooleanAttribute("loop",
+					R.string.animation_loop_default, mission.xmlMissionNode);
+			if (!loop) {
+				// CASE 4: animation set with single shot:
+				myCountDownTimer = new MyCountDownTimer(animationDuration,
+						animationDuration);
+				return;
+			} else {
+				// CASE 4: animation set with loop, so we act as interactive had
+				// been set:
+				setEndInteractive();
+				return;
+			}
+		}
+	}
+
+	private void setEndInteractive() {
+		endByTimer = false;
+		imageView.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				finish(Globals.STATUS_SUCCEEDED);
+			}
+		});
 	}
 
 	private void initOnTap() {
@@ -139,7 +182,7 @@ public class StartAndExitScreen extends MissionActivity {
 		}
 	}
 
-	private void handleImageAttributes() {
+	private int handleImageAttributes() {
 		String pathToImage = ((String) XMLUtilities.getStringAttribute("image",
 				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
 				.trim();
@@ -148,10 +191,10 @@ public class StartAndExitScreen extends MissionActivity {
 					R.string.animation_loop_default, mission.xmlMissionNode);
 			int framerate = (Integer) XMLUtilities.getIntegerAttribute("fps",
 					R.string.animation_fps_default, mission.xmlMissionNode);
-			// TODO framerate
-			setupAnimation(pathToImage, framerate, loop);
+			return setupAnimation(pathToImage, framerate, loop);
 		} else {
 			setupImage(pathToImage);
+			return 0;
 		}
 	}
 
@@ -159,8 +202,12 @@ public class StartAndExitScreen extends MissionActivity {
 	 * Erases all files in the cache dir.
 	 * 
 	 * @param pathToAnimationArchive
+	 * @param framerate
+	 * @param loop
+	 * @return number of milliseconds this animation will take to run through
+	 *         one time.
 	 */
-	private void setupAnimation(String pathToAnimationArchive, int framerate,
+	private int setupAnimation(String pathToAnimationArchive, int framerate,
 			boolean loop) {
 		File animationArchiveFile = new File(GeoQuestApp.getRunningGameDir(),
 				pathToAnimationArchive);
@@ -177,7 +224,6 @@ public class StartAndExitScreen extends MissionActivity {
 			public boolean accept(File dir, String filename) {
 				return (filename.endsWith(".jpg") || filename.endsWith(".png") || filename
 						.endsWith(".gif"));
-				// TODO extract as boolean function to some util class
 			}
 		});
 
@@ -187,7 +233,8 @@ public class StartAndExitScreen extends MissionActivity {
 		for (int i = 0; i < frameFileNames.length; i++) {
 			frameFile = animationCacheDir.getAbsolutePath() + "/"
 					+ frameFileNames[i];
-			animD.addFrame(new BitmapDrawable(frameFile), 1000 / framerate);
+			animD.addFrame(new BitmapDrawable(getResources(), frameFile),
+					1000 / framerate);
 		}
 
 		imageView.setBackgroundDrawable(animD);
@@ -195,6 +242,8 @@ public class StartAndExitScreen extends MissionActivity {
 		animD.setOneShot(!loop);
 		animD.stop();
 		animD.start();
+
+		return framerate * animD.getNumberOfFrames();
 	}
 
 	private void setupImage(String pathToImage) {
@@ -228,7 +277,7 @@ public class StartAndExitScreen extends MissionActivity {
 			return;
 		}
 		handleImageAttributes();
-		if (!endByTouch && myCountDownTimer != null)
+		if (endByTimer && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
@@ -242,6 +291,7 @@ public class StartAndExitScreen extends MissionActivity {
 	public class MyCountDownTimer extends CountDownTimer {
 		public MyCountDownTimer(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
+			endByTimer = true;
 		}
 
 		@Override
@@ -267,6 +317,29 @@ public class StartAndExitScreen extends MissionActivity {
 	@Override
 	public void finish() {
 		// GeoQuestApp.recycleImagesFromView(imageView);
+		Drawable drawable = imageView.getBackground();
+		if (!(drawable instanceof AnimationDrawable)) {
+			// TODO release Bitmap
+		}
+
+		AnimationDrawable anim = (AnimationDrawable) drawable;
+
+		anim.stop();
+		for (int i = 0; i < anim.getNumberOfFrames(); ++i) {
+			Drawable frame = anim.getFrame(i);
+			if (frame instanceof BitmapDrawable) {
+				Bitmap bmp = ((BitmapDrawable) frame).getBitmap();
+				if (bmp != null && !bmp.isRecycled()) {
+					bmp.recycle();
+					bmp = null;
+				}
+			}
+			frame.setCallback(null);
+			frame = null;
+		}
+		anim.setCallback(null);
+		//		System.gc();
+
 		super.finish();
 	}
 
