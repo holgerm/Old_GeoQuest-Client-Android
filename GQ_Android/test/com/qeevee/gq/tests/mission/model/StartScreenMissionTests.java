@@ -5,6 +5,7 @@ import static com.qeevee.gq.tests.util.TestUtils.prepareMission;
 import static com.qeevee.gq.tests.util.TestUtils.startGameForTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.history.History;
 import com.qeevee.gq.mission.MissionActivity;
@@ -22,7 +24,7 @@ import com.qeevee.gq.mission.StartAndExitScreen;
 import com.qeevee.gq.start.LandingScreen;
 import com.qeevee.gq.tests.robolectric.GQTestRunner;
 import com.qeevee.gq.tests.util.TestUtils;
-
+import com.qeevee.gqdefault.R;
 
 @RunWith(GQTestRunner.class)
 public class StartScreenMissionTests {
@@ -71,7 +73,30 @@ public class StartScreenMissionTests {
 		assertEquals(4.0, Variables.getValue("nrOfTaps"));
 	}
 
+	@Test
+	public void checkDurationDefaultValue() {
+		// GIVEN:
+		TestUtils.startApp();
+
+		// WHEN:
+		CharSequence durationDefault = GeoQuestApp.getInstance().getText(
+				R.string.startAndExitScreen_duration_default);
+
+		// THEN:
+		shouldBeValidDurationValue(durationDefault);
+	}
+
 	// === HELPER METHODS FOLLOW =============================================
+
+	private void shouldBeValidDurationValue(CharSequence durationDefault) {
+		try {
+			Long.parseLong((String) durationDefault);
+		} catch (NumberFormatException nfe) {
+			if (!durationDefault.equals("interactive")
+					&& !durationDefault.equals("animation"))
+				fail();
+		}
+	}
 
 	private void startMission(MissionActivity mission) {
 		mission.onCreate(null);
