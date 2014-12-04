@@ -24,14 +24,12 @@ import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
-import com.qeevee.gq.start.GameDataManager;
 import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.util.FileOperations;
 
 public class StartAndExitScreen extends MissionActivity {
 
@@ -209,16 +207,13 @@ public class StartAndExitScreen extends MissionActivity {
 	 */
 	private int setupAnimation(String pathToAnimationArchive, int framerate,
 			boolean loop) {
-		File animationArchiveFile = new File(GeoQuestApp.getRunningGameDir(),
-				pathToAnimationArchive);
-		File animationCacheDir = new File(getCacheDir(), "anim");
-		if (animationCacheDir.exists())
-			FileOperations.cleanDirectory(animationCacheDir);
-		String cacheDirPath = animationCacheDir.getAbsolutePath();
-		GameDataManager.unzipFile(animationArchiveFile, cacheDirPath);
+		String animationFolderName = pathToAnimationArchive.substring(0,
+				pathToAnimationArchive.length() - ".zip".length());
+		File animationDirPath = new File(GeoQuestApp.getRunningGameDir(),
+				animationFolderName);
 
 		// prepare image files for iteration:
-		String[] frameFileNames = animationCacheDir.list(new FilenameFilter() {
+		String[] frameFileNames = animationDirPath.list(new FilenameFilter() {
 
 			@Override
 			public boolean accept(File dir, String filename) {
@@ -235,12 +230,16 @@ public class StartAndExitScreen extends MissionActivity {
 		// TODO setup animation drawable and start the animation
 		AnimationDrawable animD = new AnimationDrawable();
 		String frameFile;
+		int durationPerFrame = 1000 / framerate;
+		long before = System.currentTimeMillis();
 		for (int i = 0; i < frameFileNames.length; i++) {
-			frameFile = animationCacheDir.getAbsolutePath() + "/"
+			frameFile = animationDirPath.getAbsolutePath() + "/"
 					+ frameFileNames[i];
 			animD.addFrame(new BitmapDrawable(getResources(), frameFile),
-					1000 / framerate);
+					durationPerFrame);
 		}
+		Log.i(TAG, "anim loading with " + frameFileNames.length
+				+ " frames took (ms): " + (System.currentTimeMillis() - before));
 
 		imageView.setBackgroundDrawable(animD);
 
@@ -330,6 +329,7 @@ public class StartAndExitScreen extends MissionActivity {
 
 		AnimationDrawable anim = (AnimationDrawable) drawable;
 
+		long before = System.currentTimeMillis();
 		Bitmap[] tmpBMPs = new Bitmap[anim.getNumberOfFrames()];
 
 		for (int i = 0; i < anim.getNumberOfFrames(); ++i) {
@@ -340,6 +340,8 @@ public class StartAndExitScreen extends MissionActivity {
 				frame = null;
 			}
 		}
+		Log.i(TAG, "anim cleaning with " + anim.getNumberOfFrames()
+				+ " frames took (ms): " + (System.currentTimeMillis() - before));
 
 		imageView.setBackgroundDrawable(new BitmapDrawable(GeoQuestApp
 				.getInstance().getMissingBitmap())); // TEStweise eingesetzt
