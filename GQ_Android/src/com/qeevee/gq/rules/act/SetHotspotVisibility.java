@@ -10,7 +10,8 @@ public class SetHotspotVisibility extends Action {
 
 	@Override
 	protected boolean checkInitialization() {
-		return params.containsKey("id") && params.containsKey("visible");
+		return params.containsKey("id")
+				&& (params.containsKey("visible") || params.containsKey("mode"));
 	}
 
 	@Override
@@ -19,7 +20,9 @@ public class SetHotspotVisibility extends Action {
 				params.get("id"));
 		if (hotspot == null)
 			return;
-		hotspot.setVisible(stringToBool(params.get("mode")));
+		boolean newVisbility = stringToBool(params.get("mode"))
+				|| stringToBool(params.get("visible"));
+		hotspot.setVisible(newVisbility);
 
 		GeoQuestApp.getInstance().refreshMapDisplay();
 	}
