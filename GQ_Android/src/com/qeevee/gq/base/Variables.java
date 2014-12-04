@@ -184,6 +184,10 @@ public class Variables {
 	 */
 	public static void registerMissionResult(String missionID, String result) {
 		Variables.setValue(MISSION_PREFIX + missionID + RESULT_SUFFIX, result);
+		Variables.setValue(SYSTEM_PREFIX + missionID + RESULT_SUFFIX, result); // TODO
+																				// supporting
+																				// old
+																				// version.
 	}
 
 	public static String getMissionStateVarName(String id) {
