@@ -227,6 +227,11 @@ public class StartAndExitScreen extends MissionActivity {
 			}
 		});
 
+		imageView.setBackgroundDrawable(new BitmapDrawable(GeoQuestApp
+				.getInstance().getMissingBitmap())); // TEStweise eingesetzt
+														// (ersetzen durch
+														// loading screen)
+
 		// TODO setup animation drawable and start the animation
 		AnimationDrawable animD = new AnimationDrawable();
 		String frameFile;
@@ -319,28 +324,38 @@ public class StartAndExitScreen extends MissionActivity {
 		// GeoQuestApp.recycleImagesFromView(imageView);
 		Drawable drawable = imageView.getBackground();
 		if (!(drawable instanceof AnimationDrawable)) {
-			// TODO release Bitmap
+			super.finish();
+			return;
 		}
 
 		AnimationDrawable anim = (AnimationDrawable) drawable;
 
-		anim.stop();
+		Bitmap[] tmpBMPs = new Bitmap[anim.getNumberOfFrames()];
+
 		for (int i = 0; i < anim.getNumberOfFrames(); ++i) {
 			Drawable frame = anim.getFrame(i);
 			if (frame instanceof BitmapDrawable) {
-				Bitmap bmp = ((BitmapDrawable) frame).getBitmap();
-				if (bmp != null && !bmp.isRecycled()) {
-					bmp.recycle();
-					bmp = null;
-				}
+				tmpBMPs[i] = ((BitmapDrawable) frame).getBitmap();
+				frame.setCallback(null);
+				frame = null;
 			}
-			frame.setCallback(null);
-			frame = null;
 		}
+
+		imageView.setBackgroundDrawable(new BitmapDrawable(GeoQuestApp
+				.getInstance().getMissingBitmap())); // TEStweise eingesetzt
+		anim.stop();
 		anim.setCallback(null);
-		//		System.gc();
+		anim = null;
+		for (int i = 0; i < tmpBMPs.length; i++) {
+			if (tmpBMPs[i] != null && !tmpBMPs[i].isRecycled()) {
+				tmpBMPs[i].recycle();
+				tmpBMPs[i] = null;
+			}
+
+		}
+
+		System.gc();
 
 		super.finish();
 	}
-
 }
