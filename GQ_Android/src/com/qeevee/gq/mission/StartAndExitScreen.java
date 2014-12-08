@@ -26,6 +26,7 @@ import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
+import com.qeevee.gq.ui.anim.AnimationSurfaceView;
 import com.qeevee.gq.xml.XMLUtilities;
 import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
@@ -35,7 +36,7 @@ public class StartAndExitScreen extends MissionActivity {
 
 	private static final String TAG = StartAndExitScreen.class
 			.getCanonicalName();
-	private ImageView imageView;
+	private View fullscreenView;
 	private boolean endByTimer = true;
 
 	private List<Rule> onTapRules = new ArrayList<Rule>();
@@ -60,14 +61,29 @@ public class StartAndExitScreen extends MissionActivity {
 
 	/** countdowntimer for the start countdown */
 	private MyCountDownTimer myCountDownTimer;
+	private String pathToImage;
+	private boolean isUsingAnimation;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.m_default_startscreen);
 
-		imageView = (ImageView) findViewById(R.id.canvas);
+		pathToImage = ((String) XMLUtilities.getStringAttribute("image",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
+				.trim();
+
+		isUsingAnimation = pathToImage.endsWith(".zip");
+
+		// if (isUsingAnimation)
+		// setContentView(R.layout.m_default_animated_full_screen);
+		// else
+		setContentView(R.layout.m_default_image_fullscreen);
+
+		fullscreenView = findViewById(R.id.canvas);
+
+		// TODO in zwei Seitentypen trennen!
+
 		outerView = (View) findViewById(R.id.outerview);
 
 		int animationDuration = handleImageAttributes();
@@ -137,7 +153,8 @@ public class StartAndExitScreen extends MissionActivity {
 
 	private void setEndInteractive() {
 		endByTimer = false;
-		imageView.setOnClickListener(new OnClickListener() {
+		// TODO split in case of surafce view for animation
+		fullscreenView.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				finish(Globals.STATUS_SUCCEEDED);
@@ -151,7 +168,7 @@ public class StartAndExitScreen extends MissionActivity {
 		if (onTapRules.size() == 0)
 			return;
 		else {
-			imageView.setOnTouchListener(new OnTouchListener() {
+			fullscreenView.setOnTouchListener(new OnTouchListener() {
 
 				public boolean onTouch(View v, MotionEvent event) {
 
@@ -167,9 +184,12 @@ public class StartAndExitScreen extends MissionActivity {
 					Variables.setValue(Variables.LAST_TAP_X, (double) x);
 					Variables.setValue(Variables.LAST_TAP_Y, (double) y);
 
+					v.performClick();
+
 					applyOnTapRules();
 					return false;
 				}
+
 			});
 			for (Rule rule : onTapRules) {
 				if (rule.leavesMission()) {
@@ -181,9 +201,6 @@ public class StartAndExitScreen extends MissionActivity {
 	}
 
 	private int handleImageAttributes() {
-		String pathToImage = ((String) XMLUtilities.getStringAttribute("image",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
-				.trim();
 		if (pathToImage.endsWith(".zip")) {
 			boolean loop = (Boolean) XMLUtilities.getBooleanAttribute("loop",
 					R.string.animation_loop_default, mission.xmlMissionNode);
@@ -194,6 +211,20 @@ public class StartAndExitScreen extends MissionActivity {
 			setupImage(pathToImage);
 			return 0;
 		}
+	}
+
+	/**
+	 * @param pathToAnimationArchive
+	 * @param framerate
+	 * @param loop
+	 * @return number of milliseconds this animation will take to run through
+	 *         one time.
+	 */
+	private int setupAnimationNew(String pathToAnimationArchive, int framerate,
+			boolean loop) {
+		((AnimationSurfaceView) fullscreenView).init(this,
+				pathToAnimationArchive, framerate, loop);
+		return ((AnimationSurfaceView) fullscreenView).getNrOfFrames();
 	}
 
 	/**
@@ -222,10 +253,11 @@ public class StartAndExitScreen extends MissionActivity {
 			}
 		});
 
-		imageView.setBackgroundDrawable(new BitmapDrawable(GeoQuestApp
-				.getInstance().getMissingBitmap())); // TEStweise eingesetzt
-														// (ersetzen durch
-														// loading screen)
+		((ImageView) fullscreenView).setBackgroundDrawable(new BitmapDrawable(
+				GeoQuestApp.getInstance().getMissingBitmap())); // TEStweise
+																// eingesetzt
+		// (ersetzen durch
+		// loading screen)
 
 		// TODO setup animation drawable and start the animation
 		AnimationDrawable animD = new AnimationDrawable();
@@ -241,7 +273,7 @@ public class StartAndExitScreen extends MissionActivity {
 		Log.i(TAG, "anim loading with " + frameFileNames.length
 				+ " frames took (ms): " + (System.currentTimeMillis() - before));
 
-		imageView.setBackgroundDrawable(animD);
+		((ImageView) fullscreenView).setBackgroundDrawable(animD);
 
 		animD.setOneShot(!loop);
 		animD.stop();
@@ -258,12 +290,12 @@ public class StartAndExitScreen extends MissionActivity {
 					Device.getDisplayWidth() - (2 * margin),
 					Device.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
-				imageView.setImageBitmap(bitmap);
+				((ImageView) fullscreenView).setImageBitmap(bitmap);
 			} else {
 				Log.e(TAG, "Bitmap file invalid: " + pathToImage);
 			}
 		} catch (IllegalArgumentException iae) {
-			imageView.setVisibility(View.GONE);
+			((ImageView) fullscreenView).setVisibility(View.GONE);
 		}
 	}
 
@@ -321,7 +353,7 @@ public class StartAndExitScreen extends MissionActivity {
 	@Override
 	public void finish() {
 		// GeoQuestApp.recycleImagesFromView(imageView);
-		Drawable drawable = imageView.getBackground();
+		Drawable drawable = fullscreenView.getBackground();
 		if (!(drawable instanceof AnimationDrawable)) {
 			super.finish();
 			return;
@@ -343,8 +375,9 @@ public class StartAndExitScreen extends MissionActivity {
 		Log.i(TAG, "anim cleaning with " + anim.getNumberOfFrames()
 				+ " frames took (ms): " + (System.currentTimeMillis() - before));
 
-		imageView.setBackgroundDrawable(new BitmapDrawable(GeoQuestApp
-				.getInstance().getMissingBitmap())); // TEStweise eingesetzt
+		((ImageView) fullscreenView).setBackgroundDrawable(new BitmapDrawable(
+				GeoQuestApp.getInstance().getMissingBitmap())); // TEStweise
+																// eingesetzt
 		anim.stop();
 		anim.setCallback(null);
 		anim = null;

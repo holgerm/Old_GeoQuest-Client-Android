@@ -100,7 +100,7 @@ public class StartScreenMissionTests {
 
 	private void startMission(MissionActivity mission) {
 		mission.onCreate(null);
-		imageView = (View) getFieldValue(mission, "imageView");
+		imageView = (View) getFieldValue(mission, "fullscreenView");
 	}
 
 	private void performTouch(float x, float y) {
