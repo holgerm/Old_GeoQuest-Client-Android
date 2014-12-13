@@ -1,10 +1,15 @@
 package com.qeevee.gq.mission;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -21,17 +26,18 @@ import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.rules.Rule;
 import com.qeevee.gq.ui.ScreenArea;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
+import com.qeevee.gq.ui.anim.AnimationSurfaceView;
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqdefault.R;
 
 public class StartAndExitScreen extends MissionActivity {
 
 	private static final String TAG = StartAndExitScreen.class
 			.getCanonicalName();
-	private ImageView imageView;
-	private boolean endByTouch = false;
+	private View fullscreenView;
+	private boolean endByTimer = true;
 
 	private List<Rule> onTapRules = new ArrayList<Rule>();
 	private boolean onTapRulesLeaveMission = false;
@@ -55,49 +61,105 @@ public class StartAndExitScreen extends MissionActivity {
 
 	/** countdowntimer for the start countdown */
 	private MyCountDownTimer myCountDownTimer;
+	private String pathToImage;
+	private boolean isUsingAnimation;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.m_default_startscreen);
 
-		imageView = (ImageView) findViewById(R.id.startimage);
+		pathToImage = ((String) XMLUtilities.getStringAttribute("image",
+				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode))
+				.trim();
+
+		isUsingAnimation = pathToImage.endsWith(".zip");
+
+		// if (isUsingAnimation)
+		// setContentView(R.layout.m_default_animated_full_screen);
+		// else
+		setContentView(R.layout.m_default_image_fullscreen);
+
+		fullscreenView = findViewById(R.id.canvas);
+
+		// TODO in zwei Seitentypen trennen!
+
 		outerView = (View) findViewById(R.id.outerview);
 
-		readDurationAttribute();
-		setImage();
+		int animationDuration = handleImageAttributes();
+		handleDurationAttribute(animationDuration);
 
 		initOnTap();
 
-		if (!endByTouch)
+		if (endByTimer && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
-	private void readDurationAttribute() {
+	private void handleDurationAttribute(int animationDuration) {
+		long durationLong;
 		String duration = (String) XMLUtilities.getStringAttribute("duration",
 				R.string.startAndExitScreen_duration_default,
 				mission.xmlMissionNode);
-		if (duration != null && duration.equals("interactive")) {
-			endByTouch = true;
-			imageView.setOnClickListener(new OnClickListener() {
 
-				public void onClick(View v) {
-					finish(Globals.STATUS_SUCCEEDED);
+		// Is it a number?
+		try {
+			durationLong = Long.parseLong(duration);
+			// CASE 1: number was explicitly given or by default.
+			myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+			return;
+		} catch (NumberFormatException nfe) {
+			if (!duration.equals("interactive")
+					&& !duration.equals("animation")) {
+				// if attribute does NOT contain a valid value we rescue to
+				// default:
+				duration = getString(R.string.startAndExitScreen_duration_default);
+				Log.w(TAG, "Specified value for duration is not set correct: "
+						+ duration + ". We rescue to default value.");
+				try {
+					durationLong = Long.parseLong(duration);
+					// CASE 2: we rescued to default value and got a number:
+					myCountDownTimer = new MyCountDownTimer(durationLong,
+							durationLong);
+					return;
+				} catch (NumberFormatException nfe2) {
+					// we rescued to default value and got a string - we assume
+					// it is correct (checked by tests).
 				}
-			});
+			}
+		}
+
+		if (duration.equals("interactive")) {
+			// CASE 3: interactive set either in attribute or default:
+			setEndInteractive();
 			return;
 		}
-		if (duration != null && duration.equals("infinite"))
-			return;
 
-		// else:
-		long durationLong;
-		if (duration == null)
-			durationLong = 5000;
-		else
-			durationLong = Long.parseLong(duration);
-		myCountDownTimer = new MyCountDownTimer(durationLong, durationLong);
+		if (duration.equals("animation")) {
+			boolean loop = (Boolean) XMLUtilities.getBooleanAttribute("loop",
+					R.string.animation_loop_default, mission.xmlMissionNode);
+			if (!loop) {
+				// CASE 4: animation set with single shot:
+				myCountDownTimer = new MyCountDownTimer(animationDuration,
+						animationDuration);
+				return;
+			} else {
+				// CASE 4: animation set with loop, so we act as interactive had
+				// been set:
+				setEndInteractive();
+				return;
+			}
+		}
+	}
+
+	private void setEndInteractive() {
+		endByTimer = false;
+		// TODO split in case of surafce view for animation
+		fullscreenView.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				finish(Globals.STATUS_SUCCEEDED);
+			}
+		});
 	}
 
 	private void initOnTap() {
@@ -106,7 +168,7 @@ public class StartAndExitScreen extends MissionActivity {
 		if (onTapRules.size() == 0)
 			return;
 		else {
-			imageView.setOnTouchListener(new OnTouchListener() {
+			fullscreenView.setOnTouchListener(new OnTouchListener() {
 
 				public boolean onTouch(View v, MotionEvent event) {
 
@@ -122,9 +184,12 @@ public class StartAndExitScreen extends MissionActivity {
 					Variables.setValue(Variables.LAST_TAP_X, (double) x);
 					Variables.setValue(Variables.LAST_TAP_Y, (double) y);
 
+					v.performClick();
+
 					applyOnTapRules();
 					return false;
 				}
+
 			});
 			for (Rule rule : onTapRules) {
 				if (rule.leavesMission()) {
@@ -135,9 +200,89 @@ public class StartAndExitScreen extends MissionActivity {
 		}
 	}
 
-	private void setImage() {
-		String pathToImage = (String) XMLUtilities.getStringAttribute("image",
-				XMLUtilities.OPTIONAL_ATTRIBUTE, mission.xmlMissionNode);
+	private int handleImageAttributes() {
+		if (pathToImage.endsWith(".zip")) {
+			boolean loop = (Boolean) XMLUtilities.getBooleanAttribute("loop",
+					R.string.animation_loop_default, mission.xmlMissionNode);
+			int framerate = (Integer) XMLUtilities.getIntegerAttribute("fps",
+					R.string.animation_fps_default, mission.xmlMissionNode);
+			return setupAnimation(pathToImage, framerate, loop);
+		} else {
+			setupImage(pathToImage);
+			return 0;
+		}
+	}
+
+	/**
+	 * @param pathToAnimationArchive
+	 * @param framerate
+	 * @param loop
+	 * @return number of milliseconds this animation will take to run through
+	 *         one time.
+	 */
+	private int setupAnimationNew(String pathToAnimationArchive, int framerate,
+			boolean loop) {
+		((AnimationSurfaceView) fullscreenView).init(this,
+				pathToAnimationArchive, framerate, loop);
+		return ((AnimationSurfaceView) fullscreenView).getNrOfFrames();
+	}
+
+	/**
+	 * Erases all files in the cache dir.
+	 * 
+	 * @param pathToAnimationArchive
+	 * @param framerate
+	 * @param loop
+	 * @return number of milliseconds this animation will take to run through
+	 *         one time.
+	 */
+	private int setupAnimation(String pathToAnimationArchive, int framerate,
+			boolean loop) {
+		String animationFolderName = pathToAnimationArchive.substring(0,
+				pathToAnimationArchive.length() - ".zip".length());
+		File animationDirPath = new File(GeoQuestApp.getRunningGameDir(),
+				animationFolderName);
+
+		// prepare image files for iteration:
+		String[] frameFileNames = animationDirPath.list(new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String filename) {
+				return (filename.endsWith(".jpg") || filename.endsWith(".png") || filename
+						.endsWith(".gif"));
+			}
+		});
+
+		((ImageView) fullscreenView).setBackgroundDrawable(new BitmapDrawable(
+				GeoQuestApp.getInstance().getMissingBitmap())); // TEStweise
+																// eingesetzt
+		// (ersetzen durch
+		// loading screen)
+
+		// TODO setup animation drawable and start the animation
+		AnimationDrawable animD = new AnimationDrawable();
+		String frameFile;
+		int durationPerFrame = 1000 / framerate;
+		long before = System.currentTimeMillis();
+		for (int i = 0; i < frameFileNames.length; i++) {
+			frameFile = animationDirPath.getAbsolutePath() + "/"
+					+ frameFileNames[i];
+			animD.addFrame(new BitmapDrawable(getResources(), frameFile),
+					durationPerFrame);
+		}
+		Log.i(TAG, "anim loading with " + frameFileNames.length
+				+ " frames took (ms): " + (System.currentTimeMillis() - before));
+
+		((ImageView) fullscreenView).setBackgroundDrawable(animD);
+
+		animD.setOneShot(!loop);
+		animD.stop();
+		animD.start();
+
+		return framerate * animD.getNumberOfFrames();
+	}
+
+	private void setupImage(String pathToImage) {
 		try {
 			int margin = GeoQuestApp.getContext().getResources()
 					.getDimensionPixelSize(R.dimen.margin);
@@ -145,12 +290,12 @@ public class StartAndExitScreen extends MissionActivity {
 					Device.getDisplayWidth() - (2 * margin),
 					Device.getDisplayHeight() - (2 * margin), true);
 			if (bitmap != null) {
-				imageView.setImageBitmap(bitmap);
+				((ImageView) fullscreenView).setImageBitmap(bitmap);
 			} else {
 				Log.e(TAG, "Bitmap file invalid: " + pathToImage);
 			}
 		} catch (IllegalArgumentException iae) {
-			imageView.setVisibility(View.GONE);
+			((ImageView) fullscreenView).setVisibility(View.GONE);
 		}
 	}
 
@@ -167,8 +312,8 @@ public class StartAndExitScreen extends MissionActivity {
 		if (!hasFocus) {
 			return;
 		}
-		setImage();
-		if (!endByTouch)
+		handleImageAttributes();
+		if (endByTimer && myCountDownTimer != null)
 			myCountDownTimer.start();
 	}
 
@@ -182,6 +327,7 @@ public class StartAndExitScreen extends MissionActivity {
 	public class MyCountDownTimer extends CountDownTimer {
 		public MyCountDownTimer(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
+			endByTimer = true;
 		}
 
 		@Override
@@ -207,7 +353,44 @@ public class StartAndExitScreen extends MissionActivity {
 	@Override
 	public void finish() {
 		// GeoQuestApp.recycleImagesFromView(imageView);
+		Drawable drawable = fullscreenView.getBackground();
+		if (!(drawable instanceof AnimationDrawable)) {
+			super.finish();
+			return;
+		}
+
+		AnimationDrawable anim = (AnimationDrawable) drawable;
+
+		long before = System.currentTimeMillis();
+		Bitmap[] tmpBMPs = new Bitmap[anim.getNumberOfFrames()];
+
+		for (int i = 0; i < anim.getNumberOfFrames(); ++i) {
+			Drawable frame = anim.getFrame(i);
+			if (frame instanceof BitmapDrawable) {
+				tmpBMPs[i] = ((BitmapDrawable) frame).getBitmap();
+				frame.setCallback(null);
+				frame = null;
+			}
+		}
+		Log.i(TAG, "anim cleaning with " + anim.getNumberOfFrames()
+				+ " frames took (ms): " + (System.currentTimeMillis() - before));
+
+		((ImageView) fullscreenView).setBackgroundDrawable(new BitmapDrawable(
+				GeoQuestApp.getInstance().getMissingBitmap())); // TEStweise
+																// eingesetzt
+		anim.stop();
+		anim.setCallback(null);
+		anim = null;
+		for (int i = 0; i < tmpBMPs.length; i++) {
+			if (tmpBMPs[i] != null && !tmpBMPs[i].isRecycled()) {
+				tmpBMPs[i].recycle();
+				tmpBMPs[i] = null;
+			}
+
+		}
+
+		System.gc();
+
 		super.finish();
 	}
-
 }

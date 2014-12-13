@@ -33,7 +33,11 @@
 
     <!-- HOTSPOTS -->
     <string name="hotspot_default_activity">true</string>
-
+    
+    <!-- Animations -->
+    <string name="animation_loop_default">true</string>
+    <string name="animation_fps_default">true</string>
+    
     <!-- Menu Items -->
     <string name="menuItem_showState_default">if_room</string>
     

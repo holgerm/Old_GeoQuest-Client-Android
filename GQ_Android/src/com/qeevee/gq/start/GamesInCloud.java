@@ -1,6 +1,8 @@
 package com.qeevee.gq.start;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -14,10 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestActivity;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.HostConnector;
+import com.qeevee.gqdefault.R;
 
 public class GamesInCloud extends GeoQuestActivity {
 
@@ -79,6 +81,16 @@ public class GamesInCloud extends GeoQuestActivity {
 
 		@Override
 		protected void onPostExecute(List<GameDescription> games) {
+
+			Collections.sort(games, new Comparator<GameDescription>() {
+				@Override
+				public int compare(GameDescription gameDescr1,
+						GameDescription gameDescr2) {
+
+					return gameDescr1.getName().compareTo(gameDescr2.getName());
+				}
+			});
+
 			GameListAdapter listAdapter = new GameListAdapter(
 					GamesInCloud.this, R.layout.list_item, games);
 

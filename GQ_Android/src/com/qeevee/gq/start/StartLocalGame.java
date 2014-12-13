@@ -1,6 +1,7 @@
 package com.qeevee.gq.start;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,8 +60,9 @@ public class StartLocalGame extends
 		Mission.documentRoot = document.getRootElement();
 		setGlobalMissionLayout();
 		GeoQuestApp.setRunningGameDir(gameXMLFile.getParentFile());
-		GeoQuestApp.setRunningGameID(Mission.documentRoot
-				.attributeValue("id"));
+		GeoQuestApp.setRunningGameID(Mission.documentRoot.attributeValue("id"));
+
+		unzipFilesIfNeeded(new File(gameXMLFile.getParentFile(), "files"));
 
 		firstMission = createMissions();
 		createHotspots(Mission.documentRoot);
@@ -70,6 +72,26 @@ public class StartLocalGame extends
 		GeoQuestApp.setImprint(new Imprint(Mission.documentRoot
 				.element("imprint")));
 		return true;
+	}
+
+	private void unzipFilesIfNeeded(File gameFilesDir) {
+		String[] zipFileNames = gameFilesDir.list(new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String filename) {
+				return filename.endsWith(".zip");
+			}
+		});
+
+		for (int i = 0; i < zipFileNames.length; i++) {
+			File zipFile = new File(gameFilesDir, zipFileNames[i]);
+			File targetDir = new File(gameFilesDir, zipFileNames[i].substring(
+					0, zipFileNames[i].length() - ".zip".length()));
+			targetDir.mkdir();
+			GameDataManager.unzipFile(zipFile, targetDir.getAbsolutePath());
+			zipFile.delete();
+		}
+
 	}
 
 	private void setGlobalMissionLayout() {

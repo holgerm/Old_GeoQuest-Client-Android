@@ -120,8 +120,12 @@ public class GameDataManager {
 		// TODO Publish progress
 		String newGameDirName = gameZipFile.getParent();
 
+		unzipFile(gameZipFile, newGameDirName);
+	}
+
+	public static void unzipFile(File archiveFile, String targetDir) {
 		try {
-			ZipFile zipFile = new ZipFile(gameZipFile);
+			ZipFile zipFile = new ZipFile(archiveFile);
 			ZipEntry zipEntry;
 			File entryFile;
 			FileOutputStream fos;
@@ -138,7 +142,7 @@ public class GameDataManager {
 						.startsWith("."))
 					continue;
 
-				entryFile = new File(newGameDirName + "/" + zipEntry.getName());
+				entryFile = new File(targetDir + "/" + zipEntry.getName());
 
 				// in case the entry is a directory:
 				if (zipEntryName.endsWith("/")) {
@@ -168,11 +172,11 @@ public class GameDataManager {
 			}
 		} catch (ZipException e) {
 			Log.d(DownloadGame.TAG, "ZipException creating zipfile from "
-					+ gameZipFile);
+					+ archiveFile);
 			e.printStackTrace();
 		} catch (IOException e) {
 			Log.d(DownloadGame.TAG, "IOException creating zipfile from "
-					+ gameZipFile);
+					+ archiveFile);
 			e.printStackTrace();
 		}
 	}
