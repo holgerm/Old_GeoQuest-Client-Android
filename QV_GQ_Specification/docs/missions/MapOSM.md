@@ -1,3 +1,5 @@
+CSS: github.css 
+
 # MapOSM #
 
 | Name | Meaning | Values | Default Value |

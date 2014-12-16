@@ -1,3 +1,5 @@
+CSS: github.css 
+
 Wenn du keine Template-Seite verwenden möchtest, bietet der GeoQuest-Webservice dir ein Standard Layout an.
 Du kannst ein eigenes Logo und eine eigene Farbgebung einstellen. In Zukunft werden noch weitere verschiedene vordefinierte Layouts angeboten werden.
 

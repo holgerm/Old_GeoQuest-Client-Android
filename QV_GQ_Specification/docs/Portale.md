@@ -1,3 +1,5 @@
+CSS: github.css 
+
 * [Standard Layouts](https://github.com/qeevee/GQ_Specification/wiki/Standard-Layouts)
 * [Template Seite](https://github.com/qeevee/GQ_Specification/wiki/Template-Seite)
 * [Mapping Datei](https://github.com/qeevee/GQ_Specification/wiki/Mapping-Datei)

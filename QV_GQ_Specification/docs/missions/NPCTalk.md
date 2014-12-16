@@ -1,3 +1,5 @@
+CSS: github.css 
+
 ## NPCTalk ##
 
 | Name | Meaning | Values | Default Value |
