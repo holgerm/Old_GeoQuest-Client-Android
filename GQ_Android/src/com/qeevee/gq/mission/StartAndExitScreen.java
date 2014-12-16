@@ -5,11 +5,13 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.qeevee.gq.base.GeoQuestApp;
@@ -85,6 +88,7 @@ public class StartAndExitScreen extends MissionActivity {
 		// TODO in zwei Seitentypen trennen!
 
 		outerView = (View) findViewById(R.id.outerview);
+		handleFullScreen();
 
 		int animationDuration = handleImageAttributes();
 		handleDurationAttribute(animationDuration);
@@ -93,6 +97,27 @@ public class StartAndExitScreen extends MissionActivity {
 
 		if (endByTimer && myCountDownTimer != null)
 			myCountDownTimer.start();
+	}
+
+	private void handleFullScreen() {
+		boolean fullScreen = ((Boolean) XMLUtilities.getBooleanAttribute(
+				"fullscreen", R.bool.startAndExitScreen_fullscreen_default,
+				mission.xmlMissionNode));
+		if (!fullScreen)
+			return; 
+		if (Build.VERSION.SDK_INT < 16) {
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		} else {
+			View decorView = getWindow().getDecorView();
+			// Hide the status bar.
+			int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+			decorView.setSystemUiVisibility(uiOptions);
+			// Remember that you should never show the action bar if the
+			// status bar is hidden, so hide that too if necessary.
+			ActionBar actionBar = getActionBar();
+			actionBar.hide();
+		}
 	}
 
 	private void handleDurationAttribute(int animationDuration) {

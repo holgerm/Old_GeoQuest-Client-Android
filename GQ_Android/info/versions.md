@@ -1,6 +1,11 @@
 # Versioning #
 
-## 0.9.4* ##
+## 0.9.5* ##
+
+- Image alignment in FullScreenImage pages enhanced; new attribute fullscreen introduced that can hide action and status bars;
+- image in FullScreenPage is now scaled to fill the screen but keep original aspect ratio.
+
+## 0.9.4 ##
 
 - Animation support for FullScreenImage page type (at work)
 - TagScanner mission introduced: covers QR Code
