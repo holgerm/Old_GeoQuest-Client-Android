@@ -1,3 +1,5 @@
+CSS: github.css 
+
 # Game Element - Global Attributes #
 
 The outer most xml element (game) contains global attributes.

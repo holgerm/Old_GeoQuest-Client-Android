@@ -1,3 +1,5 @@
+CSS: github.css 
+
 # Definition of GeoQuest Terms #
 
 ## Mission ##

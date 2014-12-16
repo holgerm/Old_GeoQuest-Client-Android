@@ -17,7 +17,8 @@
 
     <!-- StartAndExitScreen MISSION -->
     <string name="startAndExitScreen_duration_default">interactive</string>
-
+    <bool name="startAndExitScreen_fullscreen_default">true</bool>
+    
     <!-- QRTagReading MISSION -->
     <string name="qrtagreader_treasure_feedback">"@result@"</string>
 

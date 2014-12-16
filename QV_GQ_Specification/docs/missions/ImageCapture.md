@@ -1,3 +1,5 @@
+CSS: github.css 
+
 # ImageCapture #
 
 | Name | Meaning | Values | Default Value |
