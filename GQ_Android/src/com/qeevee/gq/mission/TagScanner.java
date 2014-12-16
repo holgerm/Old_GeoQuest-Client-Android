@@ -1,5 +1,10 @@
 package com.qeevee.gq.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.dom4j.Element;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -16,66 +21,24 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.gq.xml.XMLUtilities;
+import com.qeevee.gqdefault.R;
 import com.qeevee.ui.BitmapUtil;
 import com.qeevee.util.Device;
-import com.qeevee.gqdefault.R;
 
 /**
- * QR Tag Reading Mission.
- * 
- * The following modes are supported:
- * 
- * <ol>
- * <li>Finding a treasure (as text). Attributes must be:
- * <ul>
- * <li>{@code mode="treasure".} This is the default mode, if the {@code mode}
- * attribute is omitted.
- * <li>{@code initial_image} local path to an image that is shown before the
- * mission has been done.
- * <li>{@code if_right_image} local path to an image that is shown after the
- * treasure has been found (i.e. bar code has been scanned)
- * <li>The tag itself should then contain a simple text which is shown to the
- * player after he scanned the tag.. Later on images, links to a web page,
- * sound, or movies could be supported by a special formatted link within the
- * encoded text.
- * </ul>
- * <li>Finding a real world object (e.g. a book). Attributes must be:
- * <ul>
- * <li>{@code mode="product"},
- * <li>{@code initial_image} local path to an image that is shown before the
- * mission has been done.
- * <li>{@code expected_content} must contain the real products data,
- * <li>The Tag itself must encode the given product data in the given format.
- * <li>The attribute {@code if_wrong} may contain text that is shown to the
- * player when he scans a wrong tag. If not specified the generic resource
- * string {@code qrtagreader_product_ifwrong} is used.
- * <li>{@code if_wrong_image} local path to an image that is shown after a wrong
- * scan.
- * <li>The attribute {@code if_right} may contain text that is shown to the
- * player when he scans the right tag. If not specified the generic resource
- * string {@code qrtagreader_product_ifright} is used.
- * <li>{@code if_right_image} local path to an image that is shown after the
- * searched product has been found (i.e. the right bar code has been scanned)
- * </ul>
- * </ol>
- * 
- * Independent of the mode, the {@code taskdescription} attribute should contain
- * the descriptive text shown to the player before he plays the QR Tag Reading
- * mission. <br/>
- * <br/>
- * TODO: Add an optional image shown above the description text.
- * 
- * For details see wiki documentation page.
+ * Convenient Tag Scanner Class that represents QR Code Scanner as well as NFC
+ * Code Scanner.
  * 
  * @author Holger Muegge
  */
 
-public class QRTagReading extends InteractiveMission implements OnClickListener {
-	private static final String TAG = QRTagReading.class.getCanonicalName();
+public class TagScanner extends InteractiveMission implements OnClickListener {
+	private static final String TAG = TagScanner.class.getCanonicalName();
 
 	/** button to start the QRTag Reader */
 	private Button okButton;
@@ -85,14 +48,18 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 
 	private static final int START_SCAN = 1;
 	private static final int END_MISSION = 2;
-
 	private int buttonMode;
+
+	private static final int QRCODE = 1;
+	private static final int NFCCODE = 2;
+	private int mode;
 
 	private static final int TREASURE = 1;
 	private static final int PRODUCT = 2;
-	private int missionMode = TREASURE;
+	private int expectationMode = TREASURE;
 
-	private CharSequence expectedContent;
+	private List<CharSequence> expectedCodes;
+
 	private CharSequence ifWrongText;
 	private CharSequence ifRightText;
 	private CharSequence feedbackText;
@@ -103,7 +70,7 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.tag_scanner);
+		setContentView(R.layout.tag_scanner); // TODO TagScanner Layout machen
 
 		// init Start Scan Button at bottom:
 		okButton = (Button) findViewById(R.id.tagscanner_startbutton);
@@ -125,25 +92,25 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 		imageView = (ImageView) findViewById(R.id.qrImageView);
 		setImage("initial_image");
 
-		// init mode and dependent attributes:
-		String modeAsString = mission.xmlMissionNode.attributeValue("mode");
-		if (modeAsString == null
-				|| modeAsString
-						.equals("beliebiger Tag (mit Wenn-Dann-Bedingung)")
-				|| modeAsString.equals("treasure")) {
-			this.missionMode = TREASURE;
-			this.feedbackText = getMissionAttribute("feedbacktext",
-					R.string.qrtagreader_treasure_feedback);
-		} else if (modeAsString.equals("bestimmter Tag (mit onSuccess)")
-				|| modeAsString.equals("product")) {
-			this.missionMode = PRODUCT;
-			this.expectedContent = getMissionAttribute("expected_content",
-					XMLUtilities.NECESSARY_ATTRIBUTE);
-			this.ifRightText = getMissionAttribute("if_right",
-					R.string.qrtagreader_product_ifright);
-			this.ifWrongText = getMissionAttribute("if_wrong",
-					R.string.qrtagreader_product_ifwrong);
+		// init scan mode:
+		String modeS = mission.xmlMissionNode.attributeValue("mode");
+		this.mode = (modeS == null || modeS.equals("QR-Code")) ? QRCODE
+				: NFCCODE;
+
+		// init expectations:
+		expectedCodes = new ArrayList<CharSequence>();
+		for (Element elem : this.getMissionElements("expectedCode")) {
+			expectedCodes.add(elem.getText());
 		}
+		this.expectationMode = (expectedCodes.size() == 0) ? TREASURE : PRODUCT;
+
+		// init feedback:
+		this.feedbackText = getMissionAttribute("feedbacktext",
+				R.string.qrtagreader_treasure_feedback);
+		this.ifRightText = getMissionAttribute("if_right",
+				R.string.qrtagreader_product_ifright);
+		this.ifWrongText = getMissionAttribute("if_wrong",
+				R.string.qrtagreader_product_ifwrong);
 	}
 
 	private void setImage(String attributeName) {
@@ -176,14 +143,32 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 			finish(Globals.STATUS_SUCCEEDED);
 			break;
 		case START_SCAN:
-			Intent intentScan = new Intent(
-					"com.google.zxing.client.android.SCAN");
-			intentScan.addCategory(Intent.CATEGORY_DEFAULT);
-			try {
-				startActivityForResult(intentScan, 0x0ba7c0de);
-			} catch (ActivityNotFoundException e) {
-				showDownloadDialog(this, DEFAULT_TITLE, DEFAULT_MESSAGE,
-						DEFAULT_YES, DEFAULT_NO);
+			if (mode == QRCODE) {
+				// Start QR Code Reader:
+				Intent intentScan = new Intent(
+						"com.google.zxing.client.android.SCAN");
+				intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+				try {
+					startActivityForResult(intentScan, 0x0ba7c0de);
+				} catch (ActivityNotFoundException e) {
+					showDownloadDialog(this, DEFAULT_TITLE, DEFAULT_MESSAGE,
+							DEFAULT_YES, DEFAULT_NO);
+				}
+			} else {
+				// TODO Start NFC Scan:
+				Intent intentScan = null;
+				try {
+					intentScan = new Intent(GeoQuestApp.getContext(),
+							Class.forName(MissionActivity.getPackageBaseName()
+									+ "NFCScanMission"));
+				} catch (ClassNotFoundException e1) {
+					Log.e(TAG,
+							"Unable to start intent for class "
+									+ e1.getMessage());
+					return;
+				}
+				intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+				startActivityForResult(intentScan, 2);
 			}
 			break;
 		default:
@@ -237,7 +222,7 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 			Variables.registerMissionResult(mission.id, scannedResult);
 
 			// handle scan result depending on mode:
-			switch (missionMode) {
+			switch (expectationMode) {
 			case TREASURE:
 				taskTextView.setText(this.feedbackText.toString().replaceAll(
 						TOKEN_SCAN_RESULT, scannedResult));
@@ -248,7 +233,14 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 				break;
 			case PRODUCT:
 				// check content:
-				if (this.expectedContent.toString().equals(scannedResult)) {
+				boolean asExpected = false;
+				for (CharSequence curExpect : expectedCodes) {
+					if (scannedResult.equals(curExpect)) {
+						asExpected = true;
+						break;
+					}
+				}
+				if (asExpected) {
 					taskTextView.setText(this.ifRightText);
 					setImage("if_right_image");
 					buttonMode = END_MISSION;
@@ -264,7 +256,7 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 				break;
 			default:
 				Log.e(TAG, "undefined QRTagReading mission mode: "
-						+ missionMode);
+						+ expectationMode);
 			}
 		} else {
 			buttonMode = START_SCAN;
@@ -280,7 +272,6 @@ public class QRTagReading extends InteractiveMission implements OnClickListener 
 
 	public void onBlockingStateUpdated(boolean blocking) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public MissionOrToolUI getUI() {

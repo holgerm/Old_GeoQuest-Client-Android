@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+    name="Test TagScanner QR With Expectation"
+    xmlformat="5" >
+
+    <mission
+        id="QR_Code_Scan_With_Expectations"
+        buttontext="Scannen"
+        mode="qr"
+        taskdescription="Scanne einen QR Code"
+        type="TagScanner" >
+        <expectedCode id ="1234">
+            Mein Tag
+        </expectedCode>
+        <expectedCode id ="1235">
+            Dein Tag
+        </expectedCode>
+        <expectedCode id ="1236">
+            Noch ein erwarteter Tag
+        </expectedCode>
+        
+        <onFail>
+
+            <rule>
+
+                <action
+                    message="Failure!"
+                    type="ShowMessage" />
+            </rule>
+        </onFail>
+
+        <onSuccess>
+
+            <rule>
+
+                <action
+                    message="Success!"
+                    type="ShowMessage" />
+            </rule>
+        </onSuccess>
+        <onEnd>
+
+            <rule>
+
+                <action
+                    message="Scanned code is: @$_mission_QR_Code_Scan_With_Expectations.result@"
+                    type="ShowMessage" />
+            </rule>
+        </onEnd>
+        </mission>
+
+</game>

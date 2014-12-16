@@ -3,6 +3,7 @@
 ## 0.9.4* ##
 
 - Animation support for FullScreenImage page type (at work)
+- TagScanner mission introduced: covers QR Code
 
 ## 0.9.3 ##
 

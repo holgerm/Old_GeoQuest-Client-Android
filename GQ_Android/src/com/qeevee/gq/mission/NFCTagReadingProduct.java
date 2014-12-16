@@ -45,7 +45,7 @@ public class NFCTagReadingProduct extends InteractiveMission implements
 
 		String taskDescription = (String) getMissionAttribute(
 				"taskdescription",
-				R.string.qrtagreading_taskdescription_default);
+				R.string.tagscanner_taskdescription_default);
 
 		ui.init(taskDescription);
 		try {

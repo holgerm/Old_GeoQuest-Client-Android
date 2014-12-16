@@ -14,18 +14,16 @@ import org.junit.runner.RunWith;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.qeevee.gq.history.History;
-import com.qeevee.gq.mission.QRTagReading;
-import com.qeevee.gq.tests.robolectric.GQTestRunner;
-
-import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.Variables;
-
+import com.qeevee.gq.history.History;
+import com.qeevee.gq.mission.TagScanner;
+import com.qeevee.gq.tests.robolectric.GQTestRunner;
+import com.qeevee.gqdefault.R;
 
 @RunWith(GQTestRunner.class)
-public class QRTagReadingModeTreasureTests {
+public class TagScannerModeQR {
 
-	QRTagReading mission;
+	TagScanner mission;
 	private int buttonMode;
 	private TextView taskTextView;
 	private Button button;
@@ -45,8 +43,8 @@ public class QRTagReadingModeTreasureTests {
 
 	@SuppressWarnings("unchecked")
 	public void initTestMission(String missionID) {
-		mission = (QRTagReading) prepareMission("QRTagReading",
-				missionID, startGameForTest("QRTagReadingModeTreasureTest"));
+		mission = (TagScanner) prepareMission("TagScanner", missionID,
+				startGameForTest("TagScanner_Mode_QR_NoExpectations"));
 		try {
 			mission.onCreate(null);
 		} catch (NullPointerException npe) {
@@ -75,12 +73,12 @@ public class QRTagReadingModeTreasureTests {
 		// nothing
 
 		// WHEN:
-		initTestMission("With_Explicit_Attribute_Values");
+		initTestMission("QR_Code_Scan_No_Expectations");
 
 		// THEN:
 		shouldBeInMode(START_SCAN);
-		shouldShowTaskText("This is a demo task description.");
-		shouldShowButtonText("Start demo scan ...");
+		shouldShowTaskText("Scanne einen QR Code");
+		shouldShowButtonText("Scannen");
 	}
 
 	// === HELPER METHODS FOLLOW =============================================

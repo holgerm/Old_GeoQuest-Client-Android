@@ -134,8 +134,8 @@
     <string name="questionandanswer_wrongAnswer">Falsche Antwort.</string>
 
     <!-- QRTagReading MISSION -->
-    <string name="qrtagreading_startscanbutton_default">Scanner starten</string>
-    <string name="qrtagreading_taskdescription_default">Suche den QR Code und scanne ihn ein ...</string>
+    <string name="tagscanner_startscanbutton_default">Scanner starten</string>
+    <string name="tagscanner_taskdescription_default">Suche den QR Code und scanne ihn ein ...</string>
     <string name="qrtagreader_product_ifright">Toll, du hast den QR-Code gefunden!</string>
     <string name="qrtagreader_product_ifwrong">Das war leider der falsche QR-Code!</string>
 

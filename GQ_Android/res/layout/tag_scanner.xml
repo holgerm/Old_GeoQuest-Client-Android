@@ -18,7 +18,7 @@
         android:scaleType="fitCenter" />
 
     <TextView
-        android:id="@+id/qrTextView"
+        android:id="@+id/tsTextView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/margin"
@@ -32,7 +32,7 @@
         android:textSize="@dimen/text_size" />
 
     <Button
-        android:id="@+id/qrtagreaderstartbutton"
+        android:id="@+id/tagscanner_startbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
