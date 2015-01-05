@@ -40,9 +40,9 @@ The set of actions is large and continuously growing. Examples are:
 [You find further documentation on actions here](Actions.md).
 
 
-## Missions ##
+## Pages ##
 
-Missions are coherent interactions that the user performs with the device, often on screen, sometimes involving other device features such as the camera. The whole quest can be perceived as a flow of missions.
+Pages (formerly called missions) are coherent interactions that the user performs with the device, often on screen, sometimes involving other device features such as the camera. The whole quest can be perceived as a flow of missions.
 
 Examples for missions are:
 
@@ -53,7 +53,11 @@ Examples for missions are:
 - Ask the user to scan a QR code
 - Show a map and some hotspots on it
 
-[You find further documentation on missions here](Missions.md).
+[You find further documentation on pages here](Pages.md).
+
+## Layout ##
+
+[You find documentation about layout options for pages here](Layout.md).
 
 
 ## Hotspots ##
