@@ -36,11 +36,13 @@ The layout variable names are composed of three parts:
 
 ![Structure of layout variable names](images/layoutOptionNames.jpg)
 
-# Layout Elements #
+# General Layout Elements #
 
 All displayed objects that occupy a certain area on the screen have some basic layout options in common: they have a *margin*, a *border* and a *padding*. All of these are optional and might be invisible. In this case only the content is shown and there is no distance (not even one pixel) to their neighbors on the screen.
 
 The following image depicts the five basic screen estate parts each displayed object occupies:
+
+![Segments of margin and *padding*](images/margins.jpg)
 
 * *area* - the whole screen estate the object occupies
 * *border* - a visible frame around the visible object
@@ -48,11 +50,12 @@ The following image depicts the five basic screen estate parts each displayed ob
 * *padding* - a space on the inner side between the border and the visible content of this object
 * *content* - the screen space that is actually covered by the visible object
 
-![Area, margin, border, padding, and content](images/marginBorderPadding.jpg)
 
 ## Segments of Margin and Padding
 
 To allow for a flexible layout, *margin* and *padding* are divided into eight segments: the four edges and the four corners which can be specified either separately or  as (partly overlapping) edges:
+
+![Area, margin, border, padding, and content](images/marginBorderPadding.jpg)
 
 * *.margin.tl (top-left corner only)
 * *.margin.tm (top-middle edge only)
@@ -63,9 +66,7 @@ To allow for a flexible layout, *margin* and *padding* are divided into eight se
 * *.margin.bl (bottom-left corner only)
 * *.margin.lm (middle-left edge only)
 
-## Convenience Segments of Margin and Paddingf
-
-![Segments of margin and *padding*](images/margins.jpg)
+## Convenience Segments of Margin and Padding
 
 * *.margin.all (covers all eight segments)
 * *.margin.top (covers the three top segments)
@@ -82,4 +83,57 @@ The layout elements margin and padding (and all their segment variants) offer th
 | Attribute Name | Values | Meaning |  
 |  ------	| ------	| ------	|  
 | size | int | Width either in pixel or in per mille of screen size |  
-| background | 
+| background | String | Either a color (e.g. "#6688eea5" or "#88eea5") or a path to an image (e.g. "images/bg.jpg") |
+
+## Attributes of Border ##
+
+The border layout element has the following attributes:
+
+| Attribute Name | Values | Meaning |  
+|  ------	| ------	| ------	|  
+| width | int | width of the border line in number of pixel |  
+| style | String | "straight", "dotted", or "dashed" |  
+| color | String | A color specification (e.g. "#6688eea5" or "#88eea5") |  
+
+## Attributes of Content ##
+
+The content spaces of any object has the following attributes:
+
+| Attribute Name | Values | Meaning |  
+|  ------	| ------	| ------	|  
+| background | String | Either a color (e.g. "#6688eea5" or "#88eea5") or a path to an image (e.g. "images/bg.jpg") |
+
+
+# Layout Elements for Specific Content Objects #
+
+## Layout Attributes for Images ##
+
+For images the content layout element has the following attributes:
+
+| Attribute Name | Values | Meaning |  
+|  ------	| ------	| ------	|  
+| image | path | refers to the image file |  
+| scaletype | "fit" , "fill" |  How the image is scaled to fit into the content space |
+
+The scaletype attribute values have the following meaning:
+
+* "fit" - “fit” scales the image so that it its completely shown inside the content space and leaves the rest transparent, showing the content background
+* "fill" - scales the image so that it covers just the complete content space. The superfluous images parts are cropped
+
+## Layout Attributes for Texts ##
+
+For the content of text objects the following layout attributes are defined:
+
+| Attribute Name | Values | Meaning |  
+|  ------	| ------	| ------	|  
+| font | String | Name of a font |  
+| text size | int | size of text in pixel |  
+| adjustment | "left", "center", "right" | horizontal text adjustment of the text within the content space |  
+| vertical adjustment | "top", "middle", "bottom" | vertical adjustment of the text within the content space |
+
+
+
+
+
+
+
