@@ -213,6 +213,18 @@ public class Expressions {
 											// undefined variables.
 		}
 	}
+	
+	private static Object evaluateScript(Element xmlScriptExpression) {
+		Double value;
+		try {
+			value = Double.parseDouble(xmlScriptExpression.getText());
+		} catch (NumberFormatException e) {
+			Log.d(TAG,
+					" invalid script expression: " + xmlScriptExpression.asXML());
+			value = null;
+		}
+		return value;
+	}
 
 	public static String toString(Element xmlExpression) {
 		return xmlExpression.getName() + "("
