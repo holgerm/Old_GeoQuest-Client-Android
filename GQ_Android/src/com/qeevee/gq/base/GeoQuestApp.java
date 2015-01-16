@@ -40,6 +40,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
@@ -63,22 +64,15 @@ public class GeoQuestApp extends Application implements InteractionBlocker {
 	public static boolean useAdaptionEngine = false;
 	private static boolean adaptionEngineLibAvailable = false;
 
-	// private static HostConnector[] hostConnectorsOLD;
+	private WebView webView = null;
 
-	// public static HostConnector[] getHostConnectorsOLD() {
-	// if (hostConnectorsOLD == null) {
-	// int[] hostIDs = Configuration.getPortalIDs();
-	// hostConnectorsOLD = new HostConnector[hostIDs.length];
-	// for (int i = 0; i < hostIDs.length; i++) {
-	// hostConnectorsOLD[i] = new HostConnector(hostIDs[i]);
-	// }
-	// }
-	// return hostConnectorsOLD;
-	// }
-	//
-	// public void setHostConnectorsOLD(HostConnector[] connectors) {
-	// hostConnectorsOLD = connectors;
-	// }
+	public WebView getWebView() {
+		if (webView == null) {
+			webView = new WebView(theApp);
+			webView.getSettings().setJavaScriptEnabled(true);
+		}
+		return webView;
+	}
 
 	private MapView googleMap;
 	private boolean isInGame = false;
