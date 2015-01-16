@@ -1,5 +1,7 @@
 package com.qeevee.gq.mission;
 
+import static com.qeevee.gq.xml.XMLUtilities.stringToBool;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.tileprovider.MapTileProviderBasic;
@@ -239,9 +242,8 @@ public class MapOSM extends MapMissionActivity {
 
 	public void updateZoom() {
 		ArrayList<GeoPoint> points = new ArrayList<GeoPoint>();
-		if (Variables.getValue(Variables.CENTER_MAP_POSITION).equals("true")
-				|| Variables.getValue(Variables.CENTER_MAP_POSITION)
-						.equals("1")) {
+		if (stringToBool((String) Variables
+				.getValue(Variables.CENTER_MAP_POSITION))) {
 			LocationManager mLocationManager = (LocationManager) GeoQuestApp
 					.getContext().getSystemService(Context.LOCATION_SERVICE);
 			Criteria crit = new Criteria();
@@ -251,17 +253,13 @@ public class MapOSM extends MapMissionActivity {
 			if (location != null)
 				points.add(new GeoPoint(location));
 		}
-		if (Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS).equals(
-				"true")
-				|| Variables.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS)
-						.equals("1")) {
+		if (stringToBool((String) Variables
+				.getValue(Variables.CENTER_MAP_ACTIVE_HOTSPOTS))) {
 			points.addAll(HotspotManager.getInstance()
 					.getGeoPointsOfActiveHotspots());
 		}
-		if (Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS).equals(
-				"true")
-				|| Variables.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS)
-						.equals("1")) {
+		if (stringToBool((String) Variables
+				.getValue(Variables.CENTER_MAP_VISIBLE_HOTSPOTS))) {
 			Collection<GeoPoint> visiblePoints = HotspotManager.getInstance()
 					.getGeoPointsOfVisibleHotspots();
 			for (GeoPoint curPoint : visiblePoints) {
@@ -269,7 +267,22 @@ public class MapOSM extends MapMissionActivity {
 					points.add(curPoint);
 			}
 		}
-		zoomToQuestArea(points);
+		if (points.size() > 0) {
+			zoomToQuestArea(points);
+			return;
+		}
+
+		// No point given: we try to reuse old map position:
+		IGeoPoint oldCenter = (IGeoPoint) Variables.getMissionAttribute(
+				mission.id, LAST_CENTER);
+		Integer oldZoom = (Integer) Variables.getMissionAttribute(mission.id,
+				LAST_ZOOMLEVEL);
+		if (oldZoom != null) {
+			mapView.getController().setZoom(oldZoom);
+		}
+		if (oldCenter != null) {
+			mapView.getController().animateTo(oldCenter);
+		}
 	}
 
 	private void zoomToQuestArea() {

@@ -18,9 +18,13 @@ import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestMapActivity;
 import com.qeevee.gq.base.Globals;
 import com.qeevee.gq.base.Mission;
+import com.qeevee.gq.base.Variables;
 import com.qeevee.gq.loc.MapHelper;
 import com.qeevee.gq.ui.abstrakt.MissionOrToolUI;
 import com.qeevee.util.locationmocker.LocationSource;
+
+import static com.qeevee.gq.base.GeoQuestMapActivity.LAST_CENTER;
+import static com.qeevee.gq.base.GeoQuestMapActivity.LAST_ZOOMLEVEL;
 
 public abstract class MapMissionActivity extends GeoQuestMapActivity {
 
@@ -186,4 +190,16 @@ public abstract class MapMissionActivity extends GeoQuestMapActivity {
 		return true;
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		if (mapView != null) {
+			Variables.storeMissionAttribute(mission.id, LAST_ZOOMLEVEL,
+					mapView.getZoomLevel());
+			Variables.storeMissionAttribute(mission.id, LAST_CENTER,
+					mapView.getMapCenter());
+
+		}
+	}
 }

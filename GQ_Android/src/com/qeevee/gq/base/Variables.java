@@ -202,4 +202,15 @@ public class Variables {
 		return Variables.HOTSPOT_PREFIX + id + LAT;
 	}
 
+	public static Object getMissionAttribute(String missionID,
+			String attributeName) {
+		return variables.get(Variables.MISSION_PREFIX + missionID + "."
+				+ attributeName);
+	}
+
+	public static void storeMissionAttribute(String missionID,
+			String attributeName, Object value) {
+		Variables.setValue(Variables.MISSION_PREFIX + missionID + "."
+				+ attributeName, value);
+	}
 }

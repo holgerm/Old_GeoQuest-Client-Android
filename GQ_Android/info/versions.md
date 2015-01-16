@@ -1,9 +1,10 @@
 # Versioning #
 
-## 0.9.5* ##
+## 0.9.5 ##
 
 - Image alignment in FullScreenImage pages enhanced; new attribute fullscreen introduced that can hide action and status bars;
 - image in FullScreenPage is now scaled to fill the screen but keep original aspect ratio.
+- MapCentering action now reuses old center and zoom level in case no centering points are given
 
 ## 0.9.4 ##
 

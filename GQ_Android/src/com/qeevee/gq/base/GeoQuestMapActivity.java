@@ -27,6 +27,9 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 		return id;
 	}
 
+	public static final String LAST_ZOOMLEVEL = "last_zoomlevel";
+	public static final String LAST_CENTER = "last_center";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
