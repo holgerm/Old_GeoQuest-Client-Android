@@ -32,6 +32,32 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		callBackToReenable = activity;
 	}
 
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		// TODO: make cancellable
+		progressDialog = new ProgressDialog(callBackToReenable);
+		progressDialog.setCancelable(true);
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+
+			public void onCancel(DialogInterface dialog) {
+				// cancel:
+				DownloadGame.this.cancel(true);
+				reenableGamesInCloud();
+			}
+
+		});
+		progressDialog.setIndeterminate(true);
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		progressDialog.setProgress(0);
+		progressDialog.setMax(100);
+		progressDialog.setTitle(GeoQuestApp.getContext().getText(
+				R.string.downloadDialogTitleBeforeStart));
+		progressDialog.setMessage(GeoQuestApp.getContext().getText(
+				R.string.downloadDialogMessage));
+		progressDialog.show();
+	}
+
 	protected Boolean doInBackground(GameDescription... games) {
 		this.game = games[0];
 
@@ -43,8 +69,9 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 						R.string.downloadDialogTitleSuffix));
 		progressDialog.setMessage(GeoQuestApp.getContext().getText(
 				R.string.downloadDialogMessage));
-		progressDialog.setIcon(R.drawable.app_item_icon); // TODO use game
-															// icon instead.
+		progressDialog.setIcon(R.drawable.app_item_icon);
+		// TODO use game icon instead.
+
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
 			deleteDir(gameDir);
@@ -90,13 +117,21 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 				&& !isCancelled()) {
 			fOutLocal.write(by, 0, readThisTime);
 			alreadyRead += readThisTime;
-			publishProgress((int) ((alreadyRead / (float) lenght) * 100));
+			if (lenght != -1)
+				publishProgress((int) ((alreadyRead / (float) lenght) * 100));
 		}
 
 		in.close();
 		fOutLocal.close();
 		Log.d(TAG, "completed download: " + url);
 		return gameZipFile;
+	}
+
+	@Override
+	protected void onProgressUpdate(Integer... values) {
+		super.onProgressUpdate(values);
+		if (values != null && values.length == 1)
+			progressDialog.setProgress(values[0]);
 	}
 
 	private void deleteDir(File dir) {
@@ -146,23 +181,6 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 			Toast.makeText(GeoQuestApp.getContext(), toastText,
 					Toast.LENGTH_LONG).show();
 		}
-	}
-
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-		// TODO: make cancellable
-		progressDialog = ProgressDialog.show(callBackToReenable,
-				"Downloading ...", "Please wait.", true, true,
-				new OnCancelListener() {
-
-					public void onCancel(DialogInterface dialog) {
-						// cancel:
-						DownloadGame.this.cancel(true);
-						reenableGamesInCloud();
-					}
-
-				});
 	}
 
 	protected GameDescription getGame() {

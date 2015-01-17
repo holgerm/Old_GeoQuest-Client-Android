@@ -39,6 +39,7 @@
 
     <!-- Generic DIALOG Labels -->
     <string name="dialogGetGameListTitle">Gathering List of Quests</string>
+    <string name="downloadDialogTitleBeforeStart">Download starting</string>
     <string name="downloadDialogTitleSuffix">is downloading</string>
     <string name="downloadDialogMessage">Please wait ...</string>
     <string name="deleteAllDialogTitle">Really remove all quest from this device?</string>

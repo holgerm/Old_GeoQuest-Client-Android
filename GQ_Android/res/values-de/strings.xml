@@ -41,6 +41,7 @@
 
     <!-- Generic DIALOG Labels -->
     <string name="dialogGetGameListTitle">Lade Liste aller Quests</string>
+    <string name="downloadDialogTitleBeforeStart">Download startet</string>
     <string name="downloadDialogTitleSuffix"> wird geladen</string>
     <string name="downloadDialogMessage">Bitte warten ...</string>
     <string name="deleteAllDialogTitle">Wirklich alle Quest von diesem Gerät löschen?</string>
@@ -149,10 +150,10 @@
     <string name="videoplay_finishdialog_watchagain">Nochmal</string>
     <string name="videoplay_finishdialog_leave">Ja</string>
     <string name="videoplay_errordialog_message">Das Video kann nicht abgespielt werden.</string>
-    
+
     <!-- WebPage PAGE -->
     <string name="webpage_loading_message">Webseite lädt ...</string>
-    
+
     <!-- HOTSPOTS -->
     <string name="missing_hotspot_description">Für diesen Hotspot ist leider keine Beschreibung verfügbar.</string>
 
