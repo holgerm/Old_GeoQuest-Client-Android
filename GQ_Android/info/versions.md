@@ -1,5 +1,9 @@
 # Versioning #
 
+## 0.9.6* ##
+
+- Progress bar for downloading process of quests
+
 ## 0.9.5 ##
 
 - Image alignment in FullScreenImage pages enhanced; new attribute fullscreen introduced that can hide action and status bars;
