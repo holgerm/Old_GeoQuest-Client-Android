@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "welcome to scale!"
+
+if [ ! "$#" -eq 3 ]; then
+	echo "Usage: scale <source_dir> <size> <target_dir_path_absolute>"
+	exit 1
+fi
+if [ ! -d "$1" ]; then
+	echo "First argument (source dir) did not match a directory."
+	exit 1
+fi 
+
+
+mkdir -p $3
+cd $1
+
+for file in `ls *.png` 
+	do 
+		echo "executing: convert $file -resize $2x$2 $3/$file"
+		convert $file -resize $2x$2 $3/$file
+	done
+
+echo "done." 
