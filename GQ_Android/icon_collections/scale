@@ -1,7 +1,0 @@
-#!/bin/bash
-
-for file in `ls *_button_*.png` 
-	do 
-		echo "scaling $file to $1 x $1 pixels";
-		convert $file -resize $1x$1 $file;
-	done
