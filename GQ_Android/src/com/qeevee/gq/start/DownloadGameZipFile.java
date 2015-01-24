@@ -15,36 +15,41 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.qeevee.gqdefault.R;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.Host;
+import com.qeevee.gqdefault.R;
 import com.qeevee.util.FileOperations;
 
-public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
+public class DownloadGameZipFile extends
+		AsyncTask<GameDescription, Integer, File> {
 
-	static final String TAG = DownloadGame.class.getCanonicalName();
+	static final String TAG = DownloadGameZipFile.class.getCanonicalName();
 	private final static int BYTE_SIZE = 1024;
 	private GameDescription game;
-	private GamesInCloud callBackToReenable;
+	private GamesInCloud activity;
 	private ProgressDialog progressDialog;
 
-	public DownloadGame(GamesInCloud activity) {
-		callBackToReenable = activity;
+	public DownloadGameZipFile(GamesInCloud activity) {
+		this.activity = activity;
 	}
 
-	protected Boolean doInBackground(GameDescription... games) {
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		progressDialog = new ProgressDialog(activity);
+	}
+
+	protected File doInBackground(GameDescription... games) {
 		this.game = games[0];
+		game.getFileSize(); // just to ensure that filesize is loaded on non-ui
+							// thread. TODO remove as soon as server JSON
+							// contains filesize.
 
 		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
-		progressDialog.setTitle(game.getName()
-				+ " "
-				+ GeoQuestApp.getContext().getText(
-						R.string.downloadDialogTitleSuffix));
-		progressDialog.setMessage(GeoQuestApp.getContext().getText(
-				R.string.downloadDialogMessage));
-		progressDialog.setIcon(R.drawable.app_item_icon); // TODO use game
-															// icon instead.
+
+		activity.runOnUiThread(initProgressBar4Download);
+
 		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
 		if (gameDir.exists())
 			deleteDir(gameDir);
@@ -56,9 +61,11 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 				gameZipFile = downloadZipFile(gameDir, game);
 			} catch (IOException e) {
 				Log.e(TAG, e.getMessage());
-				return false;
+				return null;
 			}
 		}
+
+		activity.runOnUiThread(initProgressBar4Unzip);
 
 		if (!isCancelled() && gameZipFile != null) {
 			GameDataManager.unzipGameArchive(gameZipFile);
@@ -66,7 +73,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 			gameZipFile.delete();
 		}
 
-		return true;
+		return gameZipFile;
 	}
 
 	private File downloadZipFile(File gameDir, GameDescription game)
@@ -80,23 +87,36 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 
 		Log.d(TAG, "starting download: " + url);
 		in = new BufferedInputStream(url.openStream(), BYTE_SIZE);
-		int lenght = url.openConnection().getContentLength();
 
 		byte by[] = new byte[BYTE_SIZE];
 		int readThisTime;
 		int alreadyRead = 0;
 
+		long fileSize = game.getFileSize();
+
 		while ((readThisTime = in.read(by, 0, BYTE_SIZE)) != -1
 				&& !isCancelled()) {
 			fOutLocal.write(by, 0, readThisTime);
 			alreadyRead += readThisTime;
-			publishProgress((int) ((alreadyRead / (float) lenght) * 100));
+			if (fileSize != 0) {
+				int percent = (int) ((alreadyRead / (float) fileSize) * 10);
+
+				publishProgress(percent);
+			}
 		}
 
 		in.close();
 		fOutLocal.close();
 		Log.d(TAG, "completed download: " + url);
 		return gameZipFile;
+	}
+
+	@Override
+	protected void onProgressUpdate(Integer... values) {
+		super.onProgressUpdate(values);
+		if (values != null && values.length == 1 && progressDialog != null) {
+			progressDialog.setProgress(values[0]);
+		}
 	}
 
 	private void deleteDir(File dir) {
@@ -114,7 +134,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 	}
 
 	@Override
-	protected void onPostExecute(Boolean success) {
+	protected void onPostExecute(File gameZip) {
 		if (isCancelled()) {
 			doCancel();
 			return;
@@ -122,7 +142,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		progressDialog.dismiss();
 		reenableGamesInCloud();
 		CharSequence toastText = null;
-		if (success) {
+		if (gameZip != null) {
 			toastText = GeoQuestApp.getContext().getText(
 					R.string.messageDownloadFinishedPrefix)
 					+ " "
@@ -138,7 +158,7 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 						AsyncTask.THREAD_POOL_EXECUTOR, game);
 			else
 				startLocalGame.execute(game);
-			callBackToReenable.finish();
+			activity.finish();
 		} else {
 			toastText = GeoQuestApp.getContext().getText(
 					R.string.messageDownloadErrorPrefix)
@@ -148,39 +168,83 @@ public class DownloadGame extends AsyncTask<GameDescription, Integer, Boolean> {
 		}
 	}
 
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-		// TODO: make cancellable
-		progressDialog = ProgressDialog.show(callBackToReenable,
-				"Downloading ...", "Please wait.", true, true,
-				new OnCancelListener() {
-
-					public void onCancel(DialogInterface dialog) {
-						// cancel:
-						DownloadGame.this.cancel(true);
-						reenableGamesInCloud();
-					}
-
-				});
-	}
-
 	protected GameDescription getGame() {
 		return game;
 	}
 
 	public void reenableGamesInCloud() {
-		callBackToReenable.reenable();
+		activity.reenable();
 	}
 
 	private void doCancel() {
 		// Delete already loaded parts:
 		File questsDir = GameDataManager.getQuestsDir();
-		File deleteDir = new File(questsDir, DownloadGame.this.getGame()
+		File deleteDir = new File(questsDir, DownloadGameZipFile.this.getGame()
 				.getID());
 		FileOperations.deleteDirectory(deleteDir);
 
 		// reenable listview:
 		reenableGamesInCloud();
 	}
+
+	private Runnable initProgressBar4Download = new Runnable() {
+		public void run() {
+			progressDialog.setCancelable(true);
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				public void onCancel(DialogInterface dialog) {
+					DownloadGameZipFile.this.cancel(true);
+					reenableGamesInCloud();
+				}
+
+			});
+
+			progressDialog.setTitle(game.getName());
+			progressDialog.setMessage(GeoQuestApp.getContext().getText(
+					R.string.dialogMessageDownloading));
+			progressDialog.setIcon(R.drawable.app_item_icon);
+
+			if (game.getFileSize() != 0) {
+				progressDialog.setIndeterminate(false);
+				progressDialog
+						.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				progressDialog.setProgress(0);
+				progressDialog.setMax(100);
+			} else {
+				progressDialog.setIndeterminate(true);
+				progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			}
+
+			progressDialog.show();
+		}
+	};
+
+	private Runnable initProgressBar4Unzip = new Runnable() {
+		public void run() {
+			progressDialog.dismiss();
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setCancelable(true);
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				public void onCancel(DialogInterface dialog) {
+					DownloadGameZipFile.this.cancel(true);
+					reenableGamesInCloud();
+				}
+
+			});
+
+			progressDialog.setTitle(game.getName());
+			progressDialog.setMessage(GeoQuestApp.getContext().getText(
+					R.string.dialogMessageExtracting));
+			progressDialog.setIcon(R.drawable.app_item_icon);
+
+			progressDialog.setIndeterminate(true);
+			progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+			progressDialog.show();
+		}
+	};
+
 }

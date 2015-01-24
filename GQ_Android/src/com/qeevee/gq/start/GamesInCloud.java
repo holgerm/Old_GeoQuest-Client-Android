@@ -101,7 +101,7 @@ public class GamesInCloud extends GeoQuestActivity {
 				public void onItemClick(AdapterView<?> parent, final View view,
 						int position, long id) {
 					listView.setEnabled(false);
-					DownloadGame downloader = new DownloadGame(
+					DownloadGameZipFile downloader = new DownloadGameZipFile(
 							GamesInCloud.this);
 					downloader.execute((GameDescription) parent
 							.getItemAtPosition(position));

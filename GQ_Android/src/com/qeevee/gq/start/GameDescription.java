@@ -11,6 +11,9 @@ import org.dom4j.io.SAXReader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.qeevee.gq.host.Host;
+import com.qeevee.util.IO;
+
 import android.util.Log;
 
 public class GameDescription {
@@ -20,7 +23,8 @@ public class GameDescription {
 	private String id;
 	private String zipURL = "none";
 
-	// private String portalID;
+	private long filesize = FILESIZE_NOT_YET_RETRIEVED;
+	private static long FILESIZE_NOT_YET_RETRIEVED = -1;
 
 	// private long lastUpdate;
 
@@ -33,7 +37,7 @@ public class GameDescription {
 		id = ((Integer) jsonObject.get("id")).toString();
 		// lastUpdate = Long.parseLong((String) jsonObject.get("lastUpdate"));
 		zipURL = (String) jsonObject.get("zip");
-		// this.setPortalID(portalID);
+		// filesize = getFileSize(id);
 	}
 
 	/**
@@ -74,12 +78,25 @@ public class GameDescription {
 		return name;
 	}
 
-	// public String getPortalID() {
-	// return portalID;
-	// }
-	//
-	// private void setPortalID(String portalID) {
-	// this.portalID = portalID;
-	// }
+	/**
+	 * TODO should be replaced with attribute in JSON string as soon as the
+	 * server can do that.
+	 */
+	public long getFileSize() {
+		if (this.filesize == FILESIZE_NOT_YET_RETRIEVED) {
+			String filesizeAsString = IO.getHTTPResult(Host.GQ_HOST_BASE_URL
+					+ "/game/filesize/" + getID());
+			filesizeAsString.trim();
+			if (filesizeAsString.endsWith("\n"))
+				filesizeAsString = filesizeAsString.substring(0,
+						filesizeAsString.length() - 2);
+			try {
+				this.filesize = Long.valueOf(filesizeAsString);
+			} catch (NumberFormatException exc) {
+				this.filesize = 0;
+			}
+		}
+		return this.filesize;
+	}
 
 }

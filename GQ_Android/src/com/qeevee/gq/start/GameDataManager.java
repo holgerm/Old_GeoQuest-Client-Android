@@ -171,11 +171,11 @@ public class GameDataManager {
 				fos.close();
 			}
 		} catch (ZipException e) {
-			Log.d(DownloadGame.TAG, "ZipException creating zipfile from "
+			Log.d(DownloadGameZipFile.TAG, "ZipException creating zipfile from "
 					+ archiveFile);
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.d(DownloadGame.TAG, "IOException creating zipfile from "
+			Log.d(DownloadGameZipFile.TAG, "IOException creating zipfile from "
 					+ archiveFile);
 			e.printStackTrace();
 		}
