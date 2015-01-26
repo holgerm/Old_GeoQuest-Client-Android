@@ -4,6 +4,7 @@
 
 - Progress bar for downloading process of quests
 - Downloads can be cancelled during download now and will n this case not affect the old local version.
+- Local games now alphabetically sorted
 
 ## 0.9.5 ##
 
