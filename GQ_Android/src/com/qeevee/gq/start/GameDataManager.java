@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -92,6 +94,16 @@ public class GameDataManager {
 			for (int i = 0; i < gameDirs.length; i++) {
 				games.add(new GameDescription(gameDirs[i]));
 			}
+
+		Collections.sort(games, new Comparator<GameDescription>() {
+			@Override
+			public int compare(GameDescription gameDescr1,
+					GameDescription gameDescr2) {
+
+				return gameDescr1.getName().compareTo(gameDescr2.getName());
+			}
+		});
+
 		return games;
 	}
 
