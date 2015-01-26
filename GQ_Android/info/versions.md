@@ -1,8 +1,9 @@
 # Versioning #
 
-## 0.9.6* ##
+## 0.9.6 ##
 
 - Progress bar for downloading process of quests
+- Downloads can be cancelled during download now and will n this case not affect the old local version.
 
 ## 0.9.5 ##
 

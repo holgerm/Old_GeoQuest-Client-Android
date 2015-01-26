@@ -55,7 +55,8 @@ public class ExtractGamesFromAssets extends AsyncTask<Void, Integer, Void> {
 					ASSET_DIR_FOR_INCLUDED_QUESTS + File.separator
 							+ assetRelPath, AssetManager.ACCESS_BUFFER),
 					BYTE_SIZE);
-			File newGameZipFile = new File(gameDir, gameName + ".zip");
+			File newGameZipFile = new File(GameDataManager.getQuestsDir(),
+					gameName + ".zip");
 			FileOutputStream fOutLocal = new FileOutputStream(newGameZipFile);
 
 			// TODO: care about lenght == -1, i.e. if info not

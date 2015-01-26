@@ -88,7 +88,9 @@ public class StartLocalGame extends
 			File targetDir = new File(gameFilesDir, zipFileNames[i].substring(
 					0, zipFileNames[i].length() - ".zip".length()));
 			targetDir.mkdir();
-			GameDataManager.unzipFile(zipFile, targetDir.getAbsolutePath());
+			GameDataManager.unzipFile(zipFile, targetDir);
+			// TODO check since we changed the gamezipfile location
+
 			zipFile.delete();
 		}
 

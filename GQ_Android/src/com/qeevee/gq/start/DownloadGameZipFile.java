@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.qeevee.gq.base.GeoQuestApp;
 import com.qeevee.gq.host.Host;
 import com.qeevee.gqdefault.R;
-import com.qeevee.util.FileOperations;
 
 public class DownloadGameZipFile extends
 		AsyncTask<GameDescription, Integer, File> {
@@ -45,29 +44,37 @@ public class DownloadGameZipFile extends
 							// thread. TODO remove as soon as server JSON
 							// contains filesize.
 
-		// create game directory - if needed:
 		String gameName = Integer.valueOf(game.getID()).toString();
+		// TODO skip converting back and forth
+
+		File gameDir = GameDataManager.getQuestDir(gameName);
 
 		activity.runOnUiThread(initProgressBar4Download);
-
-		File gameDir = new File(GameDataManager.getQuestsDir(), gameName);
-		if (gameDir.exists())
-			deleteDir(gameDir);
-		gameDir = GameDataManager.getQuestDir(gameName);
 
 		File gameZipFile = null;
 		if (!isCancelled()) {
 			try {
-				gameZipFile = downloadZipFile(gameDir, game);
+				gameZipFile = downloadQuestZipFile(GameDataManager.getQuestsDir(), game);
 			} catch (IOException e) {
 				Log.e(TAG, e.getMessage());
 				return null;
 			}
 		}
 
+		if (isCancelled()) {
+			Log.i(TAG,
+					"download cancelled (" + game.getName() + ":"
+							+ game.getID() + ")");
+			return null;
+		}
+
 		activity.runOnUiThread(initProgressBar4Unzip);
 
 		if (!isCancelled() && gameZipFile != null) {
+			if (gameDir.exists())
+				deleteDir(gameDir);
+			gameDir = GameDataManager.getQuestDir(gameName);
+
 			GameDataManager.unzipGameArchive(gameZipFile);
 
 			gameZipFile.delete();
@@ -76,9 +83,9 @@ public class DownloadGameZipFile extends
 		return gameZipFile;
 	}
 
-	private File downloadZipFile(File gameDir, GameDescription game)
+	private File downloadQuestZipFile(File questsDir, GameDescription game)
 			throws IOException {
-		File gameZipFile = new File(gameDir, "game.zip");
+		File gameZipFile = new File(questsDir, game.getID() + ".zip");
 		InputStream in;
 		FileOutputStream fOutLocal = null;
 		fOutLocal = new FileOutputStream(gameZipFile);
@@ -134,12 +141,25 @@ public class DownloadGameZipFile extends
 	}
 
 	@Override
+	protected void onCancelled(File file) {
+		// Delete already loaded parts:
+		if (file != null)
+			file.delete();
+		// File questsDir = GameDataManager.getQuestsDir();
+		// File deleteDir = new File(questsDir,
+		// DownloadGameZipFile.this.getGame()
+		// .getID());
+		// FileOperations.deleteDirectory(deleteDir);
+
+		// reenable listview:
+		reenableGamesInCloud();
+		return;
+	}
+
+	@Override
 	protected void onPostExecute(File gameZip) {
-		if (isCancelled()) {
-			doCancel();
-			return;
-		}
 		progressDialog.dismiss();
+
 		reenableGamesInCloud();
 		CharSequence toastText = null;
 		if (gameZip != null) {
@@ -176,17 +196,6 @@ public class DownloadGameZipFile extends
 		activity.reenable();
 	}
 
-	private void doCancel() {
-		// Delete already loaded parts:
-		File questsDir = GameDataManager.getQuestsDir();
-		File deleteDir = new File(questsDir, DownloadGameZipFile.this.getGame()
-				.getID());
-		FileOperations.deleteDirectory(deleteDir);
-
-		// reenable listview:
-		reenableGamesInCloud();
-	}
-
 	private Runnable initProgressBar4Download = new Runnable() {
 		public void run() {
 			progressDialog.setCancelable(true);
@@ -195,9 +204,7 @@ public class DownloadGameZipFile extends
 
 				public void onCancel(DialogInterface dialog) {
 					DownloadGameZipFile.this.cancel(true);
-					reenableGamesInCloud();
 				}
-
 			});
 
 			progressDialog.setTitle(game.getName());
@@ -224,7 +231,7 @@ public class DownloadGameZipFile extends
 		public void run() {
 			progressDialog.dismiss();
 			progressDialog = new ProgressDialog(activity);
-			progressDialog.setCancelable(true);
+			progressDialog.setCancelable(false);
 			progressDialog.setCanceledOnTouchOutside(false);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 

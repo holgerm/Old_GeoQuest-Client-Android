@@ -117,13 +117,26 @@ public class GameDataManager {
 	 */
 	static void unzipGameArchive(File gameZipFile) {
 
-		// TODO Publish progress
-		String newGameDirName = gameZipFile.getParent();
+		if (gameZipFile == null) {
+			Log.e(TAG, "Unzipping cancelled: Game file was null.");
+			return;
+		}
 
-		unzipFile(gameZipFile, newGameDirName);
+		String gameFileName = gameZipFile.getName();
+		int gameIDLength = gameFileName.lastIndexOf(".zip");
+
+		if (gameIDLength < 1) {
+			Log.e(TAG,
+					"Unzipping cancelled: Game ID was empty of game file was not named \"*.zip\".");
+			return;
+		}
+
+		String gameID = gameFileName.substring(0, gameIDLength);
+
+		unzipFile(gameZipFile, GameDataManager.getQuestDir(gameID));
 	}
 
-	public static void unzipFile(File archiveFile, String targetDir) {
+	public static void unzipFile(File archiveFile, File targetDir) {
 		try {
 			ZipFile zipFile = new ZipFile(archiveFile);
 			ZipEntry zipEntry;
@@ -142,7 +155,7 @@ public class GameDataManager {
 						.startsWith("."))
 					continue;
 
-				entryFile = new File(targetDir + "/" + zipEntry.getName());
+				entryFile = new File(targetDir, zipEntry.getName());
 
 				// in case the entry is a directory:
 				if (zipEntryName.endsWith("/")) {
@@ -171,8 +184,8 @@ public class GameDataManager {
 				fos.close();
 			}
 		} catch (ZipException e) {
-			Log.d(DownloadGameZipFile.TAG, "ZipException creating zipfile from "
-					+ archiveFile);
+			Log.d(DownloadGameZipFile.TAG,
+					"ZipException creating zipfile from " + archiveFile);
 			e.printStackTrace();
 		} catch (IOException e) {
 			Log.d(DownloadGameZipFile.TAG, "IOException creating zipfile from "
