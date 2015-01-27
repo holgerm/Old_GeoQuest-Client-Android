@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Tours</string>
-    <string name="quest_name">Tours</string>
+    <string name="app_name">Opa-Enkel-App</string>
+    <string name="quest_name">Opa-Enkel</string>
     <string name="imprint_authorName">TODO</string>
-    <string name="imprint_city">Köln</string>
+    <string name="imprint_city">Herford</string>
     <string name="imprint_email">TODO</string>
     <string name="imprint_fax">TODO</string>
     <string name="imprint_legalForm">TODO</string>
