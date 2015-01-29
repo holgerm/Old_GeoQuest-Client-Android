@@ -10,12 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.maps.MapActivity;
-import com.qeevee.gqdefault.R;
-import com.qeevee.gqdefault.R.id;
-import com.qeevee.gqdefault.R.menu;
-import com.qeevee.gqdefault.R.string;
 import com.qeevee.gq.ui.InteractionBlocker;
 import com.qeevee.gq.ui.InteractionBlockingManager;
+import com.qeevee.gqdefault.R;
 import com.qeevee.util.Dialogs;
 
 public abstract class GeoQuestMapActivity extends MapActivity implements
@@ -29,7 +26,7 @@ public abstract class GeoQuestMapActivity extends MapActivity implements
 
 	public static final String LAST_ZOOMLEVEL = "last_zoomlevel";
 	public static final String LAST_CENTER = "last_center";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
