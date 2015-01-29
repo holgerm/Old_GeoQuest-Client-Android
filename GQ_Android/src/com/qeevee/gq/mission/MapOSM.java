@@ -226,6 +226,7 @@ public class MapOSM extends MapMissionActivity {
 	protected void onResume() {
 		super.onResume();
 		ui.enable();
+		updateZoom();
 
 		((MapView) mapView).getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
